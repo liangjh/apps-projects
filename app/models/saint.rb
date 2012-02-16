@@ -34,8 +34,7 @@ class Saint < ActiveRecord::Base
     mod_times << self.updated_at
     mod_times << MetadataValue.where(:saint_id => self.id).maximum(:updated_at)
     mod_times << SaintAttrib.where(:saint_id => self.id).maximum(:updated_at)
-    mod_times.sort
-    mod_times.last
+    mod_times.sort.last
   end
 
 

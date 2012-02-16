@@ -15,7 +15,7 @@
         if (!meta_key.multi)
           %><%= text_field_tag code, @meta_values[code].nil? ? "" : @meta_values[code][0].value %><%
         else
-          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| x.value }.join("\r\n"), :size => "50x10" %><%
+          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| x.value }.join("\r\n"), :size => (meta_key.meta_type == MetadataKey.META_TYPE_LONG ? "60x15" : "50x10") %><%
         end
         %>
         <span class="help-inline"><%= meta_key.description %></span>
