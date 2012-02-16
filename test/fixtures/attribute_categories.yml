@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id:
+  code: my_string
+  name: MyString
+  description: MyString
+  visible: false
+
+two:
+  id:
+  code: my_string
+  name: MyString
+  description: MyString
+  visible: false

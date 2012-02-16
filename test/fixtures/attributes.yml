@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 
+  attribute_category_id: 1
+  code: my_string
+  name: MyString
+  description: 
+  ord: 1
+  visible: false
+
+two:
+  id: 
+  attribute_category_id: 1
+  code: my_string
+  name: MyString
+  description: 
+  ord: 1
+  visible: false

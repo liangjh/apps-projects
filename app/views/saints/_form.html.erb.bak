@@ -1,0 +1,54 @@
+<%= form_for(@saint) do |saint_form| %>
+
+  <%# print errors, if any %>
+
+  <% if @saint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@saint.errors.count, "error") %> prohibited this saint from being saved:</h2>
+
+      <ul>
+      <% @saint.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+    <%#// Saint:symbol %>
+    <%= saint_form.label :symbol %>
+    <%= saint_form.text_field :symbol %>
+    <br/><br/>
+
+
+    <%= saint_form.fields_for :metadata_values do |meta_form| %>
+        <%#// Metadata:name %>
+        <% puts "***** FLAG !!! " %>
+        <% puts meta_form %>
+        <%= meta_form.label :name, @meta_keys["name"].name %>
+        <%= meta_form.text_field :value %>
+        <br/><br/>
+        <%#// Metadata:nickname %>
+        <%= meta_form.label :nickname, @meta_keys["nickname"].name %>
+        <%= meta_form.text_field :value %>
+        <br/><br/>
+        <%#// Metadata:suffix %>
+        <%= meta_form.label :suffix, @meta_keys["suffix"].name %>
+        <%= meta_form.text_field :value %>
+        <br/><br/>
+    <% end %>
+
+
+    <%# saint_form.fields_for :attributes do |attribute| %>
+        <%#// Attribute:century %>
+        <%#// Attribute:superpower %>
+    <%# end %>
+
+
+
+
+
+  <div class="actions">
+    <%= saint_form.submit %>
+  </div>
+<% end %>

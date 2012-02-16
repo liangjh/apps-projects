@@ -1,0 +1,62 @@
+
+
+<%
+
+#//
+#// Form Element Generators
+#// Metadata and Attribs can be generated dynamically
+#//
+
+    #//  Utility method to generate a metadata form element
+    def generate_metadata_form_element(code, meta_key)
+    %>
+      <%= label_tag code, meta_key.name %>
+      <%
+        if (!meta_key.multi)
+          %><%= text_field_tag code, @meta_values[code].nil? ? "" : @meta_values[code][0].value %><%
+        else
+          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| x.value }.join("\r\n"), :size => "50x10" %><%
+        end
+        %>
+        <span class="help-inline"><%= meta_key.description %></span>
+        <br/><br/>
+      <%
+    end
+
+    #//  Utility method to generate an attrib form element
+    def generate_attrib_form_element(code, attrib_cat)
+    %>
+      <%= label_tag code, attrib_cat.name %>
+      <%= select_tag code, options_from_collection_for_select(@attrib_by_category[code], "id", "name",
+                                lambda { |opt| @attrib_saint.has_key?(opt.id)}), {:multiple => @attrib_categories[code].multi} %>
+        <span class="help-inline"><%= attrib_cat.description %></span>
+        <br/><br/>
+    <%
+    end
+%>
+
+<%#// Symbol is an attribute of the saint %>
+<%= label_tag :symbol %>
+<%= text_field_tag :symbol, @saint.symbol %>
+<br/><br/>
+
+
+<p><h4>Metadata Values</h4></p>
+<%
+    @meta_keys.each do |code, meta_key|
+      generate_metadata_form_element(code, meta_key)
+    end
+%>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary"} %>
+
+<p><h4>Discrete Attributes</h4></p>
+<%
+    @attrib_categories.each do |code, attrib_cat|
+      generate_attrib_form_element(code, attrib_cat)
+    end
+%>
+
+<p>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary"} %>
+</p>
+

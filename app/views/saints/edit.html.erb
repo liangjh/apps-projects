@@ -1,0 +1,12 @@
+<h2>Editing: <%=@saint.symbol%></h2>
+
+<%= link_to 'Back', saints_path %><br/><br/>
+<%= form_tag(saint_path(@saint), {:method => :put }) do %>
+
+    <%= render 'form' %>
+
+<% end %>
+
+<%= link_to 'Back', saints_path %>
+<br/><br/>
+

@@ -1,0 +1,34 @@
+
+<h2>Saint Roster</h2>
+<br/><br/>
+<table class="table" width="600">
+  <thead>
+  <tr>
+    <th>Symbol</th>
+    <th>Name</th>
+    <th>Last Updated</th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+<%
+  @saints.each do |saint|
+    meta_name = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :name)
+    meta_suffix = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :suffix)
+%>
+  <tr>
+    <td><%= link_to saint.symbol, edit_saint_path(saint) %></td>
+    <td><%= (meta_name.empty? ? "N/A" : meta_name[0].value) %> <%= (meta_suffix.empty? ? "" : meta_suffix[0].value) %></td>
+    <td><%= saint.last_modified.strftime("%b %d, %Y") %></td>
+    <td><%= link_to 'Edit', edit_saint_path(saint) %></td>
+    <td><%= link_to 'Delete', saint, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'Create New Saint', new_saint_path %>
+<br/><br/>

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+gemset='saintstir'
+ruby_version='ruby-1.9.2-p290'
+
+rvm_gemset_create_on_us_flag=1
+rvm use "${ruby_version}@${gemset}"

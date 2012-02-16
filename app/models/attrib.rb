@@ -1,0 +1,36 @@
+
+#//
+#// Attribs represent discrete values in the Saintstir system that
+#// are associated with a given Saint.
+#//
+#// -- COLUMNS --
+#//   id,
+#//   attrib_category_id (fk: attrib_categories.id),
+#//   code, name, description, ord, visible
+#//
+
+
+class Attrib < ActiveRecord::Base
+
+  #//  Association with: attribute categories
+  belongs_to :attrib_category
+
+  #//  Association with saints through saint_attributes table
+  has_many :saints, :through => :saint_attribs
+  has_many :saint_attribs
+
+  #// All named scopes and custom queries
+  scope :by_category, lambda { |category| {:conditions => {:attrib_category_id => category} }}
+  scope :by_code, lambda { |code| {:conditions => {:code => code}}}
+
+  #// Retrieve all attributes that belong to a saint and a category
+  def self.by_saint_and_category(saint, category)
+    all_attribs = self.by_category(category)
+    saint.attribs.select { |attrib| all_attribs.include?(attrib) }
+  end
+
+
+
+
+end
+
