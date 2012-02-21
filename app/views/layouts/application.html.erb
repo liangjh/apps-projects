@@ -14,18 +14,16 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <style>
       body {
+        background-color: #f5f7db;
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
 
-    <!-- Le fav and touch icons -->
-    <link href="images/favicon.ico" rel="shortcut icon">
-    <link href="images/apple-touch-icon.png" rel="apple-touch-icon">
-    <link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
-    <link href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
   </head>
+
   <body>
 
+    <!--// Top Navbar -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
           <div class="container">
@@ -34,49 +32,55 @@
             <span class="i-bar"></span>
             <span class="i-bar"></span>
           </a>
-          <a class="brand" href="#">Saintstir</a>
-          <!--
-          <div class="container nav-collapse">
-            <ul class="nav">
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
+          <a class="brand" href="/">saintstir</a>
+          <div>
+            <ul class="nav pull-right">
+                <li><%= link_to "Sign In", "#" %></li>
+                <li><%= link_to "Sign Up", "#" %></li>
             </ul>
           </div>
-          -->
         </div>
       </div>
     </div>
 
+    <!--// Header, Logo -->
+    <div class="container">
+      <div class="content">
+        <div class="row">
+          <div class="span6">
+            <%= image_tag "saintstir_logo_large.jpg" %>
+          </div>
+      </div>
+      </div>
+   </div>
+
+    <!--// Main page content -->
     <div class="container">
         <div class="content">
           <div class="row">
-            <div class="span9">
-            <!--// Begin main content section -->
+            <div class="span12">
+            <!--// Yield to page content -->
             <%= yield %>
             </div>
-            <div class="span1">&nbsp;</div>
-            <!--
-            <div class="span3">
-              <div class="well sidebar-nav">
-                <h3>Sidebar</h3>
-                 <ul class="nav nav-list">
-                    <li class="nav-header">Sidebar</li>
-                    <li><%= link_to "Link1", "/path1"  %></li>
-                    <li><%= link_to "Link2", "/path2"  %></li>
-                    <li><%= link_to "Link3", "/path3"  %></li>
-                </ul>
-              </div>
-            </div>
-            -->
           </div>
         </div>
+    </div>
 
-      <footer>
-        <p>&copy; Saintstir 2012</p>
-      </footer>
-
-    </div> <!-- /container -->
+    <!--// Footer -->
+    <div class="container">
+      <div class="content">
+        <div class="row">
+          <div class="span10">
+            <a href="#">About</a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#">Contact</a> &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#">@Saintstir</a>
+          </div>
+          <div class="span2">
+            &copy; Saintstir 2012
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Le javascript
     ================================================== -->
