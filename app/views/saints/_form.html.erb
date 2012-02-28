@@ -39,7 +39,17 @@
 <%= label_tag :symbol %>
 <%= text_field_tag :symbol, @saint.symbol %>
 <br/><br/>
-
+<%= label_tag :edit_comment, "Edit Comment"%>
+<%= text_field_tag :edit_comment %>
+<br/><br/>
+<%#// Edit audit info %>
+<b>Audit Log</b><br/>
+<%
+  @saint.saint_edit_audits.each do |audit|
+  %><i><%=audit.created_at%> :: <%= audit.edited_by %> :: <%=audit.comment%></i><%
+  end
+%>
+<br/><br/>
 
 <p><h4>Metadata Values</h4></p>
 <%

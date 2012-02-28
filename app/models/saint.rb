@@ -19,6 +19,9 @@ class Saint < ActiveRecord::Base
   has_many :saint_attribs
   has_many :attribs, :through => :saint_attribs
 
+  #// Audit informaiton
+  has_many :saint_edit_audits
+
 
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
 

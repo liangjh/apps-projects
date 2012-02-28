@@ -74,6 +74,13 @@ class SaintsController < ApplicationController
       save_meta_values(k)
     end
 
+    #// Save audit information
+    audit = @saint.saint_edit_audits.create do |a|
+      a.saint_id = @saint.id
+      a.edited_by = current_user.email
+      a.comment = params[:edit_comment]
+    end
+
   end
 
 
