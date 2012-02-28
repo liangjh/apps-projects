@@ -59,6 +59,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.0.4)
     mysql2 (0.3.11)
+    newrelic_rpm (3.3.2)
     orm_adapter (0.0.5)
     pg (0.12.0)
       rake-compiler (~> 0.7)
@@ -123,6 +124,7 @@ DEPENDENCIES
   jquery-rails
   json
   mysql2
+  newrelic_rpm
   pg
   rails (= 3.1.3)
   sass-rails (~> 3.1.5)

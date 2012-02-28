@@ -20,7 +20,7 @@ heroku create --stack cedar --remote staging
 git push staging master
 git@heroku.com:saintstir-staging.git
 heroku run rake db:migrate --remote staging
-heroku ps --remote staging   
+heroku ps --remote staging
 
 QA:
 heroku create --stack cedar --remote qa
