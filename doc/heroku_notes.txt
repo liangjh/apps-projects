@@ -1,0 +1,47 @@
+
+
+////
+
+(--remote <env> : runs in the specified remote environment)
+
+//
+./.git/config
+(edit this to set config settings for a given environment)
+
+
+> create
+> code push
+> remote git repo
+> db migrations (rake commands)
+> heroku commands
+
+STAGING:
+heroku create --stack cedar --remote staging
+git push staging master
+git@heroku.com:saintstir-staging.git
+heroku run rake db:migrate --remote staging
+heroku ps --remote staging
+
+QA:
+heroku create --stack cedar --remote qa
+git push qa master
+git@heroku.com:saintstir-qa.git
+heroku run rake db:migrate --remote qa
+
+PRODUCTION:
+heroku create --stack cedar --remote production
+git push production master
+git@heroku.com:saintstir-production.git
+heroku run rake db:migrate --remote production
+
+////
+git push <env> <local-branch>:master
+eg git push staging staging:master
+(push local staging to master branch on staging env) 
+
+
+///////
+
+
+
+
