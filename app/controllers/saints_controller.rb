@@ -11,6 +11,7 @@ class SaintsController < ApplicationController
   around_filter :wrap_in_transaction, :only => [:create, :update, :destroy]
   before_filter :load_dimensional_data
   before_filter :authenticate_user!
+  before_filter :check_super_user
 
   # Display list of available saints
   # GET /saints
