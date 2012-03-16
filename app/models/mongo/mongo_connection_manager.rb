@@ -1,0 +1,3 @@
+class MongoConnectionManager
+
+end

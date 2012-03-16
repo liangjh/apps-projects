@@ -65,6 +65,26 @@
       </div>
    </div>
 
+
+  <%
+      #  has error message
+      if (flash[:error])
+  %>
+        <div class="alert alert-error"><%=flash[:error]%></div>
+  <%
+      end
+      # has notice (status) message
+      if (flash[:notice])
+  %>
+        <div class="alert alert-info"><%=flash[:notice]%></div>
+  <%
+      end
+  %>
+
+  <div class="container">
+  </div>
+
+
     <!--// Main page content -->
     <div class="container">
         <div class="content">

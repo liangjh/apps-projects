@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120221061522) do
+ActiveRecord::Schema.define(:version => 20120307070728) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -79,6 +79,14 @@ ActiveRecord::Schema.define(:version => 20120221061522) do
   add_index "saint_attribs", ["saint_id", "attrib_id"], :name => "index_saint_attribs_on_saint_id_and_attrib_id", :unique => true
   add_index "saint_attribs", ["saint_id"], :name => "index_saint_attribs_on_saint_id"
 
+  create_table "saint_edit_audits", :force => true do |t|
+    t.integer  "saint_id",   :null => false
+    t.string   "edited_by",  :null => false
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "saints", :force => true do |t|
     t.string   "symbol",     :null => false
     t.datetime "created_at"
@@ -100,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20120221061522) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "super_user"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -19,6 +19,9 @@ class Saint < ActiveRecord::Base
   has_many :saint_attribs
   has_many :attribs, :through => :saint_attribs
 
+  #// Audit informaiton
+  has_many :saint_edit_audits
+
 
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
 
@@ -34,7 +37,7 @@ class Saint < ActiveRecord::Base
     mod_times << self.updated_at
     mod_times << MetadataValue.where(:saint_id => self.id).maximum(:updated_at)
     mod_times << SaintAttrib.where(:saint_id => self.id).maximum(:updated_at)
-    mod_times.sort.last
+    mod_times.compact.sort.last
   end
 
 

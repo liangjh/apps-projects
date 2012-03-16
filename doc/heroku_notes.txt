@@ -1,6 +1,7 @@
 
 
 ////
+DEPLOYMENT COMMANDS 
 
 (--remote <env> : runs in the specified remote environment)
 
@@ -16,31 +17,67 @@
 > heroku commands
 
 STAGING:
-heroku create --stack cedar --remote staging
-git push staging master
-git@heroku.com:saintstir-staging.git
-heroku run rake db:migrate --remote staging
-heroku ps --remote staging
+  heroku create --stack cedar --remote staging
+  git push staging develop:master # pushes develop branch to staging env
+  git@heroku.com:saintstir-staging.git
+  heroku run rake db:migrate --remote staging
+  heroku ps --remote staging
 
 QA:
-heroku create --stack cedar --remote qa
-git push qa master
-git@heroku.com:saintstir-qa.git
-heroku run rake db:migrate --remote qa
+  heroku create --stack cedar --remote qa
+  git push qa master
+  git@heroku.com:saintstir-qa.git
+  heroku run rake db:migrate --remote qa
 
 PRODUCTION:
-heroku create --stack cedar --remote production
-git push production master
-git@heroku.com:saintstir-production.git
-heroku run rake db:migrate --remote production
+  heroku create --stack cedar --remote production
+  git push production master
+  git@heroku.com:saintstir-production.git
+  heroku run rake db:migrate --remote production
 
 ////
-git push <env> <local-branch>:master
-eg git push staging staging:master
-(push local staging to master branch on staging env) 
+  git push <env> <local-branch>:master
+  eg git push staging develop:master
+    (push local develop branch to master branch on staging env) 
+
+
+///// 
+
+heroku-sql-console
+(rails dbconsole won't work, expects psql installed - the heroku sql console emulates this')
+
+installation:
+  heroku plugins:install git://github.com/ddollar/heroku-sql-console.git
+command:
+  heroku sql --app <appname>
 
 
 ///////
+PGBACKUPS NOTES
+
+list backups (prod)
+  heroku pgbackups --app=<appname>
+
+create backups (prod)
+  heroku pgbackups:add --app=<appname>
+
+create url (for migrate/export)
+  heroku pgbackups:url <backup_id> --app=<appname>
+
+delete backup:
+  heroku pgbackups:destroy <backup_id> --app=<appname>
+
+restore from backup (db dump):
+  heroku pgbackups:restore DATABASE b251
+
+export via backup
+  curl -o latest.dump `heroku pgbackups:url`  # use heroku pgbackups:url to get url
+  pg_restore --verbose --clean --no-acl --no-owner -h myhost -U myuser -d mydb latest.dump
+    # pgrestore is a local command
+
+transfer db backup to another environment
+  heroku pgbackups:capture --app myapp
+  heroku pgbackups:restore DATABASE `heroku pgbackups:url --app <from-app>` --app <to-app>
 
 
 

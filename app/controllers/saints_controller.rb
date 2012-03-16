@@ -11,6 +11,7 @@ class SaintsController < ApplicationController
   around_filter :wrap_in_transaction, :only => [:create, :update, :destroy]
   before_filter :load_dimensional_data
   before_filter :authenticate_user!
+  before_filter :check_super_user
 
   # Display list of available saints
   # GET /saints
@@ -72,6 +73,13 @@ class SaintsController < ApplicationController
     #// Save Metadata
     @meta_keys.each do |k,v|
       save_meta_values(k)
+    end
+
+    #// Save audit information
+    audit = @saint.saint_edit_audits.create do |a|
+      a.saint_id = @saint.id
+      a.edited_by = current_user.email
+      a.comment = params[:edit_comment]
     end
 
   end

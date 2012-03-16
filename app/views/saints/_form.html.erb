@@ -13,9 +13,9 @@
       <%= label_tag code, meta_key.name %>
       <%
         if (!meta_key.multi)
-          %><%= text_field_tag code, @meta_values[code].nil? ? "" : @meta_values[code][0].value %><%
+          %><%= text_field_tag code, @meta_values[code].nil? ? "" : (meta_key.is_short? ? @meta_values[code][0].value : @meta_values[code][0].value_text) %><%
         else
-          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| x.value }.join("\r\n"), :size => (meta_key.meta_type == MetadataKey.META_TYPE_LONG ? "60x15" : "50x10") %><%
+          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| (meta_key.is_short? ? x.value : x.value_text) }.join("\r\n"), :size => (meta_key.is_long? ? "60x15" : "50x10") %><%
         end
         %>
         <span class="help-inline"><%= meta_key.description %></span>
@@ -39,7 +39,17 @@
 <%= label_tag :symbol %>
 <%= text_field_tag :symbol, @saint.symbol %>
 <br/><br/>
-
+<%= label_tag :edit_comment, "Edit Comment"%>
+<%= text_field_tag :edit_comment %>
+<br/><br/>
+<%#// Edit audit info %>
+<b>Audit Log</b><br/>
+<%
+  @saint.saint_edit_audits.each do |audit|
+  %><i><%=audit.created_at%> :: <%= audit.edited_by %> :: <%=audit.comment%></i><br/><%
+  end
+%>
+<br/><br/>
 
 <p><h4>Metadata Values</h4></p>
 <%

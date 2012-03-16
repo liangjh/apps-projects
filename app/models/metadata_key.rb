@@ -13,10 +13,13 @@ class MetadataKey < ActiveRecord::Base
   has_many :metadata_values
   has_many :saints, :through => :metadata_values
 
+  def is_short?
+    return "SHORT" == meta_type
+  end
 
-  #// meta_type can be "SHORT" or "LONG"
-  def self.META_TYPE_SHORT; "SHORT" end
-  def self.META_TYPE_LONG; "LONG" end
+  def is_long?
+    return "LONG" == meta_type
+  end
 
   scope :all_visible, lambda { {:conditions => {:visible => true}}}
   scope :by_metadata_key_code, lambda {|metadata_key_code| {:conditions => {:code => metadata_key_code}} }
