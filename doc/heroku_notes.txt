@@ -49,7 +49,7 @@ heroku-sql-console
 installation:
   heroku plugins:install git://github.com/ddollar/heroku-sql-console.git
 command:
-  heroku sql --app=<appname>
+  heroku sql --app <appname>
 
 
 ///////
