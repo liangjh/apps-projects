@@ -8,35 +8,33 @@ use 'mongo'
 #//
 class SaintMongoEtl
 
-  #//  static methods
-  class.self <<
 
     #//  ETLs all saints in database (essentially, a refresh)
-    def etl_all
+    def self.etl_all
       saints = Saint.all
       etl_saints(saints)
     end
 
-    def etl_saints(saints = [])
+    def self.etl_saints(saints = [])
       saints.each { |saint| etl_saint(saint) }
     end
 
-    def etl_saint(saint)
+    def self.etl_saint(saint)
       delete_saint_etl(saint)
       saint_hash = construct_attrib_hash(saint)
       save_saint_etl(saint, saint_hash)
     end
 
-    def delete_saint_etl(saint)
+    def self.delete_saint_etl(saint)
 
     end
 
-    def save_saint_etl(saint, saint_hash)
+    def self.save_saint_etl(saint, saint_hash)
       Rails.logger.debug("SaintMongoEtl :: saving ETL to mongo for: #{saint.symbol}")
 
     end
 
-    def construct_attrib_hash(saint)
+    def self.construct_attrib_hash(saint)
       # construct a hash of arrays
       # format: {attrib_category_code => [attrib_code(.)*]}
       attrib_map = Hash.new
@@ -53,10 +51,6 @@ class SaintMongoEtl
       end
       attrib_map
     end
-
-
-  end
-  #// end static methods
 
 
 end
