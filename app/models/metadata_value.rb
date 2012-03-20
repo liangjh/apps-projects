@@ -27,9 +27,9 @@ class MetadataValue < ActiveRecord::Base
     if (saint == nil || metadata_key == nil || value == nil)
       nil
     else
-      if (metadata_key.meta_type == MetadataKey.META_TYPE_SHORT)
+      if (metadata_key.is_short?)
         MetadataValue.new({:saint_id => saint.id, :metadata_key_id => metadata_key.id, :value => value, :ord => ord, :visible => true})
-      elsif (metadata_key.meta_type == MetadataKey.META_TYPE_LONG)
+      elsif (metadata_key.is_long?)
         MetadataValue.new({:saint_id => saint.id, :metadata_key_id => metadata_key.id, :value_text => value, :ord => ord, :visible => true})
       end
     end
