@@ -18,8 +18,9 @@ class MetadataValue < ActiveRecord::Base
   has_one :metadata_key
 
   #//  Scopes
+  default_scope :order => "ord ASC"
   scope :by_saint_and_metadata_key, lambda { |saint, metadata_key| {:conditions => {:saint_id => saint, :metadata_key_id => metadata_key}} }
-  scope :by_saint_symbol_and_metadata_key_code, lambda { |symbol, metadata_key_code| {:conditions => {:saint_id => Saint.by_symbol(symbol), :metadata_key_id => MetadataKey.by_metadata_key_code(metadata_key_code)}}}
+  scope :by_saint_symbol_and_metadata_key_code, lambda { |symbol, metadata_key_code| {:conditions => {:saint_id => Saint.by_symbol(symbol), :metadata_key_id => MetadataKey.by_metadata_key_code(metadata_key_code)}, :order => "ord ASC"}}
 
   #// Based on inputs, create a MetadataValue object
   def self.construct_metadata_value(saint, metadata_key, value, ord)

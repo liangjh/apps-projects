@@ -6,26 +6,32 @@
 #// (locally) into the mongodb representation - also saves the saint
 #// to mongodb.
 #//
-class SaintMongoEtl
+class SaintMongoAdapter
 
 
-  #//  ETLs all saints in database (essentially, a refresh)
+  cattr_accessor :connection_manager
+
+
+  # ETLs all saints in database (essentially, a refresh)
   def self.etl_all
     saints = Saint.all
     etl_saints(saints)
   end
 
+  # ETL a list of saints
   def self.etl_saints(saints = [])
     saints.each { |saint| etl_saint(saint) }
   end
 
+  # ETL a single saint
   def self.etl_saint(saint)
     delete_saint_etl(saint)
     saint_hash = construct_attrib_hash(saint)
     save_saint_etl(saint, saint_hash)
   end
 
-  def self.delete_saint_etl(saint)
+  # wipes a saint from the database
+  def self.delete_saint(saint)
 
   end
 
