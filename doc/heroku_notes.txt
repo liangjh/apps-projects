@@ -59,7 +59,7 @@ list backups (prod)
   heroku pgbackups --app=<appname>
 
 create backups (prod)
-  heroku pgbackups:add --app=<appname>
+  heroku pgbackups:capture --app=<appname>
 
 create url (for migrate/export)
   heroku pgbackups:url <backup_id> --app=<appname>
