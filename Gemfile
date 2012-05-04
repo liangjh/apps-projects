@@ -9,6 +9,8 @@ gem 'mysql2'
 gem 'pg'
 gem 'json'
 gem 'newrelic_rpm'
+gem 'quiet_assets'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
