@@ -20,6 +20,7 @@ class Attrib < ActiveRecord::Base
   has_many :saint_attribs
 
   #// All named scopes and custom queries
+  default_scope :order => "ord ASC"
   scope :by_category, lambda { |category| {:conditions => {:attrib_category_id => category} }}
   scope :by_code, lambda { |code| {:conditions => {:code => code}}}
 
@@ -28,9 +29,6 @@ class Attrib < ActiveRecord::Base
     all_attribs = self.by_category(category)
     saint.attribs.select { |attrib| all_attribs.include?(attrib) }
   end
-
-
-
 
 end
 

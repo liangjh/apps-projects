@@ -71,7 +71,7 @@ restore from backup (db dump):
   heroku pgbackups:restore DATABASE b251
 
 export via backup
-  curl -o latest.dump `heroku pgbackups:url`  # use heroku pgbackups:url to get url
+  curl -o latest.dump `heroku pgbackups:url --app=<appname>`  # use heroku pgbackups:url to get url
   pg_restore --verbose --clean --no-acl --no-owner -h myhost -U myuser -d mydb latest.dump
     # pgrestore is a local command
 

@@ -8,7 +8,6 @@
 #//   id, symbol
 #//
 
-
 class Saint < ActiveRecord::Base
 
   #// Associations for Metadata
@@ -25,10 +24,21 @@ class Saint < ActiveRecord::Base
 
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
 
+  #//  Map of all attribs associated w/ this saint {attrib_id => attrib}
+  def map_attribs
+    self.attribs.inject({}) { |h,e| h[e.id] = e; h }
+  end
 
-  #//  Retrieve all metadata values by a metadata key
-  def self.metadata_values_by_meta_key(meta_key)
-
+  #//  Map of all metadata associated w/ this saint {metadata_code => metadata}
+  def map_metadata_values
+    meta_key_map = MetadataKey.map_metadata_key_by_id
+    mv = {}
+    self.metadata_values.each do |val|
+      meta_key_code = meta_key_map[val.metadata_key_id].code
+      mv[meta_key_code] = [] if (mv[meta_key_code] == nil)
+      mv[meta_key_code] << val
+    end
+    mv
   end
 
   #//  Last modified is the max updated_at between saint, metadata_value, and saint_attrib
@@ -44,16 +54,18 @@ class Saint < ActiveRecord::Base
   #// Save submitted attributes - we need to resolve this with
   #// any existing attributes:  (1) create new, (2) delete not included, (3) ignore already included
   def save_attributes_for_saint(attrib_category, attribs_submitted = [])
-
+    #// Resolve submitted w/ existing values
     attribs_all_category = Attrib.by_category(attribute_category)
     attribs_saint = self.attributes.select { |attr| attribs_all_category.include?(attr)}
     attribs_to_create = attribs_submitted - attribs_saint
     attribs_to_delete = attribs_saint - attribs_submitted
-
+    #// Perform all creation / deletion actions
     attribs_to_create.each { |new_attrib| SaintAttrib.create(:saint_id => self.id, :attrib_id => new_attrib.id) }
     attribs_to_delete.each { |del_attrib| SaintAttrib.by_saint_and_attrib(self, del_attrib).first.destroy  }
-
   end
+
+
+
 
 
 

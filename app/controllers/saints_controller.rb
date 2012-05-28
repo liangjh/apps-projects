@@ -11,7 +11,7 @@ class SaintsController < ApplicationController
   around_filter :wrap_in_transaction, :only => [:create, :update, :destroy]
   before_filter :load_dimensional_data
   before_filter :authenticate_user!
-  before_filter :check_super_user
+  before_filter :check_super_user  #//  administrative pages only for super users
 
   # Display list of available saints
   # GET /saints
@@ -118,12 +118,12 @@ class SaintsController < ApplicationController
   #// Load attributes / categories to build saint edit form
   def load_dimensional_data
     #//  All attribute categories, keyed by: code
-    @attrib_categories = AttribCategory.all.inject({}) { |h,e| h[e.code] = e; h}
+    @attrib_categories = AttribCategory.map_attrib_cat
     #// Hash of Array of attributes, for each category, keyed by: category code
-    @attrib_by_category = AttribCategory.all.inject({}) { |h,e| h[e.code] = Attrib.by_category(e); h }
+    @attrib_by_category = AttribCategory.map_attrib_cat_content
     #// Get meta keys, but convert to hash for fast lookup in view generation
-    @meta_keys = MetadataKey.all.inject({}) { |h,e| h[e.code] = e; h }
-    @meta_keys_id = MetadataKey.all.inject({}) { |h,e| h[e.id] = e; h }
+    @meta_keys = MetadataKey.map_metadata_key_by_code
+    @meta_keys_id = MetadataKey.map_metadata_key_by_id
   end
 
 
@@ -133,14 +133,9 @@ class SaintsController < ApplicationController
       @saint = (params[:id].nil? ? Saint.new : Saint.find(params[:id]))
     end
     #// Current saint's attributes (turn into hash)
-    @attrib_saint = @saint.attribs.inject({}) { |h,e| h[e.id] = e; h }
+    @attrib_saint = @saint.map_attribs
     #// Load meta values into hash
-    @meta_values = {}
-    @saint.metadata_values.each do |val|
-      meta_code = @meta_keys_id[val.metadata_key_id].code
-      @meta_values[meta_code] = [] if (@meta_values[meta_code] == nil)
-      @meta_values[meta_code] << val
-    end
+    @meta_values = @saint.map_metadata_values
   end
 
   #//  wraps actions into a single transaction

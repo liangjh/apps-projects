@@ -1,3 +1,4 @@
+require 'm_diffable'
 
 #//
 #// Join table between saints and attributes
@@ -12,10 +13,12 @@
 
 class SaintAttrib < ActiveRecord::Base
 
+  #// Mixins
+  include MDiffable
+
+  #// Associations
   belongs_to :saint
   belongs_to :attrib
-#  has_one :saint
-#  has_one :attrib
 
   #// Retrieve associated saint and attrib
   scope :by_saint_and_attrib, lambda {|saint, attrib| {:conditions => {:saint_id => saint, :attrib_id => attrib }}}
@@ -42,8 +45,8 @@ class SaintAttrib < ActiveRecord::Base
     end
 
     all_current = SaintAttrib.by_saint_and_attrib_category(saint, attrib_category)
-    sattribs_to_add = MDiffable.diff_op(saint_attribs, all_current, false)
-    sattribs_to_remove = MDiffable.diff_op(all_current, saint_attribs, false)
+    sattribs_to_add = diff_op(saint_attribs, all_current, false)
+    sattribs_to_remove = diff_op(all_current, saint_attribs, false)
 
     sattribs_to_add.each { |add| add.save! }
     sattribs_to_remove.each { |remove| remove.destroy }

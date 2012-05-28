@@ -14,15 +14,26 @@ class MetadataKey < ActiveRecord::Base
   has_many :saints, :through => :metadata_values
 
   def is_short?
-    return "SHORT" == meta_type
+    ("SHORT" == meta_type)
   end
 
   def is_long?
-    return "LONG" == meta_type
+    ("LONG" == meta_type)
   end
 
   scope :all_visible, lambda { {:conditions => {:visible => true}}}
   scope :by_metadata_key_code, lambda {|metadata_key_code| {:conditions => {:code => metadata_key_code}} }
   scope :for_metadata_value, lambda {|metadata_value| {:conditions => {:id => metadata_value.metadata_key_id, :visible => true}}}
+
+  #//  map of metadata keys, by code {metadata_key_code => metadata_key}
+  def self.map_metadata_key_by_code
+    self.all.inject({}) { |h,e| h[e.code] = e; h }
+  end
+
+  #//  map of metadata keys, by id {metadata_key_id => metadata_key}
+  def self.map_metadata_key_by_id
+    self.all.inject({}) { |h,e| h[e.id] = e; h }
+  end
+
 
 end
