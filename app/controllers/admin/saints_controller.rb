@@ -7,7 +7,7 @@
 #//
 #//
 
-class SaintsController < ApplicationController
+class Admin::SaintsController < ApplicationController
   around_filter :wrap_in_transaction, :only => [:create, :update, :destroy]
   before_filter :load_dimensional_data
   before_filter :authenticate_user!
@@ -37,7 +37,7 @@ class SaintsController < ApplicationController
     @saint = Saint.create(:symbol => params[:symbol])
     load_saint_data
     save_saint(true)
-    redirect_to saints_path, :notice => "Successfully created new saint: #{@saint.symbol}"
+    redirect_to admin_saints_path, :notice => "Successfully created new saint: #{@saint.symbol}"
   end
 
   # Updates an existing saint (form submit)
@@ -45,7 +45,7 @@ class SaintsController < ApplicationController
   def update
     load_saint_data
     save_saint(false)
-    redirect_to saints_path, :notice => "Successfully updated saint: #{@saint.symbol}"
+    redirect_to admin_saints_path, :notice => "Successfully updated saint: #{@saint.symbol}"
   end
 
   # Disable deletions for now
@@ -55,7 +55,7 @@ class SaintsController < ApplicationController
     MetadataValue.delete_for_saint(@saint)
     SaintAttrib.delete_for_saint(@saint)
     @saint.destroy
-    redirect_to saints_url, :notice => "Successfully deleted saint: #{@saint.symbol}"
+    redirect_to admin_saints_path, :notice => "Successfully deleted saint: #{@saint.symbol}"
   end
 
 

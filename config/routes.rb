@@ -15,6 +15,8 @@ Saintstir::Application.routes.draw do
 
   #//  Administrative / Editor Modules
   #//  Saints Editor Module
-  resources :saints
+  namespace :admin do
+    resources :saints
+  end
 
 end
