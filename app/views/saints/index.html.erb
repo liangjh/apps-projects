@@ -1,0 +1,72 @@
+
+
+<%# SAINTSTIR INTEGRATION W/ ISOTOPE  %>
+
+<%
+# Since we are returning the entire set for now, we can cache all generated content
+cache ["saints_isotope"] do
+
+  #// all saints
+  @saints = Saint.all
+  #// all metadata keys
+  @meta_key_map = MetadataKey.map_metadata_key_by_code
+  #// all attribute categories
+  @attrib_categories = AttribCategory.all_visible
+  #// all attributes, keyed by category code
+  @attribs_all = AttribCategory.map_attrib_cat_content
+  %>
+
+
+  <!--// All available saints -->
+  <div class="row">
+    <!--// List of all available discrete filters -->
+    <div id="discrete_filters" class="span2">
+      <% @attrib_categories.each do |category| %>
+        <p>
+        <h4><%=category.name%></h4>
+          <% @attribs_all[category.code].each do |attrib| %>
+            <a href="#" data-filter="<%=attrib.code%>"><%=attrib.name%></a><br/>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+
+    <!--// All available saints -->
+    <div id="isotope_content" class="span8 offset2">
+    <% @saints.each do |saint|
+         disc_filters = saint.attribs.map(&:code).join(" ")
+    %>
+      <div class="element basic <%=disc_filters%>" data-symbol="<%=saint.symbol%>">
+        <p class="number">DCTR</p>
+        <h3 class="symbol"><%=saint.symbol%></h3>
+        <br/>
+        <p class="name"><%=saint.map_metadata_values[MetadataKey::NAME][0].value%></p>
+      </div>
+    <% end %>
+    </div>
+
+  </div>
+
+  <!--// Isotope script -->
+  <script>
+    // cache container
+    var container = $('#isotope_content');
+    // initialize isotope
+    container.isotope({
+      // options...
+    });
+
+    // filter items when filter link is clicked
+    $('discrete_filters a').click(function(){
+      var selector = $(this).attr('data-filter');
+      container.isotope({ filter: selector });
+      return false;
+    });
+  </script>
+
+
+<%
+end
+%>
+
+

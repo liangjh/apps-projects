@@ -13,8 +13,11 @@ Saintstir::Application.routes.draw do
   #//  Generate devise-related routes (auth/login)
   devise_for :users
 
+  #//  Core saintstir controller
+  resources :saints, :only => [:index, :show]
+
+
   #//  Administrative / Editor Modules
-  #//  Saints Editor Module
   namespace :admin do
     resources :saints
   end
