@@ -7,4 +7,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require isotope/jquery.isotope.min
 //= require_tree .

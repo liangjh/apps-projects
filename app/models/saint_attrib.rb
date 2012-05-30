@@ -7,7 +7,7 @@ require 'm_diffable'
 #// complex to resolve simply via equals
 #//
 #//  -- COLUMNS --
-#//   id, saint_id (fk: saints.di), attribute_id (fk: attributes.id)
+#//   id, saint_id (fk: saints.di), attrib_id (fk: attribs.id)
 #//
 
 
@@ -53,6 +53,10 @@ class SaintAttrib < ActiveRecord::Base
 
   end
 
+  #//  Returns a list of unique attribute ids that are actually used
+  def self.attrib_ids_in_use
+    self.all.map(&:attrib_id).uniq.sort
+  end
 
   #//  Saint attribute
   def equivalent?(saint_attrib)

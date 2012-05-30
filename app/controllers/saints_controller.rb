@@ -7,10 +7,17 @@
 
 class SaintsController < ApplicationController
 
-  #// Return all saints
+  #// Return all saints, all metadata, all attributes
+  #// Dump all data and render
   def index
-    # load in view, since we're going to frag-cache it all
-    # @saints = Saint.all
+    #// all saints
+    @saints = Saint.all
+    #// all metadata keys
+    @meta_key_map = MetadataKey.map_metadata_key_by_code
+    #// all attribute categories
+    @attrib_categories = AttribCategory.all_visible
+    #// all attributes, keyed by category code
+    @attribs_all = AttribCategory.map_attrib_cat_content(true)
   end
 
   #// Return the saint passed in the ID parameter

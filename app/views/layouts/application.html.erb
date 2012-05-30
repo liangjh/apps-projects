@@ -12,6 +12,8 @@
 
     <!-- Le styles -->
     <%= stylesheet_link_tag    "application", :media => "all" %>
+    <!-- Javascripts -->
+    <%= javascript_include_tag "application" %>
     <style>
       body {
         background-color: #f5f7db;
@@ -35,6 +37,7 @@
           <a class="brand" href="/">saintstir</a>
           <div>
             <ul class="nav pull-right">
+              <li><%= link_to "Explore", saints_path %></li>
               <li><%= link_to "Administration", admin_saints_path %></li>
               <%
                 if (current_user)
