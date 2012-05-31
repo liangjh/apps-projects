@@ -1,19 +1,27 @@
 
 
-<%# SAINTSTIR INTEGRATION W/ ISOTOPE  %>
+<%# --- SAINTSTIR INTEGRATION W/ ISOTOPE ---  %>
 
 <%
 # Since we are returning the entire set for now, we can cache all generated content
 cache ["saints_isotope"] do %>
 
-
-  <!--// All available saints -->
+  <!--// Bread crumbs section :: list of searched items -->
   <div class="row">
+    <div class="span2">&nbsp;&nbsp;</div>
+    <div id="bread_crumbs" class="span8">
+   </div>
+  </div>
+
+  <div class="row">
+
     <!--// List of all available discrete filters -->
-    <div id="discrete_filters" class="span4">
-      <p>
-        <a href="#" data-filter="*">Show All</a>
-      </p>
+    <div id="discrete_filters" class="span2">
+
+      <!--// "Show all" link -->
+      <p><a href="#" class="btn" data-filter="*">Show All</a></p>
+
+      <!--// Render all available filters, by category -->
       <% @attrib_categories.each do |category|
           #// if category code DNE in list of existing filters, the skip
           next if (!@attribs_all.has_key?(category.code))
@@ -50,23 +58,75 @@ cache ["saints_isotope"] do %>
 
   <script>
 
+    //
+    //  --- PAGE SCRIPTS / EVENT BINDINGS ---
+    //
+
+
     // -- Twitter Bootstrap --
     // Dropdown Lists Initialization
     $('.dropdown-toggle').dropdown()
 
-
+    //
     // -- Isotope Plugin Initialization --
+    //
+
     // cache container & initialize isotope
     var $container = $('#isotope_content');
     $container.isotope({
       itemSelector: '.element'
     });
 
-    // filter items when filter link is clicked
+    // list of elements to perform queries for
+    var $filterList = new Array();
+
+    function appendFilter(selector, name) {
+      //  check if exists in array - if not, add
+      if ($.inArray([selector, name], $filterList) < 0) { $filterList.push([selector, name]); }
+      runFilters();
+    }
+
+    function removeFilter(selector) {
+      $filterList = $.grep($filterList, function(n) { return (n[0] != selector); });
+      runFilters();
+    }
+
+    function runFilters() {
+      $container.isotope({ filter: $.map($filterList, function(e,i) {return e[0]; }).join('')});
+      renderBreadCrumbs();
+    }
+
+    function renderBreadCrumbs() {
+      crumblist = new Array();
+      $.each($filterList, function(i,v) {
+        if (v[0] != '*') {
+          crumblist.push("<a class='btn' href='#'  data-filter='" + v[0] + "'><i class='icon-remove'/> " + v[1] + "</a>")
+        }
+      });
+      $('#bread_crumbs').html(crumblist.join(" "));
+
+      //  Event Binding for REMOVING FILTERS
+      $('#bread_crumbs a').click(function() {
+        var selector = $(this).attr('data-filter');
+        removeFilter(selector);
+      });
+   }
+
+    function showAll() {
+      $filterList = new Array();
+      $filterList.push(["*", ""]);
+      runFilters();
+    }
+
+    //  Event Binding for ADDING FILTERS
     $('#discrete_filters a').click(function(){
       var selector = $(this).attr('data-filter');
-      $container.isotope({ filter: selector });
-      return false;
+      if (selector == undefined) { return; } // exit out, if DNE
+      else if (selector == '*') { showAll(); }
+      else {
+        var sname = $(this).text();
+        appendFilter(selector, sname);
+      }
     });
 
   </script>
