@@ -6,7 +6,7 @@
 # Since we are returning the entire set for now, we can cache all generated content
 cache ["saints_isotope"] do %>
 
-  <!--// Bread crumbs section :: list of searched items -->
+  <!--// Bread crumbs section :: list of searched filters -->
   <div class="row">
     <div class="span2">&nbsp;&nbsp;</div>
     <div id="bread_crumbs" class="span8">
@@ -44,7 +44,7 @@ cache ["saints_isotope"] do %>
     <% @saints.each do |saint|
          disc_filters = saint.attribs.map(&:code).join(" ")
     %>
-      <div class="element basic <%=disc_filters%>" data-symbol="<%=saint.symbol%>">
+    <div class="element basic <%=disc_filters%>" data-symbol="<%=saint.id%>">
         <p class="number">DCTR</p>
         <h3 class="symbol"><%=saint.symbol%></h3>
         <br/>
@@ -54,7 +54,6 @@ cache ["saints_isotope"] do %>
     </div>
 
   </div>
-
 
   <script>
 
@@ -71,17 +70,16 @@ cache ["saints_isotope"] do %>
     // -- Isotope Plugin Initialization --
     //
 
-    // cache container & initialize isotope
+    // initialize isotope plugin
     var $container = $('#isotope_content');
     $container.isotope({
       itemSelector: '.element'
     });
 
-    // list of elements to perform queries for
+    // Filter List -- elements to perform queries for
     var $filterList = new Array();
 
     function appendFilter(selector, name) {
-      //  check if exists in array - if not, add
       if ($.inArray([selector, name], $filterList) < 0) { $filterList.push([selector, name]); }
       runFilters();
     }
@@ -105,7 +103,7 @@ cache ["saints_isotope"] do %>
       });
       $('#bread_crumbs').html(crumblist.join(" "));
 
-      //  Event Binding for REMOVING FILTERS
+      //  Event Binding for REMOVING FILTERS from breadcrumbs section
       $('#bread_crumbs a').click(function() {
         var selector = $(this).attr('data-filter');
         removeFilter(selector);
@@ -128,6 +126,24 @@ cache ["saints_isotope"] do %>
         appendFilter(selector, sname);
       }
     });
+
+
+    //
+    //  --- HOVER / POPOVER BEHAVIORS ---
+    //      (ajax integration)
+
+    $('#isotope_content div').mouseenter(function() {
+        curr_elem = $(this);
+        $.get('/saints/'+ curr_elem.attr('data-symbol') + '/blurb',  function(data){
+          curr_elem.popover({content: data});
+          curr_elem.popover('show');
+        });
+    });
+
+    $('#isotope_content div').mouseleave(function() {
+      $(this).popover('hide');
+    });
+
 
   </script>
 

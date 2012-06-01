@@ -22,7 +22,14 @@ class SaintsController < ApplicationController
 
   #// Return the saint passed in the ID parameter
   def show
-    @saint = Saint.find(param[:id])
+    @saint = Saint.find(params[:id])
   end
+
+  #// Return a blurb, which is currently rendered within a modal
+  def blurb
+    @saint = Saint.find(params[:id])
+    render :layout => 'clean'
+  end
+
 
 end

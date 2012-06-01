@@ -8,5 +8,18 @@ SECRET:
 2798aab1d4a3141d
 
 
+///
+api notes
+
+flickr.photos.getSizes
+  (returns list of sizes w/ urls)
+
+/*
+  require 'flickraw'
+  FlickRaw.api_key = "c55154d0d97a1b628366dc371b1ff1f8"
+  FlickRaw.shared_secret = "2798aab1d4a3141d"
+  flickr.photos.getSizes(:photo_id => "6962334442")
+*/
+
 
 

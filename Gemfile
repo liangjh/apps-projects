@@ -10,6 +10,7 @@ gem 'pg'
 gem 'json'
 gem 'newrelic_rpm'
 gem 'quiet_assets'
+gem 'flickraw'
 
 # Gems used only for assets and not required
 # in production environments by default.

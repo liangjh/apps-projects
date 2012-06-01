@@ -10,12 +10,16 @@ Saintstir::Application.routes.draw do
   match "/statics/volunteer" => "statics#volunteer", :via => :get
   match "/statics/about" => "statics#about", :via => :get
 
+  #//  User login / auth routes
   #//  Generate devise-related routes (auth/login)
   devise_for :users
 
-  #//  Core saintstir controller
-  resources :saints, :only => [:index, :show]
-
+  #//  Core saints controller, with ajax events
+  resources :saints, :only => [:index, :show] do
+    member do
+      get :blurb #// displays small blurb of saint profile info (render in modal)
+    end
+  end
 
   #//  Administrative / Editor Modules
   namespace :admin do
