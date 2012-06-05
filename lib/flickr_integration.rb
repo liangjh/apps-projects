@@ -51,6 +51,7 @@ class FlickrIntegration
     end
 
     def get_flickr_photos(photo_id)
+      Rails.logger.info("Retrieving photo data from flickr (photo_id: #{photo_id})")
       begin
         FlickRaw.api_key = api_key
         FlickRaw.shared_secret = api_secret
