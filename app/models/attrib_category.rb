@@ -33,7 +33,7 @@ class AttribCategory < ActiveRecord::Base
     if (in_use)
       attrib_list = Attrib.find_all_by_id(SaintAttrib.attrib_ids_in_use)
     else
-      attrib_list = SaintAttrib.all
+      attrib_list = Attrib.all
     end
     attrib_map = {}
     attrib_list.each do |e|
