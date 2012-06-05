@@ -1,3 +1,4 @@
+require 'flickr_integration'
 
 #//
 #//  This is the core of saintstir.  The index action takes in search parameters

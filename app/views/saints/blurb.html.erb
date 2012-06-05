@@ -1,3 +1,6 @@
 hi, this is a test
 <br/><br/>
 saint is: <%=@saint.symbol%>
+
+<%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_PROFILE), FlickrIntegration::SIZE_MEDIUM)  %>
+

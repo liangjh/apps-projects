@@ -134,13 +134,14 @@ cache ["saints_isotope"] do %>
 
     $('#isotope_content div').mouseenter(function() {
         curr_elem = $(this);
-        $.get('/saints/'+ curr_elem.attr('data-symbol') + '/blurb',  function(data){
+        $.get('/saints/' + curr_elem.attr('data-symbol') + '/blurb',  function(data){
           curr_elem.popover({content: data});
           curr_elem.popover('show');
         });
     });
 
     $('#isotope_content div').mouseleave(function() {
+      $(this).popover({content: ''});
       $(this).popover('hide');
     });
 
