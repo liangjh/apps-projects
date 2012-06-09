@@ -39,14 +39,15 @@
     </div>
 
     <!--// All available saints -->
-    <div id="isotope_content" class="span8">
+    <div id="isotope_content" class="span10 clickable clearfix">
     <%
       @saints.each do |saint|
          disc_filters = saint.attribs.map(&:code).join(" ")
     %>
-        <div class="element basic <%=disc_filters%>" data-symbol="<%=saint.id%>">
-          <p class="number">DCTR</p>
-          <h3 class="symbol"><%=saint.symbol%></h3>
+        <div class="element <%=SaintInsigniaFilter.get_color(saint)%> <%=disc_filters%>"
+            data-symbol="<%=saint.id%>">
+            <%=SaintInsigniaFilter.get_insignia(saint)[0]%><br/>
+            <h3 class="symbol"><%=saint.symbol%></h3>
           <br/>
           <p class="name"><%=saint.get_metadata_value(MetadataKey::NAME)%></p>
         </div>
@@ -131,30 +132,34 @@
     //  The current saint that the mouseover is hovering over
     //  Since ajax requests are coming in asynchronously at unpredictable times,
     //  we need to check that our current data is not
-    var curr_saint_id = null;
+    var $currSaintId = null;
 
-    $('#isotope_content div').mouseenter(function() {
-      var curr_elem = $(this);
-      var saint_id = curr_elem.attr('data-symbol');
-      curr_saint_id = saint_id;
-      $.get(getBlurbUri(saint_id),
+    $('#isotope_content .element').mouseenter(function() {
+      var currElem = $(this);
+      var saintId = currElem.attr('data-symbol');
+      $currSaintId = saintId;
+      $.get(('/saints/' + saintId + '/blurb'),
         function(data){
           $('.popover').each(function(i,e) { $(e).popover('hide'); });
-          if (saint_id == curr_saint_id) {
-            curr_elem.popover({content: data});
-            curr_elem.popover('show');
+          if (saintId == $currSaintId) {
+            currElem.popover({content: data});
+            currElem.popover('show');
           }
         });
     });
 
-    function getBlurbUri(saintId) {
-      return '/saints/' + saintId + '/blurb';
-    }
-
-    $('#isotope_content div').mouseleave(function() {
-      curr_saint_id = null;
+    $('#isotope_content .element').mouseleave(function() {
+      $currSaintId = null;
       $('.popover').each(function(i,e) { $(e).popover('hide'); });
     });
+
+    //  --- CLICK BEHAVIORS ---
+
+    //  Direct user to saint page upon click
+    $('#isotope_content .element').click(function() {
+        window.location = '/saints/' + $(this).attr('data-symbol');
+    });
+
   </script>
 
 

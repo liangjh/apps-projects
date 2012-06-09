@@ -15,9 +15,6 @@ INSIGNIA & COLORS - first pass
 [
  Vocation          | Bishop
  Vocation          | Cardinal
-]
-
-[
  Vocation          | Pope
 ]
 

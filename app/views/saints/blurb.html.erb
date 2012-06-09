@@ -1,6 +1,5 @@
 
-<h3><%=@saint.get_metadata_value(MetadataKey::NAME)%></h3><br/>
-
+<h3><%=@saint.get_metadata_value(MetadataKey::NAME)%></h3>
 <table>
   <tr>
     <td>
@@ -16,6 +15,16 @@
       Canonized: <%= @saint.get_metadata_value(MetadataKey::CANON_YEAR) || "Unknown" %><br/>
     </td>
   </tr>
+  <tr>
+    <td colspan="3">
+    <%# Display insignia badge details %>
+    <%
+      insig = SaintInsigniaFilter.get_insignia(@saint)
+      if (!insig[0].blank?)
+    %>
+        <span class="badge badge-success"><%=insig[0]%>: <%=insig[1]%></span>
+    <% end %>
+  </td>
+  </tr>
 </table>
-
 

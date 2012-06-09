@@ -29,7 +29,12 @@ class Saint < ActiveRecord::Base
 
   #//  Map of all attribs associated w/ this saint {attrib_id => attrib}
   def map_attribs_by_id
-    @attribs_map ||= self.attribs.inject({}) { |h,e| h[e.id] = e; h }
+    @attribs_id_map ||= self.attribs.inject({}) { |h,e| h[e.id] = e; h }
+  end
+
+  #// Map of all attributes by code {attrib_code => attrib}
+  def map_attribs_by_code
+    @attribs_code_map ||= self.attribs.inject({}) { |h,e| h[e.code] = e; h }
   end
 
   #//  Map of all metadata associated w/ this saint {metadata_key_code => metadata}

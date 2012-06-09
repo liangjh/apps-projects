@@ -59,13 +59,14 @@
 
 
 /*
- *  SAINTSTIR CUSTOM STYLES
+ *  ---- SAINTSTIR CUSTOM STYLES ----
  */
 
 .element {
-  width: 110px;
+  width: 100px;
   height: 110px;
   margin: 5px;
+  padding: 5px 5px 0px 5px;
   float: left;
   overflow: hidden;
   position: relative;
@@ -88,18 +89,21 @@ h2 {
   line-height: 1.1em;
 }
 
+/* light blue (default) */
+.basic-elem { background-color: #0FF; background: hsl(180,100%,50%); }
+/* light green */
+.cstm1-elem { background-color: #B8FFE6; background: hsl(159,100%,86%); }
+/* light purple */
+.cstm2-elem { background-color: #b8ccff; }
+/* yellow */
+.cstm3-elem { background-color: #dba96c; }
+/* rose */
+.cstm4-elem { background-color: #bfb299; }
+/* light gray */
+.cstm5-elem { background-color: #c2c7c6; }
 
-.element.basic { background: #0FF; background: hsl( 180, 100%, 50%); }
-/*
-.element.lbltype_1
-.element.lbltype_2
-.element.lbltype_3
-.element.lbltype_4
-.element.lbltype_5
-*/
-
-
-
+.clickable .element:hover { cursor: pointer; }
+.clickable .element:hover h3 { text-shadow: 0 0 10px white, 0 0 10px white; }
 
 
 
