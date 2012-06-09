@@ -26,6 +26,11 @@ INSIGNIA & COLORS - first pass
 ]
 
 
+////////////
+
+TIMELINE PLUGINS
+
+http://timeline.verite.co/
 
 
 

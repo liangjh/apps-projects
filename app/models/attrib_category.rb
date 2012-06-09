@@ -21,7 +21,7 @@ class AttribCategory < ActiveRecord::Base
   scope :by_code, lambda {|category_code| {:conditions => {:code => category_code}}}
 
   #//  All categories, keyed by code  {attrib_cat_code => attrib_cat}
-  def self.map_attrib_cat
+  def self.map_attrib_cat_by_code
     self.all.inject({}) { |h,e| h[e.code] = e; h}
   end
 

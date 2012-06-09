@@ -10,49 +10,42 @@
 
 class Saint < ActiveRecord::Base
 
-  #// Associations for Metadata
+  #// Associations
   has_many :metadata_values
   has_many :metadata_keys, :through => :metadata_values
-
-  #// Associations for Attributes
   has_many :saint_attribs
   has_many :attribs, :through => :saint_attribs
-
-  #// Audit informaiton
   has_many :saint_edit_audits
 
-
+  #//  Scopes
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
 
   #//  Given a meta key code, return the associated metadata_value for this saint
+  #//  Retrieve map of all values first, then retrieve by key
   def get_metadata_value(meta_key_code)
-    mkey = MetadataKey.by_metadata_key_code(meta_key_code)[0]
-    mvalue = nil
-    metadata_values.each do |mv|
-      if (mv.metadata_key_id == mkey.id)
-        mvalue = mv.value if (mkey.is_short?)
-        mvalue = mv.value_text if (mkey.is_long?)
-        break
-      end
-    end
-    mvalue
+    mv = map_metadata_values_by_code
+    mv[meta_key_code][0].value if (!mv[meta_key_code].nil?)
   end
 
   #//  Map of all attribs associated w/ this saint {attrib_id => attrib}
-  def map_attribs
-    self.attribs.inject({}) { |h,e| h[e.id] = e; h }
+  def map_attribs_by_id
+    @attribs_map ||= self.attribs.inject({}) { |h,e| h[e.id] = e; h }
   end
 
-  #//  Map of all metadata associated w/ this saint {metadata_code => metadata}
-  def map_metadata_values
-    meta_key_map = MetadataKey.map_metadata_key_by_id
-    mv = {}
-    self.metadata_values.each do |val|
-      meta_key_code = meta_key_map[val.metadata_key_id].code
-      mv[meta_key_code] = [] if (mv[meta_key_code] == nil)
-      mv[meta_key_code] << val
+  #//  Map of all metadata associated w/ this saint {metadata_key_code => metadata}
+  #//  Memoize all of this for efficiency
+  def map_metadata_values_by_code
+    if (@metadata_values_map.nil?)
+      meta_key_map = MetadataKey.map_metadata_key_by_id
+      mv = {}
+      self.metadata_values.each do |val|
+        meta_key_code = meta_key_map[val.metadata_key_id].code
+        mv[meta_key_code] = [] if (mv[meta_key_code] == nil)
+        mv[meta_key_code] << val
+      end
+      @metadata_values_map = mv
     end
-    mv
+    @metadata_values_map
   end
 
   #//  Last modified is the max updated_at between saint, metadata_value, and saint_attrib
@@ -77,10 +70,5 @@ class Saint < ActiveRecord::Base
     attribs_to_create.each { |new_attrib| SaintAttrib.create(:saint_id => self.id, :attrib_id => new_attrib.id) }
     attribs_to_delete.each { |del_attrib| SaintAttrib.by_saint_and_attrib(self, del_attrib).first.destroy  }
   end
-
-
-
-
-
 
 end

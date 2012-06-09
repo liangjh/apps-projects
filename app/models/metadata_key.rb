@@ -37,14 +37,16 @@ class MetadataKey < ActiveRecord::Base
   FLICKR_SET = "flickr_set"
 
 
-  #//  map of metadata keys, by code {metadata_key_code => metadata_key}
+  #//  Map of metadata keys, by code {metadata_key_code => metadata_key}
+  #//  Memoize for efficiency
   def self.map_metadata_key_by_code
-    self.all.inject({}) { |h,e| h[e.code] = e; h }
+    @metadata_key_by_code_map ||= self.all.inject({}) { |h,e| h[e.code] = e; h }
   end
 
-  #//  map of metadata keys, by id {metadata_key_id => metadata_key}
+  #//  Map of metadata keys, by id {metadata_key_id => metadata_key}
+  #//  Memoize for efficiency
   def self.map_metadata_key_by_id
-    self.all.inject({}) { |h,e| h[e.id] = e; h }
+    @metadata_key_by_id_map ||= self.all.inject({}) { |h,e| h[e.id] = e; h }
   end
 
   def is_short?

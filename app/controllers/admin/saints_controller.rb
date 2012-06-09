@@ -118,7 +118,7 @@ class Admin::SaintsController < ApplicationController
   #// Load attributes / categories to build saint edit form
   def load_dimensional_data
     #//  All attribute categories, keyed by: code
-    @attrib_categories = AttribCategory.map_attrib_cat
+    @attrib_categories = AttribCategory.map_attrib_cat_by_code
     #// Hash of Array of attributes, for each category, keyed by: category code
     @attrib_by_category = AttribCategory.map_attrib_cat_content
     #// Get meta keys, but convert to hash for fast lookup in view generation
@@ -133,9 +133,9 @@ class Admin::SaintsController < ApplicationController
       @saint = (params[:id].nil? ? Saint.new : Saint.find(params[:id]))
     end
     #// Current saint's attributes (turn into hash)
-    @attrib_saint = @saint.map_attribs
+    @attrib_saint = @saint.map_attribs_by_id
     #// Load meta values into hash
-    @meta_values = @saint.map_metadata_values
+    @meta_values = @saint.map_metadata_values_by_code
   end
 
   #//  wraps actions into a single transaction
