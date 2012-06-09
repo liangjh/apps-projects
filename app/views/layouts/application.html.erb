@@ -72,15 +72,11 @@
   <%
       #  has error message
       if (flash[:error])
-  %>
-        <div class="alert alert-error"><%=flash[:error]%></div>
-  <%
+        %><div class="alert alert-error"><%=flash[:error]%></div><%
       end
       # has notice (status) message
       if (flash[:notice])
-  %>
-        <div class="alert alert-info"><%=flash[:notice]%></div>
-  <%
+        %><div class="alert alert-info"><%=flash[:notice]%></div><%
       end
   %>
 

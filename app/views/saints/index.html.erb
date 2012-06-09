@@ -1,6 +1,5 @@
 
-
-<%# --- SAINTSTIR INTEGRATION W/ ISOTOPE ---  %>
+<%# //////------ SAINTSTIR INTEGRATION W/ ISOTOPE ------//////  %>
 
 <%
 # Since we are returning the entire set for now, we can cache all generated content
@@ -41,15 +40,16 @@
 
     <!--// All available saints -->
     <div id="isotope_content" class="span8">
-    <% @saints.each do |saint|
+    <%
+      @saints.each do |saint|
          disc_filters = saint.attribs.map(&:code).join(" ")
     %>
-    <div class="element basic <%=disc_filters%>" data-symbol="<%=saint.id%>">
-        <p class="number">DCTR</p>
-        <h3 class="symbol"><%=saint.symbol%></h3>
-        <br/>
-        <p class="name"><%=saint.map_metadata_values[MetadataKey::NAME][0].value%></p>
-      </div>
+        <div class="element basic <%=disc_filters%>" data-symbol="<%=saint.id%>">
+          <p class="number">DCTR</p>
+          <h3 class="symbol"><%=saint.symbol%></h3>
+          <br/>
+          <p class="name"><%=saint.get_metadata_value(MetadataKey::NAME)%></p>
+        </div>
     <% end %>
     </div>
 
@@ -61,14 +61,11 @@
     //  --- PAGE SCRIPTS / EVENT BINDINGS ---
     //
 
-
     // -- Twitter Bootstrap --
     // Dropdown Lists Initialization
     $('.dropdown-toggle').dropdown()
 
-    //
     // -- Isotope Plugin Initialization --
-    //
 
     // initialize isotope plugin
     var $container = $('#isotope_content');
@@ -95,7 +92,7 @@
     }
 
     function renderBreadCrumbs() {
-      crumblist = new Array();
+      var crumblist = new Array();
       $.each($filterList, function(i,v) {
         if (v[0] != '*') {
           crumblist.push("<a class='btn' href='#'  data-filter='" + v[0] + "'><i class='icon-remove'/> " + v[1] + "</a>")
@@ -108,7 +105,7 @@
         var selector = $(this).attr('data-filter');
         removeFilter(selector);
       });
-   }
+    }
 
     function showAll() {
       $filterList = new Array();
@@ -127,25 +124,37 @@
       }
     });
 
-
     //
     //  --- HOVER / POPOVER BEHAVIORS ---
     //      (ajax integration)
 
+    //  The current saint that the mouseover is hovering over
+    //  Since ajax requests are coming in asynchronously at unpredictable times,
+    //  we need to check that our current data is not
+    var curr_saint_id = null;
+
     $('#isotope_content div').mouseenter(function() {
-        curr_elem = $(this);
-        $.get('/saints/' + curr_elem.attr('data-symbol') + '/blurb',  function(data){
-          curr_elem.popover({content: data});
-          curr_elem.popover('show');
+      var curr_elem = $(this);
+      var saint_id = curr_elem.attr('data-symbol');
+      curr_saint_id = saint_id;
+      $.get(getBlurbUri(saint_id),
+        function(data){
+          $('.popover').each(function(i,e) { $(e).popover('hide'); });
+          if (saint_id == curr_saint_id) {
+            curr_elem.popover({content: data});
+            curr_elem.popover('show');
+          }
         });
     });
 
+    function getBlurbUri(saintId) {
+      return '/saints/' + saintId + '/blurb';
+    }
+
     $('#isotope_content div').mouseleave(function() {
-      $(this).popover({content: ''});
-      $(this).popover('hide');
+      curr_saint_id = null;
+      $('.popover').each(function(i,e) { $(e).popover('hide'); });
     });
-
-
   </script>
 
 

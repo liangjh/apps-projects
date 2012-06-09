@@ -29,7 +29,7 @@ class SaintsController < ApplicationController
   #// Return a blurb, which is currently rendered within a modal
   def blurb
     @saint = Saint.find(params[:id])
-    render :layout => 'clean'
+    render :layout => 'blankslate'
   end
 
 

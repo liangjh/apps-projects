@@ -35,13 +35,15 @@ class FlickrIntegration
       #//  retrieve from flickr, and save to cache
       if (photo_link.nil?)
         data = get_flickr_photos(photo_id)
-        if (cache_enabled)
-          save_to_cache(photo_id, data)
-          photo_link = get_from_cache(photo_id, size)
-        else
-          data.each do |photo|
-            photo_link = photo["source"]
-            break if (photo["label"] == size)
+        if (!data.nil?)
+          if (cache_enabled)
+            save_to_cache(photo_id, data)
+            photo_link = get_from_cache(photo_id, size)
+          else
+            data.each do |photo|
+              photo_link = photo["source"]
+              break if (photo["label"] == size)
+            end
           end
         end
       end

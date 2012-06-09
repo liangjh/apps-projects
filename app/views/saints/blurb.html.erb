@@ -1,19 +1,21 @@
 
 <h3><%=@saint.get_metadata_value(MetadataKey::NAME)%></h3><br/>
 
-<table cellpadding="5">
+<table>
   <tr>
     <td>
-      <%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_PROFILE), FlickrIntegration::SIZE_SQUARE_LARGE)  %>
+      <%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
+                                                FlickrIntegration::SIZE_SQUARE_LARGE) %>
     </td>
+    <td>&nbsp;</td>
     <td valign="top" nowrap>
-      <b>Quick Facts:</b><br/><br/>
+      <b>Quick Facts:</b><br/>
       Lived: <%= @saint.get_metadata_value(MetadataKey::BORN) || "?" %> - <%= @saint.get_metadata_value(MetadataKey::DIED) || "?" %><br/>
       Feast: <%= @saint.get_metadata_value(MetadataKey::FEASTDAY) || "N/A" %><br/>
       Modern-day <%= @saint.get_metadata_value(MetadataKey::MODERNDAYCOUNTRY) %><br/>
       Canonized: <%= @saint.get_metadata_value(MetadataKey::CANON_YEAR) || "Unknown" %><br/>
     </td>
   </tr>
-</table>`
+</table>
 
 
