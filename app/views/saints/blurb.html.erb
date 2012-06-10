@@ -1,4 +1,6 @@
 
+<% cache CacheManager.get_key(CacheConfig::PARTITION_SAINT_BLURB, @saint_id) do %>
+
 <h3><%=@saint.get_metadata_value(MetadataKey::NAME)%></h3>
 <table>
   <tr>
@@ -27,4 +29,9 @@
   </td>
   </tr>
 </table>
+
+<%# end cache block %>
+<% end %>
+
+
 

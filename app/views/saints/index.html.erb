@@ -3,7 +3,7 @@
 
 <%
 # Since we are returning the entire set for now, we can cache all generated content
-# cache ["saints_isotope"] do %>
+cache [CacheConfig::PARTITION_SAINTS_ISOTOPE] do %>
 
   <!--// Bread crumbs section :: list of searched filters -->
   <div class="row">
@@ -96,7 +96,7 @@
       var crumblist = new Array();
       $.each($filterList, function(i,v) {
         if (v[0] != '*') {
-          crumblist.push("<a class='btn' href='#'  data-filter='" + v[0] + "'><i class='icon-remove'/> " + v[1] + "</a>")
+          crumblist.push("<a class='btn btn-info' href='#'  data-filter='" + v[0] + "'><i class='icon-remove'/> " + v[1] + "</a>")
         }
       });
       $('#bread_crumbs').html(crumblist.join(" "));
@@ -164,7 +164,7 @@
 
 
 <%
-#end
+end
 %>
 
 

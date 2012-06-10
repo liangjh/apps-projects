@@ -11,14 +11,16 @@ class SaintsController < ApplicationController
   #// Return all saints, all metadata, all attributes
   #// Dump all data and render
   def index
-    #// all saints
-    @saints = Saint.all
-    #// all metadata keys
-    @meta_key_map = MetadataKey.map_metadata_key_by_code
-    #// all attribute categories
-    @attrib_categories = AttribCategory.all_visible
-    #// all attributes, keyed by category code
-    @attribs_all = AttribCategory.map_attrib_cat_content(true)
+    if (!CacheManager.exist?(CacheConfig::PARTITION_SAINTS_ISOTOPE))
+      #// all saints
+      @saints = Saint.all
+      #// all metadata keys
+      @meta_key_map = MetadataKey.map_metadata_key_by_code
+      #// all attribute categories
+      @attrib_categories = AttribCategory.all_visible
+      #// all attributes, keyed by category code
+      @attribs_all = AttribCategory.map_attrib_cat_content(true)
+    end
   end
 
   #// Return the saint passed in the ID parameter
@@ -28,8 +30,11 @@ class SaintsController < ApplicationController
 
   #// Return a blurb, which is currently rendered within a modal
   def blurb
-    @saint = Saint.find(params[:id])
-    render :layout => 'blankslate'
+    @saint_id = params[:id]
+    if (!CacheManager.exist?(CacheConfig::PARTITION_SAINT_BLURB, params[:id]))
+      @saint = Saint.find(@saint_id)
+    end
+    render :layout => false
   end
 
 

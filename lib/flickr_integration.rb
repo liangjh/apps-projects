@@ -53,7 +53,7 @@ class FlickrIntegration
     end
 
     def get_flickr_photos(photo_id)
-      Rails.logger.info("Retrieving photo data from flickr (photo_id: #{photo_id})")
+      Rails.logger.info("Retrieving photo data from Flickr (photo_id: #{photo_id})")
       begin
         FlickRaw.api_key = api_key
         FlickRaw.shared_secret = api_secret
@@ -63,18 +63,24 @@ class FlickrIntegration
       end
     end
 
+    #//  Assemble uniq cache key, and pass the partition to the cache manager
     def get_from_cache(photo_id, size)
-      Rails.cache.get(get_cache_key(photo_id, size))
+      CacheManager.read(CacheConfig::PARTITION_FLICKR_SOURCE,
+                        get_uniq_cache_key(photo_id, size))
     end
 
+    #//  Assemble uniq cache key, pass the partition to the cache manager
     def save_to_cache(photo_id, data)
       data.each do |photo|
-        Rails.cache.write(get_cache_key(photo_id, photo["label"]), photo["source"])
+        CacheManager.write(CacheConfig::PARTITION_FLICKR_SOURCE,
+                           get_uniq_cache_key(photo_id, photo["label"]),
+                           photo["source"])
       end
     end
 
-    def get_cache_key(photo_id, size)
-      "#{photo_id} -- #{size}"
+    #//  unique identifier for a photo is the photo_id + size
+    def get_uniq_cache_key(photo_id, size)
+      "#{photo_id}__#{size}"
     end
 
 
