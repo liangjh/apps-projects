@@ -5,6 +5,7 @@ require 'flickr_integration'
 #//  while the show action takes
 #//  Note: for p1, return all saints.  We're going to rely completely upon the
 #//  isotope javascript plugin for our filtering functionality
+#//
 
 class SaintsController < ApplicationController
 
@@ -34,7 +35,7 @@ class SaintsController < ApplicationController
     if (!CacheManager.exist?(CacheConfig::PARTITION_SAINT_BLURB, params[:id]))
       @saint = Saint.find(@saint_id)
     end
-    render :layout => false
+    render :layout => false #// no layout, to avoid erb interpolation
   end
 
 

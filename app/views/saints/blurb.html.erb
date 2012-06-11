@@ -5,8 +5,9 @@
 <table>
   <tr>
     <td>
-      <%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
-                                                FlickrIntegration::SIZE_SQUARE_LARGE) %>
+      <%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_SET),
+                                                @saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
+                                                FlickrIntegration::SIZE_SMALL) %>
     </td>
     <td>&nbsp;</td>
     <td valign="top" nowrap>

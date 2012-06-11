@@ -1,4 +1,5 @@
 
+
 FLICKR API NOTES
 
 API KEY: 
@@ -8,8 +9,10 @@ SECRET:
 2798aab1d4a3141d
 
 
-///
-api notes
+////
+API NOTES
+
+1.  GET INFO FOR SINGLE PHOTO:
 
 flickr.photos.getSizes
   (returns list of sizes w/ urls)
@@ -21,5 +24,27 @@ flickr.photos.getSizes
   flickr.photos.getSizes(:photo_id => "6962334442")
 */
 
+2.  GET INFO FOR A PHOTOSET
+
+flickr.photos.getPhotos
+  (returns photos in photoset, w/ urls)
+
+// get photos in photoset, including urls
+result = flickr.photosets.getPhotos(:photoset_id => Saint.find(1).get_metadata_value(MetadataKey::FLICKR_SET), 
+                           :extras=>'url_sq,url_m,url_o,url_s')
+
+// return value:  (result:photo - array of hashes)
+ => [
+{"id"=>"6962334442", "secret"=>"e92df3e85a", "server"=>"8145", "farm"=>9, "title"=>"1", "isprimary"=>"1", "url_sq"=>"http://farm9.staticflickr.com/8145/6962334442_e92df3e85a_s.jpg", "height_sq"=>75, "width_sq"=>75, "url_t"=>"http://farm9.staticflickr.com/8145/6962334442_e92df3e85a_t.jpg", "height_t"=>"100", "width_t"=>"84", "url_s"=>"http://farm9.staticflickr.com/8145/6962334442_e92df3e85a_m.jpg", "height_s"=>"240", "width_s"=>"201"}, 
+{"id"=>"7108407595", "secret"=>"977e5a4764", "server"=>"7096", "farm"=>8, "title"=>"4", "isprimary"=>"0", "url_sq"=>"http://farm8.staticflickr.com/7096/7108407595_977e5a4764_s.jpg", "height_sq"=>75, "width_sq"=>75, "url_t"=>"http://farm8.staticflickr.com/7096/7108407595_977e5a4764_t.jpg", "height_t"=>"100", "width_t"=>"67", "url_s"=>"http://farm8.staticflickr.com/7096/7108407595_977e5a4764_m.jpg", "height_s"=>"240", "width_s"=>"161"}, 
+{"id"=>"7108407551", "secret"=>"4fdfe66090", "server"=>"7053", "farm"=>8, "title"=>"3", "isprimary"=>"0", "url_sq"=>"http://farm8.staticflickr.com/7053/7108407551_4fdfe66090_s.jpg", "height_sq"=>75, "width_sq"=>75, "url_t"=>"http://farm8.staticflickr.com/7053/7108407551_4fdfe66090_t.jpg", "height_t"=>"100", "width_t"=>"66", "url_s"=>"http://farm8.staticflickr.com/7053/7108407551_4fdfe66090_m.jpg", "height_s"=>"240", "width_s"=>"159"}, 
+{"id"=>"6962334476", "secret"=>"3437e3e904", "server"=>"7049", "farm"=>8, "title"=>"2", "isprimary"=>"0", "url_sq"=>"http://farm8.staticflickr.com/7049/6962334476_3437e3e904_s.jpg", "height_sq"=>75, "width_sq"=>75, "url_t"=>"http://farm8.staticflickr.com/7049/6962334476_3437e3e904_t.jpg", "height_t"=>"100", "width_t"=>"84", "url_s"=>"http://farm8.staticflickr.com/7049/6962334476_3437e3e904_m.jpg", "height_s"=>"240", "width_s"=>"202"}
+] 
+
+
+
+////
+
+flickr photoset integration libraries
 
 

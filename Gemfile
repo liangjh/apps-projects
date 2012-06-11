@@ -35,6 +35,7 @@ gem 'bson_ext'
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger
-#gem 'ruby-debug19'
+group :development do
+  gem 'ruby-debug19'
+end
 

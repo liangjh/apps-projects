@@ -8,4 +8,5 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require isotope/jquery.isotope.min
-//= require_tree .
+//= require fancybox/jquery.fancybox
+//= require_tree
