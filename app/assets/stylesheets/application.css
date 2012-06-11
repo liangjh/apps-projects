@@ -5,6 +5,8 @@
  *= require_self
  *= require twitter/bootstrap
  *= require fancybox/jquery.fancybox
+ *= require fancybox/jquery.fancybox-buttons
+ *= require fancybox/jquery.fancybox-thumbs
  *= require_tree .
  *= require saintstir/styles
 */

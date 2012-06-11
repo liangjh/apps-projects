@@ -4,14 +4,14 @@
   <div class="span4">
 
 
-    <!--// Saint element -->
+    <!--// Saint element (magnified) -->
     <div class="element-magnified <%=SaintInsigniaFilter.get_color(@saint)%>">
       <h3><%=SaintInsigniaFilter.get_insignia(@saint)[0]%></h3><br/>
       <span class="saint-title"><%=@saint.symbol%></span><br/><br/>
       <span class="saint-subtitle"><%=@saint.get_metadata_value(MetadataKey::NAME)%></span>
     </div>
 
-    <!--// Flickr photoset -->
+    <!--// Flickr photoset / reel -->
     <%
       sml_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_SQUARE_SMALL)
       med_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_MEDIUM)
@@ -31,7 +31,8 @@
           helpers	: {
             title	: {type: 'outside'},
             overlay	: {opacity : 0.8, css : { 'background-color' : '#000' }},
-            thumbs	: {width	: 50, height	: 50}
+            thumbs	: {width	: 50, height	: 50},
+            buttons : {}
           }
         });
         $('.fancybox-thumb').tooltip({title: 'click on thumbnails to see larger image'})
@@ -40,7 +41,7 @@
 
   </div>
 
-  <!--// Attrib & Metadata Content -->
+  <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
   <div class="span8">
   </div>
 

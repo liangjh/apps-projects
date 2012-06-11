@@ -9,4 +9,7 @@
 //= require twitter/bootstrap
 //= require isotope/jquery.isotope.min
 //= require fancybox/jquery.fancybox
+//= require fancybox/jquery.fancybox-buttons
+//= require fancybox/jquery.fancybox-media
+//= require fancybox/jquery.fancybox-thumbs
 //= require_tree
