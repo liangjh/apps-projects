@@ -11,6 +11,7 @@ gem 'json'
 gem 'newrelic_rpm'
 gem 'quiet_assets'
 gem 'flickraw'
+gem 'dalli'
 
 # Gems used only for assets and not required
 # in production environments by default.

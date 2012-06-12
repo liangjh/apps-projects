@@ -44,6 +44,7 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     columnize (0.3.6)
+    dalli (2.0.5)
     devise (1.5.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -144,6 +145,7 @@ DEPENDENCIES
   bson
   bson_ext
   coffee-rails (~> 3.1.1)
+  dalli
   devise
   flickraw
   jquery-rails

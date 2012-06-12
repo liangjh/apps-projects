@@ -57,7 +57,7 @@ class CacheManager
       if (!@@config_map[partition].nil? && @@config_map[partition].is_view?)
         rails_key += "#{CacheConfig::CACHE_PREFIX_VIEWS}/"
       end
-      rails_key += partition
+      rails_key += "#{partition}"
       rails_key += "/#{key}" if (!key.nil?)
       rails_key
     end
@@ -66,7 +66,7 @@ class CacheManager
     def flush_all_for_saint(saint_id)
       @@config_map.values.each do |ption|
         if (ption.saint_trg)
-          rk = (ption.sgltn ? get_rails_key(ption.cache_partition, nil) : get_rails_key(ption, saint_id))
+          rk = (ption.sgltn ? get_rails_key(ption.cache_partition, nil) : get_rails_key(ption.cache_partition, saint_id))
           Rails.logger.info("CacheManager :: deleting from cache: #{rk}")
           Rails.cache.delete(rk)
         end
@@ -83,7 +83,6 @@ class CacheConfig
   #// Cache Partitions
   PARTITION_SAINT_BLURB = "saint_blurb"
   PARTITION_SAINTS_ISOTOPE = "saints_isotope"
-  PARTITION_FLICKR_SOURCE = "flickr_source" #// info for profile picture
   PARTITION_FLICKR_SET = "flickr_set" #// info for all photos in photoset
 
   #// Properties obj/view

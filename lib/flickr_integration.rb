@@ -44,7 +44,6 @@ class FlickrIntegration
       photo_data.each do |photo|
         photos << photo[size]
       end
-      puts "data is: #{photos}"
       photos
     end
 
@@ -53,7 +52,7 @@ class FlickrIntegration
       #// retrieve from cache, if enabled
       photo_data = nil
       if (cache_enabled)
-        CacheManager.read(CacheConfig::PARTITION_FLICKR_SET, photoset_id)
+        photo_data = CacheManager.read(CacheConfig::PARTITION_FLICKR_SET, photoset_id)
       end
       #//  retrieve from flickr, and save to cache
       if (photo_data.nil?)
