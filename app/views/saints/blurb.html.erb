@@ -13,7 +13,7 @@
       <td valign="top" nowrap>
         <b>Quick Facts:</b><br/>
         Lived: <%= @saint.get_metadata_value(MetadataKey::BORN) || "?" %> - <%= @saint.get_metadata_value(MetadataKey::DIED) || "?" %><br/>
-        Feast: <%= @saint.get_metadata_value(MetadataKey::FEASTDAY) || "N/A" %><br/>
+        Feast: <%= ApplicationHelper.mm_dd_prettify(@saint.get_metadata_value(MetadataKey::FEASTDAY)) || "N/A" %><br/>
         Modern-day <%= @saint.get_metadata_value(MetadataKey::MODERNDAYCOUNTRY) %><br/>
         Canonized: <%= @saint.get_metadata_value(MetadataKey::CANONYEAR) || "Unknown" %><br/>
       </td>
@@ -21,11 +21,9 @@
     <tr>
       <td colspan="3">
       <%# Display insignia badge details %>
-      <%
-        insig = SaintInsigniaFilter.get_insignia(@saint)
-        if (!insig[0].blank?)
-      %>
-          <span class="badge badge-success"><%=insig[0]%>: <%=insig[1]%></span>
+      <% insig = SaintInsigniaFilter.get_insignia(@saint) %>
+      <% if (!insig[0].blank?) %>
+        <span class="badge badge-success"><%=insig[0]%>: <%=insig[1]%></span>
       <% end %>
     </td>
     </tr>

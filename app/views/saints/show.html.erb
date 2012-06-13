@@ -103,7 +103,7 @@
                       if (i % 4 == 0)
                         %><br/><%
                       end
-                      %><span class="label label-success"><%=meta%></span> <%
+                      %><span class="label label-success"><%=meta%></span>&nbsp;&nbsp;<%
                       i += 1
                     end
                   %>
@@ -114,7 +114,7 @@
                 <td><b>Graces</b></td>
                 <td>
                   <% @saint.get_attribs(AttribCategory::GRACES).each do |attrib| %>
-                    <span class="label label-info"><%=attrib%></span>
+                    <span class="label label-info"><%=attrib%></span>&nbsp;&nbsp;
                   <% end %>
                 </td>
               </tr>
@@ -125,7 +125,7 @@
                     <td><b>Superpowers</b></td>
                     <td>
                       <% superpowers.each do |pwr| %>
-                        <span class="label"><%=pwr%></span>&nbsp;
+                        <span class="label"><%=pwr%></span>&nbsp;&nbsp;
                       <% end %>
                     </td>
                   </tr>
