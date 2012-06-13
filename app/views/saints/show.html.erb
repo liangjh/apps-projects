@@ -3,10 +3,9 @@
 
   <div class="span4">
 
-
     <!--// Saint element (magnified) -->
     <div class="element-magnified <%=SaintInsigniaFilter.get_color(@saint)%>">
-      <h3><%=SaintInsigniaFilter.get_insignia(@saint)[0]%></h3><br/>
+      <h3><%=SaintInsigniaFilter.get_insignia(@saint)[0]%>&nbsp;</h3><br/>
       <span class="saint-title"><%=@saint.symbol%></span><br/><br/>
       <span class="saint-subtitle"><%=@saint.get_metadata_value(MetadataKey::NAME)%></span>
     </div>
@@ -32,7 +31,7 @@
           helpers	: {
             title	: {type: 'outside'},
             overlay	: {opacity : 0.8, css : { 'background-color' : '#000' }},
-            thumbs	: {width	: 50, height	: 50},
+            thumbs	: {width	: 40, height	: 50},
             buttons : {}
           }
         });
@@ -46,15 +45,133 @@
   <div class="span8">
     <div class="tabbable">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">Section 1</a></li>
-        <li><a href="#tab2" data-toggle="tab">Section 2</a></li>
+        <li class="active"><a href="#about" data-toggle="tab">About</a></li>
+        <%# <li><a href="#bio" data-toggle="tab">Biography</a></li> %>
+        <li><a href="#quotes" data-toggle="tab">Quotes</a></li>
+        <li><a href="#prayers" data-toggle="tab">Prayers</a></li>
       </ul>
       <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
-          In tab pane #1
+
+        <!--// Section: About -->
+        <div class="tab-pane active" id="about" style="padding:7px">
+          <table class="table">
+            <tbody>
+              <%#// Lots of code, b/c we want to enforce particular ordering of saint data %>
+
+              <tr>
+                <td><b>Lived</b></td>
+                <td><%=@saint.get_attrib(AttribCategory::CENTURY)%> Century<br/>
+                  <%=(@saint.get_metadata_value(MetadataKey::BORN) || "N/A")%> - <%=(@saint.get_metadata_value(MetadataKey::DIED) || "N/A")%> AD
+                </td>
+              </tr>
+
+              <tr>
+                  <td><b>Dates<b/></td>
+                  <td>
+                    <%=(@saint.get_metadata_value(MetadataKey::CANONYEAR) || "Pre-Congregation")%> (Canonized)<br/>
+                    <% feast = ApplicationHelper.mm_dd_prettify(@saint.get_metadata_value(MetadataKey::FEASTDAY))%>
+                    <% if (!feast.nil?) %>
+                        <%=feast%> (Feast Day)
+                    <% end %>
+                  </td>
+              </tr>
+
+              <tr>
+                <td><b>Origin</b></td>
+                <td>
+                  <%=@saint.get_attrib(AttribCategory::WORLDREGION)%><br/>
+                  <%=@saint.get_attrib(AttribCategory::PERIODEUROCENTRIC)%><br/>
+                  <%=@saint.get_metadata_value(MetadataKey::SPECIFICGEOPERIOD)%><br/>
+                  Modern-day <%=@saint.get_metadata_value(MetadataKey::MODERNDAYCOUNTRY)%>
+                </td>
+              </tr>
+
+              <tr>
+                <td><b>Profession</b></td>
+                <td>
+                  <%=@saint.get_metadata_value(MetadataKey::OCCUPATION)%><br/>
+                  <%=@saint.get_attrib(AttribCategory::OCCUPATIONSECTOR)%>
+                </td>
+              </tr>
+
+              <tr>
+                <td><b>Patronage</b></td>
+                <td>
+                  <%
+                    i = 0
+                    @saint.get_metadata_values(MetadataKey::PATRONAGE).sort.each do |meta|
+                      if (i % 4 == 0)
+                        %><br/><%
+                      end
+                      %><span class="label label-success"><%=meta%></span> <%
+                      i += 1
+                    end
+                  %>
+                </td>
+              </tr>
+
+              <tr>
+                <td><b>Graces</b></td>
+                <td>
+                  <% @saint.get_attribs(AttribCategory::GRACES).each do |attrib| %>
+                    <span class="label label-info"><%=attrib%></span>
+                  <% end %>
+                </td>
+              </tr>
+
+              <% superpowers = @saint.get_attribs(AttribCategory::SUPERPOWER) %>
+              <% if (!superpowers.empty?) %>
+                  <tr>
+                    <td><b>Superpowers</b></td>
+                    <td>
+                      <% superpowers.each do |pwr| %>
+                        <span class="label"><%=pwr%></span>&nbsp;
+                      <% end %>
+                    </td>
+                  </tr>
+              <%  end %>
+
+              <% experiences = @saint.get_attribs(AttribCategory::LIFEEXPERIENCE) %>
+              <% if (!experiences.empty?) %>
+                <tr>
+                  <td><b>Experiences</b></td>
+                  <td>
+                      <% experiences.each do |exp| %>
+                        <span class="label label-success"><%=exp%></span>&nbsp;
+                      <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-        <div class="tab-pane" id="tab2">
-          In tab pane #2
+        <%#
+        <!--// Section: Biography -->
+        <div class="tab-pane" id="bio" style="padding:7px;">
+          In "bio" tab
+        </div>
+        %>
+        <!--// Section: Quotes -->
+        <div class="tab-pane" id="quotes" style="padding:7px;">
+          <table class="table">
+            <% quotes = @saint.get_metadata_values(MetadataKey::QUOTES) %>
+            <% if (quotes.nil? || quotes.empty?) %>
+              <tr><td><i>No quotes currently available</i></td></tr>
+            <% else %>
+              <% quotes.each do |quote| %>
+                <tr><td><%=quote%></td></tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
+
+        <!--// Section: Prayers -->
+        <div class="tab-pane" id="prayers" style="padding:7px;">
+          <table class="table">
+            <% @saint.get_metadata_values(MetadataKey::NOVENASPRAYERS).each do |pry| %>
+              <tr><td><%=pry%></td></tr>
+            <% end %>
+          </table>
         </div>
       </div>
     </div>

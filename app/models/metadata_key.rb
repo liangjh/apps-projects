@@ -32,7 +32,7 @@ class MetadataKey < ActiveRecord::Base
   BIOGRAPHY = "biography"
   QUOTES = "quotes"
   NOVENASPRAYERS = "novenasprayers"
-  CANON_YEAR = "canon_year"
+  CANONYEAR = "canon_year"
   FLICKR_PROFILE = "flickr_profile"
   FLICKR_SET = "flickr_set"
 

@@ -27,6 +27,8 @@ class SaintsController < ApplicationController
   #// Return the saint passed in the ID parameter
   def show
     @saint = Saint.find(params[:id])
+    #// All attribs in use
+    @attribs_all = AttribCategory.map_attrib_cat_content(true)
   end
 
   #// Return a blurb, which is currently rendered within a modal

@@ -27,6 +27,31 @@ class Saint < ActiveRecord::Base
     mv[meta_key_code][0].value if (!mv[meta_key_code].nil?)
   end
 
+  #// For metadata fields with multiple values, return an array of
+  #// all values for the given meta_key_code
+  def get_metadata_values(meta_key_code)
+    mv_values = []
+    mk = MetadataKey.by_metadata_key_code(meta_key_code)
+    mv = map_metadata_values_by_code
+    if (!mv[meta_key_code].nil?)
+      mv_values = mv[meta_key_code].map(&:value) if (mk[0].is_short?)
+      mv_values = mv[meta_key_code].map(&:value_text) if (mk[0].is_long?)
+    end
+    mv_values
+  end
+
+  def get_attrib(attrib_cat_code)
+    attrs_by_code = map_attribs_by_attrib_cat_code
+    attrs_by_code[attrib_cat_code][0].name if (!attrs_by_code[attrib_cat_code].empty?)
+  end
+
+  def get_attribs(attrib_cat_code)
+    attrs = []
+    attrs_by_code = map_attribs_by_attrib_cat_code
+    attrs = attrs_by_code[attrib_cat_code].map(&:name) if (!attrs_by_code[attrib_cat_code].nil?)
+    attrs
+  end
+
   #//  Map of all attribs associated w/ this saint {attrib_id => attrib}
   def map_attribs_by_id
     @attribs_id_map ||= self.attribs.inject({}) { |h,e| h[e.id] = e; h }
@@ -35,6 +60,20 @@ class Saint < ActiveRecord::Base
   #// Map of all attributes by code {attrib_code => attrib}
   def map_attribs_by_code
     @attribs_code_map ||= self.attribs.inject({}) { |h,e| h[e.code] = e; h }
+  end
+
+  #// Map of attributes, grouped into their respective attribute categories (by code)
+  #// {attrib_category_code => [Attribute].*}
+  def map_attribs_by_attrib_cat_code
+    if (@attribs_by_category_code_map.nil?)
+      @attribs_by_category_code_map = {}
+      attribs.each do |attrib|
+        attrib_cat = attrib.attrib_category
+        @attribs_by_category_code_map[attrib_cat.code] = [] if (@attribs_by_category_code_map[attrib_cat.code].nil?)
+        @attribs_by_category_code_map[attrib_cat.code] << attrib
+      end
+    end
+    @attribs_by_category_code_map
   end
 
   #//  Map of all metadata associated w/ this saint {metadata_key_code => metadata}

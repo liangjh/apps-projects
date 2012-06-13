@@ -1,37 +1,36 @@
 
 <% cache CacheManager.get_key(CacheConfig::PARTITION_SAINT_BLURB, @saint_id) do %>
 
-<h3><%=@saint.get_metadata_value(MetadataKey::NAME)%></h3>
-<table>
-  <tr>
-    <td>
-      <%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_SET),
-                                                @saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
-                                                FlickrIntegration::SIZE_SMALL) %>
+  <h3><%=@saint.get_metadata_value(MetadataKey::NAME)%></h3>
+  <table>
+    <tr>
+      <td>
+        <%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_SET),
+                                                  @saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
+                                                  FlickrIntegration::SIZE_SMALL) %>
+      </td>
+      <td>&nbsp;</td>
+      <td valign="top" nowrap>
+        <b>Quick Facts:</b><br/>
+        Lived: <%= @saint.get_metadata_value(MetadataKey::BORN) || "?" %> - <%= @saint.get_metadata_value(MetadataKey::DIED) || "?" %><br/>
+        Feast: <%= @saint.get_metadata_value(MetadataKey::FEASTDAY) || "N/A" %><br/>
+        Modern-day <%= @saint.get_metadata_value(MetadataKey::MODERNDAYCOUNTRY) %><br/>
+        Canonized: <%= @saint.get_metadata_value(MetadataKey::CANONYEAR) || "Unknown" %><br/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+      <%# Display insignia badge details %>
+      <%
+        insig = SaintInsigniaFilter.get_insignia(@saint)
+        if (!insig[0].blank?)
+      %>
+          <span class="badge badge-success"><%=insig[0]%>: <%=insig[1]%></span>
+      <% end %>
     </td>
-    <td>&nbsp;</td>
-    <td valign="top" nowrap>
-      <b>Quick Facts:</b><br/>
-      Lived: <%= @saint.get_metadata_value(MetadataKey::BORN) || "?" %> - <%= @saint.get_metadata_value(MetadataKey::DIED) || "?" %><br/>
-      Feast: <%= @saint.get_metadata_value(MetadataKey::FEASTDAY) || "N/A" %><br/>
-      Modern-day <%= @saint.get_metadata_value(MetadataKey::MODERNDAYCOUNTRY) %><br/>
-      Canonized: <%= @saint.get_metadata_value(MetadataKey::CANON_YEAR) || "Unknown" %><br/>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3">
-    <%# Display insignia badge details %>
-    <%
-      insig = SaintInsigniaFilter.get_insignia(@saint)
-      if (!insig[0].blank?)
-    %>
-        <span class="badge badge-success"><%=insig[0]%>: <%=insig[1]%></span>
-    <% end %>
-  </td>
-  </tr>
-</table>
+    </tr>
+  </table>
 
-<%# end cache block %>
 <% end %>
 
 
