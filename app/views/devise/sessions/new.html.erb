@@ -1,17 +1,34 @@
-<h2>Sign in</h2>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+<div class="span6">
+<h2>Sign in</h2><br/>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+<h3>Sign in through one of the services below</h3><br/><br/>
+<%= render :partial => "authentications/auth_providers" %>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+
+<br/><br/>
+<h3>OR</h3>
+<br/>
+<h3>Sign in with your Saintstir &copy; account</h3>
+<br/>
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-vertical well"}) do |f| %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <% if devise_mapping.rememberable? -%><br/>
+    <span class="form-inline">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </span><br/>
   <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
+  <br/>
+  <%= f.submit "Sign in", :class => "btn btn-large btn-primary" %>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
+</div>
+

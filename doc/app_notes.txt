@@ -1,28 +1,4 @@
 
-
-INSIGNIA & COLORS - first pass
-
-[
- Saint Status      | Doctor of Church
-]
-
-[
- Vocation          | Nun
- Vocation          | Monk 
- Vocation          | Priest
-]
-
-[
- Vocation          | Bishop
- Vocation          | Cardinal
- Vocation          | Pope
-]
-
-[
- Life Experience   | Martyrdom
-]
-
-
 ////////////
 
 TIMELINE PLUGINS
@@ -30,5 +6,6 @@ TIMELINE PLUGINS
 http://timeline.verite.co/
 
 
+///////
 
 

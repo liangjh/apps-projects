@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120307070728) do
+ActiveRecord::Schema.define(:version => 20120615062219) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -40,6 +40,17 @@ ActiveRecord::Schema.define(:version => 20120307070728) do
   add_index "attribs", ["attrib_category_id"], :name => "index_attribs_on_attrib_category_id"
   add_index "attribs", ["code"], :name => "index_attribs_on_code"
   add_index "attribs", ["name"], :name => "index_attribs_on_name"
+
+  create_table "authentications", :force => true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["user_id"], :name => "index_authentications_on_user_id"
 
   create_table "metadata_keys", :force => true do |t|
     t.string   "code",        :null => false
@@ -109,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20120307070728) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "super_user"
+    t.string   "username"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
