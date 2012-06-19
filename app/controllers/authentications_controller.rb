@@ -36,7 +36,6 @@ class AuthenticationsController < ApplicationController
       redirect_to new_user_session_url
     end
 
-
     if (current_user)
 
       #// If user is already logged in, then two scenarios will occur:
@@ -51,9 +50,20 @@ class AuthenticationsController < ApplicationController
 
       #// User has not been logged in yet.  There are two scenarios:
       #//  (1) user is found for this authentication, so sign in the user
-      #//  (2) user is NOT found for this authentication, so direct user to a registration page to complete the signup process
-      auth = Authentication.from_omniauth(omniauth, nil)
-      sign_in(auth.user) if (auth.present?)
+      #//  (2) user is NOT found for this authentication, so create the authentication entry and
+      #//      direct the user to a registration page to complete the signup process
+
+      user = User.peek_omniauth(omniauth)
+      if (user.present?)
+        #// Get auth object - if DNE, will create and associate with this user object
+        Authentication.from_omniauth(omniauth, user)
+        sign_in(user)
+      else
+        #// Create auth object, and creates a new user object (go to registration page to complete)
+        auth = Authentication.from_omniauth(omniauth, nil)
+        session[:omniauth] = omniauth.except("extra")
+        sign_in(auth.user) if (auth.present? && auth.user.present?)
+      end
 
       if (current_user)
         flash[:notice] = "You've logged in as user: [#{current_user.username}] through #{AUTH_NAME_MAP[omniauth['provider']]}"

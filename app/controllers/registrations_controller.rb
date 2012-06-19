@@ -6,6 +6,12 @@
 
 class RegistrationsController < Devise::RegistrationsController
 
+  def create
+    super
+    session[:omniauth] = nil unless @user.new_record?
+  end
+
+
   private
 
   #//  this method is called by create() and new() in devise - we're overriding to

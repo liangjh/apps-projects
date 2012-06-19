@@ -22,8 +22,13 @@ class User < ActiveRecord::Base
 
   # Associates this user with an omniauth credentials set
   def apply_omniauth(omniauth)
-    #// link the passed-in omniauth to this user account
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+
+    #// if auth does not exist, then create a new one to be associated
+    #// push the found auth into the association - the user may be new and will not have an id to
+    #// complete the association in the database, so we assign in memory for now
+    auth = authentications.where(:provider => omniauth['provider'], :uid => omniauth['uid']).first
+    auth = authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid']) if (auth.nil?)
+    authentications << auth if (authentications.empty?)
 
     #// Try to set whatever properties we have in omniauth for this user
     #// Override w/ omniauth credentials if those fields don't exist in user object
@@ -36,5 +41,24 @@ class User < ActiveRecord::Base
   def password_required?
     (authentications.empty? || !password.blank?) && super
   end
+
+
+  class << self
+    #// Given an omniauth user, check to see whether a saintstir user already exists with the
+    #// same email address.  Return this user if so (otherwise nil)
+    def peek_omniauth(omniauth)
+      find_by_email(omniauth['info']['email']) if (omniauth['info']['email'])
+    end
+
+    #// Build a user from omniauth
+    def create_omniauth_user(omniauth)
+      user = User.new
+      user.email = omniauth['info']['email']
+      user.username ||= omniauth['info']['nickname'] || omniauth['info']['name']
+      user.save!
+    end
+
+  end
+
 
 end
