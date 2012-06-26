@@ -1,0 +1,46 @@
+
+<%# Saint Postings %>
+<%# Assumed parameters: @saint %>
+
+<table cellpadding="10">
+  <tr>
+    <td nowrap>
+      <a href="#posting-modal" class="btn btn-primary" data-toggle="modal">Submit a posting</a> <br/><br/>
+    </td>
+  </tr>
+</table>
+<br/>
+
+<table id="posting-content" class="table">
+</table>
+
+
+<%# Postings form, implemented as a modal %>
+<div class="modal hide" id="posting-modal">
+    <form id="posting-form">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h3>Submit your posting</h3>
+    </div>
+    <div class="modal-body" style="text-align:center">
+      <textarea id="posting-data" name="posting-data" rows="15" class="span6"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button href="#" class="btn" data-dismiss="modal">Close</button>
+      <button id="submit-posting" href="#" class="btn btn-primary">Submit</button>
+      </div>
+  </form>
+</div>
+
+
+<script>
+
+
+  //  The postings javascript contains
+
+  var PostingsPage = function(type)({
+  })
+
+
+</script>
+

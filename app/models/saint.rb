@@ -16,6 +16,7 @@ class Saint < ActiveRecord::Base
   has_many :saint_attribs
   has_many :attribs, :through => :saint_attribs
   has_many :saint_edit_audits
+  has_many :postings
 
   #//  Scopes
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
@@ -42,7 +43,7 @@ class Saint < ActiveRecord::Base
 
   def get_attrib(attrib_cat_code)
     attrs_by_code = map_attribs_by_attrib_cat_code
-    attrs_by_code[attrib_cat_code][0].name if (!attrs_by_code[attrib_cat_code].empty?)
+    attrs_by_code[attrib_cat_code][0].name if (!attrs_by_code[attrib_cat_code].nil? && !attrs_by_code[attrib_cat_code].empty?)
   end
 
   def get_attribs(attrib_cat_code)

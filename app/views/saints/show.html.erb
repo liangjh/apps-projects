@@ -1,4 +1,5 @@
 
+
 <div class="row">
 
   <div class="span4">
@@ -11,156 +12,36 @@
     </div>
 
     <!--// Flickr photoset / reel -->
-    <%
-      sml_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_SQUARE_SMALL)
-      med_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_MEDIUM)
-    %>
-    <div class="saint-gallery">
-      <br/><br/>
-      <% med_pics.each_with_index do |pic,idx| %>
-        <a id="<%=idx%>" href="<%=pic%>" class="fancybox-thumb">
-          <img src="<%=sml_pics[idx]%>"/>
-        </a>
-      <% end %>
-    </div>
-    <script>
-      $(document).ready(function() {
-        $('.fancybox-thumb').fancybox({
-          prevEffect	: 'none',
-          nextEffect	: 'none',
-          helpers	: {
-            title	: {type: 'outside'},
-            overlay	: {opacity : 0.8, css : { 'background-color' : '#000' }},
-            thumbs	: {width	: 40, height	: 50},
-            buttons : {}
-          }
-        });
-        $('.fancybox-thumb').tooltip({title: 'click on thumbnails to see larger image'})
-      });
-    </script>
+    <%= render :partial => "saints/photoreel" %>
 
   </div>
 
   <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
   <div class="span8">
     <div class="tabbable">
+
+      <!--// All navigation tabs available -->
       <ul class="nav nav-tabs">
         <li class="active"><a href="#about" data-toggle="tab">About</a></li>
         <%# <li><a href="#bio" data-toggle="tab">Biography</a></li> %>
         <li><a href="#quotes" data-toggle="tab">Quotes</a></li>
         <li><a href="#prayers" data-toggle="tab">Prayers</a></li>
+        <li><a href="#your_stories" data-toggle="tab">Your Stories</a></li>
+        <li><a href="#your_prayers" data-toggle="tab">Your Prayers</a></li>
       </ul>
+
       <div class="tab-content">
 
         <!--// Section: About -->
         <div class="tab-pane active" id="about" style="padding:7px">
-          <table class="table">
-            <tbody>
-              <%#// Lots of code, b/c we want to enforce particular ordering of saint data %>
-
-              <tr>
-                <td><b>Lived</b></td>
-                <td><%=@saint.get_attrib(AttribCategory::CENTURY)%> Century<br/>
-                  <%=(@saint.get_metadata_value(MetadataKey::BORN) || "N/A")%> - <%=(@saint.get_metadata_value(MetadataKey::DIED) || "N/A")%> AD
-                </td>
-              </tr>
-
-              <tr>
-                  <td><b>Dates<b/></td>
-                  <td>
-                    <%=(@saint.get_metadata_value(MetadataKey::CANONYEAR) || "Pre-Congregation")%> (Canonized)<br/>
-                    <% feast = ApplicationHelper.mm_dd_prettify(@saint.get_metadata_value(MetadataKey::FEASTDAY))%>
-                    <% if (!feast.nil?) %>
-                        <%=feast%> (Feast Day)
-                    <% end %>
-                  </td>
-              </tr>
-
-              <tr>
-                <td><b>Origin</b></td>
-                <td>
-                  <%=@saint.get_attrib(AttribCategory::WORLDREGION)%><br/>
-                  <%=@saint.get_attrib(AttribCategory::PERIODEUROCENTRIC)%><br/>
-                  <%=@saint.get_metadata_value(MetadataKey::SPECIFICGEOPERIOD)%><br/>
-                  Modern-day <%=@saint.get_metadata_value(MetadataKey::MODERNDAYCOUNTRY)%>
-                </td>
-              </tr>
-
-              <tr>
-                <td><b>Profession</b></td>
-                <td>
-                  <%=@saint.get_metadata_value(MetadataKey::OCCUPATION)%><br/>
-                  <%=@saint.get_attrib(AttribCategory::OCCUPATIONSECTOR)%>
-                </td>
-              </tr>
-
-              <tr>
-                <td><b>Patronage</b></td>
-                <td>
-                  <%
-                    i = 0
-                    @saint.get_metadata_values(MetadataKey::PATRONAGE).sort.each do |meta|
-                      if (i % 4 == 0)
-                        %><br/><%
-                      end
-                      %><span class="label label-success"><%=meta%></span>&nbsp;&nbsp;<%
-                      i += 1
-                    end
-                  %>
-                </td>
-              </tr>
-
-              <tr>
-                <td><b>Graces</b></td>
-                <td>
-                  <% @saint.get_attribs(AttribCategory::GRACES).each do |attrib| %>
-                    <span class="label label-info"><%=attrib%></span>&nbsp;&nbsp;
-                  <% end %>
-                </td>
-              </tr>
-
-              <% superpowers = @saint.get_attribs(AttribCategory::SUPERPOWER) %>
-              <% if (!superpowers.empty?) %>
-                  <tr>
-                    <td><b>Superpowers</b></td>
-                    <td>
-                      <% superpowers.each do |pwr| %>
-                        <span class="label"><%=pwr%></span>&nbsp;&nbsp;
-                      <% end %>
-                    </td>
-                  </tr>
-              <%  end %>
-
-              <% experiences = @saint.get_attribs(AttribCategory::LIFEEXPERIENCE) %>
-              <% if (!experiences.empty?) %>
-                <tr>
-                  <td><b>Experiences</b></td>
-                  <td>
-                      <% experiences.each do |exp| %>
-                        <span class="label label-success"><%=exp%></span>&nbsp;
-                      <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+          <%= render :partial => "saints/about" %>
         </div>
-        <%#
-        <!--// Section: Biography -->
-        <div class="tab-pane" id="bio" style="padding:7px;">
-          In "bio" tab
-        </div>
-        %>
+
         <!--// Section: Quotes -->
         <div class="tab-pane" id="quotes" style="padding:7px;">
           <table class="table">
-            <% quotes = @saint.get_metadata_values(MetadataKey::QUOTES) %>
-            <% if (quotes.nil? || quotes.empty?) %>
-              <tr><td><i>No quotes currently available</i></td></tr>
-            <% else %>
-              <% quotes.each do |quote| %>
-                <tr><td><%=quote%></td></tr>
-              <% end %>
+            <% @saint.get_metadata_values(MetadataKey::QUOTES).each do |quote| %>
+              <tr><td><%=quote%></td></tr>
             <% end %>
           </table>
         </div>
@@ -172,6 +53,16 @@
               <tr><td><%=pry%></td></tr>
             <% end %>
           </table>
+        </div>
+
+        <!--// Section: Stories (User) -->
+        <div class="tab-pane" id="your_stories" style="padding:7px;">
+          <%= render :partial => "saints/postings", :locals => { :posting_type => Posting::TYPE_STORY } %>
+        </div>
+
+        <!--// Section: Prayers (User) -->
+        <div class="tab-pane" id="your_prayers" style="padding:7px;">
+          <%#= render :partial => "saints/postings", :locals => { :posting_type => Posting::TYPE_PRAYER } %>
         </div>
       </div>
     </div>

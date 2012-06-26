@@ -8,5 +8,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_logged_in
+    (current_user ? true : false)
+  end
 
 end

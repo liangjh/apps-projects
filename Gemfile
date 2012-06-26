@@ -9,9 +9,10 @@ gem 'newrelic_rpm' # monitoring
 gem 'quiet_assets' # remove asset pipeline requests
 gem 'flickraw' # flickr client
 gem 'dalli' # memcached client
-gem 'mongo' # mongodb plugin 
+gem 'mongo' # mongodb plugin
 gem 'bson'
 gem 'bson_ext'
+gem 'kaminari' # pagination
 
 # Auth plugins
 gem 'devise'  # auth library (p1)

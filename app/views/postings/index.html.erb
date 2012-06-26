@@ -1,0 +1,20 @@
+
+
+<%= paginate @postings %>
+
+<% if (@postings.nil? || @postings.empty?) %>
+  <i>No postings yet, please submit one!</i>
+<% else %>
+  <table class="table">
+    <% @postings.each do |posting| %>
+      <tr><td><%=posting.content%></td></tr>
+    <% end %>
+  </table>
+
+<% end %>
+
+
+
+
+
+

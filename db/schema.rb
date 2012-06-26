@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120615062219) do
+ActiveRecord::Schema.define(:version => 20120621040100) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -78,6 +78,22 @@ ActiveRecord::Schema.define(:version => 20120615062219) do
 
   add_index "metadata_values", ["metadata_key_id"], :name => "index_metadata_values_on_metadata_key_id"
   add_index "metadata_values", ["saint_id"], :name => "index_metadata_values_on_saint_id"
+
+  create_table "postings", :force => true do |t|
+    t.text     "content"
+    t.string   "status"
+    t.integer  "votes"
+    t.integer  "user_id"
+    t.integer  "saint_id"
+    t.string   "posting_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "postings", ["saint_id"], :name => "index_postings_on_saint_id"
+  add_index "postings", ["status"], :name => "index_postings_on_status"
+  add_index "postings", ["user_id"], :name => "index_postings_on_user_id"
+  add_index "postings", ["votes"], :name => "index_postings_on_votes"
 
   create_table "saint_attribs", :force => true do |t|
     t.integer  "saint_id",   :null => false

@@ -10,24 +10,26 @@ Saintstir::Application.routes.draw do
   match "/statics/volunteer" => "statics#volunteer", :via => :get
   match "/statics/about" => "statics#about", :via => :get
 
-  #//  Devise user login / auth routes
+  #//  Authentication routes, via (1) Omniauth, (2) Devise
   #//  We override the registrations and sessions controllers to accomodate third party auth
   devise_for :users, :controllers => { :registrations => "registrations" }
-
-  #// Authentication routes using OmniAuth
-  resources :authentications
+  resources :authentications, :only => [:create, :destroy]
   match "/auth/:provider/callback" => "authentications#create" #// callback for 3rd party integration
   match "/authentications/create" => "authentications#create"  #// given a prior omniauth session, associate w/ new login
 
   #//  Core saints controller, with ajax events
-  #//  index => saint explore page
-  #//  show  => saint profile page
-  #//  blurb => saint modal hover-over
+  #//  index => saint explore, show  => saint profile, blurb => saint peek hover-over
   resources :saints, :only => [:index, :show] do
     member do
-      get :blurb #// displays small blurb of saint profile info (render in modal)
+      get :blurb
     end
+
+    #//  Resources paths for managing postings (prayers or stories)
+    resources :postings, :only => [:create, :show, :index]
+
   end
+
+
 
   #//  Administrative / Editor Modules
   namespace :admin do
