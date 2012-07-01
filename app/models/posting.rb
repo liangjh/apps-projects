@@ -16,16 +16,17 @@ class Posting < ActiveRecord::Base
   belongs_to :user
   belongs_to :saint
 
-  CONTENT_MAX_WORD_COUNT = 100
-  STATUS_PENDING = "pending"
+  CONTENT_MAX_WORD_COUNT = 500
+  STATUS_PENDING = "pending"  #//  this means the message has been flagged for review
   STATUS_REJECT = "reject"
   STATUS_ACCEPT = "accept"
 
   #// Scopes
-  scope :by_status_accept, where(:status => STATUS_ACCEPT)
+  scope :by_visible_status, where(:status => [STATUS_ACCEPT, STATUS_PENDING])
   scope :by_saint, lambda { |saint| where(:saint_id => saint.id) }
   scope :by_saint_id, lambda { |saint_id| where(:saint_id => saint_id) }
   scope :sort_by_create, order("id DESC")
+  scope :sort_by_popular, order("votes DESC")
 
   #// Validate existence and within set of values
   validates :content, :presence => true

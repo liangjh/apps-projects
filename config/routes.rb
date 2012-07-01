@@ -24,16 +24,17 @@ Saintstir::Application.routes.draw do
       get :blurb
     end
 
-    #// Posting actions (listing & create new)
+    #// Posting actions - list, create, like, flag
     resources :postings, :only => [:index, :create]
-    #// 'Like' a posting
     match "/like_posting/:id" => "postings#like"
+    match "/flag_posting/:id" => "postings#flag"
 
   end
 
-  #//  Administrative / Editor Modules
+  #//  Administrative modules / editing pages
   namespace :admin do
     resources :saints
+    resources :postings
   end
 
 end

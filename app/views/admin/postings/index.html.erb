@@ -1,0 +1,98 @@
+
+<%#// POSTINGS ADMINISTRATION %>
+<%#// Allows administrator to review / edit / remove postings from the system %>
+
+<h2>Postings Administrator</h2>
+<br/>
+<div class="btn-group">
+  <a href="#" class="btn page-filter" data-id="<%=Posting::STATUS_PENDING%>">Flagged (Pending)</a>
+  <a href="#" class="btn page-filter" data-id="<%=Posting::STATUS_ACCEPT%>">Accepted</a>
+  <a href="#" class="btn page-filter" data-id="<%=Posting::STATUS_REJECT%>">Rejected</a>
+</div>
+
+<%= paginate @postings %>
+<br/>
+
+<% if (@postings.nil?) %>
+  <i>No postings for this category yet</i>
+<% else %>
+  <h3>All postings in status: <font color="red"><%=@status%></font></h3><br/>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User</th><th>Posting</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @postings.each do |posting| %>
+      <tr>
+        <td><b><%=posting.user.username%></b><br/><%=(posting.created_at.nil? ? "" : posting.created_at.strftime('%m/%d/%Y'))%></td>
+        <td><%=raw(posting.content_formatted)%></td>
+        <td nowrap>
+          <a href="#" class="btn btn-info accept-posting" data-id="<%=posting.id%>">Accept</a>&nbsp;&nbsp;
+          <a href="#" class="btn btn-warning reject-posting" data-id="<%=posting.id%>">Reject</a>&nbsp;&nbsp;
+          <a href="#" class="btn btn-info pending-posting" data-id="<%=posting.id%>">Flag/Pending</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+
+<% end %>
+
+<%#// Form for actions (accept/reject statuses) %>
+<%= form_tag('/admin/postings', :method => :put, :id => 'edit-posting') do %>
+  <%= hidden_field_tag 'posting_status', '', :id => 'posting-status' %>
+<% end %>
+
+<script>
+
+  // Wait until page loads completely
+  $(document).ready(function() {
+
+    // Set up pagination (submit a url req w/ the specified page)
+    // server-side will persist pref to session (so doesn't need to be replayed)
+    $('.page-link').click(function(){
+      var pageNum = $(this).attr('data-id');
+      var uri = '/admin/postings?page=' + pageNum;
+      window.location = uri;
+    });
+
+    // Set up page filters (submit a url req w/ the specified filter)
+    // server-side will persist pref to session (so this doesn't need to be replayed)
+    $('.page-filter').click(function() {
+      var filterStatus = $(this).attr('data-id');
+      var uri = '/admin/postings?status=' + filterStatus;
+      window.location = uri;
+    });
+
+
+    //  Bind actions for Accept / Reject / Flag (Pending)
+    $('.accept-posting').click(function() {
+      var postingId = $(this).attr('data-id');
+      $('#edit-posting #posting-status').val('accept');
+      $('#edit-posting').attr('action','/admin/postings/' + postingId);
+      $('#edit-posting').submit();
+    });
+
+    $('.reject-posting').click(function() {
+      var postingId = $(this).attr('data-id');
+      $('#edit-posting #posting-status').val('reject');
+      $('#edit-posting').attr('action','/admin/postings/' + postingId);
+      $('#edit-posting').submit();
+    });
+
+    $('.pending-posting').click(function() {
+      var postingId = $(this).attr('data-id');
+      $('#edit-posting #posting-status').val('pending');
+      $('#edit-posting').attr('action','/admin/postings/' + postingId);
+      $('#edit-posting').submit();
+    });
+
+
+
+  });
+
+</script>
+
+

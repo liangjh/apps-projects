@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120630192402) do
+ActiveRecord::Schema.define(:version => 20120701165926) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -82,13 +82,13 @@ ActiveRecord::Schema.define(:version => 20120630192402) do
   create_table "postings", :force => true do |t|
     t.text     "content"
     t.string   "status"
-    t.integer  "votes"
     t.integer  "user_id"
     t.integer  "saint_id"
     t.string   "posting_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "anonymous",    :default => false
+    t.integer  "votes",        :default => 0
   end
 
   add_index "postings", ["saint_id"], :name => "index_postings_on_saint_id"

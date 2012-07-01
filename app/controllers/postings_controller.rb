@@ -18,10 +18,21 @@ class PostingsController < ApplicationController
   def index
     #// Retrieve page number, and return postings
     @page = params[:page].nil? ? 1 : params[:page]
+    @sort_by = params[:sort_by].nil? ? "date" : params[:sort_by]
     @saint_id = params[:saint_id]
 
     #// Retrieve all within page (using kaminari gem)
-    @postings = Posting.by_saint_id(@saint_id).sort_by_create.page(@page).per(POSTINGS_PER_PAGE)
+    #// Choose sorting methodology
+    #// We'll sort either by "date" or "popular" (popularity, based on # of votes)
+    if (@sort_by == "popular")
+      @postings = Posting.by_saint_id(@saint_id).by_visible_status.includes(:user).
+                          sort_by_popular.
+                          page(@page).per(POSTINGS_PER_PAGE)
+    else
+      @postings = Posting.by_saint_id(@saint_id).by_visible_status.includes(:user).
+                          sort_by_create.
+                          page(@page).per(POSTINGS_PER_PAGE)
+    end
 
     #// Render plain, w/o layout, since it'll be inset dynamically into existing page
     render :template => 'postings/index', :layout => false
@@ -44,7 +55,7 @@ class PostingsController < ApplicationController
     anonymous = params[:anonymous]
 
     user_id  = current_user.id
-    posting  = Posting.new(:status => Posting::STATUS_PENDING, :anonymous => ("true" == anonymous),
+    posting  = Posting.new(:status => Posting::STATUS_ACCEPT, :anonymous => ("true" == anonymous),
                            :user_id => user_id, :saint_id => saint_id, :content => content)
 
     #// Run validations; save posting if valid
@@ -58,17 +69,33 @@ class PostingsController < ApplicationController
     end
 
   end
+
   #// Submits a 'like' for this posting
   def like
     posting_id = params[:id]
     saint_id = params[:saint_id]
 
     #// For now, let anyone submit any number of likes - in the future we'll add uniqueness checks
-    if (posting_id && saint_id)
+    if (posting_id)
       posting = Posting.find(posting_id.to_i)
-      posting.votes = 0 if (posting.votes.nil?)
-      posting.votes += 1
-      posting.save
+      votes = posting.votes
+      votes = 0 if (posting.votes.nil?)
+      votes += 1
+      posting.update_attribute(:votes, votes)
+      render :json => {"success" => true}.to_json
+    else
+      render :json => {"success" => false, "errors" => ["Could not find saint or posting."]}.to_json
+    end
+  end
+
+  #// Flags a posting as inappropriate
+  def flag
+    posting_id = params[:id]
+    saint_id = params[:saint_id]
+
+    if (posting_id)
+      posting = Posting.find(posting_id.to_i)
+      posting.update_attribute(:status, Posting::STATUS_PENDING)
       render :json => {"success" => true}.to_json
     else
       render :json => {"success" => false, "errors" => ["Could not find saint or posting."]}.to_json
@@ -76,7 +103,6 @@ class PostingsController < ApplicationController
 
 
   end
-
 
 end
 

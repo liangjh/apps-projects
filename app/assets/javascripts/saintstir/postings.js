@@ -6,10 +6,11 @@
 //
 
 
-// PostingApp object, with postingType
+// PostingApp object, with
 PostingApp = function(saintId) {
   this.saintId = saintId;
   this.currentPage = 1;
+  this.currentSortBy = 'date';
 }
 
 // Initializer
@@ -21,25 +22,39 @@ PostingApp.prototype.init = function() {
 }
 
 // Retrieve content for a given page
-PostingApp.prototype.getContent = function(pageNum) {
+PostingApp.prototype.getContent = function(pageNum, sortBy) {
   if (pageNum != null) { this.currentPage = pageNum; }
-  this.clearFormMsg();  // clear any messages from forlm
+  if (sortBy != null) { this.currentSortBy = sortBy; }
+  this.clearActionStatus();  // clear any action status messages
   var paObj = this;
-  $.get(paObj.getServerUri(), {page: this.currentPage},
+  $.get(paObj.getServerUri(), {page: this.currentPage, sort_by: this.currentSortBy},
         function(data) {
           $('#posting-content').html(data);
           paObj.bindPageLinks();
+          paObj.bindSortLinks();
           paObj.bindLikeLinks();
+          paObj.bindFlagLinks();
         });
 }
 
-// Bind page links to new content (pagination)
+// Bind pagination links
 PostingApp.prototype.bindPageLinks = function() {
   //  Bind listeners to each link in the paginator for navigation
   var paObj = this;
   $('.page-link').click(function() {
+    paObj.clearActionStatus();
     var pNum = $(this).attr('data-id');
-    paObj.getContent(pNum);
+    paObj.getContent(pNum, null);
+  });
+}
+
+// Bind sort order links
+PostingApp.prototype.bindSortLinks = function() {
+  var paObj = this;
+  $('.sort-order').click(function() {
+    paObj.clearActionStatus();
+    var sortOrder = $(this).attr('data-id');
+    paObj.getContent(null, sortOrder);
   });
 }
 
@@ -47,10 +62,25 @@ PostingApp.prototype.bindPageLinks = function() {
 PostingApp.prototype.bindLikeLinks = function() {
   var paObj = this;
   $('.like-button').click(function() {
+    paObj.clearActionStatus();
     var postId = $(this).attr('data-id');
     $.post(paObj.getLikeUri(postId), function(data) {
       if (data.success) {
-        paObj.getContent(null);
+        paObj.getContent(null, null);
+      }
+    });
+  });
+}
+
+// Bind 'flag' links
+PostingApp.prototype.bindFlagLinks = function() {
+  var paObj = this;
+  $('.flag-button').click(function() {
+    paObj.clearActionStatus();
+    var postId = $(this).attr('data-id');
+    $.post(paObj.getFlagUri(postId), function(data) {
+      if (data.success) {
+        $('#action-status').html("<div class='alert alert-success'>We have received your request to flag this posting, and will review as soon as possible.  Thank you!</div>");
       }
     });
   });
@@ -81,7 +111,9 @@ PostingApp.prototype.bindFormSubmit = function() {
 
 // Bind form's cancel button to clear the contents of the form
 PostingApp.prototype.bindFormCancel = function() {
+  paObj = this;
   $('#cancel-posting').click(function() {
+    paObj.clearActionStatus();
     $('#posting-data').val('');
   });
 }
@@ -101,8 +133,8 @@ PostingApp.prototype.failureMsg = function(errorArray) {
   $('#action-status').html(failureMsgHtml);
 }
 
-PostingApp.prototype.clearFormMsg = function() {
-  $('#action-status' + this.postingType).html('');
+PostingApp.prototype.clearActionStatus = function() {
+  $('#action-status').html('');
 }
 
 // Handles the cancel functionality
@@ -111,13 +143,15 @@ PostingApp.prototype.cancel = function() {
   $('#posting-data').val('');
 }
 
+// All URI helpers
 PostingApp.prototype.getServerUri = function() {
   return '/saints/' + this.saintId + '/postings';
 }
-
 PostingApp.prototype.getLikeUri = function(postingId) {
   return '/saints/' + this.saintId + '/like_posting/' + postingId;
 }
-
+PostingApp.prototype.getFlagUri = function(postingId) {
+  return '/saints/' + this.saintId + '/flag_posting/' + postingId;
+}
 
 
