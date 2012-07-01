@@ -1,5 +1,9 @@
 
 /*
+
+  NOTE: THIS IS NOT BEING USED !!!  ARCHIVED FOR LATER IMPLEMENTATION 
+  OF BACKBONE - WE'RE NOW JUST USING PLAIN JQUERY AND OO JAVASCRIPT
+
   --- Postings, integrated into backbone ---
     The backbone and underscore frameworks are used for client-server communication over ajax
 */

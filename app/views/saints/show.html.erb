@@ -26,8 +26,7 @@
         <%# <li><a href="#bio" data-toggle="tab">Biography</a></li> %>
         <li><a href="#quotes" data-toggle="tab">Quotes</a></li>
         <li><a href="#prayers" data-toggle="tab">Prayers</a></li>
-        <li><a href="#your_stories" data-toggle="tab">Your Stories</a></li>
-        <li><a href="#your_prayers" data-toggle="tab">Your Prayers</a></li>
+        <li><a href="#wall" data-toggle="tab">Wall</a></li>
       </ul>
 
       <div class="tab-content">
@@ -56,17 +55,13 @@
         </div>
 
         <!--// Section: Stories (User) -->
-        <div class="tab-pane" id="your_stories" style="padding:7px;">
-          <%= render :partial => "saints/postings", :locals => { :posting_type => Posting::TYPE_STORY } %>
+        <div class="tab-pane" id="wall" style="padding:7px;">
+          <%= render :partial => "postings/postings", :locals => { :saint_id => @saint.id } %>
         </div>
 
-        <!--// Section: Prayers (User) -->
-        <div class="tab-pane" id="your_prayers" style="padding:7px;">
-          <%#= render :partial => "saints/postings", :locals => { :posting_type => Posting::TYPE_PRAYER } %>
-        </div>
-      </div>
     </div>
   </div>
+
 
 
 </div>

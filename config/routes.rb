@@ -24,12 +24,12 @@ Saintstir::Application.routes.draw do
       get :blurb
     end
 
-    #//  Resources paths for managing postings (prayers or stories)
-    resources :postings, :only => [:create, :show, :index]
+    #// Posting actions (listing & create new)
+    resources :postings, :only => [:index, :create]
+    #// 'Like' a posting
+    match "/like_posting/:id" => "postings#like"
 
   end
-
-
 
   #//  Administrative / Editor Modules
   namespace :admin do

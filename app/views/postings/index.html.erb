@@ -1,5 +1,7 @@
 
+<%#// List of available postings %>
 
+<%#// Generate pagination using Kaminari gem %>
 <%= paginate @postings %>
 
 <% if (@postings.nil? || @postings.empty?) %>
@@ -7,10 +9,35 @@
 <% else %>
   <table class="table">
     <% @postings.each do |posting| %>
-      <tr><td><%=posting.content%></td></tr>
+      <tr>
+
+        <td>
+
+          <div style="position:relative">
+            <div style="position:absolute; top:0;right:0;">
+              <% if (!posting.votes.nil? && posting.votes > 0) %>
+                <span class="badge badge-success"><%=posting.votes%></span>
+              <% end %>
+              <a href="#" class="like-button" data-id="<%=posting.id%>"><i class="icon-thumbs-up"/></a>
+            </div>
+            <b>
+              <% if (!posting.anonymous) %>
+                <%= posting.user.username %>
+              <% else %>
+                Anonymous
+              <% end %>
+            </b>
+            wrote<%=posting.created_at.nil? ?  "" : " (#{posting.created_at.strftime('%m/%d/%Y')})"%>:
+            <br/><br/>
+
+            <%#// Retain formatting - transform newlines to <br/> tags - but we don't want rails to escape the HTML %>
+            <%=raw(posting.content_formatted)%>
+
+          </div>
+        </td>
+      </tr>
     <% end %>
   </table>
-
 <% end %>
 
 
