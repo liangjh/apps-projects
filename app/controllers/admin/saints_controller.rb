@@ -13,10 +13,15 @@ class Admin::SaintsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :check_super_user  #//  administrative pages only for super users
 
-  # Display list of available saints
+  #// for pagination
+  SAINTS_PER_PAGE = 10
+
+  # Display list of available saints - we implement pagination here as well
   # GET /saints
   def index
-    @saints = Saint.all
+    @page = (params[:page] || session[:saints_page] || "1")
+    session[:saints_page] = @page
+    @saints = Saint.sort_by_symbol.page(@page).per(SAINTS_PER_PAGE)
   end
 
   # Return form to create a new saint

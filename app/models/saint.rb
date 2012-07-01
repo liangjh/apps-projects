@@ -20,6 +20,7 @@ class Saint < ActiveRecord::Base
 
   #//  Scopes
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
+  scope :sort_by_symbol, order("symbol ASC")
 
   #//  Given a meta key code, return the associated metadata_value for this saint
   #//  Retrieve map of all values first, then retrieve by key
