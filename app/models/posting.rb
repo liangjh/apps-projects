@@ -25,7 +25,7 @@ class Posting < ActiveRecord::Base
   scope :by_status_accept, where(:status => STATUS_ACCEPT)
   scope :by_saint, lambda { |saint| where(:saint_id => saint.id) }
   scope :by_saint_id, lambda { |saint_id| where(:saint_id => saint_id) }
-  scope :sort_by_create, order("created_at DESC")
+  scope :sort_by_create, order("id DESC")
 
   #// Validate existence and within set of values
   validates :content, :presence => true
