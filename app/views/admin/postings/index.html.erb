@@ -26,7 +26,7 @@
     <tbody>
     <% @postings.each do |posting| %>
       <tr>
-        <td><b><%=posting.user.username%></b><br/><%=(posting.created_at.nil? ? "" : posting.created_at.strftime('%m/%d/%Y'))%></td>
+        <td><b><%=(posting.user.nil? ? "Unknown" : posting.user.username)%></b><br/><%=(posting.created_at.nil? ? "" : posting.created_at.strftime('%m/%d/%Y'))%></td>
         <td><%=raw(posting.content_formatted)%></td>
         <td nowrap>
           <a href="#" class="btn btn-info accept-posting" data-id="<%=posting.id%>">Accept</a>&nbsp;&nbsp;

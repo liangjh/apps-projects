@@ -6,9 +6,7 @@
 #//
 
 class PostingsController < ApplicationController
-
-  # do explicit checks in data
-  # before_filter :check_logged_in, :only => [:create_prayer, :create_story]
+  before_filter :check_logged_in, :only => [:create, :like, :flag]
 
   #// Number of postings per "page" on the saint profile page
   POSTINGS_PER_PAGE = 5
@@ -43,12 +41,6 @@ class PostingsController < ApplicationController
   #// passing in a type
   def create
 
-    #// check whether user is logged in - if not, return an error
-    if (!logged_in?)
-      render :json => {"success" => false, "errors" => ["You must be logged into Saintstir to post a prayer"]}.to_json
-      return
-    end
-
     #// Retrieve all params to create a posting
     saint_id = params[:saint_id]
     content  = params[:posting_data]
@@ -63,9 +55,11 @@ class PostingsController < ApplicationController
 
     #// Render in json,
     if (posting.errors.size > 0)
-      render :json => {"success" => false, "errors" => posting.errors.messages.values.flatten}.to_json
+      render :json => {"success" => false, "errors" => posting.errors.messages.values.flatten,
+                       "message" => "Click on 'Write on wall' above and revise - don't worry, your stuff is still there!"}.to_json
     else
-      render :json => {"success" => true}.to_json
+      render :json => {"success" => true,
+                       "message" => "Got it!  Thanks for posting!"}.to_json
     end
 
   end
@@ -82,9 +76,10 @@ class PostingsController < ApplicationController
       votes = 0 if (posting.votes.nil?)
       votes += 1
       posting.update_attribute(:votes, votes)
-      render :json => {"success" => true}.to_json
+      render :json => {"success" => true,
+                       "message" => "Thanks!  We're glad you liked this wall post."}.to_json
     else
-      render :json => {"success" => false, "errors" => ["Could not find saint or posting."]}.to_json
+      render :json => {"success" => false, "errors" => ["Could not find saint or posting"]}.to_json
     end
   end
 
@@ -96,13 +91,24 @@ class PostingsController < ApplicationController
     if (posting_id)
       posting = Posting.find(posting_id.to_i)
       posting.update_attribute(:status, Posting::STATUS_PENDING)
-      render :json => {"success" => true}.to_json
+      render :json => {"success" => true,
+                       "message" => "We have received your request to flag this posting, and will review it as soon as possible.  Thanks!"}.to_json
     else
       render :json => {"success" => false, "errors" => ["Could not find saint or posting."]}.to_json
     end
-
-
   end
+
+
+  #// if user is not logged in, will return a json error (for rendering on client-side)
+  def check_logged_in
+    if (!logged_in?)
+      render :json => {"success" => false,
+                       "errors" => ["You must be logged in to do this"],
+                       "message" => "Please sign in or register on Saintstir using the links above."}.to_json
+    end
+    logged_in?
+  end
+
 
 end
 

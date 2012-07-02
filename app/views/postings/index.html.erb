@@ -40,7 +40,7 @@
             </div>
             <b>
               <% if (!posting.anonymous) %>
-                <%= posting.user.username %>
+                <%= (posting.user.nil? ? "Unknown" : posting.user.username) %>
               <% else %>
                 Anonymous
               <% end %>

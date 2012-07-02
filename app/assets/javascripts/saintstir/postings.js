@@ -68,6 +68,9 @@ PostingApp.prototype.bindLikeLinks = function() {
       if (data.success) {
         paObj.getContent(null, null);
       }
+      else {
+        paObj.failureMsg(data.errors, data.message)
+      }
     });
   });
 }
@@ -80,7 +83,10 @@ PostingApp.prototype.bindFlagLinks = function() {
     var postId = $(this).attr('data-id');
     $.post(paObj.getFlagUri(postId), function(data) {
       if (data.success) {
-        $('#action-status').html("<div class='alert alert-success'>We have received your request to flag this posting, and will review as soon as possible.  Thank you!</div>");
+        paObj.successMsg(data.message);
+      }
+      else {
+        paObj.failureMsg(data.errors, data.message);
       }
     });
   });
@@ -98,12 +104,12 @@ PostingApp.prototype.bindFormSubmit = function() {
                   // response was successful:  (1) close modal, (2) clear form, (3) display in flash
                   $('#submit-posting').val('');
                   $('#posting-modal').modal('hide');
-                  paObj.successMsg();
+                  paObj.postingSuccessMsg(data.message);
                 }
                 else {
                   // response was failure: (1) close modal, (2) do NOT clear form, (3) display errors in flash_error
                   $('#posting-modal').modal('hide');
-                  paObj.failureMsg(data.errors);
+                  paObj.postingFailureMsg(data.errors, data.message);
                 }
               });
   });
@@ -119,17 +125,16 @@ PostingApp.prototype.bindFormCancel = function() {
 }
 
 // When a posting has been successfully submitted, display a "success" message
-PostingApp.prototype.successMsg = function() {
-  var successMsgHtml = "<div class='alert alert-success'>Your posting has been received.  We'll notify you as soon as it has been approved.  Thanks!</div>";
+PostingApp.prototype.successMsg = function(message) {
+  var successMsgHtml = "<div class='alert alert-success'>" + message + "</div>";
   $('#action-status').html(successMsgHtml);
 }
 
 // When a posting has been submitted w/ failures, display all failure messages
-PostingApp.prototype.failureMsg = function(errorArray) {
+PostingApp.prototype.failureMsg = function(errorArray, message) {
   var failureMsgHtml = "<div class='alert alert-error'>"
-  failureMsgHtml += "Oops!  Your posting couldn't be submitted, because: \n";
   for (i = 0; i < errorArray.length; i++) { failureMsgHtml += errorArray[i] + ", <br/>"; }
-  failureMsgHtml += "Click on 'Write on wall' above and revise - don't worry, your stuff is still there!</div>";
+  failureMsgHtml += message + "</div>";
   $('#action-status').html(failureMsgHtml);
 }
 
@@ -137,7 +142,7 @@ PostingApp.prototype.clearActionStatus = function() {
   $('#action-status').html('');
 }
 
-// Handles the cancel functionality
+// Clears posting data
 // The modal binding already takes care of closing the modal window
 PostingApp.prototype.cancel = function() {
   $('#posting-data').val('');
