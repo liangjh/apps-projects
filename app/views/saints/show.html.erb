@@ -1,0 +1,68 @@
+
+
+<div class="row">
+
+  <div class="span4">
+
+    <!--// Saint element (magnified) -->
+    <div class="element-magnified <%=SaintInsigniaFilter.get_color(@saint)%>">
+      <h3><%=SaintInsigniaFilter.get_insignia(@saint)[0]%>&nbsp;</h3><br/>
+      <span class="saint-title"><%=@saint.symbol%></span><br/><br/>
+      <span class="saint-subtitle"><%=@saint.get_metadata_value(MetadataKey::NAME)%></span>
+    </div>
+
+    <!--// Flickr photoset / reel -->
+    <%= render :partial => "saints/photoreel" %>
+
+  </div>
+
+  <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
+  <div class="span8">
+    <div class="tabbable">
+
+      <!--// All navigation tabs available -->
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#about" data-toggle="tab">About</a></li>
+        <%# <li><a href="#bio" data-toggle="tab">Biography</a></li> %>
+        <li><a href="#quotes" data-toggle="tab">Quotes</a></li>
+        <li><a href="#prayers" data-toggle="tab">Prayers</a></li>
+        <li><a href="#wall" data-toggle="tab">Wall</a></li>
+      </ul>
+
+      <div class="tab-content">
+
+        <!--// Section: About -->
+        <div class="tab-pane active" id="about" style="padding:7px">
+          <%= render :partial => "saints/about" %>
+        </div>
+
+        <!--// Section: Quotes -->
+        <div class="tab-pane" id="quotes" style="padding:7px;">
+          <table class="table">
+            <% @saint.get_metadata_values(MetadataKey::QUOTES).each do |quote| %>
+              <tr><td><%=quote%></td></tr>
+            <% end %>
+          </table>
+        </div>
+
+        <!--// Section: Prayers -->
+        <div class="tab-pane" id="prayers" style="padding:7px;">
+          <table class="table">
+            <% @saint.get_metadata_values(MetadataKey::NOVENASPRAYERS).each do |pry| %>
+              <tr><td><%=pry%></td></tr>
+            <% end %>
+          </table>
+        </div>
+
+        <!--// Section: Stories (User) -->
+        <div class="tab-pane" id="wall" style="padding:7px;">
+          <%= render :partial => "postings/postings", :locals => { :saint_id => @saint.id } %>
+        </div>
+
+    </div>
+  </div>
+
+
+
+</div>
+

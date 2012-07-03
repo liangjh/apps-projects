@@ -1,0 +1,56 @@
+
+<h2>Saint Roster</h2>
+<br/>
+<%= paginate @saints %>
+<br/>
+<%= link_to 'Create New Saint', new_admin_saint_path, :class => "btn btn-primary" %>
+<br/><br/>
+<table class="table" width="600">
+  <thead>
+  <tr>
+    <th>Symbol</th>
+    <th>Name</th>
+    <th>Last Updated</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+<%
+  @saints.each do |saint|
+    meta_name = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :name)
+    meta_suffix = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :suffix)
+%>
+  <tr>
+    <td><%= link_to saint.symbol, edit_admin_saint_path(saint) %></td>
+    <td><%= (meta_name.empty? ? "N/A" : meta_name[0].value) %> <%= (meta_suffix.empty? ? "" : meta_suffix[0].value) %></td>
+    <td><%= saint.last_modified.strftime("%b %d, %Y") %></td>
+    <td>
+      <%= link_to 'Edit', edit_admin_saint_path(saint), :class => "btn btn-info" %>&nbsp;&nbsp;
+      <%= link_to 'Delete', admin_saint_path(saint), :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-warning" %>
+    </td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+<%= link_to 'Create New Saint', new_admin_saint_path, :class => "btn btn-primary" %>
+<br/><br/>
+
+<script>
+  $(document).ready(function() {
+    // bind pagination links
+    $('.page-link').click(function(){
+      var pageNum = $(this).attr('data-id');
+      var uri = '/admin/saints?page=' + pageNum;
+      window.location = uri;
+    });
+
+  });
+
+</script>
+
+
+
+
+

@@ -1,0 +1,102 @@
+
+/*
+
+  NOTE: THIS IS NOT BEING USED !!!  ARCHIVED FOR LATER IMPLEMENTATION 
+  OF BACKBONE - WE'RE NOW JUST USING PLAIN JQUERY AND OO JAVASCRIPT
+
+  --- Postings, integrated into backbone ---
+    The backbone and underscore frameworks are used for client-server communication over ajax
+*/
+
+
+// Posting App - backbone definition
+var PostingApp = {
+  Views: {},
+  Controllers: {},
+  init: function() {
+    new PostingApp.Controllers.Postings();
+    Backbone.history.start();
+  }
+}
+
+// -- MODEL --
+// The backbone model's rest url corresponds to a given saint id and type -- i.e. /saints/<saint_id>/postings/<id>
+var Posting = Backbone.Model.extend({
+  initialize: function() { console.log('hello, posting initialized...'); },
+  url: function() {
+    var baseUrl = "/saints/1/postings"
+    if (this.isNew()) { return baseUrl; }
+    return (baseUrl + "/" + this.id);
+  }
+});
+
+// -- CONTROLLER --
+PostingApp.Controllers.Postings = Backbone.Router.extend({
+  routes: {
+    "": "index",
+    "new": "newPosting"
+  },
+  index: function() {
+    $.getJSON("/saints/1/postings", function(data) {
+      if (data) {
+        var postings = _(data).map(function(i) { return new Posting(i); });
+        new PostingApp.Views.Index({ postings: postings });
+      }
+      else {
+        new Error({ messsage: "Error loading postings."});
+      }
+    });
+  },
+  newPosting: function() {
+    console.log('controller newPosting invoked..');
+    new PostingApp.Views.Edit({ model: new Posting() });
+  }
+});
+
+//
+// -- VIEWS --
+//
+
+//  View: index
+PostingApp.Views.Index = Backbone.View.extend({
+  initialize: function() {
+    this.postings = this.options.postings;
+    this.render();
+  },
+  render: function() {
+    if (this.postings.length > 0) {
+      var out = "";
+      _(this.postings).each(function(item) {
+        out += "<tr><td>" + item.attributes.content + "<td></tr>";
+      });
+    }
+    else {
+      out += "<tr><td>No postings yet!</td></tr>";
+    }
+    $(this.el).html(out);
+    $('#posting-content').html(this.el);
+  }
+});
+
+//  View: edit / new
+PostingApp.Views.Edit = Backbone.View.extend({
+  el: "#posting-form",
+  events: {
+    "click #submit-posting": "save"
+  },
+  initialize: function() {
+    console.log('invoking postingapp - edit.initialize');
+    this.render();
+  },
+  render: function() {
+    $('#posting-modal').modal('show');
+  },
+  save: function() {
+    var content = $('#posting-data')[0].value
+    console.log('in backbone SAVE, content = ' + content);
+    return false;
+  }
+});
+
+
+

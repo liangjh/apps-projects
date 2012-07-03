@@ -1,0 +1,73 @@
+
+<%#// List of available postings %>
+
+<%#// Generate pagination using Kaminari gem %>
+<table border="0" width="100%">
+  <tr>
+    <td><%= paginate @postings %></td>
+    <td align="right">
+      <% if (@sort_by == 'date') %>
+        Date
+      <% else %>
+        <a href="#" class="sort-order" data-id="date">Date</a>
+      <% end %>
+      &nbsp;|&nbsp;
+      <% if (@sort_by == 'popular') %>
+        Most Popular
+      <% else %>
+        <a href="#" class="sort-order" data-id="popular">Most Popular</a>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<% if (@postings.nil? || @postings.empty?) %>
+  <i>No postings yet, please submit one!</i>
+<% else %>
+  <table class="table">
+    <% @postings.each do |posting| %>
+      <tr>
+
+        <td>
+
+          <div style="position:relative">
+            <div style="position:absolute; top:0;right:0;">
+              <% if (!posting.votes.nil? && posting.votes > 0) %>
+                <span class="badge badge-success num-votes"><%=posting.votes%></span>
+              <% end %>
+              <a href="#" class="like-button" data-id="<%=posting.id%>"><i class="icon-thumbs-up"/></a>
+              <a href="#" class="flag-button" data-id="<%=posting.id%>"><i class="icon-flag"/></a>
+            </div>
+            <b>
+              <% if (!posting.anonymous) %>
+                <%= (posting.user.nil? ? "Unknown" : posting.user.username) %>
+              <% else %>
+                Anonymous
+              <% end %>
+            </b>
+            wrote<%=posting.created_at.nil? ?  "" : " (#{posting.created_at.strftime('%m/%d/%Y')})"%>:
+            <br/><br/>
+
+            <%#// Retain formatting - transform newlines to <br/> tags - but we don't want rails to escape the HTML %>
+            <%=raw(posting.content_formatted)%>
+
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <script>
+    // Configure tooltips on actions
+    $(document).ready(function(){
+      $('.num-votes').tooltip({title: "Number of 'likes' this posting has received"});
+      $('.like-button').tooltip({title: "Click to 'like' this posting"});
+      $('.flag-button').tooltip({title: "Click to flag this posting for offensive or inappropriate content"});
+    });
+  </script>
+<% end %>
+
+
+
+
+
+

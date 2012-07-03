@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120307070728) do
+ActiveRecord::Schema.define(:version => 20120701165926) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(:version => 20120307070728) do
   add_index "attribs", ["code"], :name => "index_attribs_on_code"
   add_index "attribs", ["name"], :name => "index_attribs_on_name"
 
+  create_table "authentications", :force => true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authentications", ["user_id"], :name => "index_authentications_on_user_id"
+
   create_table "metadata_keys", :force => true do |t|
     t.string   "code",        :null => false
     t.string   "name",        :null => false
@@ -67,6 +78,23 @@ ActiveRecord::Schema.define(:version => 20120307070728) do
 
   add_index "metadata_values", ["metadata_key_id"], :name => "index_metadata_values_on_metadata_key_id"
   add_index "metadata_values", ["saint_id"], :name => "index_metadata_values_on_saint_id"
+
+  create_table "postings", :force => true do |t|
+    t.text     "content"
+    t.string   "status"
+    t.integer  "user_id"
+    t.integer  "saint_id"
+    t.string   "posting_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "anonymous",    :default => false
+    t.integer  "votes",        :default => 0
+  end
+
+  add_index "postings", ["saint_id"], :name => "index_postings_on_saint_id"
+  add_index "postings", ["status"], :name => "index_postings_on_status"
+  add_index "postings", ["user_id"], :name => "index_postings_on_user_id"
+  add_index "postings", ["votes"], :name => "index_postings_on_votes"
 
   create_table "saint_attribs", :force => true do |t|
     t.integer  "saint_id",   :null => false
@@ -109,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20120307070728) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "super_user"
+    t.string   "username"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

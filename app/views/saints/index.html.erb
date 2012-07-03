@@ -1,34 +1,170 @@
 
-<h2>Saint Roster</h2>
-<br/><br/>
-<table class="table" width="600">
-  <thead>
-  <tr>
-    <th>Symbol</th>
-    <th>Name</th>
-    <th>Last Updated</th>
-    <th></th>
-    <th></th>
-  </tr>
-</thead>
-<tbody>
+<%# //////------ SAINTSTIR INTEGRATION W/ ISOTOPE ------//////  %>
+
 <%
-  @saints.each do |saint|
-    meta_name = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :name)
-    meta_suffix = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :suffix)
+# Since we are returning the entire set for now, we can cache all generated content
+cache [CacheConfig::PARTITION_SAINTS_ISOTOPE] do %>
+
+  <!--// Bread crumbs section :: list of searched filters -->
+  <div class="row">
+    <div class="span2">&nbsp;&nbsp;</div>
+    <div id="bread_crumbs" class="span8">
+   </div>
+  </div>
+
+  <div class="row">
+
+    <!--// List of all available discrete filters -->
+    <div id="discrete_filters" class="span2">
+
+      <!--// "Show all" link -->
+      <p><a href="#" class="btn" data-filter="*">Show All</a></p>
+
+      <!--// Render all available filters, by category -->
+      <% @attrib_categories.each do |category|
+          #// if category code DNE in list of existing filters, the skip
+          next if (!@attribs_all.has_key?(category.code))
+      %>
+        <p>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% @attribs_all[category.code].each do |attrib| %>
+              <a href="#" data-filter=".<%=attrib.code%>"><%=attrib.name%></a>
+            <% end %>
+          </ul>
+        </div>
+        </p>
+      <% end %>
+    </div>
+
+    <!--// All available saints -->
+    <div id="isotope_content" class="span10 clickable clearfix">
+    <%
+      @saints.each do |saint|
+         disc_filters = saint.attribs.map(&:code).join(" ")
+    %>
+        <div class="element <%=SaintInsigniaFilter.get_color(saint)%> <%=disc_filters%>"
+            data-symbol="<%=saint.id%>">
+            <%=SaintInsigniaFilter.get_insignia(saint)[0]%><br/>
+            <h3 class="symbol"><%=saint.symbol%></h3>
+          <br/>
+          <p class="name"><%=saint.get_metadata_value(MetadataKey::NAME)%></p>
+        </div>
+    <% end %>
+    </div>
+
+  </div>
+
+  <script>
+
+    //
+    //  --- PAGE SCRIPTS / EVENT BINDINGS ---
+    //
+
+    // -- Twitter Bootstrap --
+    // Dropdown Lists Initialization
+    $('.dropdown-toggle').dropdown()
+
+    // -- Isotope Plugin Initialization --
+
+    // initialize isotope plugin
+    var $container = $('#isotope_content');
+    $container.isotope({
+      itemSelector: '.element'
+    });
+
+    // Filter List -- elements to perform queries for
+    var $filterList = new Array();
+
+    function appendFilter(selector, name) {
+      if ($.inArray([selector, name], $filterList) < 0) { $filterList.push([selector, name]); }
+      runFilters();
+    }
+
+    function removeFilter(selector) {
+      $filterList = $.grep($filterList, function(n) { return (n[0] != selector); });
+      runFilters();
+    }
+
+    function runFilters() {
+      $container.isotope({ filter: $.map($filterList, function(e,i) {return e[0]; }).join('')});
+      renderBreadCrumbs();
+    }
+
+    function renderBreadCrumbs() {
+      var crumblist = new Array();
+      $.each($filterList, function(i,v) {
+        if (v[0] != '*') {
+          crumblist.push("<a class='btn btn-info' href='#'  data-filter='" + v[0] + "'><i class='icon-remove'/> " + v[1] + "</a>")
+        }
+      });
+      $('#bread_crumbs').html(crumblist.join(" "));
+
+      //  Event Binding for REMOVING FILTERS from breadcrumbs section
+      $('#bread_crumbs a').click(function() {
+        var selector = $(this).attr('data-filter');
+        removeFilter(selector);
+      });
+    }
+
+    function showAll() {
+      $filterList = new Array();
+      $filterList.push(["*", ""]);
+      runFilters();
+    }
+
+    //  Event Binding for ADDING FILTERS
+    $('#discrete_filters a').click(function(){
+      var selector = $(this).attr('data-filter');
+      if (selector == undefined) { return; } // exit out, if DNE
+      else if (selector == '*') { showAll(); }
+      else {
+        var sname = $(this).text();
+        appendFilter(selector, sname);
+      }
+    });
+
+    //
+    //  --- HOVER / POPOVER BEHAVIORS ---
+    //      (ajax integration)
+
+    //  The current saint that the mouseover is hovering over
+    //  Since ajax requests are coming in asynchronously at unpredictable times,
+    //  we need to check that our current data is not
+    var $currSaintId = null;
+
+    $('#isotope_content .element').mouseenter(function() {
+      var currElem = $(this);
+      var saintId = currElem.attr('data-symbol');
+      $currSaintId = saintId;
+      $.get(('/saints/' + saintId + '/blurb'),
+        function(data){
+          $('.popover').each(function(i,e) { $(e).popover('hide'); });
+          if (saintId == $currSaintId) {
+            currElem.popover({content: data});
+            currElem.popover('show');
+          }
+        });
+    });
+
+    $('#isotope_content .element').mouseleave(function() {
+      $currSaintId = null;
+      $('.popover').each(function(i,e) { $(e).popover('hide'); });
+    });
+
+    //  --- CLICK BEHAVIORS ---
+
+    //  Direct user to saint page upon click
+    $('#isotope_content .element').click(function() {
+        window.location = '/saints/' + $(this).attr('data-symbol');
+    });
+
+  </script>
+
+
+<%
+end
 %>
-  <tr>
-    <td><%= link_to saint.symbol, edit_saint_path(saint) %></td>
-    <td><%= (meta_name.empty? ? "N/A" : meta_name[0].value) %> <%= (meta_suffix.empty? ? "" : meta_suffix[0].value) %></td>
-    <td><%= saint.last_modified.strftime("%b %d, %Y") %></td>
-    <td><%= link_to 'Edit', edit_saint_path(saint) %></td>
-    <td><%= link_to 'Delete', saint, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</tbody>
-</table>
 
-<br />
 
-<%= link_to 'Create New Saint', new_saint_path %>
-<br/><br/>

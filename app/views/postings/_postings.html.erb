@@ -1,0 +1,64 @@
+
+<%# Saint Postings %>
+<%# Assumed local variables: (saint_id, posting_type) %>
+
+<table cellpadding="10">
+  <tr>
+    <% if (current_user) %>
+      <td nowrap>
+        <a href="#posting-modal" class="btn btn-primary" data-toggle="modal">Write on wall</a> <br/><br/>
+      </td>
+      <td>
+        Write a personal prayer request to this saint, or leave a story about how this saint has affected your life.
+        Please note that what you write will be visible to everyone on Saintstir &copy; (though you can choose to be anonymous).
+      </td>
+    <% else %>
+      <td colspan="2">
+        <div class="alert alert-info">
+          Hi there!  You're more than welcome to browse, but if you'd like to post on this saint's wall, you'll
+          need to create a Sainstir &copy; account.  It's easy - choose one of the following: <br/>
+          <%=link_to 'Sign in', new_user_session_path%> (you can use your Facebook, Google, or Twitter account), or <br/>
+          <%=link_to 'Register', new_user_registration_path%> (register with a Saintstir &copy; account)
+        </div>
+      </td>
+    <% end %>
+  </tr>
+  <%# If there are errors / notfications from the form, they will be placed in this container %>
+  <tr><td colspan="2" id="action-status"></td></tr>
+</table>
+
+
+<!--// Main content for the page (pagination + postings) -->
+<div id="posting-content">
+</div>
+
+
+<%# Postings form, implemented as a modal %>
+<div class="modal hide span8" id="posting-modal">
+    <form id="posting-form">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Write on Saint Wall</h3>
+      </div>
+      <div class="modal-body">
+        <textarea id="posting-data" name="posting_data" rows="15" class="span7"></textarea><br/>
+        <input type="checkbox" id="posting-anonymous" name="posting_anonymous" value="true"/> Make this posting anonymous
+      </div>
+      <div class="modal-footer">
+        <a id="cancel-posting" href="#" class="btn" data-dismiss="modal">Close</a>
+        <a id="submit-posting" href="#" class="btn btn-primary">Submit</a>
+      </div>
+  </form>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    //  Initialize the posting app, by type
+    var pa = new PostingApp(<%=saint_id%>);
+    pa.init();
+  });
+</script>
+
+
+

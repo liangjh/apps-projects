@@ -1,0 +1,34 @@
+<%# Saint Photoreel %>
+<%# Assumed parameters: @saint instance variable %>
+<%# We utilize the fancybox jquery plugin %>
+
+
+<%
+  sml_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_SQUARE_SMALL)
+  med_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_MEDIUM)
+%>
+<div class="saint-gallery">
+  <br/><br/>
+  <% med_pics.each_with_index do |pic,idx| %>
+    <a id="pic-<%=idx%>" href="<%=pic%>" class="fancybox-thumb">
+      <img src="<%=sml_pics[idx]%>"/>
+    </a>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function() {
+    $('.fancybox-thumb').fancybox({
+      prevEffect	: 'none',
+      nextEffect	: 'none',
+      helpers	: {
+        title	: {type: 'outside'},
+        overlay	: {opacity : 0.8, css : { 'background-color' : '#000' }},
+        thumbs	: {width	: 40, height	: 50},
+        buttons : {}
+      }
+    });
+    $('.fancybox-thumb').tooltip({title: 'click on thumbnails to see larger image'})
+  });
+</script>
+
+

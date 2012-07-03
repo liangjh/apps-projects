@@ -14,5 +14,10 @@
 /log/*.log
 /tmp
 
-# tags (vim dev_
+# tags 
 tags
+
+# DS_Store (is this a mac thing?)
+.DS_Store
+
+

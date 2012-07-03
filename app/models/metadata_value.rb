@@ -1,3 +1,4 @@
+require 'm_diffable'
 
 #//
 #// Metadata values represent free-form (user-entered) values for information fields
@@ -10,6 +11,9 @@
 
 
 class MetadataValue < ActiveRecord::Base
+
+  #//  Mixins
+  include MDiffable
 
   #//  Associations
   belongs_to :saint
@@ -52,9 +56,9 @@ class MetadataValue < ActiveRecord::Base
     #// All metadata values for this saint and key
     all_current_metadata_values = MetadataValue.by_saint_and_metadata_key(saint, metadata_key)
     #// All meta values to be added (in submitted but not in current)
-    meta_to_add = MDiffable.diff_op(metadata_values, all_current_metadata_values, false)
+    meta_to_add = diff_op(metadata_values, all_current_metadata_values, false)
     #// Existing meta values that need to be removed (in current but not in submitted)
-    meta_to_remove = MDiffable.diff_op(all_current_metadata_values, metadata_values, false)
+    meta_to_remove = diff_op(all_current_metadata_values, metadata_values, false)
 
     #// Perform removal for this metadata value set
     meta_to_add.each { |add| add.save! }

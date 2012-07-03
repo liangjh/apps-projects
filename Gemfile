@@ -2,13 +2,26 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
-gem 'mysql2'
 gem 'pg'
 gem 'json'
-gem 'newrelic_rpm'
+gem 'jquery-rails'
+gem 'newrelic_rpm' # monitoring
+gem 'quiet_assets' # remove asset pipeline requests
+gem 'flickraw' # flickr client
+gem 'dalli' # memcached client
+gem 'memcachier' # for memcachier add-on in heroku environment
+gem 'mongo' # mongodb plugin
+gem 'bson'
+gem 'bson_ext'
+gem 'kaminari' # pagination
+
+# Auth plugins
+gem 'devise'  # auth library (p1)
+gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -17,21 +30,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-gem 'devise'
-gem 'mongo'
-gem 'bson'
-gem 'bson_ext'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-#gem 'ruby-debug19'
+#// include debug only for development 
+group :development do
+  gem 'ruby-debug19'
+end
 
