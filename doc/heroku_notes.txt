@@ -10,7 +10,12 @@ DEPLOYMENT COMMANDS
 (edit this to set config settings for a given environment)
 
 
+Note: need to set the public key @ heroku
+  heroku keys:add ~/.ssh/id_rsa.pub
+
+ENVIRONMENT:
 > create
+> create remote git push repo
 > code push
 > remote git repo
 > db migrations (rake commands)
@@ -18,20 +23,16 @@ DEPLOYMENT COMMANDS
 
 STAGING:
   heroku create --stack cedar --remote staging
-  git push staging develop:master # pushes develop branch to staging env
+  git remote add heroku-staging git@heroku.com:saintstir-staging.git
+  git push heroku-staging develop:master # pushes develop branch to staging env
   git@heroku.com:saintstir-staging.git
   heroku run rake db:migrate --remote staging
   heroku ps --remote staging
 
-QA:
-  heroku create --stack cedar --remote qa
-  git push qa master
-  git@heroku.com:saintstir-qa.git
-  heroku run rake db:migrate --remote qa
-
 PRODUCTION:
   heroku create --stack cedar --remote production
-  git push production master
+  git remove add heroku-production git@heroku.com:saintstir-production.git
+  git push heroku-production master
   git@heroku.com:saintstir-production.git
   heroku run rake db:migrate --remote production
 
@@ -71,13 +72,13 @@ restore from backup (db dump):
   heroku pgbackups:restore DATABASE b251
 
 export via backup
-  curl -o latest.dump `heroku pgbackups:url --app=<appname>`  # use heroku pgbackups:url to get url
+  curl -o latest.dump `heroku pgbackups:url <backup_id> --app=<appname>`  # use heroku pgbackups:url to get url
   pg_restore --verbose --clean --no-acl --no-owner -h myhost -U myuser -d mydb latest.dump
     # pgrestore is a local command
 
 transfer db backup to another environment
   heroku pgbackups:capture --app myapp
-  heroku pgbackups:restore DATABASE `heroku pgbackups:url --app <from-app>` --app <to-app>
+  heroku pgbackups:restore DATABASE `heroku pgbackups:url <backups_id> --app <from-app>` --app <to-app>
 
 
 
