@@ -9,6 +9,7 @@ gem 'newrelic_rpm' # monitoring
 gem 'quiet_assets' # remove asset pipeline requests
 gem 'flickraw' # flickr client
 gem 'dalli' # memcached client
+gem 'memcachier' # for memcachier add-on in heroku environment
 gem 'mongo' # mongodb plugin
 gem 'bson'
 gem 'bson_ext'
