@@ -25,6 +25,15 @@ Saintstir::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
+  ActionMailer::Base.smtp_settings = {
+    :port           => 587,
+    :address        => 'smtp.mailgun.org',
+    :user_name      => 'postmaster@app2912649.mailgun.org',
+    :password       => '73c3j-42aow9',
+    :domain         => 'www.saintstir.com',
+    :authentication => :plain,
+  }
+  ActionMailer::Base.delivery_method = :smtp
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Do not compress assets
