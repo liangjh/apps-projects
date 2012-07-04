@@ -13,7 +13,7 @@
 //= require fancybox/jquery.fancybox.pack
 //= require isotope/jquery.isotope.min
 //= require saintstir/postings
-
+//= require saintstir/explore
 
 
 
