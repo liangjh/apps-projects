@@ -66,30 +66,27 @@
       window.location = uri;
     });
 
+    function postingAction(actionStatus, postingId) {
+      $('#edit-posting #posting-status').val(actionStatus);
+      $('#edit-posting').attr('action','/admin/postings/' + postingId);
+      $('#edit-posting').submit();
+    }
 
     //  Bind actions for Accept / Reject / Flag (Pending)
     $('.accept-posting').click(function() {
       var postingId = $(this).attr('data-id');
-      $('#edit-posting #posting-status').val('accept');
-      $('#edit-posting').attr('action','/admin/postings/' + postingId);
-      $('#edit-posting').submit();
+      postingAction('accept', postingId);
     });
 
     $('.reject-posting').click(function() {
       var postingId = $(this).attr('data-id');
-      $('#edit-posting #posting-status').val('reject');
-      $('#edit-posting').attr('action','/admin/postings/' + postingId);
-      $('#edit-posting').submit();
+      postingAction('reject', postingId);
     });
 
     $('.pending-posting').click(function() {
       var postingId = $(this).attr('data-id');
-      $('#edit-posting #posting-status').val('pending');
-      $('#edit-posting').attr('action','/admin/postings/' + postingId);
-      $('#edit-posting').submit();
+      postingAction('pending', postingId);
     });
-
-
 
   });
 
