@@ -31,7 +31,7 @@ Saintstir::Application.configure do
     :user_name      => 'postmaster@app2912649.mailgun.org',
     :password       => '73c3j-42aow9',
     :domain         => 'www.saintstir.com',
-    :authentication => :plain,
+    :authentication => :plain
   }
   ActionMailer::Base.delivery_method = :smtp
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }

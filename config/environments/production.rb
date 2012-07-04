@@ -54,6 +54,8 @@ Saintstir::Application.configure do
     :authentication => :plain,
   }
   ActionMailer::Base.delivery_method = :smtp
+  config.action_mailer.default_url_options = { :host => 'saintstir.com' }
+
 
 
   # Disable delivery errors, bad email addresses will be ignored
