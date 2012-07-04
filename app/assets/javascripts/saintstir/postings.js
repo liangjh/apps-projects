@@ -98,18 +98,19 @@ PostingApp.prototype.bindFormSubmit = function() {
   $('#submit-posting').click(function() {
     $.post(paObj.getServerUri(),
            {posting_data: $('#posting-data').val(),
-            anonymous: ($('#posting-anonymous').val() == 'true')},
+            anonymous: ($('#posting-anonymous').is(':checked') ? true : false)},
               function(data) {
                 if (data.success) {
                   // response was successful:  (1) close modal, (2) clear form, (3) display in flash
                   $('#submit-posting').val('');
                   $('#posting-modal').modal('hide');
-                  paObj.postingSuccessMsg(data.message);
+                  paObj.getContent();
+                  paObj.successMsg(data.message);
                 }
                 else {
                   // response was failure: (1) close modal, (2) do NOT clear form, (3) display errors in flash_error
                   $('#posting-modal').modal('hide');
-                  paObj.postingFailureMsg(data.errors, data.message);
+                  paObj.failureMsg(data.errors, data.message);
                 }
               });
   });

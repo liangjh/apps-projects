@@ -1,3 +1,4 @@
+require 'country_select.rb'
 
 #//
 #//  We're overriding default devise behavior, since we're integration
@@ -11,8 +12,6 @@ class RegistrationsController < Devise::RegistrationsController
     session[:omniauth] = nil unless @user.new_record?
   end
 
-
-  private
 
   #//  this method is called by create() and new() in devise - we're overriding to
   #//  provide some custom behavior to bind an authentication strategy with the current

@@ -1,0 +1,26 @@
+
+<%# Profile information - included by new and edit registrations %>
+<%# Expects local:  formobj (ref to form in block) %>
+
+  <h3>Your Profile Information</h3>
+  <br/>
+
+  <%= formobj.label :username %><i>(this will be your displayed nickname on the site)</i><br/>
+  <%= formobj.text_field :username %><br/><br/>
+
+  <label for="user_anonymous">
+    <%= formobj.check_box :anonymous %> <b>Anonymous</b>: check to remain anonymous on the site. Your username will by default not be displayed on the site (you can always change your mind of course)
+  </label>
+
+  <br/>
+  <%= formobj.label :state %>
+  <%= select :user, :location_state, us_states, {:prompt => "Select State"} %>
+  <%# us_states is defined in the registrations_helper.rb class %>
+
+  <%= formobj.label :country %>
+  <%= country_select :user, :location_country, {"Select Country" => ""} %>
+  <%# the helper country_select is defined in 'lib/country_select.rb', and adds convenience methods to FormHelper %>
+
+
+
+

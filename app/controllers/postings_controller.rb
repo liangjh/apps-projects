@@ -54,7 +54,7 @@ class PostingsController < ApplicationController
     posting.save if (posting.valid?)
 
     #// Render in json,
-    if (posting.errors.size > 0)
+    if (!posting.nil? && posting.errors.size > 0)
       render :json => {"success" => false, "errors" => posting.errors.messages.values.flatten,
                        "message" => "Click on 'Write on wall' above and revise - don't worry, your stuff is still there!"}.to_json
     else

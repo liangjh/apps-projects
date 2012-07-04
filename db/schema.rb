@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120701165926) do
+ActiveRecord::Schema.define(:version => 20120704175919) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -124,8 +124,8 @@ ActiveRecord::Schema.define(:version => 20120701165926) do
   add_index "saints", ["symbol"], :name => "index_saints_on_symbol", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "email",                                 :default => "",    :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -138,6 +138,9 @@ ActiveRecord::Schema.define(:version => 20120701165926) do
     t.datetime "updated_at"
     t.boolean  "super_user"
     t.string   "username"
+    t.boolean  "anonymous",                             :default => false
+    t.string   "location_state"
+    t.string   "location_country"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

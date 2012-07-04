@@ -77,7 +77,7 @@ class AuthenticationsController < ApplicationController
   def destroy
     @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy
-    flash[:notice] = "Removed your affialiated login from your saintstir account"
+    flash[:notice] = "Removed your affiliated login from your saintstir account"
     redirect_to authentications_url
   end
 

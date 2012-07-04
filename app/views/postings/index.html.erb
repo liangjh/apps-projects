@@ -45,7 +45,12 @@
                 Anonymous
               <% end %>
             </b>
-            wrote<%=posting.created_at.nil? ?  "" : " (#{posting.created_at.strftime('%m/%d/%Y')})"%>:
+            <%=posting.created_at.nil? ?  "" : " (#{posting.created_at.strftime('%m/%d/%Y')})"%>
+            <% if (!posting.user.nil?) %>
+              <% if (!posting.user.location_state.nil? || !posting.user.location_country.nil?) %>
+                <br/><i><%=posting.user.location_state.nil? ? "" : "#{posting.user.location_state}, "%><%=posting.user.location_country.nil? ? "" : posting.user.location_country%></i>
+              <% end %>
+            <% end %>
             <br/><br/>
 
             <%#// Retain formatting - transform newlines to <br/> tags - but we don't want rails to escape the HTML %>
