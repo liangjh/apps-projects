@@ -1,5 +1,52 @@
 
-Hi, this is the homepage.
+
+<div id="banner-carousel" class="carousel slide">
+
+  <div class="carousel-inner">
+
+    <div class="active item" style="height:325px;">
+      <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Search.</h1></div>
+      <%= image_tag "banner_1.jpg" %>
+      <div class="carousel-caption">
+        <p>Search and learn about the saints of the Catholic Church using Saintstir's interactive filter buttons.  Every wonder which saints are
+          known for particular virtues or superpowers?  Interested in finding saints who went through the same struggles that you are going through?
+          Find this with our saint explorer.</p>
+      </div>
+    </div>
+
+    <div class="item" style="height:325px;">
+      <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Discover.</h1></div>
+      <%= image_tag "banner_2.jpg" %>
+      <div class="carousel-caption">
+        <p>Find out more about the Catholic saints, beyond facts and biographies.  Read their quotes for inspiration, and discover other
+          saints with similar traits and graces.  Read stories, testimonies, and prayers from site members.</p>
+      </div>
+    </div>
+
+    <div class="item" style="height:325px;">
+      <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Venerate.</h1></div>
+      <%= image_tag "banner_3.jpg" %>
+      <div class="carousel-caption">
+        <p>Honor and venerate the saints of the church with other members and contributors.  Share your reflections with others on Facebook, Google, and Twitter.
+          Leave reflections and prayers on the saint's "wall".  "Like" other member's reflections.  Build a community through Saintstir.</p>
+      </div>
+   </div>
+
+  </div>
+
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#banner-carousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#banner-carousel" data-slide="next">&rsaquo;</a>
+
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('.carousel').carousel({interval:5000});
+  });
+</script>
+
+
 
 
 
