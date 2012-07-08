@@ -44,7 +44,7 @@ module ActionView
         "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia",
         "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia",
         "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guinea",
-        "Guinea-Bissau", "Guyana", "Haiti", "Holy See (Vatican)",
+        "Guinea-Bissau", "Guyana", "Haiti",
         "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
         "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya",
         "Kiribati", "Korea", "Kuwait", "Kyrgyzstan",
@@ -63,7 +63,7 @@ module ActionView
         "Taiwan", "Tajikistan", "Tanzania", "Thailand",
         "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
         "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
-        "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela",
+        "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela",
         "Vietnam", "Virgin Islands","Yemen", "Zambia", "Zimbabwe"] unless const_defined?("COUNTRIES")
     end
 

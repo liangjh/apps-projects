@@ -1,0 +1,25 @@
+
+<%#
+  SAINT INSIGNIA
+  Produces the logo/insignia on the the saint's profile page
+  Expects the following local variable to be passed to partial:
+    - saint: saint model object from database
+%>
+
+<!--// Saint element (magnified) -->
+<div class="element-magnified <%=SaintInsigniaFilter.get_color(saint)%>">
+  <h3><%=SaintInsigniaFilter.get_insignia(saint)[0]%>&nbsp;</h3><br/>
+  <span class="saint-title"><%=saint.symbol%></span><br/><br/>
+  <span class="saint-subtitle"><%=saint.get_metadata_value(MetadataKey::NAME)%></span>
+</div>
+
+<%# Set click events on insignia / title / subtitles if with_link is true %>
+<script>
+  var saint_link = '<%=saint_path(saint)%>';
+  $(document).ready(function() {
+    $('.element-magnified').click(function() { window.location = saint_link;  });
+  });
+</script>
+
+
+

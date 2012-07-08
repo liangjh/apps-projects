@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704175919) do
+ActiveRecord::Schema.define(:version => 20120707214344) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -122,6 +122,17 @@ ActiveRecord::Schema.define(:version => 20120704175919) do
   end
 
   add_index "saints", ["symbol"], :name => "index_saints_on_symbol", :unique => true
+
+  create_table "settings", :force => true do |t|
+    t.string   "region",     :null => false
+    t.string   "key",        :null => false
+    t.string   "value",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "settings", ["key"], :name => "index_settings_on_key"
+  add_index "settings", ["region"], :name => "index_settings_on_region"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "",    :null => false

@@ -1,48 +1,87 @@
 
+<div class="row">
+  <div class="span12">
 
-<div id="banner-carousel" class="carousel slide">
+    <!--// BEGIN BANNER CAROUSEL -->
+    <div id="banner-carousel" class="carousel slide">
 
-  <div class="carousel-inner">
+      <div class="carousel-inner">
 
-    <div class="active item" style="height:325px;">
-      <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Search.</h1></div>
-      <%= image_tag "banner_1.jpg" %>
-      <div class="carousel-caption">
-        <p>Search and learn about the saints of the Catholic Church using Saintstir's interactive filter buttons.  Every wonder which saints are
-          known for particular virtues or superpowers?  Interested in finding saints who went through the same struggles that you are going through?
-          Find this with our saint explorer.</p>
+        <div class="active item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Search.</h1></div>
+          <%= image_tag "banner_1.jpg" %>
+          <div class="carousel-caption">
+            <p>Search and learn about the saints of the Catholic Church using Saintstir's interactive filter buttons.  Every wonder which saints are
+            known for particular virtues or superpowers?  Interested in finding saints who went through the same struggles that you are going through?
+            Find this with our saint explorer.</p>
+          </div>
+        </div>
+
+        <div class="item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Discover.</h1></div>
+          <%= image_tag "banner_2.jpg" %>
+          <div class="carousel-caption">
+            <p>Find out more about the Catholic saints, beyond facts and biographies.  Read their quotes for inspiration, and discover other
+            saints with similar traits and graces.  Read stories, testimonies, and prayers from site members.</p>
+          </div>
+        </div>
+
+        <div class="item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Venerate.</h1></div>
+          <%= image_tag "banner_3.jpg" %>
+          <div class="carousel-caption">
+            <p>Honor and venerate the saints of the church with other members and contributors.  Share your reflections with others on Facebook, Google, and Twitter.
+            Leave reflections and prayers on the saint's "wall".  "Like" other member's reflections.  Build a community through Saintstir.</p>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Carousel nav -->
+      <a class="carousel-control left" href="#banner-carousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#banner-carousel" data-slide="next">&rsaquo;</a>
+
     </div>
-
-    <div class="item" style="height:325px;">
-      <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Discover.</h1></div>
-      <%= image_tag "banner_2.jpg" %>
-      <div class="carousel-caption">
-        <p>Find out more about the Catholic saints, beyond facts and biographies.  Read their quotes for inspiration, and discover other
-          saints with similar traits and graces.  Read stories, testimonies, and prayers from site members.</p>
-      </div>
-    </div>
-
-    <div class="item" style="height:325px;">
-      <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Venerate.</h1></div>
-      <%= image_tag "banner_3.jpg" %>
-      <div class="carousel-caption">
-        <p>Honor and venerate the saints of the church with other members and contributors.  Share your reflections with others on Facebook, Google, and Twitter.
-          Leave reflections and prayers on the saint's "wall".  "Like" other member's reflections.  Build a community through Saintstir.</p>
-      </div>
-   </div>
 
   </div>
+</div>
 
-  <!-- Carousel nav -->
-  <a class="carousel-control left" href="#banner-carousel" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#banner-carousel" data-slide="next">&rsaquo;</a>
+<div class="row">
 
+  <!--// Short intro to saintstir, etc-->
+  <div class="span4">
+    <h2>What is Saintstir</h2><br/>
+    Rhoncus et diam. Ut elit arcu ut, vel magnis tristique ultrices, turpis nunc ultricies mus placerat penatibus integer ut amet dolor, pid mattis, adipiscing integer. Sed in cras enim in tortor a, a et nunc lundium integer est placerat tortor dolor rhoncus tortor. Penatibus nascetur diam urna? Sociis amet. Augue nascetur, sit scelerisque nisi odio, ridiculus et aliquet. Eros, et ac. Tincidunt odio, massa. Dapibus eros parturient sit eros mus et augue non ultricies porttitor duis ultrices elit platea ridiculus. Vut magna ac dolor porta sit augue sagittis porta odio dapibus ac ridiculus amet egestas, turpis ut porta nisi! Arcu amet! Lacus tincidunt, elementum sed dapibus urna? Facilisis purus quis, egestas, pellentesque lacus. Sed arcu tincidunt etiam odio dignissim.
+  </div>
+
+  <!--// Integrate insignia and photoreel partials -->
+  <div class="span4">
+    <h2>Saint of the Day</h2><br/>
+    <!--// Saint insignia -->
+    <%= render :partial => "saints/insignia", :locals => {:saint => @saint} %>
+    <!--// Flickr photoset / reel -->
+    <%= render :partial => "saints/photoreel", :locals => {:saint => @saint} %>
+  </div>
+
+  <!--// Integrate saintstir twitter feed -->
+  <div class="span4">
+    <h2>News <a href="http://twitter.com/saintstir">@saintstir</a></h2><br/>
+    <div class="tweet"></div>
+  </div>
 </div>
 
 <script>
   $(document).ready(function() {
+    // Initialize banner carousel
     $('.carousel').carousel({interval:5000});
+
+    // Initialize twitter js plugin
+    $('.tweet').tweet({
+      avatar_size: 32,
+      count: 5,
+      username: ['saintstir'],
+      loading_text: "loading tweets..."
+    });
   });
 </script>
 
