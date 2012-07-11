@@ -31,6 +31,9 @@ Saintstir::Application.routes.draw do
 
   end
 
+  #//  Singular controller for contact us page
+  resource :contact_us, :only => [:create, :show]
+
   #//  Administrative modules / editing pages
   namespace :admin do
     resources :saints

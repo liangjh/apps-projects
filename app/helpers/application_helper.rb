@@ -11,7 +11,7 @@ module ApplicationHelper
   #//  ie  12/12  => December 12
   #//  ie  04/13  => April 13
   #//
-  def self.mm_dd_prettify(datestr)
+  def mm_dd_prettify(datestr)
     return nil if (datestr.nil?)
 
     mdata = /(\d*)\/(\d*)/.match(datestr)
@@ -37,5 +37,20 @@ module ApplicationHelper
     month_pretty
 
   end
+
+
+
+  def contact_us_purpose_options
+    [
+      "Technical Support",
+      "Content Issues",
+      "Comment / Suggestion",
+      "General Inquiries",
+      "I Want to Help",
+      "Just Saying Hi"
+    ]
+  end
+
+
 
 end
