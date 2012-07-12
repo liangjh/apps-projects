@@ -5,12 +5,15 @@
 
 class SaintMailer < ActionMailer::Base
 
+  SAINTSTIR_EMAIL = "info@saintstir.com"
+
+
   #  For questions submitted on the "contact us" section of the website
   def contact_us(user, from_email, purpose, message)
     @user = user
     @message = message.gsub(/\n/, "<br/>")
     mail(:content_type => "text/html",
-         :to => "saintstir@gmail.com", :from => from_email, :cc => from_email,
+         :to => SAINTSTIR_EMAIL, :from => from_email, :cc => from_email,
          :subject => "Saintstir Inquiry: #{purpose}")
   end
 
@@ -19,7 +22,7 @@ class SaintMailer < ActionMailer::Base
     @posting = posting
     @user = posting.user
     mail(:content_type => "text/html",
-         :to => @posting.user.email, :from => "saintstir@gmail.com",
+         :to => @posting.user.email, :from => SAINTSTIR_EMAIL,
          :subject => "Your posting on Saintstir was removed")
   end
 
@@ -27,7 +30,7 @@ class SaintMailer < ActionMailer::Base
   def account_details_change(user)
     @user = user
     mail(:content_type => "text/html",
-         :to => @user.email, :from => "saintstir@gmail.com",
+         :to => @user.email, :from => SAINTSTIR_EMAIL,
          :subject => "Your account on Saintstir")
   end
 
@@ -35,7 +38,7 @@ class SaintMailer < ActionMailer::Base
   def welcome_to_saintstir(user)
     @user = user
     mail(:content_type => "text/html",
-         :to => @user.email, :from => "saintstir@gmail.com",
+         :to => @user.email, :from => SAINTSTIR_EMAIL,
          :subject => "Welcome to Saintstir")
   end
 
