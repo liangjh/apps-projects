@@ -44,6 +44,7 @@ class Admin::PostingsController < ApplicationController
     posting = Posting.find(@posting_id.to_i)
     if (posting)
       posting.update_attribute(:status, @posting_status)
+      SaintMailer.posting_rejected(posting).deliver if (@posting_status == Posting::STATUS_REJECT && !posting.user.nil? && !posting.user.email.nil?)
       flash[:notice] = "Successfully changed the status of the selected posting to: #{@posting_status}"
     else
       flash[:error] = "Failed to change the status of the posting. "

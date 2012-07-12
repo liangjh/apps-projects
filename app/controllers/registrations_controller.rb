@@ -10,6 +10,24 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     super
     session[:omniauth] = nil unless @user.new_record?
+
+    #// Welcome email
+    begin
+      SaintMailer.welcome_to_saintstir(@user).deliver
+    rescue Exception => ex
+      Rails.logger.error ex
+    end
+  end
+
+  def update
+    super
+
+    #// Send a email notifying the user that his/her details have been changed
+    begin
+      SaintMailer.account_details_change(current_user).deliver
+    rescue Exception => ex
+      Rails.logger.error ex
+    end
   end
 
 

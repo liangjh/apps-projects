@@ -1,0 +1,20 @@
+
+<p>Dear <%=(@user.username || @user.email)%>:</p>
+
+<p>We just wanted to confirm that you've recently changed your account details
+on Saintstir.com.  A quick recap:</p>
+
+<table border="0" cellpadding="5">
+  <tr><td>Username</td><td><%= @user.username || "N/A" %></td></tr>
+  <tr><td>Email</td><td><%= @user.email %></td></tr>
+  <tr><td>Anonymous?</td><td><%= @user.anonymous %></td></tr>
+  <tr><td>State</td><td><%= @user.location_state || "N/A" %></td></tr>
+  <tr><td>Country</td><td><%= @user.location_country || "N/A" %></td></tr>
+</table>
+
+<p>If there are problems, please don't hesitate to let us know.  Thank you!</p>
+
+<p>Sincerely,</p>
+<p>Saintstir Staff</p>
+
+
