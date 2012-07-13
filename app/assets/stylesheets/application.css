@@ -8,6 +8,5 @@
  *= require fancybox/jquery.fancybox-buttons
  *= require fancybox/jquery.fancybox-thumbs
  *= require tweet/jquery.tweet
- *= require_tree .
  *= require saintstir/styles
 */

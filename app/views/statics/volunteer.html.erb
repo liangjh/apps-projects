@@ -1,5 +1,55 @@
-<br/><br/><br/><br/>
-<p>
-This is the VOLUNTEER page
-</p>
+
+
+
+<div class="row">
+  <div class="span8">
+    <h2>Volunteer @ Saintstir</h2><br/>
+
+    <p>Creating a dictionary of saints is a lot of work!   If you know you are a good fit
+    with any of the roles below, we'd love to hear from you - please do <%= link_to "Contact Us", contact_us_path %>..
+    Include a copy of your resume in the message as well as a brief introduction of yourself.
+    If you have what we are looking for, we will get in touch with you.  Thanks for your interest!</p>
+
+    <br/>
+    <h2>Saint Editors</h2></br>
+
+    <p>Are you interested in helping to create the content that will drive Sainstir,
+    and also learn more about the lives of the saints in the process? A saint editor will be
+    assigned a list of saints to classify on the Saintstir system.  You will be responsible for
+    properly researching, tagging, and classifying your saints, with an eye towards creating an
+    insightful picture of that particular saint.  We would also love for you to contribute to the
+    development and refinement of the taxonomy itself over time.</p>
+
+    </br>
+    <h2>Web Application Developers</h2><br/>
+    <p>Are you a sophisticated web application developer who wants to revolutionize how members
+    of the Catholic Church, Christians, and the world views the saints of the Catholic Church?
+    Do you want to play a part in helping to revive the virtues of our saints in the modern world? You'll get to
+    work on all features of the Saintstir system, and participate in how the site evolves over time.
+    You will need to have a working knowledge of <b>Ruby on Rails, Javascript / jQuery, and the Heroku stack.</b>
+    Experience and/or interest in MongoDB as well as third-party integration with Facebook / Twitter would be a huge plus.</p>
+
+  </div>
+  <div class="span4">
+    <%= image_tag "logo_white.jpg" %>
+    <br/><br/>
+    <h2>News <a href="http://twitter.com/saintstir">@saintstir</a></h2><br/>
+    <div class="tweet"></div>
+  </div>
+
+<script>
+  $(document).ready(function() {
+    // Initialize banner carousel
+    $('.carousel').carousel({interval:5000});
+
+    // Initialize twitter js plugin
+    $('.tweet').tweet({
+      avatar_size: 32,
+      count: 5,
+      username: ['saintstir'],
+      loading_text: "loading tweets..."
+    });
+  });
+</script>
+</div>
 
