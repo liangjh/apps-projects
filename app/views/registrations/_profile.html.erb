@@ -22,5 +22,21 @@
   <%# the helper country_select is defined in 'lib/country_select.rb', and adds convenience methods to FormHelper %>
 
 
+<script>
+  $(document).ready(function(){
+
+    $('#user_location_state').change(function() {
+      $('#user_location_country option[value="United States"]')[0].selected = true;
+    });
+
+    $('#user_location_country').change(function() {
+      var selectedCountry = $('#user_location_country :selected')[0].value;
+      if (selectedCountry != 'United States') {
+        $('#user_location_state')[0].options[0].selected = true;
+      }
+    });
+
+  });
+</script>
 
 
