@@ -9,7 +9,7 @@
 
         <div class="active item" style="height:325px;">
           <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Search.</h1></div>
-          <%= image_tag "banner_1.jpg" %>
+          <%= link_to image_tag("banner_1.jpg"), saints_path %>
           <div class="carousel-caption">
             <p>Search and learn about the saints of the Catholic Church using Saintstir's interactive filter buttons.  Every wonder which saints are
             known for particular virtues or superpowers?  Interested in finding saints who went through the same struggles that you are going through?
@@ -19,7 +19,7 @@
 
         <div class="item" style="height:325px;">
           <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Discover.</h1></div>
-          <%= image_tag "banner_2.jpg" %>
+          <%= link_to image_tag("banner_2.jpg"), saints_path %>
           <div class="carousel-caption">
             <p>Find out more about the Catholic saints, beyond facts and biographies.  Read their quotes for inspiration, and discover other
             saints with similar traits and graces.  Read stories, testimonies, and prayers from site members.</p>
@@ -28,13 +28,12 @@
 
         <div class="item" style="height:325px;">
           <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Venerate.</h1></div>
-          <%= image_tag "banner_3.jpg" %>
+          <%= link_to image_tag("banner_3.jpg"), saints_path %>
           <div class="carousel-caption">
             <p>Honor and venerate the saints of the church with other members and contributors.  Share your reflections with others on Facebook, Google, and Twitter.
             Leave reflections and prayers on the saint's "wall".  "Like" other member's reflections.  Build a community through Saintstir.</p>
           </div>
         </div>
-
       </div>
 
       <!-- Carousel nav -->
@@ -59,11 +58,12 @@
     saints of the Church, our extended family, to bring hope and inspire virtue within our family on earth.
     </p>
 
-    <p><%= link_to "Get started with Saintstir", saints_path %></p>
+    <p><%= link_to "Explore Saintstir", saints_path %></p>
 
     <br/><br/>
-    <p>How Saintstir got started: <%= link_to "About us", statics_about_path %></p>
-    <p>Interested in helping out, or just have a question or comment about Saintstir? <a href="#">Contact us</a></p>
+    <p>How Saintstir got started: <%= link_to "About", statics_about_path %></p>
+    <p>Interested in helping? <%= link_to "Volunteer", statics_volunteer_path %></p>
+    <p>Have a question or comment? <a href="#">Contact us</a></p>
     <p>Follow us on twitter: <a href="http://twitter.com/saintstir">@saintstir</a></p>
 
   </div>
