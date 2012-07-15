@@ -35,8 +35,8 @@
               <% if (!posting.votes.nil? && posting.votes > 0) %>
                 <span class="badge badge-success num-votes"><%=posting.votes%></span>
               <% end %>
-              <a href="#" class="like-button" data-id="<%=posting.id%>"><i class="icon-thumbs-up"/></a>
-              <a href="#" class="flag-button" data-id="<%=posting.id%>"><i class="icon-flag"/></a>
+              <a href="#" class="like-button" data-id="<%=posting.id%>" title="click to 'like' this posting"><i class="icon-thumbs-up"/></a>
+              <a href="#" class="flag-button" data-id="<%=posting.id%>" title="click to flag this posting for inappropriate or inaccurate content"><i class="icon-flag"/></a>
             </div>
             <b>
               <% if (!posting.anonymous) %>
@@ -65,8 +65,8 @@
     // Configure tooltips on actions
     $(document).ready(function(){
       $('.num-votes').tooltip({title: "Number of 'likes' this posting has received"});
-      $('.like-button').tooltip({title: "Click to 'like' this posting"});
-      $('.flag-button').tooltip({title: "Click to flag this posting for offensive or inappropriate content"});
+      //$('.like-button').tooltip({title: "Click to 'like' this posting"});
+      //$('.flag-button').tooltip({title: "Click to flag this posting for offensive or inappropriate content"});
     });
   </script>
 <% end %>
