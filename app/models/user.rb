@@ -43,6 +43,15 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
+  # if the user doesn't currently have a password, then its not necessary to pass
+  # in the user's current password
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end
 
   class << self
     #// Given an omniauth user, check to see whether a saintstir user already exists with the

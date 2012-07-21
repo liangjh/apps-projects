@@ -23,14 +23,20 @@ or your profile information.
   <%= f.label :email %>
   <%= f.email_field :email %>
 
-  <%= f.label :password %> <i>(leave blank if you don't want to change your password)</i><br/>
-  <%= f.password_field :password %>
+  <% if f.object.password_required? %>
 
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
+    <%= f.label :password %> <i>(leave blank if you don't want to change your password)</i><br/>
+    <%= f.password_field :password %>
 
-  <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
-  <%= f.password_field :current_password %>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  <% end %>
+
+  <% if f.object.encrypted_password.present? %>
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
+    <%= f.password_field :current_password %>
+  <% end %>
+
   <br/><br/>
 
   <%= render :partial => 'registrations/profile', :locals => {:formobj => f} %>
