@@ -1,10 +1,10 @@
 Saintstir::Application.routes.draw do
 
-  #//  Root points to singular HomesController
-  root :to => "homes#show"
+  #//  Root points to singular HomeController
+  root :to => "home#show"
 
   #//  Define homepage as singular resource, since all ppl share the same homepage content
-  resource :home, :only => [:show]
+  resource :home, :controller => "home", :only => [:show]
 
   #//  Static resources (named resources)
   match "/statics/volunteer" => "statics#volunteer", :via => :get

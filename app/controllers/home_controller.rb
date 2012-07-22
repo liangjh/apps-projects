@@ -1,11 +1,11 @@
 
 #//
-#// The homes controller leads to the homepage
+#// The home controller leads to the homepage
 #// Main functionality will include "saint of the day" as well as other data-driven
 #// displays designed for the homepage
 #//
 
-class HomesController < ApplicationController
+class HomeController < ApplicationController
 
 
   def show
