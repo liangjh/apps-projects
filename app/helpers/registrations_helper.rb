@@ -2,7 +2,7 @@ module RegistrationsHelper
 
   #//  List of US states available
   #//  This is to populate the user's profile information
-  def us_states
+  def us_states_options
     [
       ['Select State', ''],
       ['Alabama', 'AL'],
@@ -59,6 +59,24 @@ module RegistrationsHelper
       ['Wyoming', 'WY']
     ]
   end
+
+
+  # for selection list in profile
+  def age_group_options
+    [
+      "<=18",
+      "19-30",
+      "31-45",
+      "46-60",
+      ">60"
+    ]
+  end
+
+  def gender_options
+    ["Male", "Female"]
+  end
+
+
 
 
 end

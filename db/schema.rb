@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722012218) do
+ActiveRecord::Schema.define(:version => 20120722024704) do
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false
@@ -205,6 +205,8 @@ ActiveRecord::Schema.define(:version => 20120722012218) do
     t.boolean  "anonymous",                             :default => false
     t.string   "location_state"
     t.string   "location_country"
+    t.string   "gender"
+    t.string   "age_group"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

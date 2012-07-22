@@ -39,7 +39,7 @@ module ApplicationHelper
   end
 
 
-
+  # for contacts form
   def contact_us_purpose_options
     [
       "Technical Support",
@@ -50,7 +50,6 @@ module ApplicationHelper
       "Just Saying Hi"
     ]
   end
-
 
 
 end

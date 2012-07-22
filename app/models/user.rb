@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :username, :password, :password_confirmation, :remember_me, :anonymous, :location_state, :location_country
+  attr_accessible :email, :username, :password, :password_confirmation, :remember_me,
+      :anonymous, :location_state, :location_country, :age_group, :gender
 
 
   def has_voted_for?(posting)

@@ -2,7 +2,7 @@
 <%# Profile information - included by new and edit registrations %>
 <%# Expects local:  formobj (ref to form in block) %>
 
-  <h3>Your Profile Information</h3>
+  <h3>Your Profile</h3>
   <br/>
 
   <%= formobj.label :username %><i>(this will be your displayed nickname on the site)</i><br/>
@@ -13,8 +13,20 @@
   </label>
 
   <br/>
+  <b>A bit more about you...</b><br/>
+  <i>(None of these below are required, but we'd love to know a bit about you and where you're from)</i>
+  <br/><br/>
+
+  <%= formobj.label :age_group %>
+  <%= select :user, :age_group, age_group_options, {:prompt => "Age Group"} %>
+
+  <%= formobj.label :gender %>
+  <%= select :user, :gender, gender_options, {:prompt => "Select"} %>
+
+  <br/><br/>
+
   <%= formobj.label :state %>
-  <%= select :user, :location_state, us_states, {:prompt => "Select State"} %>
+  <%= select :user, :location_state, us_states_options, {:prompt => "Select State"} %>
   <%# us_states is defined in the registrations_helper.rb class %>
 
   <%= formobj.label :country %>
