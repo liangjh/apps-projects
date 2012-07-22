@@ -4,6 +4,7 @@ module RegistrationsHelper
   #//  This is to populate the user's profile information
   def us_states_options
     [
+      ['Select State',''],
       ['Alabama', 'AL'],
       ['Alaska', 'AK'],
       ['Arizona', 'AZ'],
@@ -63,16 +64,17 @@ module RegistrationsHelper
   # for selection list in profile
   def age_group_options
     [
-      "<=18",
-      "19-30",
-      "31-45",
-      "46-60",
-      ">60"
+      'Select',
+      '<=18',
+      '19-30',
+      '31-45',
+      '46-60',
+      '>60'
     ]
   end
 
   def gender_options
-    ["Male", "Female"]
+    ['Select', 'Male', 'Female']
   end
 
 

@@ -21,12 +21,12 @@
   <%#= select :user, :age_group, age_group_options, {:prompt => "Age Group"} %>
 
   <%= formobj.label :gender %>
-  <%= select :user, :gender, gender_options, {:prompt => "Select"} %>
+  <%= select :user, :gender, gender_options %>
 
   <br/><br/>
 
   <%= formobj.label :state %>
-  <%= select :user, :location_state, us_states_options, {:prompt => "Select State"} %>
+  <%= select :user, :location_state, us_states_options %>
   <%# us_states is defined in the registrations_helper.rb class %>
 
   <%= formobj.label :country %>
