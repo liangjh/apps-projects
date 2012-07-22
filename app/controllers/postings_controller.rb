@@ -79,9 +79,8 @@ class PostingsController < ApplicationController
       else
 
         #  Add 'like' entry to user_posting_likes model
-        UserPostingLike.create(:user_id => current_user.id, :posting_id => posting.id)
-        #  Saves sum to posting (for speed)
-        votes = posting.votes.nil? ? 1 : posting.votes += 1
+        UserPostingLike.create_from_user_posting(current_user, posting)
+        posting.increment_vote
         posting.save!
 
         render :json => {"success" => true,

@@ -44,6 +44,11 @@ class Posting < ActiveRecord::Base
     (user_posting_likes.where(:user_id => user.id).count > 0)
   end
 
+  #// Increment the vote by 1 (if nil, start w/ 1)
+  def increment_vote
+    self.votes.nil? ? 1 : self.votes += 1
+  end
+
   #// Retain user's newlines without disrupting underlying content.
   #// <pre> is not an option since some browers will use a different font for <pre>
   #// globally replace all \n with <br/>
