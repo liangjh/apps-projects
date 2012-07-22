@@ -4,7 +4,6 @@ module RegistrationsHelper
   #//  This is to populate the user's profile information
   def us_states_options
     [
-      ['Select State', ''],
       ['Alabama', 'AL'],
       ['Alaska', 'AK'],
       ['Arizona', 'AZ'],
