@@ -15,6 +15,7 @@ class Posting < ActiveRecord::Base
   #// Associations
   belongs_to :user
   belongs_to :saint
+  has_many :user_posting_likes
 
   CONTENT_MAX_WORD_COUNT = 500
   STATUS_PENDING = "pending"  #//  this means the message has been flagged for review
@@ -37,6 +38,11 @@ class Posting < ActiveRecord::Base
               :within => 1..CONTENT_MAX_WORD_COUNT,
               :too_long => "Your posting cannot exceed #{CONTENT_MAX_WORD_COUNT} words",
               :too_short => "You must enter something to post! "
+
+
+  def is_liked_by_user?(user)
+    (user_posting_likes.where(:user_id => user.id).count > 0)
+  end
 
   #// Retain user's newlines without disrupting underlying content.
   #// <pre> is not an option since some browers will use a different font for <pre>

@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :authentications
   has_many :postings
+  has_many :user_posting_likes
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -15,6 +16,11 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :username, :password, :password_confirmation, :remember_me, :anonymous, :location_state, :location_country
+
+
+  def has_voted_for?(posting)
+    (user_posting_likes.where(:posting_id => posting.id).count > 0)
+  end
 
   # Checks if a user is set as a super-user
   def super_user?

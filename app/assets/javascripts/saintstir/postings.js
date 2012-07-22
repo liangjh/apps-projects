@@ -67,6 +67,7 @@ PostingApp.prototype.bindLikeLinks = function() {
     $.post(paObj.getLikeUri(postId), function(data) {
       if (data.success) {
         paObj.getContent(null, null);
+        paObj.successMsg(data.message);
       }
       else {
         paObj.failureMsg(data.errors, data.message)
@@ -135,7 +136,8 @@ PostingApp.prototype.successMsg = function(message) {
 PostingApp.prototype.failureMsg = function(errorArray, message) {
   var failureMsgHtml = "<div class='alert alert-error'>"
   for (i = 0; i < errorArray.length; i++) { failureMsgHtml += errorArray[i] + ", <br/>"; }
-  failureMsgHtml += message + "</div>";
+  if (message != undefined) { failureMsgHtml += message }
+  failureMsgHtml += "</div>";
   $('#action-status').html(failureMsgHtml);
 }
 
