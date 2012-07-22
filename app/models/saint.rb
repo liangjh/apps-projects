@@ -18,9 +18,16 @@ class Saint < ActiveRecord::Base
   has_many :saint_edit_audits
   has_many :postings
 
+  after_save :flush_cached_data
+
   #//  Scopes
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
   scope :sort_by_symbol, order("symbol ASC")
+
+  #//  after a saint is saved, flush anything that the saint's data touches
+  def flush_cached_data
+    CacheManager.flush_all_for_saint(self.id)
+  end
 
   #//  Given a meta key code, return the associated metadata_value for this saint
   #//  Retrieve map of all values first, then retrieve by key
