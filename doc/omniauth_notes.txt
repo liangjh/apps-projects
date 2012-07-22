@@ -5,11 +5,8 @@ THIRD-PARTY AUTHENTICATION NOTES & CREDENTIALS
 ////////////////////////////////////////
 TWITTER
 
-  CREDENTIALS  (all environments / no auth callback verification)
-    key: zc5Wzc2dPOxM6tNY0S5j2g
-    secret: kSL168Yx6MdlnWma90yA5j6IhtaOvLyo7zrwjvDN4A
 
-  API RESPONSE FRAGMENT
+API RESPONSE FRAGMENT
 /*
   ---
     provider: twitter
@@ -33,18 +30,7 @@ TWITTER
 ////////////////////////////////////////
 FACEBOOK
   
-  CREDENTIALS-PROD (www.saintstir.com)
-    key: 263163617050606
-    secret: 8e64b32bacb136305e8034f1de30f134
-  
-  CREDENTIALS-STAGING (saintstir-staging.herokuapp.com)
-    key: 105727272903075
-    secret: aa6d48b2f09447c9194ce9425cb54090
-
-  CREDENTIALS-DEV (localhost:3000)
-    key: 160847950714598
-    secret: 7aef5b1920449fcc9cde110f7cba5fed
-
+ 
   API RESPONSE
 /*
     ---
@@ -83,19 +69,6 @@ FACEBOOK
 
 ////////////////////////////////////////
 GOOGLE
-
-  
-  CREDENTIALS-PROD (www.saintstir.com)
-    id: 760350344434-d2ehtbn32qe7rf2etgefs28cej8mtkq4.apps.googleusercontent.com
-    secret: -tDL-7DLrvO_Zw9Qertys5Bu
-
-  CREDENTIALS-STAGING (saintstir-staging.herokuapp.com)
-    id: 760350344434-2vs7rm1g7erfirahaau1sslg1v1fau1c.apps.googleusercontent.com
-    secret wX3Ii8mXq4buZRQgSAwXF8Pf
-
-  CREDENTIALS-DEV (localhost:3000)
-    id: 760350344434.apps.googleusercontent.com
-    secret: 33LlTJeK0dx_xI_61jszlvh7
 
 
   API RESPONSE:

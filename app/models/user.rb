@@ -32,9 +32,10 @@ class User < ActiveRecord::Base
     authentications << auth if (authentications.empty?)
 
     #// Try to set whatever properties we have in omniauth for this user
-    #// Override w/ omniauth credentials if those fields don't exist in user object
-    self.username ||= omniauth['info']['nickname'] || omniauth['info']['name']
-    self.email = omniauth['info']['email'] if (!self.email.present?)
+    #// Override w/ omniauth credentials if those fields don't exist in user objecta
+    oauth_email = omniauth['info']['email']
+    self.username ||= omniauth['info']['nickname'] || omniauth['info']['name'] || (oauth_email.split("@")[0] if (oauth_email.present?))
+    self.email = oauth_email if (!self.email.present?)
   end
 
   # The password fields are overidden to be false if the user already
