@@ -74,14 +74,14 @@ class PostingsController < ApplicationController
       posting = Posting.find(posting_id.to_i)
 
       if (posting.is_liked_by_user?(current_user))
-        render :json => {"success" => false, 
+        render :json => {"success" => false,
                          "errors" => ["Sorry, but you've already 'liked' this posting!"]}.to_json
       else
 
         #  Add 'like' entry to user_posting_likes model
         UserPostingLike.create(:user_id => current_user.id, :posting_id => posting.id)
         #  Saves sum to posting (for speed)
-        votes = posting.votes.nil? ? 0 : posting.votes += 1
+        votes = posting.votes.nil? ? 1 : posting.votes += 1
         posting.save!
 
         render :json => {"success" => true,
