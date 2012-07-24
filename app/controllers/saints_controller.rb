@@ -8,6 +8,7 @@ require 'flickr_integration'
 #//
 
 class SaintsController < ApplicationController
+  before_filter :show_fb_like, :only => [:index, :show]
 
   #// Return all saints, all metadata, all attributes
   #// Dump all data and render
