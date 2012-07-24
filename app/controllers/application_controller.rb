@@ -7,6 +7,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :fb_like_enabled?
+  helper_method :page_title
 
   def check_super_user
     if (!current_user.super_user?)
@@ -23,6 +24,13 @@ class ApplicationController < ActionController::Base
     (@fb_like == true)
   end
 
+  def set_page_title(title)
+    @title = title
+  end
+
+  def page_title
+    @title
+  end
 
   def logged_in?
     return (!current_user.nil?)
