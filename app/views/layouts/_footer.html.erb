@@ -1,0 +1,26 @@
+
+    <!--// Footer -->
+    <div class="container-fluid">
+      <div class="content">
+        <div class="row">
+          <div class="span10">
+            <%= link_to "About", statics_about_path %> &nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to "Contact", contact_us_path %> &nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to "Volunteer", statics_volunteer_path %>   &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="http://twitter.com/saintstir">@Saintstir</a>
+            <br/><br/><br/><br/>
+          </div>
+          <div class="span2">
+            &copy; Saintstir <%=Time.now.to_date.strftime("%Y")%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+      });
+    </script>
+
+

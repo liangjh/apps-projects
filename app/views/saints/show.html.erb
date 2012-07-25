@@ -2,19 +2,15 @@
 
 <div class="row">
 
+
+  <!--// Saint insignia and photo section -->
   <div class="span4">
-
-    <!--// Saint element (magnified) -->
-    <div class="element-magnified <%=SaintInsigniaFilter.get_color(@saint)%>">
-      <h3><%=SaintInsigniaFilter.get_insignia(@saint)[0]%>&nbsp;</h3><br/>
-      <span class="saint-title"><%=@saint.symbol%></span><br/><br/>
-      <span class="saint-subtitle"><%=@saint.get_metadata_value(MetadataKey::NAME)%></span>
-    </div>
-
+    <!--// Saint insignia -->
+    <%= render :partial => "saints/insignia", :locals => {:saint => @saint} %>
     <!--// Flickr photoset / reel -->
-    <%= render :partial => "saints/photoreel" %>
-
+    <%= render :partial => "saints/photoreel", :locals => {:saint => @saint} %>
   </div>
+
 
   <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
   <div class="span8">
@@ -56,7 +52,7 @@
 
         <!--// Section: Stories (User) -->
         <div class="tab-pane" id="wall" style="padding:7px;">
-          <%= render :partial => "postings/postings", :locals => { :saint_id => @saint.id } %>
+          <%= render :partial => "postings/postings", :locals => { :saint_id => @saint.id} %>
         </div>
 
     </div>

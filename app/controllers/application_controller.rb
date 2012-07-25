@@ -6,12 +6,30 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  helper_method :fb_like_enabled?
+  helper_method :page_title
 
   def check_super_user
     if (!current_user.super_user?)
       flash[:error] = "Sorry, but you must be a super user to access this page"
       redirect_to home_path
     end
+  end
+
+  def show_fb_like
+    @fb_like = true
+  end
+
+  def fb_like_enabled?
+    (@fb_like == true)
+  end
+
+  def set_page_title(title)
+    @title = title
+  end
+
+  def page_title
+    @title
   end
 
   def logged_in?

@@ -14,11 +14,9 @@
 <h2>Sign up</h2>
 <br/>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => "form-vertical well"}) do |f| %>
-
-
-  <%= f.label :username %>
-  <%= f.text_field :username %>
+<%= form_for(resource, :as => resource_name,
+             :url => registration_path(resource_name),
+             :html => {:class => "form-vertical well"}) do |f| %>
 
   <%= f.label :email %>
   <%= f.email_field :email %>
@@ -32,8 +30,12 @@
     <%= f.password_field :password_confirmation %>
 
   <% end %>
-  <br/>
-  <%= f.submit "Sign up", :class => "btn btn-large btn-primary" %>
+  <br/><br/>
+
+  <%= render :partial => 'registrations/profile', :locals => {:formobj => f} %>
+
+  <br/><br/>
+  <%= f.submit "Sign up", :class => "btn btn-large btn-info" %>
 
 <% end %>
 

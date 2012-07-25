@@ -1,11 +1,10 @@
 <%# Saint Photoreel %>
-<%# Assumed parameters: @saint instance variable %>
+<%# Assumed parameters: saint local variable %>
 <%# We utilize the fancybox jquery plugin %>
 
-
 <%
-  sml_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_SQUARE_SMALL)
-  med_pics = FlickrIntegration.get_photos(@saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_MEDIUM)
+  sml_pics = FlickrIntegration.get_photos(saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_SQUARE_SMALL)
+  med_pics = FlickrIntegration.get_photos(saint.get_metadata_value(MetadataKey::FLICKR_SET), FlickrIntegration::SIZE_MEDIUM)
 %>
 <div class="saint-gallery">
   <br/><br/>

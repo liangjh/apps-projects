@@ -54,7 +54,7 @@ class PostingsController < ApplicationController
     posting.save if (posting.valid?)
 
     #// Render in json,
-    if (posting.errors.size > 0)
+    if (!posting.nil? && posting.errors.size > 0)
       render :json => {"success" => false, "errors" => posting.errors.messages.values.flatten,
                        "message" => "Click on 'Write on wall' above and revise - don't worry, your stuff is still there!"}.to_json
     else
@@ -72,12 +72,20 @@ class PostingsController < ApplicationController
     #// For now, let anyone submit any number of likes - in the future we'll add uniqueness checks
     if (posting_id)
       posting = Posting.find(posting_id.to_i)
-      votes = posting.votes
-      votes = 0 if (posting.votes.nil?)
-      votes += 1
-      posting.update_attribute(:votes, votes)
-      render :json => {"success" => true,
-                       "message" => "Thanks!  We're glad you liked this wall post."}.to_json
+
+      if (posting.is_liked_by_user?(current_user))
+        render :json => {"success" => false,
+                         "errors" => ["Sorry, but you've already 'liked' this posting!"]}.to_json
+      else
+
+        #  Add 'like' entry to user_posting_likes model
+        UserPostingLike.create_from_user_posting(current_user, posting)
+        posting.increment_vote
+        posting.save!
+
+        render :json => {"success" => true,
+                         "message" => "Thanks!  We're glad you liked this wall post."}.to_json
+      end
     else
       render :json => {"success" => false, "errors" => ["Could not find saint or posting"]}.to_json
     end

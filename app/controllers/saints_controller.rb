@@ -8,10 +8,13 @@ require 'flickr_integration'
 #//
 
 class SaintsController < ApplicationController
+  before_filter :show_fb_like, :only => [:index, :show]
 
   #// Return all saints, all metadata, all attributes
   #// Dump all data and render
   def index
+
+    set_page_title("explore")
     if (!CacheManager.exist?(CacheConfig::PARTITION_SAINTS_ISOTOPE))
       #// all saints
       @saints = Saint.all
@@ -27,6 +30,7 @@ class SaintsController < ApplicationController
   #// Return the saint passed in the ID parameter
   def show
     @saint = Saint.find(params[:id])
+    set_page_title("#{@saint.symbol} (#{@saint.get_metadata_value(MetadataKey::NAME)})")
     #// All attribs in use
     @attribs_all = AttribCategory.map_attrib_cat_content(true)
   end

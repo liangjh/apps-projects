@@ -20,7 +20,7 @@
                   <td><b>Dates<b/></td>
                   <td>
                     <%=(@saint.get_metadata_value(MetadataKey::CANONYEAR) || "Pre-Congregation")%> (Canonized)<br/>
-                    <% feast = ApplicationHelper.mm_dd_prettify(@saint.get_metadata_value(MetadataKey::FEASTDAY))%>
+                    <% feast = mm_dd_prettify(@saint.get_metadata_value(MetadataKey::FEASTDAY))%>
                     <% if (!feast.nil?) %>
                         <%=feast%> (Feast Day)
                     <% end %>

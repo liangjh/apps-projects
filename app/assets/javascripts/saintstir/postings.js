@@ -67,6 +67,7 @@ PostingApp.prototype.bindLikeLinks = function() {
     $.post(paObj.getLikeUri(postId), function(data) {
       if (data.success) {
         paObj.getContent(null, null);
+        paObj.successMsg(data.message);
       }
       else {
         paObj.failureMsg(data.errors, data.message)
@@ -98,18 +99,19 @@ PostingApp.prototype.bindFormSubmit = function() {
   $('#submit-posting').click(function() {
     $.post(paObj.getServerUri(),
            {posting_data: $('#posting-data').val(),
-            anonymous: ($('#posting-anonymous').val() == 'true')},
+            anonymous: ($('#posting-anonymous').is(':checked') ? true : false)},
               function(data) {
                 if (data.success) {
                   // response was successful:  (1) close modal, (2) clear form, (3) display in flash
                   $('#submit-posting').val('');
                   $('#posting-modal').modal('hide');
-                  paObj.postingSuccessMsg(data.message);
+                  paObj.getContent();
+                  paObj.successMsg(data.message);
                 }
                 else {
                   // response was failure: (1) close modal, (2) do NOT clear form, (3) display errors in flash_error
                   $('#posting-modal').modal('hide');
-                  paObj.postingFailureMsg(data.errors, data.message);
+                  paObj.failureMsg(data.errors, data.message);
                 }
               });
   });
@@ -134,7 +136,8 @@ PostingApp.prototype.successMsg = function(message) {
 PostingApp.prototype.failureMsg = function(errorArray, message) {
   var failureMsgHtml = "<div class='alert alert-error'>"
   for (i = 0; i < errorArray.length; i++) { failureMsgHtml += errorArray[i] + ", <br/>"; }
-  failureMsgHtml += message + "</div>";
+  if (message != undefined) { failureMsgHtml += message }
+  failureMsgHtml += "</div>";
   $('#action-status').html(failureMsgHtml);
 }
 

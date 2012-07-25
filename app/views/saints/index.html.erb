@@ -58,108 +58,11 @@ cache [CacheConfig::PARTITION_SAINTS_ISOTOPE] do %>
 
   <script>
 
-    //
-    //  --- PAGE SCRIPTS / EVENT BINDINGS ---
-    //
-
-    // -- Twitter Bootstrap --
-    // Dropdown Lists Initialization
-    $('.dropdown-toggle').dropdown()
-
-    // -- Isotope Plugin Initialization --
-
-    // initialize isotope plugin
-    var $container = $('#isotope_content');
-    $container.isotope({
-      itemSelector: '.element'
+    //  Initialize the ExploreApp object, which has all bindings / behaviors for this screen
+    $(document).ready(function() {
+      var eap = new ExploreApp();
+      eap.init();
     });
-
-    // Filter List -- elements to perform queries for
-    var $filterList = new Array();
-
-    function appendFilter(selector, name) {
-      if ($.inArray([selector, name], $filterList) < 0) { $filterList.push([selector, name]); }
-      runFilters();
-    }
-
-    function removeFilter(selector) {
-      $filterList = $.grep($filterList, function(n) { return (n[0] != selector); });
-      runFilters();
-    }
-
-    function runFilters() {
-      $container.isotope({ filter: $.map($filterList, function(e,i) {return e[0]; }).join('')});
-      renderBreadCrumbs();
-    }
-
-    function renderBreadCrumbs() {
-      var crumblist = new Array();
-      $.each($filterList, function(i,v) {
-        if (v[0] != '*') {
-          crumblist.push("<a class='btn btn-info' href='#'  data-filter='" + v[0] + "'><i class='icon-remove'/> " + v[1] + "</a>")
-        }
-      });
-      $('#bread_crumbs').html(crumblist.join(" "));
-
-      //  Event Binding for REMOVING FILTERS from breadcrumbs section
-      $('#bread_crumbs a').click(function() {
-        var selector = $(this).attr('data-filter');
-        removeFilter(selector);
-      });
-    }
-
-    function showAll() {
-      $filterList = new Array();
-      $filterList.push(["*", ""]);
-      runFilters();
-    }
-
-    //  Event Binding for ADDING FILTERS
-    $('#discrete_filters a').click(function(){
-      var selector = $(this).attr('data-filter');
-      if (selector == undefined) { return; } // exit out, if DNE
-      else if (selector == '*') { showAll(); }
-      else {
-        var sname = $(this).text();
-        appendFilter(selector, sname);
-      }
-    });
-
-    //
-    //  --- HOVER / POPOVER BEHAVIORS ---
-    //      (ajax integration)
-
-    //  The current saint that the mouseover is hovering over
-    //  Since ajax requests are coming in asynchronously at unpredictable times,
-    //  we need to check that our current data is not
-    var $currSaintId = null;
-
-    $('#isotope_content .element').mouseenter(function() {
-      var currElem = $(this);
-      var saintId = currElem.attr('data-symbol');
-      $currSaintId = saintId;
-      $.get(('/saints/' + saintId + '/blurb'),
-        function(data){
-          $('.popover').each(function(i,e) { $(e).popover('hide'); });
-          if (saintId == $currSaintId) {
-            currElem.popover({content: data});
-            currElem.popover('show');
-          }
-        });
-    });
-
-    $('#isotope_content .element').mouseleave(function() {
-      $currSaintId = null;
-      $('.popover').each(function(i,e) { $(e).popover('hide'); });
-    });
-
-    //  --- CLICK BEHAVIORS ---
-
-    //  Direct user to saint page upon click
-    $('#isotope_content .element').click(function() {
-        window.location = '/saints/' + $(this).attr('data-symbol');
-    });
-
   </script>
 
 

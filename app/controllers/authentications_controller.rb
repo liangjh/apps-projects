@@ -65,7 +65,7 @@ class AuthenticationsController < ApplicationController
         flash[:notice] = "You've logged in as user: [#{current_user.username}] through #{AUTH_NAME_MAP[omniauth['provider']]}"
         redirect_to home_url
       else
-        flash[:notice] = "You've logged in as user: [#{omniauth['info']['name']}] through #{AUTH_NAME_MAP[omniauth['provider']]}, but you need to associate your login with a Saintstir user.  Please complete the registration details below."
+        flash[:notice] = "You've logged in as user: [#{omniauth['info']['name']}] through #{AUTH_NAME_MAP[omniauth['provider']]}, but please complete the form below to complete your registration on Saintstir."
         redirect_to new_user_registration_url
       end
 
@@ -77,7 +77,7 @@ class AuthenticationsController < ApplicationController
   def destroy
     @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy
-    flash[:notice] = "Removed your affialiated login from your saintstir account"
+    flash[:notice] = "Removed your affiliated login from your saintstir account"
     redirect_to authentications_url
   end
 
