@@ -10,6 +10,7 @@
   <tr>
     <th>Symbol</th>
     <th>Name</th>
+    <th>Published?</td>
     <th>Last Updated</th>
     <th></th>
   </tr>
@@ -23,6 +24,7 @@
   <tr>
     <td><%= link_to saint.symbol, edit_admin_saint_path(saint) %></td>
     <td><%= (meta_name.empty? ? "N/A" : meta_name[0].value) %> <%= (meta_suffix.empty? ? "" : meta_suffix[0].value) %></td>
+    <td><%= saint.publish ? "Yes" : "No" %></td>
     <td><%= saint.last_modified.strftime("%b %d, %Y") %></td>
     <td>
       <%= link_to 'Edit', edit_admin_saint_path(saint), :class => "btn btn-info" %>&nbsp;&nbsp;

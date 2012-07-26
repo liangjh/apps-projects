@@ -5,7 +5,8 @@
 #// Attributes and Metadata are all linked to this core record table
 #//
 #//  -- COLUMNS --
-#//   id, symbol
+#//   id, symbol, publish
+#//     (if publish = true, then display on site)
 #//
 
 class Saint < ActiveRecord::Base
@@ -22,6 +23,7 @@ class Saint < ActiveRecord::Base
 
   #//  Scopes
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
+  scope :all_published, where(:publish => true)
   scope :sort_by_symbol, order("symbol ASC")
 
   #//  after a saint is saved, flush anything that the saint's data touches

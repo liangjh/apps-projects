@@ -17,7 +17,7 @@ class SaintsController < ApplicationController
     set_page_title("explore")
     if (!CacheManager.exist?(CacheConfig::PARTITION_SAINTS_ISOTOPE))
       #// all saints
-      @saints = Saint.all
+      @saints = Saint.all_published
       #// all metadata keys
       @meta_key_map = MetadataKey.map_metadata_key_by_code
       #// all attribute categories
