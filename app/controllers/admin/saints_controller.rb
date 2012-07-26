@@ -70,6 +70,13 @@ class Admin::SaintsController < ApplicationController
   #// Saves the saint into database
   def save_saint(is_new)
 
+    #// Save saint core object (symbol, publish), if modified
+    if (params[:symbol] != @saint.symbol || params[:publish] != @saint.publish.to_s)
+      @saint.symbol = params[:symbol]
+      @saint.publish = params[:publish]
+      @saint.save
+    end
+
     #// Save Attributes
     @attrib_categories.each do |k,v|
       save_attrib_mappings(k, v.multi)

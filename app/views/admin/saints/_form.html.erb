@@ -13,9 +13,9 @@
       <%= label_tag code, meta_key.name %>
       <%
         if (!meta_key.multi)
-          %><%= text_field_tag code, @meta_values[code].nil? ? "" : (meta_key.is_short? ? @meta_values[code][0].value : @meta_values[code][0].value_text) %><%
+          %><%= text_field_tag code, (@meta_values[code].nil? ? "" : (meta_key.is_short? ? @meta_values[code][0].value : @meta_values[code][0].value_text)) %><%
         else
-          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| (meta_key.is_short? ? x.value : x.value_text) }.join("\r\n"), :size => (meta_key.is_long? ? "60x15" : "50x10") %><%
+          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| (meta_key.is_short? ? x.value : x.value_text) }.join("\r\n"), :class => (meta_key.is_long? ? "span6" : "span4") %><%
         end
         %>
         <span class="help-inline"><%= meta_key.description %></span>
@@ -39,9 +39,15 @@
 <%= label_tag :symbol %>
 <%= text_field_tag :symbol, @saint.symbol %>
 <br/><br/>
+
+<%= label_tag :publish %>
+<%= check_box_tag :publish, "true", @saint.publish %> (check to publish the saint on the saintstir system - uncheck to disable)
+<br/><br/>
+
 <%= label_tag :edit_comment, "Edit Comment"%>
 <%= text_field_tag :edit_comment %>
 <br/><br/>
+
 <%#// Edit audit info %>
 <b>Audit Log</b><br/>
 <%
@@ -49,17 +55,10 @@
   %><i><%=audit.created_at%> :: <%= audit.edited_by %> :: <%=audit.comment%></i><br/><%
   end
 %>
+
 <br/><br/>
 
-<p><h4>Metadata Values</h4></p>
-<%
-    @meta_keys.each do |code, meta_key|
-      generate_metadata_form_element(code, meta_key)
-    end
-%>
-<%= submit_tag "Save Saint", {:class => "btn btn-primary"} %>
-
-<p><h4>Discrete Attributes</h4></p>
+<p><h3>Discrete Attributes</h3></p>
 <%
     @attrib_categories.each do |code, attrib_cat|
       generate_attrib_form_element(code, attrib_cat)
@@ -67,6 +66,16 @@
 %>
 
 <p>
-<%= submit_tag "Save Saint", {:class => "btn btn-primary"} %>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
 </p>
+
+<br/><br/>
+
+<p><h3>Metadata Values</h3></p>
+<%
+    @meta_keys.each do |code, meta_key|
+      generate_metadata_form_element(code, meta_key)
+    end
+%>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
 
