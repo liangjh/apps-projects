@@ -15,7 +15,8 @@
         if (!meta_key.multi)
           %><%= text_field_tag code, (@meta_values[code].nil? ? "" : (meta_key.is_short? ? @meta_values[code][0].value : @meta_values[code][0].value_text)) %><%
         else
-          %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| (meta_key.is_short? ? x.value : x.value_text) }.join("\r\n"), :class => (meta_key.is_long? ? "span6" : "span4") %><%
+        %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| (meta_key.is_short? ? x.value : x.value_text) }.join("\r\n"),
+                      :class => (meta_key.is_long? ? "span6" : "span4"), :style => "height:200px;" %><%
         end
         %>
         <span class="help-inline"><%= meta_key.description %></span>
