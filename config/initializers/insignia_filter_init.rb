@@ -8,7 +8,7 @@ require 'saint_insignia_filter'
 #//  List of *prioritized* insignias, by attribute code
 SaintInsigniaFilter.insignia_list = [
   ["saintstatus_doctor", "DCTR", "Doctor of Church"],
-  ["lifeexperiences_martyrdom", "MTYR", "Martyr"],
+  ["lifeexperience_martyrdom", "MTYR", "Martyr"],
   ["vocation_pope", "POPE", "Pope"],
   ["vocation_bishop", "BSHP", "Bishop"],
   ["vocation_cardinal","CRDL", "Cardinal"],
