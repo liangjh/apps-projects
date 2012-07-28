@@ -19,7 +19,7 @@ SaintInsigniaFilter.insignia_list = [
 #//  List of *prioritized* colors, by attribute code
 SaintInsigniaFilter.color_list = [
   ["saintstatus_doctor", "cstm1-elem"],
-  ["lifeexperiences_martyrdom", "cstm4-elem"],
+  ["lifeexperience_martyrdom", "cstm4-elem"],
   ["vocation_pope", "cstm2-elem"],
   ["vocation_bishop", "cstm2-elem"],
   ["vocation_cardinal","cstm2-elem"],
