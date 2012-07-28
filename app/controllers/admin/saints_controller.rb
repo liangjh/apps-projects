@@ -94,6 +94,9 @@ class Admin::SaintsController < ApplicationController
       a.comment = params[:edit_comment]
     end
 
+    #// flush cache for this saint upon save
+    @saint.flush_cached_data
+
   end
 
 
