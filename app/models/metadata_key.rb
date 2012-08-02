@@ -7,7 +7,6 @@
 #//  id, code, name, description, meta_type
 #//
 
-
 class MetadataKey < ActiveRecord::Base
 
   #// Associations
@@ -35,7 +34,7 @@ class MetadataKey < ActiveRecord::Base
   CANONYEAR = "canon_year"
   FLICKR_PROFILE = "flickr_profile"
   FLICKR_SET = "flickr_set"
-
+  PICS_CREDITS = "pics_credits"
 
   #//  Map of metadata keys, by code {metadata_key_code => metadata_key}
   #//  Memoize for efficiency
