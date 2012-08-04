@@ -129,14 +129,19 @@ PostingApp.prototype.bindFormCancel = function() {
 }
 
 PostingApp.prototype.bindWordCounter = function() {
-  paObj = this
-  $('#posting-data').keyup(function(event) {
-    var wc = $('#posting-data').val().split(/[\s]+/).length;
-    $('#word-count').html(wc)
-    if (wc > paObj.maxWordCount) { $('#word-count').attr('style','color:red'); }
-    else { $('#word-count').attr('style','color:black'); }
-  });
+  paObj = this;
+  $('#posting-data').keyup(function(event) { paObj.wordCounter(event, paObj.maxWordCount); });
+  $('#posting-data').change(function(event) { paObj.wordCounter(event, paObj.maxWordCount); });
+  $('#cancel-posting').click(function(event) { paObj.wordCounter(event, paObj.maxWordCount); });
 }
+
+PostingApp.prototype.wordCounter = function(event, maxWords) {
+  var wc = $('#posting-data').val().split(/[\s]+/).length;
+  $('#word-count').html(wc)
+  if (wc > maxWords) { $('#word-count').attr('style','color:red'); }
+  else { $('#word-count').attr('style','color:black'); }
+}
+
 
 // When a posting has been successfully submitted, display a "success" message
 PostingApp.prototype.successMsg = function(message) {
