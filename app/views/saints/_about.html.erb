@@ -28,7 +28,7 @@
               </tr>
 
               <tr>
-                <td><b>Origin</b></td>
+                <td><b>Origins</b></td>
                 <td>
                   <%=@saint.get_attrib(AttribCategory::WORLDREGION)%><br/>
                   <%=@saint.get_attrib(AttribCategory::PERIODEUROCENTRIC)%> (Euro-Centric)<br/>
@@ -38,11 +38,11 @@
               </tr>
 
               <tr>
-                <td><b>Occupation</b></td>
+                <td><b>Occupations</b></td>
                 <td>
                   <%
                     @saint.get_metadata_values(MetadataKey::OCCUPATION).sort.each do |meta|
-                      %><%=meta%><%
+                    %><%=meta%><br/><%
                     end
                   %>
                   <br/></br>
