@@ -41,7 +41,7 @@
       </div>
       <div class="modal-body">
         <textarea id="posting-data" name="posting_data" rows="15" class="span7"></textarea><br/>
-
+        word count:  <span id="word-count">0</span> (max <%= Posting::CONTENT_MAX_WORD_COUNT %> words)<br/>
         <%= check_box_tag "posting_anonymous", "1",
           (!current_user.nil? && current_user.anonymous), {:id => "posting-anonymous"} %>
           Make this posting anonymous
@@ -58,7 +58,7 @@
 <script>
   $(document).ready(function() {
     //  Initialize the posting app, by type
-    var pa = new PostingApp(<%=saint_id%>);
+    var pa = new PostingApp(<%=saint_id%>, <%=Posting::CONTENT_MAX_WORD_COUNT%>);
     pa.init();
   });
 </script>

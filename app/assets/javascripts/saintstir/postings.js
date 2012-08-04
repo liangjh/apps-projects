@@ -7,8 +7,9 @@
 
 
 // PostingApp object, with
-PostingApp = function(saintId) {
+PostingApp = function(saintId, maxWordCount) {
   this.saintId = saintId;
+  this.maxWordCount = maxWordCount;
   this.currentPage = 1;
   this.currentSortBy = 'date';
 }
@@ -19,6 +20,7 @@ PostingApp.prototype.init = function() {
   this.getContent();
   this.bindFormSubmit();
   this.bindFormCancel();
+  this.bindWordCounter();
 }
 
 // Retrieve content for a given page
@@ -123,6 +125,16 @@ PostingApp.prototype.bindFormCancel = function() {
   $('#cancel-posting').click(function() {
     paObj.clearActionStatus();
     $('#posting-data').val('');
+  });
+}
+
+PostingApp.prototype.bindWordCounter = function() {
+  paObj = this
+  $('#posting-data').keyup(function(event) {
+    var wc = $('#posting-data').val().split(/[\s]+/).length;
+    $('#word-count').html(wc)
+    if (wc > paObj.maxWordCount) { $('#word-count').attr('style','color:red'); }
+    else { $('#word-count').attr('style','color:black'); }
   });
 }
 
