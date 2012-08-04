@@ -17,7 +17,7 @@ class Posting < ActiveRecord::Base
   belongs_to :saint
   has_many :user_posting_likes
 
-  CONTENT_MAX_WORD_COUNT = 300
+  CONTENT_MAX_WORD_COUNT = 200
   STATUS_PENDING = "pending"  #//  this means the message has been flagged for review
   STATUS_REJECT = "reject"
   STATUS_ACCEPT = "accept"
