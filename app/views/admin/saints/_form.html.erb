@@ -28,8 +28,9 @@
     def generate_attrib_form_element(code, attrib_cat)
     %>
       <%= label_tag code, attrib_cat.name %>
-      <%= select_tag code, options_from_collection_for_select(@attrib_by_category[code], "id", "name",
-                                lambda { |opt| @attrib_saint.has_key?(opt.id)}), {:multiple => @attrib_categories[code].multi} %>
+      <%= select_tag code,
+            options_from_collection_for_select(@attrib_by_category[code], "id", "name", lambda { |opt| @attrib_saint.has_key?(opt.id)}),
+            {:class => 'chzn-select span6', :multiple => @attrib_categories[code].multi} %>
         <span class="help-inline"><%= attrib_cat.description %></span>
         <br/><br/>
     <%
@@ -57,6 +58,17 @@
   end
 %>
 
+
+<br/><br/>
+
+<p><h3>Metadata Values</h3></p>
+<%
+    @meta_keys.each do |code, meta_key|
+      generate_metadata_form_element(code, meta_key)
+    end
+%>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
+
 <br/><br/>
 
 <p><h3>Discrete Attributes</h3></p>
@@ -70,13 +82,12 @@
 <%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
 </p>
 
-<br/><br/>
+<script>
 
-<p><h3>Metadata Values</h3></p>
-<%
-    @meta_keys.each do |code, meta_key|
-      generate_metadata_form_element(code, meta_key)
-    end
-%>
-<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
+  $(document).ready(function() {
+    // Initialize the chosen dropdown
+    $('.chzn-select').chosen();
+  });
+
+</script>
 

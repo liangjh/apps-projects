@@ -15,6 +15,7 @@
 //= require saintstir/postings
 //= require saintstir/explore
 //= require tweet/jquery.tweet
+//= require chosen/chosen.jquery
 
 
 
