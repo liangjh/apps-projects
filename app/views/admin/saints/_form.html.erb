@@ -28,8 +28,9 @@
     def generate_attrib_form_element(code, attrib_cat)
     %>
       <%= label_tag code, attrib_cat.name %>
-      <%= select_tag code, options_from_collection_for_select(@attrib_by_category[code], "id", "name",
-                                lambda { |opt| @attrib_saint.has_key?(opt.id)}), {:multiple => @attrib_categories[code].multi} %>
+      <%= select_tag code,
+            options_from_collection_for_select(@attrib_by_category[code], "id", "name", lambda { |opt| @attrib_saint.has_key?(opt.id)}),
+            {:class => 'chzn-select span6', :multiple => @attrib_categories[code].multi} %>
         <span class="help-inline"><%= attrib_cat.description %></span>
         <br/><br/>
     <%
