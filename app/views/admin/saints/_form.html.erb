@@ -57,6 +57,17 @@
   end
 %>
 
+
+<br/><br/>
+
+<p><h3>Metadata Values</h3></p>
+<%
+    @meta_keys.each do |code, meta_key|
+      generate_metadata_form_element(code, meta_key)
+    end
+%>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
+
 <br/><br/>
 
 <p><h3>Discrete Attributes</h3></p>
@@ -69,14 +80,4 @@
 <p>
 <%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
 </p>
-
-<br/><br/>
-
-<p><h3>Metadata Values</h3></p>
-<%
-    @meta_keys.each do |code, meta_key|
-      generate_metadata_form_element(code, meta_key)
-    end
-%>
-<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
 
