@@ -19,10 +19,10 @@
   <% end %>
 
   <%= label_tag :purpose %>
-  <%= select_tag :purpose, options_for_select(contact_us_purpose_options) %>
+  <%= select_tag :purpose, options_for_select(contact_us_purpose_options, :selected => (@purpose.present? ? @purpose : nil)) %>
 
   <%= label_tag :message %>
-  <%= text_area_tag :message, "", {:class => "span6", :rows => "10"} %>
+  <%= text_area_tag :message, @message.present? ? @message : "", {:class => "span6", :rows => "10"} %>
 
   <br/><br/>
   <%= submit_tag "Send Message", {:class => "btn btn-info"} %>
