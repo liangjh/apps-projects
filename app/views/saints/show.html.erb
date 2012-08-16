@@ -1,7 +1,5 @@
 
-
 <div class="row">
-
 
   <!--// Saint insignia and photo section -->
   <div class="span4">
@@ -9,8 +7,11 @@
     <%= render :partial => "saints/insignia", :locals => {:saint => @saint} %>
     <!--// Flickr photoset / reel -->
     <%= render :partial => "saints/photoreel", :locals => {:saint => @saint} %>
+    <!--// Submit a correction to inaccurate content -->
+    <br/><br/>
+    <i class="icon-edit"></i>
+    <%= link_to "Errors?  Let us know!", contact_us_path(:purpose => "Correction", :message => "Corrections for saint: #{@saint.symbol}\n\n") %>
   </div>
-
 
   <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
   <div class="span8">

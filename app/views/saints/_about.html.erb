@@ -12,7 +12,11 @@
               <tr>
                 <td><b>Lived</b></td>
                 <td><%=@saint.get_attrib(AttribCategory::CENTURY)%> Century<br/>
-                  <%=(@saint.get_metadata_value(MetadataKey::BORN) || "N/A")%> - <%=(@saint.get_metadata_value(MetadataKey::DIED) || "N/A")%> AD
+                  <% if (@saint.get_metadata_value(MetadataKey::BORN).nil? && @saint.get_metadata_value(MetadataKey::DIED).nil?) %>
+                    <i>Unknown birth/death dates</i>
+                  <% else %>
+                    <%=@saint.get_metadata_value(MetadataKey::BORN)%> - <%=@saint.get_metadata_value(MetadataKey::DIED)%> AD
+                  <% end %>
                 </td>
               </tr>
 
@@ -45,7 +49,6 @@
                     %><%=meta%><br/><%
                     end
                   %>
-                  <br/></br>
                   <span class="label label-success"><%=@saint.get_attrib(AttribCategory::OCCUPATIONSECTOR)%></span>
                 </td>
               </tr>

@@ -42,12 +42,13 @@ module ApplicationHelper
   # for contacts form
   def contact_us_purpose_options
     [
-      "Technical Support",
-      "Content Issues",
-      "Comment / Suggestion",
-      "General Inquiries",
-      "I Want to Help",
-      "Just Saying Hi"
+      ["Technical Support", "Tech"],
+      ["Content Issues", "Content"],
+      ["Submit Correction", "Correction"],
+      ["Comment / Suggestion", "Comment"],
+      ["General Inquiries", "General"],
+      ["I Want to Help", "Volunteer"],
+      ["Just Saying Hi", "Hi"]
     ]
   end
 

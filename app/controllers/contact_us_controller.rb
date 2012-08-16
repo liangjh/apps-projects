@@ -8,7 +8,10 @@ class ContactUsController < ApplicationController
 
   # Display the main template page
   def show
-    puts "currently in show method"
+    # if the message and/or purpose params are passed, then set it
+    # this is used for preselected options in the contact us form
+    @message = params[:message] if (params[:message])
+    @purpose = params[:purpose] if (params[:purpose])
   end
 
   # Send the email message, and
