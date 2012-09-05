@@ -84,6 +84,7 @@ class CacheConfig
   PARTITION_SAINT_BLURB = "saint_blurb"
   PARTITION_SAINTS_ISOTOPE = "saints_isotope"
   PARTITION_FLICKR_SET = "flickr_set" #// info for all photos in photoset
+  PARTITION_SAINT_WIKI_BIO = "saint_wiki_bio"
 
   #// Properties obj/view
   CACHE_TYPE_VIEW = "view"

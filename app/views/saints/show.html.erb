@@ -20,10 +20,10 @@
       <!--// All navigation tabs available -->
       <ul class="nav nav-tabs">
         <li class="active"><a href="#about" data-toggle="tab">About</a></li>
-        <%# <li><a href="#bio" data-toggle="tab">Biography</a></li> %>
+        <li><a href="#wall" data-toggle="tab">Wall</a></li>
         <li><a href="#quotes" data-toggle="tab">Quotes</a></li>
         <li><a href="#prayers" data-toggle="tab">Prayers</a></li>
-        <li><a href="#wall" data-toggle="tab">Wall</a></li>
+        <li><a href="#bio" data-toggle="tab">Bio</a></li>
       </ul>
 
       <div class="tab-content">
@@ -51,10 +51,24 @@
           </table>
         </div>
 
-        <!--// Section: Stories (User) -->
+        <!--// Section: Wall -->
         <div class="tab-pane" id="wall" style="padding:7px;">
           <%= render :partial => "postings/postings", :locals => { :saint_id => @saint.id} %>
         </div>
+
+        <!--// Section: Bio -->
+        <div class="tab-pane" id="bio" style="padding:7px;">
+          <%  bio = WikipediaBioScraper.get(@saint.id, @saint.get_metadata_value(MetadataKey::WIKIPEDIA_LINK)) %>
+          <% if (bio.present?) %>
+            <div class="alert alert-info">Biography source: <%= link_to 'Wikipedia', @saint.get_metadata_value(MetadataKey::WIKIPEDIA_LINK)%></div>
+            <div><%= raw(bio) %></div>
+          <% else %>
+            <div class="alert alert-info">
+              No biography yet!  We'll try to update this as soon as possible.  Check back again soon!
+            </div>
+          <% end %>
+        </div>
+
 
     </div>
   </div>

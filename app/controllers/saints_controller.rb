@@ -1,4 +1,5 @@
 require 'flickr_integration'
+require 'wikipedia_bio_scraper'
 
 #//
 #//  This is the core of saintstir.  The index action takes in search parameters

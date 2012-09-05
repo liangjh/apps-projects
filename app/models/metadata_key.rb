@@ -35,6 +35,7 @@ class MetadataKey < ActiveRecord::Base
   FLICKR_PROFILE = "flickr_profile"
   FLICKR_SET = "flickr_set"
   PHOTOCREDITS = "photocredits"
+  WIKIPEDIA_LINK = "wikipedia_link"
 
   #//  Map of metadata keys, by code {metadata_key_code => metadata_key}
   #//  Memoize for efficiency
