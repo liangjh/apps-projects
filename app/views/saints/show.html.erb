@@ -20,10 +20,10 @@
       <!--// All navigation tabs available -->
       <ul class="nav nav-tabs">
         <li class="active"><a href="#about" data-toggle="tab">About</a></li>
-        <li><a href="#wall" data-toggle="tab">Wall</a></li>
-        <li><a href="#quotes" data-toggle="tab">Quotes</a></li>
-        <li><a href="#prayers" data-toggle="tab">Prayers</a></li>
-        <li><a href="#bio" data-toggle="tab">Bio</a></li>
+        <li><a id="wall-tab" href="#wall" data-toggle="tab">Wall</a></li>
+        <li><a id="quotes-tab" href="#quotes" data-toggle="tab">Quotes</a></li>
+        <li><a id="prayers-tab" href="#prayers" data-toggle="tab">Prayers</a></li>
+        <li><a id="bio-tab" href="#bio" data-toggle="tab">Bio</a></li>
       </ul>
 
       <div class="tab-content">
@@ -72,8 +72,12 @@
 
     </div>
   </div>
-
-
-
 </div>
-
+<script>
+  // This hook allows us to deep link to a specific tab
+  // (hopefully twitter bootstrap will come up with something better)
+  $(document).ready(function() {
+    url = document.location.href.split('#');
+    $('#'+url[1]+'-tab')[0].click();
+  });
+</script>
