@@ -43,14 +43,8 @@ cache [CacheConfig::PARTITION_SAINTS_ISOTOPE] do %>
     <%
       @saints.each do |saint|
          disc_filters = saint.attribs.map(&:code).join(" ")
-    %>
-        <div class="element <%=SaintInsigniaFilter.get_color(saint)%> <%=disc_filters%>"
-            data-symbol="<%=saint.id%>">
-            <%=SaintInsigniaFilter.get_insignia(saint)[0]%><br/>
-            <h3 class="symbol"><%=saint.symbol%></h3>
-          <br/>
-          <p class="name"><%=saint.get_metadata_value(MetadataKey::NAME)%></p>
-        </div>
+       %>
+     <%= render :partial => "saints/insignia_mini", :locals => {:saint => saint, :disc_filters => disc_filters} %>
     <% end %>
     </div>
 
