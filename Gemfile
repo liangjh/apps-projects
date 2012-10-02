@@ -15,6 +15,7 @@ gem 'bson'
 gem 'bson_ext'
 gem 'kaminari' # pagination
 gem 'nokogiri' # xml parsing
+gem 'airbrake'
 
 # Auth plugins
 gem 'devise'  # auth library (p1)
