@@ -7,7 +7,7 @@ gem 'json'
 gem 'jquery-rails'
 gem 'newrelic_rpm' # monitoring
 gem 'quiet_assets' # remove asset pipeline requests
-gem 'flickraw' # flickr client
+gem 'flickraw-cached' # flickr client
 gem 'dalli' # memcached client
 gem 'memcachier' # for memcachier add-on in heroku environment
 gem 'mongo' # mongodb plugin
@@ -15,6 +15,7 @@ gem 'bson'
 gem 'bson_ext'
 gem 'kaminari' # pagination
 gem 'nokogiri' # xml parsing
+gem 'airbrake'
 
 # Auth plugins
 gem 'devise'  # auth library (p1)

@@ -9,7 +9,7 @@
 <br/>
 <%= form_tag contact_us_path, { :method => :post, :class => "well form-vertical"} do %>
 
-  <%= label_tag :email %>
+  <%= label_tag :your_email_address %>
   <%# if user logged in, then user hidden field, o/w let user enter email address %>
   <% if (current_user) %>
     <%= hidden_field_tag :email, current_user.email %>

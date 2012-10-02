@@ -5,7 +5,8 @@
   <table>
     <tr>
       <td>
-        <%= image_tag FlickrIntegration.get_photo(@saint.get_metadata_value(MetadataKey::FLICKR_SET),
+        <%= image_tag FlickrIntegration.get_photo(@saint.id,
+                                                  @saint.get_metadata_value(MetadataKey::FLICKR_SET),
                                                   @saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
                                                   FlickrIntegration::SIZE_SMALL) %>
       </td>

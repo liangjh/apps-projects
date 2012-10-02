@@ -23,10 +23,10 @@ class FlickrIntegration
   class << self
 
     #//  Retrieve photo, by ID and size
-    def get_photo(photoset_id, photo_id, size = SIZE_MEDIUM)
+    def get_photo(saint_id, photoset_id, photo_id, size = SIZE_MEDIUM)
 
       #// retrieve all photos in photoset
-      photo_data = get_photoset_photos(photoset_id, size)
+      photo_data = get_photoset_photos(saint_id, photoset_id, size)
 
       #// given photoset data, retrieve link for selected size
       photo_link = ""
@@ -38,8 +38,8 @@ class FlickrIntegration
     end
 
     #//  Returns a list of photo links, (all in the same photoset)
-    def get_photos(photoset_id, size = SIZE_MEDIUM)
-      photo_data = get_photoset_photos(photoset_id, size)
+    def get_photos(saint_id, photoset_id, size = SIZE_MEDIUM)
+      photo_data = get_photoset_photos(saint_id, photoset_id, size)
       photos = []
       photo_data.each do |photo|
         photos << photo[size]
@@ -48,17 +48,17 @@ class FlickrIntegration
     end
 
     #//  Returns an array of photo objects, for a given photoset
-    def get_photoset_photos(photoset_id, size = SIZE_MEDIUM)
+    def get_photoset_photos(saint_id, photoset_id, size = SIZE_MEDIUM)
       #// retrieve from cache, if enabled
       photo_data = nil
       if (cache_enabled)
-        photo_data = CacheManager.read(CacheConfig::PARTITION_FLICKR_SET, photoset_id)
+        photo_data = CacheManager.read(CacheConfig::PARTITION_FLICKR_SET, saint_id)
       end
       #//  retrieve from flickr, and save to cache
       if (photo_data.nil?)
         data = get_flickr_photos(photoset_id)
         if (!data.nil? && cache_enabled)
-          CacheManager.write(CacheConfig::PARTITION_FLICKR_SET, photoset_id, data)
+          CacheManager.write(CacheConfig::PARTITION_FLICKR_SET, saint_id, data)
         end
         photo_data = data
       end

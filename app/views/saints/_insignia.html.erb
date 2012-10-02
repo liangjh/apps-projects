@@ -7,7 +7,7 @@
 %>
 
 <!--// Saint element (magnified) -->
-<div class="element-magnified <%=SaintInsigniaFilter.get_color(saint)%>">
+<div class="element-magnified <%=SaintInsigniaFilter.get_color(saint)%>" style="cursor: hand; cursor: pointer;">
   <h3><%=SaintInsigniaFilter.get_insignia(saint)[0]%>&nbsp;</h3><br/>
   <span class="saint-title"><%=saint.symbol%></span><br/><br/>
   <span class="saint-subtitle"><%=saint.get_metadata_value(MetadataKey::NAME)%></span>
