@@ -77,7 +77,9 @@
   // This hook allows us to deep link to a specific tab
   // (hopefully twitter bootstrap will come up with something better)
   $(document).ready(function() {
-    url = document.location.href.split('#');
-    $('#'+url[1]+'-tab')[0].click();
+    url = document.location.href.split('#')
+    if (url.length > 1) {
+      $('#'+url[1]+'-tab')[0].click();
+    }
   });
 </script>
