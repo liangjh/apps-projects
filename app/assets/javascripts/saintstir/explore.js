@@ -56,10 +56,10 @@ ExploreApp.prototype.renderBreadCrumbs = function() {
   $('#bread_crumbs').html(crumblist.join(" "));
 
   //  Event Binding for REMOVING FILTERS from breadcrumbs section
-  var eap = this;
+  var _this = this;
   $('#bread_crumbs a').click(function() {
     var selector = $(this).attr('data-filter');
-    eap.removeFilter(selector);
+    _this.removeFilter(selector);
   });
 }
 
@@ -71,14 +71,14 @@ ExploreApp.prototype.showAll = function() {
 
 ExploreApp.prototype.bindFilters = function() {
   //  Event Binding for ADDING FILTERS
-  var eap = this;
+  var _this = this;
   $('#discrete_filters a').click(function(){
     var selector = $(this).attr('data-filter');
     if (selector == undefined) { return; } // exit out, if DNE
     else if (selector == '*') { showAll(); }
     else {
       var sname = $(this).text();
-      eap.appendFilter(selector, sname);
+      _this.appendFilter(selector, sname);
     }
   });
 }
@@ -96,11 +96,11 @@ ExploreApp.prototype.bindPopovers = function() {
       else
       {
         this._currSaintId = saintId;
-        var eap = this;
+        var _this = this;
         $.get(('/saints/' + saintId + '/blurb'),
               function(data){
                 $('.popover').each(function(i,e) { $(e).popover('hide'); });
-                if (saintId == eap._currSaintId) {
+                if (saintId == _this._currSaintId) {
                   currElem.attr('data-content', data);
                   currElem.popover({content: data, delay: {show: 500, hide: 100}});
                   currElem.popover('show');

@@ -28,51 +28,51 @@ PostingApp.prototype.getContent = function(pageNum, sortBy) {
   if (pageNum != null) { this.currentPage = pageNum; }
   if (sortBy != null) { this.currentSortBy = sortBy; }
   this.clearActionStatus();  // clear any action status messages
-  var paObj = this;
-  $.get(paObj.getServerUri(), {page: this.currentPage, sort_by: this.currentSortBy},
+  var _this = this;
+  $.get(_this.getServerUri(), {page: this.currentPage, sort_by: this.currentSortBy},
         function(data) {
           $('#posting-content').html(data);
-          paObj.bindPageLinks();
-          paObj.bindSortLinks();
-          paObj.bindLikeLinks();
-          paObj.bindFlagLinks();
+          _this.bindPageLinks();
+          _this.bindSortLinks();
+          _this.bindLikeLinks();
+          _this.bindFlagLinks();
         });
 }
 
 // Bind pagination links
 PostingApp.prototype.bindPageLinks = function() {
   //  Bind listeners to each link in the paginator for navigation
-  var paObj = this;
+  var _this = this;
   $('.page-link').click(function() {
-    paObj.clearActionStatus();
+    _this.clearActionStatus();
     var pNum = $(this).attr('data-id');
-    paObj.getContent(pNum, null);
+    _this.getContent(pNum, null);
   });
 }
 
 // Bind sort order links
 PostingApp.prototype.bindSortLinks = function() {
-  var paObj = this;
+  var _this = this;
   $('.sort-order').click(function() {
-    paObj.clearActionStatus();
+    _this.clearActionStatus();
     var sortOrder = $(this).attr('data-id');
-    paObj.getContent(null, sortOrder);
+    _this.getContent(null, sortOrder);
   });
 }
 
 // Bind 'like' links
 PostingApp.prototype.bindLikeLinks = function() {
-  var paObj = this;
+  var _this = this;
   $('.like-button').click(function() {
-    paObj.clearActionStatus();
+    _this.clearActionStatus();
     var postId = $(this).attr('data-id');
-    $.post(paObj.getLikeUri(postId), function(data) {
+    $.post(_this.getLikeUri(postId), function(data) {
       if (data.success) {
-        paObj.getContent(null, null);
-        paObj.successMsg(data.message);
+        _this.getContent(null, null);
+        _this.successMsg(data.message);
       }
       else {
-        paObj.failureMsg(data.errors, data.message)
+        _this.failureMsg(data.errors, data.message)
       }
     });
   });
@@ -80,16 +80,16 @@ PostingApp.prototype.bindLikeLinks = function() {
 
 // Bind 'flag' links
 PostingApp.prototype.bindFlagLinks = function() {
-  var paObj = this;
+  var _this = this;
   $('.flag-button').click(function() {
-    paObj.clearActionStatus();
+    _this.clearActionStatus();
     var postId = $(this).attr('data-id');
-    $.post(paObj.getFlagUri(postId), function(data) {
+    $.post(_this.getFlagUri(postId), function(data) {
       if (data.success) {
-        paObj.successMsg(data.message);
+        _this.successMsg(data.message);
       }
       else {
-        paObj.failureMsg(data.errors, data.message);
+        _this.failureMsg(data.errors, data.message);
       }
     });
   });
@@ -97,9 +97,9 @@ PostingApp.prototype.bindFlagLinks = function() {
 
 // Bind the form's submit button to an ajax action w/ the server-side controller
 PostingApp.prototype.bindFormSubmit = function() {
-  var paObj = this;
+  var _this = this;
   $('#submit-posting').click(function() {
-    $.post(paObj.getServerUri(),
+    $.post(_this.getServerUri(),
            {posting_data: $('#posting-data').val(),
             anonymous: ($('#posting-anonymous').is(':checked') ? true : false)},
               function(data) {
@@ -107,13 +107,13 @@ PostingApp.prototype.bindFormSubmit = function() {
                   // response was successful:  (1) close modal, (2) clear form, (3) display in flash
                   $('#submit-posting').val('');
                   $('#posting-modal').modal('hide');
-                  paObj.getContent();
-                  paObj.successMsg(data.message);
+                  _this.getContent();
+                  _this.successMsg(data.message);
                 }
                 else {
                   // response was failure: (1) close modal, (2) do NOT clear form, (3) display errors in flash_error
                   $('#posting-modal').modal('hide');
-                  paObj.failureMsg(data.errors, data.message);
+                  _this.failureMsg(data.errors, data.message);
                 }
               });
   });
@@ -121,18 +121,18 @@ PostingApp.prototype.bindFormSubmit = function() {
 
 // Bind form's cancel button to clear the contents of the form
 PostingApp.prototype.bindFormCancel = function() {
-  paObj = this;
+  _this = this;
   $('#cancel-posting').click(function() {
-    paObj.clearActionStatus();
+    _this.clearActionStatus();
     $('#posting-data').val('');
   });
 }
 
 PostingApp.prototype.bindWordCounter = function() {
-  paObj = this;
-  $('#posting-data').keyup(function(event) { paObj.wordCounter(event, paObj.maxWordCount); });
-  $('#posting-data').change(function(event) { paObj.wordCounter(event, paObj.maxWordCount); });
-  $('#cancel-posting').click(function(event) { paObj.wordCounter(event, paObj.maxWordCount); });
+  _this = this;
+  $('#posting-data').keyup(function(event) { _this.wordCounter(event, _this.maxWordCount); });
+  $('#posting-data').change(function(event) { _this.wordCounter(event, _this.maxWordCount); });
+  $('#cancel-posting').click(function(event) { _this.wordCounter(event, _this.maxWordCount); });
 }
 
 PostingApp.prototype.wordCounter = function(event, maxWords) {
