@@ -16,7 +16,7 @@ Favorites.prototype.favorite = function() {
   var _this = this;
   $.post(_this.getFaveUri('favorite'), function(data) {
     if (data.success) {
-      // _this.successMsg(data.message);
+      _this.successMsg(data.message);
       _this.renderFavorite();
     }
     else {
@@ -29,7 +29,7 @@ Favorites.prototype.unfavorite = function() {
   var _this = this;
   $.post(_this.getFaveUri('unfavorite'), function(data) {
     if (data.success) {
-      // _this.successMsg(data.message);
+      _this.successMsg(data.message);
       _this.renderNonFavorite();
     }
     else {
@@ -61,19 +61,29 @@ Favorites.prototype.getFaveUri = function(type) {
   return ('/saints/' + this.saintId + '/' + type);
 }
 
+Favorites.prototype.successMsg = function(message) {
+  var pageNotice = $('#page-notice');
+  if (pageNotice && pageNotice.length > 0) {
+    var successHtml = "<div class='alert alert-success'>" + message + "</span>";
+    pageNotice.html(successHtml);
+  }
+}
+
 // Render a failure message
 Favorites.prototype.failureMsg = function(message) {
-  alert("Could not perform action.  " + message);
-  //var failmsg = "<div class='alert alert-error'>" + message + "</div>";
-  //$('#favorite-status').html(failmsg);
+  var pageNotice = $('#page-notice');
+  if (pageNotice && pageNotice.length > 0) {
+    var failHtml = "<div class='alert alert-error'>" + message + "</div>";
+    pageNotice.html(failHtml)
+  }
 }
 
 // The saint is currently set as a favorite
 Favorites.prototype.renderFavorite = function() {
   var faveLink = "" +
-        "<span class='label label-info' style='padding:5px;'>" +
+        "<span class='label label-favorite' style='padding:5px;'>" +
           "<a href='#' id='fave-link'>" +
-            "&nbsp;&nbsp;<i class='icon-star-empty'></i>&nbsp;&nbsp;" +
+            "&nbsp;&nbsp;<i class='icon-star'></i>&nbsp;&nbsp;" +
           "</a>" +
         "</span>";
   $('#favorite').html(faveLink);

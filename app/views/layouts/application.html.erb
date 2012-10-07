@@ -38,6 +38,8 @@
   <%# Render menu bar %>
   <%= render :partial => 'layouts/menubar' %>
 
+  <!--// General page status (can be utilize by all code on the site) -->
+  <div id="page-notice">
   <%
       #  has error message
       if (flash[:error])
@@ -48,6 +50,7 @@
         %><div class="alert alert-info"><%=flash[:notice]%></div><%
       end
   %>
+  </div>
 
   <div class="container">
     <div class="content">

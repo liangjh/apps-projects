@@ -65,7 +65,7 @@ class SaintsController < ApplicationController
     user_id = current_user.id
     Favorite.fave(saint_id, user_id)  # will do the right thing (create or ignore if exists)
     render :json => {'success' => true,
-                     'message' => 'Added to your favorites'}.to_json
+                     'message' => 'Great!  This saint has been added to your favorites'}.to_json
   end
 
   ##
@@ -76,7 +76,7 @@ class SaintsController < ApplicationController
     user_id = current_user.id
     Favorite.unfave(saint_id, user_id)  # will do the right thing (delete or ignore if DNE)
     render :json => {'success' => true,
-                     'message' => 'Removed from your favorites'}.to_json
+                     'message' => 'Aww!  This saint has been removed from your favorites'}.to_json
   end
 
 end

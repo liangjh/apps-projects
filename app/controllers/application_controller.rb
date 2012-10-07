@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   # Redirects (http 302) to login page if user is not logged in
   def check_logged_in
     if (!current_user)
-      flash[:error] = "Sorry, but you must be logged in to submit a posting."
+      flash[:error] = "Sorry, but you must be logged in to do this.  Please sign in or create a Sainstir account"
       redirect_to new_user_session_path
     end
   end
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     if (!logged_in?)
       render :json => {"success" => false,
                        "errors" => ["You must be logged in to do this"],
-                       "message" => "Please sign in or register on Saintstir"}.to_json
+                       "message" => "Sorry, but you must be logged in to do this.  Please sign in or create a Saintstir account."}.to_json
     end
     logged_in?
   end

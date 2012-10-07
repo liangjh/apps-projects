@@ -126,5 +126,15 @@ h2 {
 .clickable .element:hover { cursor: pointer; }
 .clickable .element:hover h3 { text-shadow: 0 0 10px white, 0 0 10px white; }
 
+/*
+ * TWITTER BOOTSTRAP OVERRIDE STYLES
+ *  Additions to Twitter Bootstrap (overrides)
+ */
+
+/* Twitter bootstrap overrides */
+.label-favorite {
+  background-color: #f9edbe;
+}
+
 
 
