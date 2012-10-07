@@ -5,6 +5,8 @@ Saintstir::Application.routes.draw do
 
   #//  Define homepage as singular resource, since all ppl share the same homepage content
   resource :home, :controller => "home", :only => [:show]
+  #//  "My" page - each user's customized page based on preferences set on site
+  resource :my_page, :controller => "my_page", :only => [:show]
 
   #//  Static resources (named resources)
   match "/statics/volunteer" => "statics#volunteer", :via => :get
@@ -19,17 +21,24 @@ Saintstir::Application.routes.draw do
 
   #//  Core saints controller, with ajax events
   #//  index => saint explore, show  => saint profile, blurb => saint peek hover-over
-  resources :saints, :only => [:index, :show] do
+  resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
     member do
+
+      #// Ajax blurb
       get :blurb
+
+      #// Favorites feature
+      get :is_favorite
+      post :favorite
+      post :unfavorite
     end
 
     #// Posting actions - list, create, like, flag
     resources :postings, :only => [:index, :create]
     match "/like_posting/:id" => "postings#like"
     match "/flag_posting/:id" => "postings#flag"
-
   end
+
 
   #//  Singular controller for contact us page
   resource :contact_us, :only => [:create, :show]

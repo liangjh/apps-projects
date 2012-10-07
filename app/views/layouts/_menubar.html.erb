@@ -43,7 +43,8 @@
                     <b class="caret black-caret"></b>
                   </a>
                   <ul class="dropdown-menu">
-                    <%= link_to "Edit My Profile", edit_user_registration_path %>
+                    <li><%= link_to "Edit My Profile", edit_user_registration_path %></li>
+                    <li><%= link_to "My Page", my_page_path %></li>
                   </ul>
                 </li>
                 <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>

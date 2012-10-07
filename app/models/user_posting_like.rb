@@ -21,6 +21,11 @@ class UserPostingLike < ActiveRecord::Base
       self.create(:user_id => user.id, :posting_id => posting.id)
     end
 
+    def all_postings_for_user(user)
+      posting_ids = self.select(:posting_id).find_all_by_user_id(user.id).map { |x| x.posting_id }
+      Posting.find(posting_ids) if (posting_ids.present?)
+    end
+
   end
 
 end

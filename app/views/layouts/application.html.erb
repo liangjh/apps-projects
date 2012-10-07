@@ -38,6 +38,8 @@
   <%# Render menu bar %>
   <%= render :partial => 'layouts/menubar' %>
 
+  <!--// General page status (can be utilize by all code on the site) -->
+  <div id="page-notice">
   <%
       #  has error message
       if (flash[:error])
@@ -48,13 +50,17 @@
         %><div class="alert alert-info"><%=flash[:notice]%></div><%
       end
   %>
+  </div>
 
   <div class="container">
     <div class="content">
       <div class="row">
-        <div class="span10">&nbsp;&nbsp;</div>
+        <div class="span9">&nbsp;&nbsp;</div>
         <div class="span2">
           <%= render :partial => 'layouts/fblike' %>
+        </div>
+        <div class="span1" style="align:right">
+          <%= render :partial => 'saints/favorite' %>
         </div>
       </div>
     </div>

@@ -18,6 +18,7 @@ class Saint < ActiveRecord::Base
   has_many :attribs, :through => :saint_attribs
   has_many :saint_edit_audits
   has_many :postings
+  has_many :favorites
 
   after_save :flush_cached_data
 
