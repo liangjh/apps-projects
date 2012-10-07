@@ -22,6 +22,12 @@ ExploreApp.prototype.init = function() {
   this.bindSaintClick();
 }
 
+// This is for initializing ONLY the saint insignia boxes
+ExploreApp.prototype.initAbridged = function() {
+  this.bindPopovers();
+  this.bindSaintClick();
+}
+
 ExploreApp.prototype.initContainer = function() {
   this._container = $('#isotope_content');
   this._container.isotope({itemSelector: '.element'});

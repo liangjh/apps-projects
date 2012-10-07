@@ -5,6 +5,8 @@ Saintstir::Application.routes.draw do
 
   #//  Define homepage as singular resource, since all ppl share the same homepage content
   resource :home, :controller => "home", :only => [:show]
+  #//  "My" page - each user's customized page based on preferences set on site
+  resource :my_page, :controller => "my_page", :only => [:show]
 
   #//  Static resources (named resources)
   match "/statics/volunteer" => "statics#volunteer", :via => :get
