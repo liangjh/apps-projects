@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :postings
   has_many :user_posting_likes
+  has_many :saints, :through => :favorites
+  has_many :favorites
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

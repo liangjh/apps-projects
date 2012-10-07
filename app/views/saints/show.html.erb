@@ -4,13 +4,13 @@
   <!--// Saint insignia and photo section -->
   <div class="span4">
     <!--// Saint insignia -->
-    <%= render :partial => "saints/insignia", :locals => {:saint => @saint} %>
+    <%= render :partial => 'saints/insignia', :locals => {:saint => @saint} %>
     <!--// Flickr photoset / reel -->
-    <%= render :partial => "saints/photoreel", :locals => {:saint => @saint} %>
+    <%= render :partial => 'saints/photoreel', :locals => {:saint => @saint} %>
     <!--// Submit a correction to inaccurate content -->
     <br/><br/>
     <i class="icon-edit"></i>
-    <%= link_to "Errors?  Let us know!", contact_us_path(:purpose => "Correction", :message => "Corrections for saint: #{@saint.symbol}\n\n") %>
+    <%= link_to "Errors?  Let us know!", contact_us_path(:purpose => "Correction", :message => "Corrections for saint: #{@saint.symbol}\n\n") %><br/>
   </div>
 
   <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
@@ -77,9 +77,13 @@
   // This hook allows us to deep link to a specific tab
   // (hopefully twitter bootstrap will come up with something better)
   $(document).ready(function() {
-    url = document.location.href.split('#')
-    if (url.length > 1) {
-      $('#'+url[1]+'-tab')[0].click();
+    try {
+      url = document.location.href.split('#')
+      if (url.length > 1 && url[1].length > 0) {
+        $('#'+url[1]+'-tab')[0].click();
+      }
+    }
+    catch(err) {
     }
   });
 </script>

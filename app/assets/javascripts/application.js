@@ -14,6 +14,7 @@
 //= require isotope/jquery.isotope.min
 //= require saintstir/postings
 //= require saintstir/explore
+//= require saintstir/favorites
 //= require tweet/jquery.tweet
 //= require chosen/chosen.jquery
 

@@ -10,6 +10,8 @@ require 'wikipedia_bio_scraper'
 
 class SaintsController < ApplicationController
   before_filter :show_fb_like, :only => [:index, :show]
+  before_filter :show_favorite_link, :only => [:show]
+  before_filter :ajax_logged_in, :only => [:favorite, :unfavorite, :is_favorite]
 
   #// Return all saints, all metadata, all attributes
   #// Dump all data and render
@@ -31,6 +33,7 @@ class SaintsController < ApplicationController
   #// Return the saint passed in the ID parameter
   def show
     @saint = Saint.find(params[:id])
+    show_favorite_link # enable the favorite link
     set_page_title("#{@saint.symbol} (#{@saint.get_metadata_value(MetadataKey::NAME)})")
     #// All attribs in use
     @attribs_all = AttribCategory.map_attrib_cat_content(true)
@@ -45,5 +48,35 @@ class SaintsController < ApplicationController
     render :layout => false #// no layout, to avoid erb interpolation
   end
 
+  ##
+  # Returns true/false, depending on whether this saint is a favorite
+  def is_favorite
+    saint_id = params[:id]
+    user_id = current_user.id
+    fave = Favorite.find_by_saint_id_and_user_id(saint_id, user_id)
+    render :json => {'success' => true, 'is_favorite' => fave.present?, 'saint_id' => saint_id}.to_json
+  end
+
+  ##
+  # Set this saint as a favorite for current user
+  # This is ajax-based
+  def favorite
+    saint_id = params[:id]
+    user_id = current_user.id
+    Favorite.fave(saint_id, user_id)  # will do the right thing (create or ignore if exists)
+    render :json => {'success' => true,
+                     'message' => 'Added to your favorites'}.to_json
+  end
+
+  ##
+  # Remove this saint as a favorite
+  # This is ajax-based
+  def unfavorite
+    saint_id = params[:id]
+    user_id = current_user.id
+    Favorite.unfave(saint_id, user_id)  # will do the right thing (delete or ignore if DNE)
+    render :json => {'success' => true,
+                     'message' => 'Removed from your favorites'}.to_json
+  end
 
 end

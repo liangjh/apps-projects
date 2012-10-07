@@ -19,17 +19,24 @@ Saintstir::Application.routes.draw do
 
   #//  Core saints controller, with ajax events
   #//  index => saint explore, show  => saint profile, blurb => saint peek hover-over
-  resources :saints, :only => [:index, :show] do
+  resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
     member do
+
+      #// Ajax blurb
       get :blurb
+
+      #// Favorites feature
+      get :is_favorite
+      post :favorite
+      post :unfavorite
     end
 
     #// Posting actions - list, create, like, flag
     resources :postings, :only => [:index, :create]
     match "/like_posting/:id" => "postings#like"
     match "/flag_posting/:id" => "postings#flag"
-
   end
+
 
   #//  Singular controller for contact us page
   resource :contact_us, :only => [:create, :show]

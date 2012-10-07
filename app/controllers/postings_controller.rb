@@ -6,7 +6,8 @@
 #//
 
 class PostingsController < ApplicationController
-  before_filter :check_logged_in, :only => [:create, :like, :flag]
+  before_filter :check_logged_in, :only => [:create]
+  before_filter :ajax_logged_in, :only => [:like, :flag]
 
   #// Number of postings per "page" on the saint profile page
   POSTINGS_PER_PAGE = 5
@@ -104,17 +105,6 @@ class PostingsController < ApplicationController
     else
       render :json => {"success" => false, "errors" => ["Could not find saint or posting."]}.to_json
     end
-  end
-
-
-  #// if user is not logged in, will return a json error (for rendering on client-side)
-  def check_logged_in
-    if (!logged_in?)
-      render :json => {"success" => false,
-                       "errors" => ["You must be logged in to do this"],
-                       "message" => "Please sign in or register on Saintstir using the links above."}.to_json
-    end
-    logged_in?
   end
 
 
