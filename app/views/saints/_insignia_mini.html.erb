@@ -7,9 +7,8 @@
       - disc_filters: discrete filters which apply for this saint
 %>
 
-
         <div class="element <%=SaintInsigniaFilter.get_color(saint)%> <%=disc_filters%>"
-          data-symbol="<%=saint.id%>">
+          data-symbol="<%=saint.id%>" style="cursor:hand; cursor:pointer;">
           <%=SaintInsigniaFilter.get_insignia(saint)[0]%><br/>
           <h3 class="symbol"><%=saint.symbol%></h3>
           <br/>

@@ -1,0 +1,77 @@
+<div class="span12">
+  <h2>My Favorites </h2>
+  <br/>
+
+  <div id="isotope_content" class="span12">
+    <%
+        if (@favorite_saints.present?)
+          @favorite_saints.each do |saint|
+          %><%= render :partial => 'saints/insignia_mini', :locals => {:saint => saint, :disc_filters => nil} %><%
+          end
+    else
+  %>
+<div class="alert alert-info">No favorites yet!
+  You can add a saint to your favorites list by clicking on
+  the star icon on the saint's page.  <%= link_to "Find some saints!", saints_path %></div>
+<%
+    end
+  %>
+  </div>
+</div>
+
+<div class="span12" style="height:30px;"></div>
+
+<div class="span12">
+  <h2>My Postings</h2>
+  <br/>
+  <div class="span12">
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active"><a id="myposts-tab" href="#myposts" data-toggle="tab">Wall Postings</a></li>
+        <!-- <li><a id="likedposts-tab" href="#likedposts" data-toggle="tab">Liked Postings</a></li> -->
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane active" id="myposts" style="padding:7px">
+          <%
+              if (@user_postings.present?)
+              %><table class="table"><%
+                @user_postings.each do |posting|
+              %>
+            <tr>
+              <td>
+                <b><%=posting.saint.symbol%></b> (<%=posting.created_at.present? ? posting.created_at.strftime('%m/%d/%Y') : 'N/A'%>)<br/>
+                <%=raw(posting.content_formatted)%>
+              </td>
+            </tr>
+            <%
+              end
+              %></table><%
+          else
+        %>
+      <div class="alert alert-info">You haven't submitted any wall posts for any saints yet.  It's easy!
+        Go to any saint and write a short testimony if that saint has helped or inspired you in any way.
+        Let others know that the saints of the church are alive and present in our modern world.
+      </div>
+      <%
+              end
+            %>
+        </div>
+        <!--
+        <div class="tab-pane" id="likedposts" style="padding:7px;">
+        </div>
+        -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    // Initialize the blurb and the click that links to the particular saint
+    var eap = new ExploreApp();
+    eap.initAbridged();
+  });
+</script>
