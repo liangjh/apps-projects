@@ -53,7 +53,7 @@
 
         <!--// Section: Wall -->
         <div class="tab-pane" id="wall" style="padding:7px;">
-          <%= render :partial => "postings/postings", :locals => { :saint_id => @saint.id} %>
+          <%= render :partial => "postings/postings", :locals => { :saint_id => @saint.id, :posting_id => @posting_id} %>
         </div>
 
         <!--// Section: Bio -->
@@ -80,10 +80,13 @@
     try {
       url = document.location.href.split('#')
       if (url.length > 1 && url[1].length > 0) {
-        $('#'+url[1]+'-tab')[0].click();
+        clickOnTab(url[1]);
       }
     }
     catch(err) {
     }
   });
+  function clickOnTab(tabName) {
+    $('#'+tabName+'-tab')[0].click();
+  }
 </script>

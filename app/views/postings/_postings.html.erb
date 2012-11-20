@@ -1,6 +1,6 @@
 
 <%# Saint Postings %>
-<%# Assumed local variables: (saint_id, posting_type) %>
+<%# Assumed local variables: (saint_id, posting_id) %>
 
 <table cellpadding="10">
   <tr>
@@ -58,8 +58,14 @@
 <script>
   $(document).ready(function() {
     //  Initialize the posting app, by type
+    //  Set to null if posting id DNE (TODO: fix this call, so ugly)
     var pa = new PostingApp(<%=saint_id%>, <%=Posting::CONTENT_MAX_WORD_COUNT%>);
+    var postingId = <%=posting_id || 'null' %>
     pa.init();
+    pa.getContent(null, null, <%=posting_id || 'null' %>);
+    if (postingId != null) {
+      clickOnTab('wall');
+    }
   });
 </script>
 

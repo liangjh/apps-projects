@@ -30,9 +30,11 @@ class SaintsController < ApplicationController
     end
   end
 
-  #// Return the saint passed in the ID parameter
+  ##
+  # Return the saint passed in the ID parameter
   def show
     @saint = Saint.find(params[:id])
+    @posting_id = params[:posting_id]
     show_favorite_link # enable the favorite link
     set_page_title("#{@saint.symbol} (#{@saint.get_metadata_value(MetadataKey::NAME)})")
     #// All attribs in use
