@@ -11,32 +11,36 @@ PostingApp = function(saintId, maxWordCount) {
   this.saintId = saintId;
   this.maxWordCount = maxWordCount;
   this.currentPage = 1;
+  this.postingId = null;
   this.currentSortBy = 'date';
 }
 
 // Initializer
 PostingApp.prototype.init = function() {
-  //  Retrieve just the first page of content
-  this.getContent();
   this.bindFormSubmit();
   this.bindFormCancel();
   this.bindWordCounter();
 }
 
 // Retrieve content for a given page
-PostingApp.prototype.getContent = function(pageNum, sortBy) {
-  if (pageNum != null) { this.currentPage = pageNum; }
+PostingApp.prototype.getContent = function(pageNum, sortBy, postingId) {
   if (sortBy != null) { this.currentSortBy = sortBy; }
+  if (pageNum != null) { this.postingId = null; this.pageNum = pageNum; }
+  if (postingId != null) { this.pageNum = null; this.postingId = postingId; }
+
   this.clearActionStatus();  // clear any action status messages
   var _this = this;
-  $.get(_this.getServerUri(), {page: this.currentPage, sort_by: this.currentSortBy},
-        function(data) {
-          $('#posting-content').html(data);
-          _this.bindPageLinks();
-          _this.bindSortLinks();
-          _this.bindLikeLinks();
-          _this.bindFlagLinks();
-        });
+  $.get(_this.getServerUri(),
+        {page: (this.pageNum == null ? '' : this.pageNum),
+         sort_by: (this.currentSortBy == null ? '' : this.currentSortBy),
+         posting_id: (this.postingId == null ? '' : this.postingId)},
+          function(data) {
+            $('#posting-content').html(data);
+            _this.bindPageLinks();
+            _this.bindSortLinks();
+            _this.bindLikeLinks();
+            _this.bindFlagLinks();
+          });
 }
 
 // Bind pagination links
@@ -45,8 +49,10 @@ PostingApp.prototype.bindPageLinks = function() {
   var _this = this;
   $('.page-link').click(function() {
     _this.clearActionStatus();
+    _this.postingId = null;
     var pNum = $(this).attr('data-id');
-    _this.getContent(pNum, null);
+    _this.postingId = null;
+    _this.getContent(pNum, null, null);
   });
 }
 
@@ -56,7 +62,7 @@ PostingApp.prototype.bindSortLinks = function() {
   $('.sort-order').click(function() {
     _this.clearActionStatus();
     var sortOrder = $(this).attr('data-id');
-    _this.getContent(null, sortOrder);
+    _this.getContent(null, sortOrder, null);
   });
 }
 
@@ -68,7 +74,7 @@ PostingApp.prototype.bindLikeLinks = function() {
     var postId = $(this).attr('data-id');
     $.post(_this.getLikeUri(postId), function(data) {
       if (data.success) {
-        _this.getContent(null, null);
+        _this.getContent(null, null, null);
         _this.successMsg(data.message);
       }
       else {
@@ -107,7 +113,7 @@ PostingApp.prototype.bindFormSubmit = function() {
                   // response was successful:  (1) close modal, (2) clear form, (3) display in flash
                   $('#submit-posting').val('');
                   $('#posting-modal').modal('hide');
-                  _this.getContent();
+                  _this.getContent(null, null, null);
                   _this.successMsg(data.message);
                 }
                 else {
