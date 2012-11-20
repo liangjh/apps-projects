@@ -4,7 +4,17 @@
 <%#// Generate pagination using Kaminari gem %>
 <table border="0" width="100%">
   <tr>
-    <td><%= paginate @postings %></td>
+    <td>
+      <%
+        # Pagination
+        # Do not paginate if we are trying to display a single posting
+      %>
+      <% if (@posting_id.present?) %>
+        <%= link_to 'Browse Postings', saint_path(@saint_id) %>
+      <% else %>
+        <%= paginate @postings %>
+      <% end %>
+    </td>
     <td align="right">
       <% if (@sort_by == 'date') %>
         Date
