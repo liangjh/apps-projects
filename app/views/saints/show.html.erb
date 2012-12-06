@@ -8,9 +8,8 @@
     <!--// Flickr photoset / reel -->
     <%= render :partial => 'saints/photoreel', :locals => {:saint => @saint} %>
     <!--// Submit a correction to inaccurate content -->
-    <br/><br/>
-    <i class="icon-edit"></i>
-    <%= link_to "Errors?  Let us know!", contact_us_path(:purpose => "Correction", :message => "Corrections for saint: #{@saint.symbol}\n\n") %><br/>
+    <br/>
+    <%= render :partial => 'saints/linkables', :locals => {:saint => @saint} %>
   </div>
 
   <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
