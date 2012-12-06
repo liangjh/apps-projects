@@ -21,7 +21,7 @@ Expected params:
 <div id="share-modal" class="modal hide fade">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>Share or Embed on your Website</h3>
+      <h3>Share or Embed on Website</h3>
     </div>
     <div class="modal-body">
       To email or send a link to this saint:<br/></br>
@@ -31,12 +31,8 @@ http://www.sainstir.com<%= saint_path(@saint.id) %>
       <br/><br/>
       To embed this saint on your website or blog:<br/></br>
 <pre>
-&lt;iframe src="http://www.saintstir.com<%=embed_saint_path(@saint.id)%>"
-    name="<%=@saint.symbol%>"
-    width="320" height="330" frameborder="0" marginheight="0" marginwidth="0"&gt;
-    Sorry, but your browser does not support iframes.
-    &lt;a href="http://www.saintstir.com">Saintstir &copy;&lt;/a&gt;
-&lt;/iframe&gt;
+&lt;iframe src="http://www.saintstir.com<%=embed_saint_path(@saint.id)%>" name="<%=@saint.symbol%>"
+width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt;/iframe&gt;
 </pre>
     </div>
     <div class="modal-footer">
