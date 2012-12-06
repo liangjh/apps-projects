@@ -4,6 +4,7 @@
   Produces the logo/insignia on the the saint's profile page
   Expects the following local variable to be passed to partial:
     - saint: saint model object from database
+    - popup: if true (or present), then insignia click will direct to popup
 %>
 
 <!--// Saint element (magnified) -->
@@ -16,8 +17,12 @@
 <%# Set click events on insignia / title / subtitles if with_link is true %>
 <script>
   var saint_link = '<%=saint_path(saint)%>';
+  var popup = <%= defined?(popup) ? popup : false %>;
   $(document).ready(function() {
-    $('.element-magnified').click(function() { window.location = saint_link;  });
+    $('.element-magnified').click(function() {
+      if (popup == true) { window.open(saint_link); }
+      else { window.location = saint_link; }
+    });
   });
 </script>
 

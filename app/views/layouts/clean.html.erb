@@ -10,8 +10,13 @@
   </head>
 
   <body>
+
+    <%#// google analytics usage integration into site %>
+    <%= render :partial => 'layouts/ga' if (Rails.env == "production") %>
+
     <%= yield %>
   </body>
+
 </html>
 
 
