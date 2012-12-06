@@ -35,6 +35,5 @@ end
 #// include debug only for development 
 group :development do
   gem 'ruby-debug19'
-  gem 'thin'
 end
 
