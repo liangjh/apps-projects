@@ -24,10 +24,11 @@ Saintstir::Application.routes.draw do
   resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
     member do
 
-      #// Ajax blurb
+      # Embeddables, popups
       get :blurb
+      get :embed
 
-      #// Favorites feature
+      # Favorites feature
       get :is_favorite
       post :favorite
       post :unfavorite
