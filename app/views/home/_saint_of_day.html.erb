@@ -1,0 +1,33 @@
+<%#
+    Saint of the Day widget on homepage
+    local vars:  saint (current featured saint)
+  %>
+
+    <h2>Saint of the Day</h2><br/>
+    <!--// Saint insignia -->
+    <%= render :partial => "saints/insignia", :locals => {:saint => saint} %>
+    <!--// Flickr photoset / reel -->
+    <%= render :partial => "saints/photoreel", :locals => {:saint => saint} %>
+    <br/>
+    <span class="btn" style="padding:5px;" id="share" data-toggle="modal" data-target="#share-modal">
+      <i class="icon-share"></i>
+      <%= image_tag "link.png" %>
+    </span>
+    <br/><br/>
+
+<div id="share-modal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Share or Embed on Website</h3>
+    </div>
+    <div class="modal-body">
+      To embed the saint of the day below on your website or blog:<br/></br>
+<pre>
+&lt;iframe src="http://www.saintstir.com/saints/embed_featured" name="SaintOfTheDay"
+width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt;/iframe&gt;
+</pre>
+      This widget will automated update every day with the Saint of the Day on Saintstir
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>

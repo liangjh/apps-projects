@@ -19,15 +19,13 @@ Saintstir::Application.routes.draw do
   match "/auth/:provider/callback" => "authentications#create" #// callback for 3rd party integration
   match "/authentications/create" => "authentications#create"  #// given a prior omniauth session, associate w/ new login
 
-  #//  Core saints controller, with ajax events
-  #//  index => saint explore, show  => saint profile, blurb => saint peek hover-over
+  #//  Core saints controller
+  match "/saints/embed_featured" => "saints#embed_featured"
   resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
     member do
-
       # Embeddables, popups
       get :blurb
       get :embed
-
       # Favorites feature
       get :is_favorite
       post :favorite
