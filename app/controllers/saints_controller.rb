@@ -51,7 +51,15 @@ class SaintsController < ApplicationController
   end
 
   ##
-  # Embeddable page - just contains the main saint box
+  #  Embeddable page for the featured saint - contains the main saint insignia
+  def embed_featured
+    symbol = Setting.by_key("saint_featured").first.value
+    @saint = Saint.find_by_symbol(symbol)
+    render :layout => 'clean', :template => 'saints/embed'
+  end
+
+  ##
+  # Embeddable page - contains the main saint insignia
   def embed
     @saint = Saint.find(params[:id])
     render :layout => 'clean'
