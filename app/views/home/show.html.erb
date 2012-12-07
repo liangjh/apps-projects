@@ -70,12 +70,8 @@
 
   <!--// Integrate insignia and photoreel partials -->
   <div class="span4">
-    <h2>Saint of the Day</h2><br/>
-    <!--// Saint insignia -->
-    <%= render :partial => "saints/insignia", :locals => {:saint => @saint} %>
-    <!--// Flickr photoset / reel -->
-    <%= render :partial => "saints/photoreel", :locals => {:saint => @saint} %>
-  </div>
+    <%= render :partial => "home/saint_of_day", :locals => {:saint => @saint} %>
+ </div>
 
   <!--// Integrate saintstir twitter feed -->
   <div class="span4">
