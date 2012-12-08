@@ -1,3 +1,4 @@
+require 'page_preferences'
 
 #//
 #//  Base application controller class
@@ -5,6 +6,10 @@
 #//
 
 class ApplicationController < ActionController::Base
+
+  # This module has all of the page-available settings on the system
+  include PagePreferences
+
   protect_from_forgery
   helper_method :fb_like_enabled?, :favorite_link_enabled?
   helper_method :page_title
@@ -43,33 +48,6 @@ class ApplicationController < ActionController::Base
   #  Returns a 401 HTTP status if user is not logged in
   def authorize_logged_in
     render :status => 401 if (!current_user)
-  end
-
-
-  # --- Page Preferences ---
-
-  def show_favorite_link
-    @favorite_link = true
-  end
-
-  def favorite_link_enabled?
-    (@favorite_link == true)
-  end
-
-  def show_fb_like
-    @fb_like = true
-  end
-
-  def fb_like_enabled?
-    (@fb_like == true)
-  end
-
-  def set_page_title(title)
-    @title = title
-  end
-
-  def page_title
-    @title
   end
 
 end
