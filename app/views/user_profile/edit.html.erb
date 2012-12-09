@@ -1,0 +1,30 @@
+<div class="span6">
+
+<h2>Edit Your Saintstir Profile</h2>
+
+Use the form below to change your profile information on Saintstir
+<br/><br/>
+<%= form_for(@user, :url => user_profile_path,
+             :html => { :method => :put, :class => "well" }) do |f| %>
+
+  <h3>Your Login Info</h3>
+  <br/>
+
+  <%= f.label :email %><i>(your email address will not be shared with anyone on Saintstir)</i><br/>
+  <%= f.email_field :email %>
+  <br/><br/>
+
+  <%= render :partial => 'user_profile/profile', :locals => {:formobj => f} %>
+
+  <br/><br/>
+  <%= f.submit "Update My Profile", :class => "btn btn-large btn-info" %>
+
+<% end %>
+
+
+<%= link_to "Back", :back %>
+
+</div>
+
+
+

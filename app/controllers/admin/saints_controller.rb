@@ -8,10 +8,10 @@
 #//
 
 class Admin::SaintsController < ApplicationController
+  before_filter :check_logged_in
+  before_filter :check_super_user  #//  administrative pages only for super users
   around_filter :wrap_in_transaction, :only => [:create, :update, :destroy]
   before_filter :load_dimensional_data
-  before_filter :authenticate_user!
-  before_filter :check_super_user  #//  administrative pages only for super users
 
   #// for pagination
   SAINTS_PER_PAGE = 10

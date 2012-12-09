@@ -7,7 +7,7 @@
 #//
 
 class Admin::PostingsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :check_logged_in
   before_filter :check_super_user
 
   #// display as much as possible, why not
