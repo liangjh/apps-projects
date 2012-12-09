@@ -1,25 +1,30 @@
 Saintstir::Application.routes.draw do
 
-  #//  Root points to singular HomeController
+  # Root points to singular HomeController
   root :to => "home#show"
 
-  #//  Define homepage as singular resource, since all ppl share the same homepage content
+  # Define homepage as singular resource, since all ppl share the same homepage content
   resource :home, :controller => "home", :only => [:show]
-  #//  "My" page - each user's customized page based on preferences set on site
+
+  # "My" page - each user's customized page based on preferences set on site
   resource :my_page, :controller => "my_page", :only => [:show]
 
-  #//  Static resources (named resources)
+  # Edit my user profile (user model)
+  resource :user_profile, :controller => "user_profile", :only => [:edit, :update]
+
+  # Contact us / emailer
+  resource :contact_us, :only => [:create, :show]
+
+  # Static pages
   match "/statics/volunteer" => "statics#volunteer", :via => :get
   match "/statics/about" => "statics#about", :via => :get
 
-  #//  Authentication routes, via (1) Omniauth, (2) Devise
-  #//  We override the registrations and sessions controllers to accomodate third party auth
-  devise_for :users, :controllers => { :registrations => "registrations" }
-  resources :authentications, :only => [:create, :destroy]
-  match "/auth/:provider/callback" => "authentications#create" #// callback for 3rd party integration
-  match "/authentications/create" => "authentications#create"  #// given a prior omniauth session, associate w/ new login
+  # Callback for third party authentication / login callback
+  # note: /auth/:provider URI is mapped by omniauth
+  match "/auth/:provider/callback" => "authentications#create"
+  match "/logout" => "authentications#destroy"
 
-  #//  Core saints controller
+  #  Core saints controller
   match "/saints/embed_featured" => "saints#embed_featured"
   resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
     member do
@@ -32,17 +37,13 @@ Saintstir::Application.routes.draw do
       post :unfavorite
     end
 
-    #// Posting actions - list, create, like, flag
+    # Postings feature
     resources :postings, :only => [:index, :create]
     match "/like_posting/:id" => "postings#like"
     match "/flag_posting/:id" => "postings#flag"
   end
 
-
-  #//  Singular controller for contact us page
-  resource :contact_us, :only => [:create, :show]
-
-  #//  Administrative modules / editing pages
+  # Administrative modules / editing pages
   namespace :admin do
     resources :saints
     resources :postings
