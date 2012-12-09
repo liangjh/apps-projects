@@ -19,10 +19,12 @@ Saintstir::Application.routes.draw do
   match "/statics/volunteer" => "statics#volunteer", :via => :get
   match "/statics/about" => "statics#about", :via => :get
 
+  # Auth / Login / Logout
   # Callback for third party authentication / login callback
   # note: /auth/:provider URI is mapped by omniauth
   match "/auth/:provider/callback" => "authentications#create"
   match "/logout" => "authentications#destroy"
+  match "/sign_out" => "authentications#destroy"
 
   #  Core saints controller
   match "/saints/embed_featured" => "saints#embed_featured"
