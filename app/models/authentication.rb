@@ -11,22 +11,28 @@ class Authentication < ActiveRecord::Base
   #//  Class methods
   class << self
 
-    #// Retrieve omniauth user provided, or creates a
-    #//  new user w/ omniauth credentials
-    def from_omniauth(omniauth, user)
-      find_by_provider_and_uid(omniauth["provider"], omniauth["uid"]) || create_with_omniauth(omniauth, user)
+    ##
+    #  Finds an an existing authentication (if one exists already for this user).  If one does not exist, then
+    #  create a new authentication (not associated with a user yet)
+    def find_or_create_from_omniauth(omniauth)
+      find_by_provider_and_uid(omniauth['provider'], omniauth['uid']) || self.create_with_omniauth(omniauth)
     end
 
-    #// Create new user w/ omniauth credentials
-    #// and also link it to an existing user
-    #//  (note, if we cannot find a user, then the system need to create one prior to calling this method)
-    def create_with_omniauth(omniauth, duser) #// duser is devise user
-      create! do |auth_user|
-        auth_user.provider = omniauth["provider"]
-        auth_user.uid = omniauth["uid"]
-        auth_user.name ||= omniauth['info']['nickname'] || omniauth['info']['name'] || omniauth['info']['email']
-        auth_user.user = duser
+    ##
+    #  Creates an authentication object with params
+    def create_with_omniauth(omniauth)
+      create! do |auth|
+        auth.provider = omniauth['provider']
+        auth.uid = omniauth['uid']
+        auth.name = omniauth['info']['nickname'] || omniauth['info']['name']
       end
+    end
+
+    ##
+    #  Associates a user with an auth
+    def save_user(auth, user)
+      auth.user = user
+      auth.save!
     end
 
   end

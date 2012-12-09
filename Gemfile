@@ -18,9 +18,7 @@ gem 'nokogiri' # xml parsing
 gem 'airbrake'
 
 # Auth plugins
-gem 'devise'  # auth library (p1)
 gem 'bcrypt-ruby', '~> 3.0.0'
-gem 'omniauth-twitter'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 
