@@ -7,6 +7,7 @@
 
 class MyPageController < ApplicationController
   before_filter :check_logged_in
+  after_filter :set_last_page
 
   ##
   #  Retrieve all data that will be rendered by this page

@@ -7,6 +7,7 @@
 
 class HomeController < ApplicationController
   before_filter :show_fb_like
+  after_filter :set_last_page
 
   def show
     #//  leads to homepage by default
