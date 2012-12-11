@@ -44,7 +44,7 @@ class AuthenticationsController < ApplicationController
       Authentication.save_user(auth, user) if (auth.user.nil?)
 
       # Set login metrics (last login time, login count)
-      User.up_metrics(user)
+      user.up_metrics
 
       # Set user as current_user
       sign_in(user)

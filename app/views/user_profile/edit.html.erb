@@ -2,6 +2,20 @@
 
 <h2>Edit Your Saintstir Profile</h2>
 
+<%
+if (@user.errors.present?)
+%>
+  <div class="alert alert-error">
+    Oops, there were errors on these fields:<br/>
+    <% @user.errors.each  do |err| %>
+      <%=err%>&nbsp;&nbsp;
+    <% end %>
+  </div>
+<%
+end
+%>
+
+
 Use the form below to change your profile information on Saintstir
 <br/><br/>
 <%= form_for(@user, :url => user_profile_path,
