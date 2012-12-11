@@ -2,18 +2,14 @@
 
 <h2>Edit Your Saintstir Profile</h2>
 
-<%
-if (@user.errors.present?)
-%>
+<% if (@user.errors.present?) %>
   <div class="alert alert-error">
-    Oops, there were errors on these fields:<br/>
-    <% @user.errors.each  do |err| %>
-      <%=err%>&nbsp;&nbsp;
+    We couldn't save your profile.  Please correct the following errors:<br/>
+    <% @user.errors.messages.each_pair do |k,v| %>
+      <%=k%>: <%=v%><br/>
     <% end %>
   </div>
-<%
-end
-%>
+<% end %>
 
 
 Use the form below to change your profile information on Saintstir
