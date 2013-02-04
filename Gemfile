@@ -15,6 +15,8 @@ gem 'bson_ext'
 gem 'kaminari' # pagination
 gem 'nokogiri' # xml parsing
 gem 'airbrake'
+gem 'tire'  # elastic search integration
+gem 'yajl-ruby'
 
 # Auth plugins
 gem 'bcrypt-ruby', '~> 3.0.0'
