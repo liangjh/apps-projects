@@ -3,7 +3,8 @@ require 'yajl/json_gem'
 
 ##
 #  Saint Search
-#  This is the primary gateway into elastic search on a saint-by-saint basis
+#  Primary gateway into ElasticSearch
+#  This class contains both the search methods as well as the ETL into the search index
 #
 module Search::Saint
 
@@ -18,24 +19,38 @@ module Search::Saint
 
     ##
     # Perform search action
-    # We can search by facets, or by a plain search term on all attribs
+    # We can search by discrete attributes and by a plain search term on all attribs
     def search(question = nil, attribs = [])
 
-      return [] if (question.nil? || attribs.empty?)
+      # Don't query if there is no data
+      return [] if (question.nil? && attribs.empty?)
 
-      s = Tire.search SAINT_INDEX_NAME do
-        # Search term
-        query { string question } if (question.present?)
-        # Don't need to return every field
+      # Build search query
+      search_query = Tire.search SAINT_INDEX_NAME do
+
+        # Bool search will allow for adaptive facets
+        # and full-text string-based search
+        query do
+          boolean do
+            if (question.present?)
+              must { string "*#{question}*" }
+            end
+            attribs.each do |attrib|
+              must { term :attribs, attrib }
+            end
+          end
+        end
+
+        # Restrict fields returned by search result
         fields RETURNED_FIELDS
+
         # Attributes (facets)
-        filter :terms, :attribs => attribs if (attribs.present?)
-        # Always return applicable facets across search results
+        # Return available facets
         facet 'current-tags' do
           terms :attribs
         end
       end
-      s.results
+      search_query
 
     end
 
@@ -86,7 +101,7 @@ module Search::Saint
           :id => saint.id,
           :symbol => saint.symbol,
           :name => saint.get_metadata_values(MetadataKey::NAME),
-          :attribs => saint.attribs.map(&:name),
+          :attribs => saint.attribs.map(&:code),
           :metadata => mv.join(' '),
           :postings => saint.postings.map(&:content).join(' ')
         }
