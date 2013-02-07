@@ -16,6 +16,7 @@ class Posting < ActiveRecord::Base
   belongs_to :user
   belongs_to :saint
   has_many :user_posting_likes
+  after_save :save_saint_to_index
 
   CONTENT_MAX_WORD_COUNT = 200
   STATUS_PENDING = "pending"  #//  this means the message has been flagged for review
@@ -39,6 +40,11 @@ class Posting < ActiveRecord::Base
               :too_long => "Your posting cannot exceed #{CONTENT_MAX_WORD_COUNT} words",
               :too_short => "You must enter something to post! "
 
+  ##
+  #  Re-save the saint that this posting belongs to into the search index
+  def save_saint_to_index
+    saint.save_to_search_index
+  end
 
   def is_liked_by_user?(user)
     (user_posting_likes.where(:user_id => user.id).count > 0)
