@@ -31,6 +31,7 @@ end
 
 #// include debug only for development 
 group :development do
-  gem 'ruby-debug19'
+  gem 'pry'
+  gem 'pry-nav'
 end
 
