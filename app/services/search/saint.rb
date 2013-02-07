@@ -58,6 +58,8 @@ module Search::Saint
     # Adds a list of saints to the elasticsearch search index
     def add_to_index(saints = [], clear_index = false)
 
+      Rails.logger.info "Search::Saint: saving saints #{saints.map(&:id)} to elastic search index"
+
       # ETL the list into an array of hash-based objects
       list_etl = etl(saints)
 
