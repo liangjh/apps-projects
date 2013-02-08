@@ -5,7 +5,9 @@
 if Rails.env == "development"
   puts "Tire :: Setting elasticsearch destination to: localhost"
   Tire.configure do
+    # set destination to localhost, and set logging / debug
     url "http://localhost:9200"
+    logger 'elasticsearch.log', :level => 'debug'
   end
 else
   Tire.configure do

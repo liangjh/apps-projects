@@ -50,8 +50,8 @@ module Search::Saint
           terms :attribs
         end
       end
-      search_query
-
+      query_results = search_query.results
+      Search::SaintResult.new(query_results)
     end
 
     ##
@@ -102,7 +102,7 @@ module Search::Saint
         search_hash = {
           :id => saint.id,
           :symbol => saint.symbol,
-          :name => saint.get_metadata_values(MetadataKey::NAME),
+          :name => saint.get_metadata_value(MetadataKey::NAME),
           :attribs => saint.attribs.map(&:code),
           :metadata => mv.join(' '),
           :postings => saint.postings.map(&:content).join(' ')
