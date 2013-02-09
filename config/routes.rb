@@ -53,6 +53,7 @@ Saintstir::Application.routes.draw do
   namespace :api do
     match "/saints/search" => "saints#search", :via => :get
     match "/saints/attributes" => "saints#attributes", :via => :get
+    match "/saints/metadata" => "saints#metadata", :via => :get
     match "/saints/details" => "saints#details", :via => :get
   end
 

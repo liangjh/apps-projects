@@ -29,6 +29,5 @@ class Attrib < ActiveRecord::Base
     all_attribs = self.by_category(category)
     saint.attribs.select { |attrib| all_attribs.include?(attrib) }
   end
-
 end
 

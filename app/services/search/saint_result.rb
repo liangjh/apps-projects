@@ -46,7 +46,12 @@ class Search::SaintResult
   #  Returns a array of results (array of hashes)
   def results
     result_array = @result.inject([]) do |res_array, element|
-      res_array << {:id => element.id, :symbol => element.symbol, :name => element.name}
+      res_array << {
+            :id => element.id,
+            :symbol => element.symbol,
+            :name => element.name,
+            :attributes => element.attribs
+          }
       res_array
     end
     result_array
