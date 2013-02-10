@@ -28,32 +28,61 @@ class SaintInsigniaFilter
     def default_insignia=(dinsig); @@default_insignia = dinsig; end
     def default_color=(dcolor); @@default_color = dcolor; end
 
-    #//  Returns insignia (and description) for saint, given saint's attribs a
-    #//  Once we generate a match, we return
+    ##
+    # Returns insignia (and description) for saint, given saint's attribs a
+    # Once we generate a match, we return
     def get_insignia(saint)
+      get_insignia_by_attribs(saint.attribs)
+    end
+
+    ##
+    #  Return the appropriate insignia to render, given a list of attributes
+    def get_insignia_by_attribs(attribs = [])
       res_insignia = @@default_insignia
-      saint_attrib_map = saint.map_attribs_by_code #// all saint's attribs
-      @@insignia_list.each do |insig|
-        if (saint_attrib_map.has_key?(insig[0]))
-          res_insignia = [insig[1], insig[2]]
-          break
+      if (attribs.present?)
+        attrib_set = make_set(attribs)
+        @@insignia_list.each do |insig|
+          if (attrib_set.include?(insig[0]))
+            res_insignia = insig[1]
+            break
+          end
         end
       end
       res_insignia
     end
 
-    #//  Returns color for saint, given saint's attribs
+    ##
+    #  Returns color for saint, given saint's attribs
     def get_color(saint)
+      get_color_by_attribs(saint.attribs)
+    end
+
+    ##
+    #  Return the appropriate color to render, given a list of attributes
+    def get_color_by_attribs(attribs = [])
       res_color = @@default_color
-      saint_attrib_map = saint.map_attribs_by_code  #// all saint's attribs
+      attrib_set = make_set(attribs)
       @@color_list.each do |clr|
-        if (saint_attrib_map.has_key?(clr[0]))
+        if (attrib_set.include?(clr[0]))
             res_color = clr[1]
             break
         end
       end
       res_color
     end
+
+    private
+
+    def make_set(elements = [])
+      element_set = elements.inject(Set.new) do |accum_set, value|
+        accum_set.add(value);
+        accum_set
+      end
+      element_set
+    end
+
+
+
 
   end
 

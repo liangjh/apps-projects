@@ -1,17 +1,15 @@
+
+##
 Saintstir::Application.routes.draw do
 
   # Root points to singular HomeController
   root :to => "home#show"
-
   # Define homepage as singular resource, since all ppl share the same homepage content
   resource :home, :controller => "home", :only => [:show]
-
   # "My" page - each user's customized page based on preferences set on site
   resource :my_page, :controller => "my_page", :only => [:show]
-
   # Edit my user profile (user model)
   resource :user_profile, :controller => "user_profile", :only => [:edit, :update]
-
   # Contact us / emailer
   resource :contact_us, :only => [:create, :show]
 
@@ -50,5 +48,14 @@ Saintstir::Application.routes.draw do
     resources :saints
     resources :postings
   end
+
+  # Saintstir REST / JSON API
+  namespace :api do
+    match "/saints/search" => "saints#search", :via => :get
+    match "/saints/attributes" => "saints#attributes", :via => :get
+    match "/saints/metadata" => "saints#metadata", :via => :get
+    match "/saints/details" => "saints#details", :via => :get
+  end
+
 
 end

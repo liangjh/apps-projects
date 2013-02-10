@@ -16,10 +16,60 @@ class Search::SaintResult
   end
 
 
+  ##
+  #  Returns a map of remaining attributes, with counts
+  def attrib_map
+    # TODO: maybe there's a better way to reference current-tags and standardize it
+    attr_map = @result.facets['current-tags']['terms'].inject({}) do |accum_hash, elem|
+      accum_hash[elem['term']] = elem['count']
+      accum_hash
+    end
+    attr_map
+  end
+
+  ##
+  # Returns a list of remaining attributes with count
+  def attrib_list
+    attr_list = @result.facets['current_tags']['terms'].inject([]) do |accum_list, elem|
+      accum_list << [elem['term'], elem['count']]
+      accum_list
+    end
+    attr_list
+  end
 
 
+  def results_raw
+    @result
+  end
 
 
+  ##
+  #  Returns a array of results (array of hashes)
+  #  Accepts a block from caller to add rendering attributes
+  def results
+    result_array = @result.inject([]) do |accum_array, element|
+      accum_array <<  {
+        :id => element.id,
+        :symbol => element.symbol,
+        :name => element.name,
+        :attributes => element.attribs
+      }
+      # Add any additional properties, if necessary
+      accum_array
+    end
+
+    ##
+    # Adding rendering attributes
+    # Since search results dont have knowledge of any add'l rendering attributes
+    # added by the caller, allow caller to inject any rendering logic into the results
+    if (block_given?)
+      result_array.each do |res|
+        render_attribs = yield(res[:attributes])
+        res[:render_attributes] = render_attribs
+      end
+    end
+    result_array
+  end
 
 
 
