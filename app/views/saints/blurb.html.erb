@@ -23,8 +23,8 @@
       <td colspan="3">
       <%# Display insignia badge details %>
       <% insig = SaintInsigniaFilter.get_insignia(@saint) %>
-      <% if (!insig[0].blank?) %>
-        <span class="badge badge-success"><%=insig[0]%>: <%=insig[1]%></span>
+      <% if (!insig.blank?) %>
+        <span class="badge badge-success"><%=insig%>: <%=insig%></span>
       <% end %>
     </td>
     </tr>

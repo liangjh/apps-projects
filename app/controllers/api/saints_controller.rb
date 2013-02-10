@@ -25,10 +25,18 @@ class Api::SaintsController < Api::ApiController
     attrib_categories = AttribCategory.all_visible
     attribs_all = AttribCategory.map_attrib_cat_content(true)
 
+    #  To render insignia badges and colors, a block is passed into the 
+    rendered_results = search_res.results do |attribs|
+      {
+        :insignia => SaintInsigniaFilter.get_insignia_by_attribs(attribs),
+        :color => SaintInsigniaFilter.get_color_by_attribs(attribs)
+      }
+    end
+
     #  Construct search results
     res = {
       :attribute_hierarchy => render_attrib_hierarchy(attrib_categories, attribs_all, search_res.attrib_map, true),
-      :results => search_res.results
+      :results => rendered_results
     }
     render :json => res
   end
@@ -124,7 +132,8 @@ class Api::SaintsController < Api::ApiController
         :symbol => saint.symbol,
         :name => saint.get_metadata_value(MetadataKey::NAME),
         :attributes => attribs.map(&:code),
-        :metadata => mv_rendered
+        :metadata => mv_rendered,
+        :render_attributes => 
       }
 
       saint_renderings << saint_data
