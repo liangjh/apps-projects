@@ -46,7 +46,7 @@ class Search::SaintResult
   ##
   #  Returns a array of results (array of hashes)
   #  Accepts a block from caller to add rendering attributes
-  def results
+  def results(&rendering_attribute_block)
     result_array = @result.inject([]) do |accum_array, element|
       accum_array <<  {
         :id => element.id,
@@ -62,9 +62,9 @@ class Search::SaintResult
     # Adding rendering attributes
     # Since search results dont have knowledge of any add'l rendering attributes
     # added by the caller, allow caller to inject any rendering logic into the results
-    if (block_given?)
+    if (rendering_attribute_block.present?)
       result_array.each do |res|
-        render_attribs = yield(res[:attributes])
+        render_attribs = rendering_attribute_block.call(res[:attributes])
         res[:render_attributes] = render_attribs
       end
     end
