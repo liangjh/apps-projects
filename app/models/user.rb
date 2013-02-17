@@ -11,6 +11,11 @@ class User < ActiveRecord::Base
   has_many :saints, :through => :favorites
   has_many :favorites
 
+  # All validations
+  validates :email, :username, :presence => true
+  validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
+  validates :username, :uniqueness => true
+
 
   def has_voted_for?(posting)
     (user_posting_likes.where(:posting_id => posting.id).count > 0)
@@ -19,6 +24,16 @@ class User < ActiveRecord::Base
   # Checks if a user is set as a super-user
   def super_user?
     (super_user == true)
+  end
+
+  ##
+  #  Update metrics on this user
+  #  last sign in, and count (add'l stuff can be added to this)
+  def up_metrics
+    self.last_sign_in_at = Time.zone.now
+    self.sign_in_count = 0 if (user.sign_in_count.nil?)
+    self.sign_in_count += 1
+    self.save
   end
 
   class << self
@@ -37,15 +52,6 @@ class User < ActiveRecord::Base
       user.username ||= omniauth['info']['nickname'] || omniauth['info']['name']
       user.save!
       user
-    end
-
-    ##
-    #  Update metrics on this user
-    def up_metrics(user)
-      user.last_sign_in_at = Time.zone.now
-      user.sign_in_count = 0 if (user.sign_in_count.nil?)
-      user.sign_in_count += 1
-      user.save
     end
 
   end

@@ -1,17 +1,17 @@
 
-#//
-#// Saint is the core object in Saintstir
-#// Each saint is represented by a single row in this table
-#// Attributes and Metadata are all linked to this core record table
-#//
-#//  -- COLUMNS --
-#//   id, symbol, publish
-#//     (if publish = true, then display on site)
-#//
+##
+#  Saint is the core object in Saintstir
+#  Each saint is represented by a single row in this table
+#  Attributes and Metadata are all linked to this core record table
+#
+#  -- COLUMNS --
+#   id, symbol, publish
+#     (if publish = true, then display on site)
+#
 
 class Saint < ActiveRecord::Base
 
-  #// Associations
+  # Associations
   has_many :metadata_values
   has_many :metadata_keys, :through => :metadata_values
   has_many :saint_attribs
@@ -21,26 +21,36 @@ class Saint < ActiveRecord::Base
   has_many :favorites
 
   after_save :flush_cached_data
+  after_save :save_to_search_index
 
-  #//  Scopes
+  #  Scopes
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
   scope :all_published, where(:publish => true)
   scope :sort_by_symbol, order("symbol ASC")
 
-  #//  after a saint is saved, flush anything that the saint's data touches
+  ##
+  #  After a saint is saved, flush anything that the saint's data touches
   def flush_cached_data
     CacheManager.flush_all_for_saint(self.id)
   end
 
-  #//  Given a meta key code, return the associated metadata_value for this saint
-  #//  Retrieve map of all values first, then retrieve by key
+  ##
+  #  Save this saint (and corresponding data) into the search index
+  def save_to_search_index
+    Search::Saint.add_to_index([self])
+  end
+
+  ##
+  #  Given a meta key code, return the associated metadata_value for this saint
+  #  Retrieve map of all values first, then retrieve by key
   def get_metadata_value(meta_key_code)
     mv = map_metadata_values_by_code
     mv[meta_key_code][0].value if (!mv[meta_key_code].nil?)
   end
 
-  #// For metadata fields with multiple values, return an array of
-  #// all values for the given meta_key_code
+  ##
+  # For metadata fields with multiple values, return an array of
+  # all values for the given meta_key_code
   def get_metadata_values(meta_key_code)
     mv_values = []
     mk = MetadataKey.by_metadata_key_code(meta_key_code)
@@ -64,18 +74,18 @@ class Saint < ActiveRecord::Base
     attrs
   end
 
-  #//  Map of all attribs associated w/ this saint {attrib_id => attrib}
+  # Map of all attribs associated w/ this saint {attrib_id => attrib}
   def map_attribs_by_id
     @attribs_id_map ||= self.attribs.inject({}) { |h,e| h[e.id] = e; h }
   end
 
-  #// Map of all attributes by code {attrib_code => attrib}
+  # Map of all attributes by code {attrib_code => attrib}
   def map_attribs_by_code
     @attribs_code_map ||= self.attribs.inject({}) { |h,e| h[e.code] = e; h }
   end
 
-  #// Map of attributes, grouped into their respective attribute categories (by code)
-  #// {attrib_category_code => [Attribute].*}
+  # Map of attributes, grouped into their respective attribute categories (by code)
+  # {attrib_category_code => [Attribute].*}
   def map_attribs_by_attrib_cat_code
     if (@attribs_by_category_code_map.nil?)
       @attribs_by_category_code_map = {}
@@ -88,8 +98,8 @@ class Saint < ActiveRecord::Base
     @attribs_by_category_code_map
   end
 
-  #//  Map of all metadata associated w/ this saint {metadata_key_code => metadata}
-  #//  Memoize all of this for efficiency
+  # Map of all metadata associated w/ this saint {metadata_key_code => metadata}
+  # Memoize all of this for efficiency
   def map_metadata_values_by_code
     if (@metadata_values_map.nil?)
       meta_key_map = MetadataKey.map_metadata_key_by_id
@@ -104,7 +114,7 @@ class Saint < ActiveRecord::Base
     @metadata_values_map
   end
 
-  #//  Last modified is the max updated_at between saint, metadata_value, and saint_attrib
+  # Last modified is the max updated_at between saint, metadata_value, and saint_attrib
   def last_modified
     mod_times = []
     mod_times << self.updated_at
@@ -114,8 +124,8 @@ class Saint < ActiveRecord::Base
   end
 
 
-  #// Save submitted attributes - we need to resolve this with
-  #// any existing attributes:  (1) create new, (2) delete not included, (3) ignore already included
+  # Save submitted attributes - we need to resolve this with
+  # any existing attributes:  (1) create new, (2) delete not included, (3) ignore already included
   def save_attributes_for_saint(attrib_category, attribs_submitted = [])
     #// Resolve submitted w/ existing values
     attribs_all_category = Attrib.by_category(attribute_category)

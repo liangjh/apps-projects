@@ -18,14 +18,10 @@ class AuthenticationsController < ApplicationController
   #
   def create
 
-    # Save referrer?  (to allow redirect post-login)
-    referer_uri = nil
-    referer_uri = URI(request.referer).path if (request.referer.present?)
-
+    # Omniauth params
     omniauth = request.env['omniauth.auth']
     new_user_created = false
 
-    # raise omniauth.to_yaml
     # Is user already logged in?
     # Don't do any of this if he/she is logged in already
     unless (logged_in?)
@@ -48,7 +44,7 @@ class AuthenticationsController < ApplicationController
       Authentication.save_user(auth, user) if (auth.user.nil?)
 
       # Set login metrics (last login time, login count)
-      User.up_metrics(user)
+      user.up_metrics
 
       # Set user as current_user
       sign_in(user)
@@ -67,8 +63,8 @@ class AuthenticationsController < ApplicationController
     if (new_user_created)
       redirect_to edit_user_profile_path
     else
-      if (referer_uri)
-        redirect_to referer_uri
+      if (last_page.present?)
+        redirect_to last_page
       else
         redirect_to home_path
       end

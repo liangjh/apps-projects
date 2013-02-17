@@ -11,6 +11,7 @@ class SaintsController < ApplicationController
   before_filter :show_fb_like, :only => [:index, :show]
   before_filter :show_favorite_link, :only => [:show]
   before_filter :ajax_logged_in, :only => [:favorite, :unfavorite, :is_favorite]
+  after_filter :set_last_page, :only => [:index, :show]
 
   ##
   # Return all saints, all metadata, all attributes

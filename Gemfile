@@ -10,12 +10,13 @@ gem 'quiet_assets' # remove asset pipeline requests
 gem 'flickraw-cached' # flickr client
 gem 'dalli' # memcached client
 gem 'memcachier' # for memcachier add-on in heroku environment
-gem 'mongo' # mongodb plugin
 gem 'bson'
 gem 'bson_ext'
 gem 'kaminari' # pagination
 gem 'nokogiri' # xml parsing
 gem 'airbrake'
+gem 'tire'  # elastic search integration
+gem 'yajl-ruby'
 
 # Auth plugins
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -32,6 +33,7 @@ end
 
 #// include debug only for development 
 group :development do
-  gem 'ruby-debug19'
+  gem 'pry'
+  gem 'pry-nav'
 end
 

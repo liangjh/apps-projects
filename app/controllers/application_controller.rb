@@ -19,4 +19,17 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :check_logged_in, :sign_in, :sign_out
 
 
+  ##
+  #  The last page that the user was on - this is used to ensure that
+  #  we can direct the user to his/her last viewed page
+  def set_last_page
+    session[:last_page] = request.fullpath if (request.fullpath.present?)
+  end
+
+  def last_page
+    session[:last_page]
+  end
+
+
+
 end

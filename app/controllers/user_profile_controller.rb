@@ -21,8 +21,8 @@ class UserProfileController < ApplicationController
 
     #  Save submitted attributes, and then send an email to notify user
     if (user_params.present?)
-      @user.update_attributes(user_params)
-      SaintMailer.account_details_change(@user).deliver
+      success = @user.update_attributes(user_params)
+      SaintMailer.account_details_change(@user).deliver if (success)
     end
 
     # Go back to profile edit page
