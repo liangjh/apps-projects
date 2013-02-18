@@ -54,7 +54,7 @@ class SaintInsigniaFilter
     ##
     #  Returns color for saint, given saint's attribs
     def get_color(saint)
-      get_color_by_attribs(saint.attribs)
+      get_color_by_attribs(saint.attribs.map(&:code))
     end
 
     ##
