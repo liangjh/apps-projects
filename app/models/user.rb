@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   #  last sign in, and count (add'l stuff can be added to this)
   def up_metrics
     self.last_sign_in_at = Time.zone.now
-    self.sign_in_count = 0 if (user.sign_in_count.nil?)
+    self.sign_in_count = 0 if (self.sign_in_count.nil?)
     self.sign_in_count += 1
     self.save
   end

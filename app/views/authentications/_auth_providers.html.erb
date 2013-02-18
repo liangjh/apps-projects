@@ -1,8 +1,13 @@
+
+<%#
+Authentication options
+3PD authentication entry points (impl all providers here)
+We are currently supporting facebook and google-based logins
+%>
+
 <div>&nbsp;&nbsp;
-  <a href="/auth/facebook">
-    <%= image_tag "facebook_32.png", :size => "32x32", :alt => "Log in with Facebook" %></a>
-  <a href="/auth/google_oauth2">
-    <%= image_tag "google_32.png", :size => "32x32", :alt => "Log in with Google" %></a>
+  <a href="/auth/facebook" class="btn-auth btn-facebook">Sign in</a>
+  <a href="/auth/google_oauth2" class="btn-auth btn-google">Sign in</a>
 </div>
 
 

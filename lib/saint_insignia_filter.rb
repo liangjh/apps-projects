@@ -32,13 +32,13 @@ class SaintInsigniaFilter
     # Returns insignia (and description) for saint, given saint's attribs a
     # Once we generate a match, we return
     def get_insignia(saint)
-      get_insignia_by_attribs(saint.attribs)
+      get_insignia_by_attribs(saint.attribs.map(&:code))
     end
 
     ##
     #  Return the appropriate insignia to render, given a list of attributes
     def get_insignia_by_attribs(attribs = [])
-      res_insignia = @@default_insignia
+      res_insignia = @@default_insignia[1]
       if (attribs.present?)
         attrib_set = make_set(attribs)
         @@insignia_list.each do |insig|
