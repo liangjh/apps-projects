@@ -38,7 +38,7 @@ class SaintInsigniaFilter
     ##
     #  Return the appropriate insignia to render, given a list of attributes
     def get_insignia_by_attribs(attribs = [])
-      res_insignia = @@default_insignia
+      res_insignia = @@default_insignia[1]
       if (attribs.present?)
         attrib_set = make_set(attribs)
         @@insignia_list.each do |insig|
@@ -54,7 +54,7 @@ class SaintInsigniaFilter
     ##
     #  Returns color for saint, given saint's attribs
     def get_color(saint)
-      get_color_by_attribs(saint.attribs.map(&:code))
+      get_color_by_attribs(saint.attribs)
     end
 
     ##
