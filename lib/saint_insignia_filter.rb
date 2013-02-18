@@ -32,7 +32,7 @@ class SaintInsigniaFilter
     # Returns insignia (and description) for saint, given saint's attribs a
     # Once we generate a match, we return
     def get_insignia(saint)
-      get_insignia_by_attribs(saint.attribs)
+      get_insignia_by_attribs(saint.attribs.map(&:code))
     end
 
     ##
@@ -54,7 +54,7 @@ class SaintInsigniaFilter
     ##
     #  Returns color for saint, given saint's attribs
     def get_color(saint)
-      get_color_by_attribs(saint.attribs)
+      get_color_by_attribs(saint.attribs.map(&:code))
     end
 
     ##
