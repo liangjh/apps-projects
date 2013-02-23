@@ -82,6 +82,7 @@ GEM
     multipart-post (1.1.5)
     newrelic_rpm (3.3.2)
     nokogiri (1.5.5)
+    oauth (0.4.6)
     oauth2 (0.6.0)
       faraday (~> 0.7)
       httpauth (~> 0.1)
@@ -94,9 +95,14 @@ GEM
     omniauth-google-oauth2 (0.1.9)
       omniauth (~> 1.0)
       omniauth-oauth2
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
     omniauth-oauth2 (1.0.2)
       oauth2 (~> 0.6.0)
       omniauth (~> 1.0)
+    omniauth-twitter (0.0.9)
+      omniauth-oauth (~> 1.0)
     pg (0.12.0)
       rake-compiler (~> 0.7)
     polyglot (0.3.3)
@@ -186,6 +192,7 @@ DEPENDENCIES
   nokogiri
   omniauth-facebook
   omniauth-google-oauth2
+  omniauth-twitter
   pg
   pry
   pry-nav

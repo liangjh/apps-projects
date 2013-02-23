@@ -9,7 +9,7 @@
 class AuthenticationsController < ApplicationController
 
   # Map of provider codes to friendly / display name
-  AUTH_PROVIDER_NAME_MAP = {"facebook" => "Facebook", "google_oauth2" => "Google" }
+  AUTH_PROVIDER_NAME_MAP = {"facebook" => "Facebook", "google_oauth2" => "Google", "twitter" => "Twitter"}
 
   ##
   #  Handles omniauth callback
