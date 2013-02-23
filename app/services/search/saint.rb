@@ -85,6 +85,16 @@ module Search::Saint
     end
 
     ##
+    # Clears out the search index
+    def clear_index
+      Tire.index SAINT_INDEX_NAME do
+        delete
+        create
+        refresh
+      end
+    end
+
+    ##
     #  Return saint list, in hash format - this will be the actual content
     #  that is loaded into the search index
     def etl(saints = [])
