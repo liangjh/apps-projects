@@ -1,15 +1,18 @@
 
-#//
-#//  Authentication integration into Saintstir.
-#//  This controller manages the integration of external auth services
-#//  (i.e. twitter, google, facebook, and other affiliates) into the
-#//  Saintstir system
-#//
+##
+#  Authentication integration into Saintstir.
+#  This controller manages the integration of external auth services
+#  (i.e. twitter, google, facebook, and other affiliates) into the
+#  Saintstir system
+#
 
 class AuthenticationsController < ApplicationController
 
-  # Map of provider codes to friendly / display name
-  AUTH_PROVIDER_NAME_MAP = {"facebook" => "Facebook", "google_oauth2" => "Google", "twitter" => "Twitter"}
+  AUTH_PROVIDER_NAME_MAP = {
+    "facebook" => "Facebook",
+    "google_oauth2" => "Google",
+    "twitter" => "Twitter"
+  }
 
   ##
   #  Handles omniauth callback
@@ -19,7 +22,8 @@ class AuthenticationsController < ApplicationController
   def create
 
     # Omniauth params
-    omniauth = request.env['omniauth.auth']
+    omniauth_request = request.env['omniauth.auth']
+    omniauth = OmniauthNode.new(omniauth_request)
     new_user_created = false
 
     # Is user already logged in?

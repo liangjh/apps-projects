@@ -44,9 +44,9 @@ class User < ActiveRecord::Base
     #  Return this user if so (otherwise nil)
     def peek_omniauth(omniauth)
       user = nil
-      user = self.find_by_email(omniauth['info']['email']) if (omniauth['info']['email'].present?)
+      user = self.find_by_email(omniauth.email) if (omniauth.email.present?)
       if (user.nil?)
-        user = self.find_by_username(omniauth['info']['nickname']) || self.find_by_username(omniauth['info']['name'])
+        user = self.find_by_username(omniauth.nickname) || self.find_by_username(omniauth.name)
       end
       user
     end
@@ -57,8 +57,8 @@ class User < ActiveRecord::Base
     def create_from_omniauth(omniauth)
       user = User.new
       # Set email, if this field exists
-      user.email = omniauth['info']['email'] if (omniauth['info']['email'].present?)
-      user.username ||= omniauth['info']['nickname'] || omniauth['info']['name']
+      user.email = omniauth.email if (omniauth.email.present?)
+      user.username ||= omniauth.nickname || omniauth.name
       user.save!
       user
     end
