@@ -1,7 +1,8 @@
 
-#//
-#// Core user authentication object
-#//
+##
+#  Core user object
+#  User pedigree info stored in this table
+#
 
 class User < ActiveRecord::Base
 

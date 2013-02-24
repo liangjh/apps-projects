@@ -1,8 +1,8 @@
 
-#//
-#// The AuthUser object stores users authenticated thru OmniAuth
-#// Available columns: provider, uid, name, user_id (fk to table: users)
-#//
+##
+#  The Authentication model stores registered authentications via Omniauth
+#  and 3pd auth services such as facebook, twitter, google, etc
+#
 
 class Authentication < ActiveRecord::Base
 
