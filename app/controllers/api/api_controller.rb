@@ -42,7 +42,7 @@ class Api::ApiController < ApplicationController
     begin
 
       # Log to regular rails log (dispatched to configured logging framework)
-      Rails.logger.info "saintstir-api|app:#{@api_user.present? ? @api_user.app_name: "unknown"}|req:#{request.url}"
+      Rails.logger.info "saintstir-api|#{@auth_user.present? ? @auth_user.app_name: "unknown"}|#{request.url}"
 
       # Log to google analytics
       # g = Gabba::Gabba.new('UA-24915422-1','saintstir.com')
@@ -50,7 +50,7 @@ class Api::ApiController < ApplicationController
       # g.page_view(request.url)
 
     rescue Exception => ex
-      Rails.logger.error "AFailed to log request.  Reason: #{ex}"
+      Rails.logger.error "Failed to log request.  Reason: #{ex}"
     end
   end
 
