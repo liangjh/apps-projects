@@ -50,7 +50,7 @@ class Api::ApiController < ApplicationController
       # g.page_view(request.url)
 
     rescue Exception => ex
-      Rails.logger.error "Failed to log request.  Reason: #{ex}"
+      Rails.logger.error "AFailed to log request.  Reason: #{ex}"
     end
   end
 

@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20130225064828) do
     t.string   "email"
     t.string   "contact_details"
     t.string   "app_name"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

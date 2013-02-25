@@ -7,6 +7,7 @@ class CreateApiUsers < ActiveRecord::Migration
       t.string :email
       t.string :contact_details
       t.string :app_name
+      t.boolean :active
 
       t.timestamps
     end

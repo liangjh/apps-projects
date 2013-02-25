@@ -6,5 +6,9 @@
 #
 class ApiUser < ActiveRecord::Base
 
+  ##
+  #  For purposes of authentication, do not retrieve any users which have been inactivated
+  default_scope where(:active => true)
+
 end
 
