@@ -39,15 +39,18 @@ module ApplicationHelper
   end
 
 
-  # for contacts form
+  ##
+  #  Available HELP options
   def contact_us_purpose_options
     [
-      ["Technical Support", "Tech"],
       ["Content Issues", "Content"],
       ["Submit Correction", "Correction"],
       ["Comment / Suggestion", "Comment"],
       ["General Inquiries", "General"],
+      ["Technical Support", "Tech"],
       ["I Want to Help", "Volunteer"],
+      ["Request API Key","ApiRequest"],
+      ["API Problem","ApiProblem"],
       ["Just Saying Hi", "Hi"]
     ]
   end

@@ -17,6 +17,7 @@ gem 'nokogiri' # xml parsing
 gem 'airbrake'
 gem 'tire'  # elastic search integration
 gem 'yajl-ruby'
+gem 'gabba'
 
 # Auth plugins
 gem 'bcrypt-ruby', '~> 3.0.0'
