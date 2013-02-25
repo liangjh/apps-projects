@@ -56,6 +56,7 @@ GEM
     flickraw (0.9.6)
     flickraw-cached (20120701)
       flickraw (>= 0.9)
+    gabba (1.0.1)
     girl_friday (0.10.0)
       connection_pool (~> 0.9.0)
     hashie (1.2.0)
@@ -184,6 +185,7 @@ DEPENDENCIES
   coffee-rails (~> 3.1.1)
   dalli
   flickraw-cached
+  gabba
   jquery-rails
   json
   kaminari
