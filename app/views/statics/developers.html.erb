@@ -106,7 +106,7 @@ width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt
     <h3>Attribute Definition</h3><br/>
 
     <p>Attributes are at the heart of the saintstir taxonomy.  The attribute definition query exposes our entire taxonomy to you in a structured, hierarchical manner.
-    Each attribute belongs to an attribute category.  The code name (which are unique values that are used for querying) as well as a user-friendly name is provided for 
+    Each attribute belongs to an attribute category.  The code name (which are unique values that are used for querying) as well as a user-friendly name is provided for
     each attribute. The query and a snippet of its result in JSON are below</p>
     <code>
       <pre>
@@ -121,7 +121,7 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/attributes
     <code>
       <pre class="pre-scrollable">
 ##
-#  JSON Response 
+#  JSON Response
 #  (truncated for brevity)
 
 {
@@ -219,7 +219,7 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/attributes
 
     <br/>
     <h3>Metadata Definition</h3><br/>
-    
+
     <p>The saintstir taxonomy, in addition to hierarchical attributes, also exposes metadata fields that allow for free-form, descriptive values on each saint.  The metadata query
 	returns all defined meta fields, which includes each meta field's code and name.</p>
 
@@ -283,7 +283,7 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/metadata
 
     <p>The saint details query allows you to retrieve the details for a list of saints.  The API exposes most, but not all information available on the saintstir website.
     All attributes that apply to the saint, and an abridged set of metadata information is returned</p>
-    <code> 
+    <code>
       <pre>
 # API URL and query parameters
 http://www.saintstir.com/api/saints/details?symbol=..
@@ -475,21 +475,22 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/details?symbols=IsiSe
 
     <p>Saint search allows you to filter by any number of attributes available in the saintstir taxonomy (all of the attributes in the attributes query can be used
     to filter saint results.  In addition, you can also perform a full-text search on the entire saint profile via the API</p>
-    <p>The query consists of two parameters (at least one is required).  "q", or the full-text search parameter, will initiate a full-text search against the 
-    saint directory with your search question.  All attributes and metadata fields will be searched.  "attributes" is a comma-delimited list of attribute codes (the attributes are 
-    the results of the attributes query</p>
+    <p>The query consists of two parameters (at least one is required).  "q", or the full-text search parameter, will initiate a full-text search against the
+    saint directory with your search question.  All attributes and metadata fields will be searched.  "attributes" is a comma-delimited list of attribute codes (the attributes are
+    the results of the attributes query), that will filter the search to only the saints who possess those attributes</p>
     <p>Search results consist of two parts:  <br/>
-    Adaptive Attributes: the first is an adaptive list of attributes - this means that the attributes listed in the search results are attributes that apply 
+    Adaptive Attributes: the first is an adaptive list of attributes - this means that the attributes listed in the search results are attributes that apply
     to the universe of results after search and filtering.  We also include a count with each attribute that indicates how many saints remain under each attribute.<br/>
     Search Results: the second part of the search results are the saints that were returned in the query and filters</p>
 
-    <code> 
+    <code>
       <pre>
 # API URL
 http://www.saintstir.com/api/saints/search?q=..&attributes=..
-# Parameters:  
+# Parameters:
 #    * q: any string, this will be used to perform a full-text search on saintstir's entire saint directory
-#    * attributes: a comma-delimited list of attributes that will refine the 
+#    * attributes: a comma-delimited list of attributes that will filter the search results to consist only of saints that
+#      contain those attributes
 #   (note: at least one parameter above is required)
 #
 
@@ -500,9 +501,9 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attribu
     <code>
        <pre class="pre-scrollable">
 ##
-#  Search results 
+#  Search results
 #  The attribute_hierarchy property are the remaining results after search/filtering (adaptive attributes)
-#  The results property is my search results 
+#  The results property is my search results
 #
 
 {
