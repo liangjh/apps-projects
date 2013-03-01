@@ -11,6 +11,7 @@ class SaintMailer < ActionMailer::Base
   #  For questions submitted on the "contact us" section of the website
   def contact_us(user, from_email, purpose, message)
     @user = user
+    @from_email = from_email
     @message = message.gsub(/\n/, "<br/>")
     mail(:content_type => "text/html",
          :to => SAINTSTIR_EMAIL, :from => from_email, :cc => from_email,
