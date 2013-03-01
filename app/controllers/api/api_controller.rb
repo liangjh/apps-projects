@@ -21,17 +21,17 @@ class Api::ApiController < ApplicationController
     end
 
     # No user found: render a 401 and an error json
-    generate_error_response if (@auth_user.nil?)
+    generate_auth_error_response if (@auth_user.nil?)
 
   end
 
   ##
   #  Generates an API error reponse,
-  def generate_error_response
+  def generate_auth_error_response
     render :status => 401,
            :json => {"success" => "false",
                      "errors" => ["autherror"],
-                     "message" => "Authentication error"}
+                     "message" => "Authentication Error"}
   end
 
   ##
