@@ -16,6 +16,7 @@ Saintstir::Application.routes.draw do
   # Static pages
   match "/statics/volunteer" => "statics#volunteer", :via => :get
   match "/statics/about" => "statics#about", :via => :get
+  match "/statics/developers" => "statics#developers", :via => :get
 
   # Auth / Login / Logout
   # Callback for third party authentication / login callback
