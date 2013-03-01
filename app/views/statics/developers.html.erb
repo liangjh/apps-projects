@@ -1,0 +1,79 @@
+
+
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autload=true&lang=javascript"></script>
+
+<div class="row">
+
+  <!--// Navigation -->
+  <div class="span2">
+
+
+    <h3><a href="#embed">Embed</a></h3><br/>
+    &nbsp;&nbsp;<a href="#saint_embed">Saint Embed</a><br/>
+    &nbsp;&nbsp;<a href="#saint_of_day">Saint of the Day</a>
+
+    <br/><br/><br/>
+
+
+    <h3><a href="#search_api">Search API</a></h3><br/>
+    &nbsp;&nbsp;<a href="#authentication">Authentication</a><br/>
+    &nbsp;&nbsp;<a href="#attrib_def">Attribute Definition</a><br/>
+    &nbsp;&nbsp;<a href="#metadata_def">Metadata Definition</a><br/>
+    &nbsp;&nbsp;<a href="#saint_search">Saint Search</a><br/>
+    &nbsp;&nbsp;<a href="#saint_details">Saint Details</a><br/>
+
+  </div>
+
+  <!--// API Specification  -->
+  <div class="span10">
+
+    <a name="embed">&nbsp;&nbsp;</a><h2>Embed</h2>
+
+    Saintstir can be easily integrated into your website
+
+
+
+    <a name="saint_embed">&nbsp;&nbsp;</a><h3>Saint Embed</h3>
+    <a name="saint_of_day">&nbsp;&nbsp;</a><h3>Saint of the Day</h3>
+
+
+
+    <a name="search_api">&nbsp;&nbsp;</a><h2>Search API</h2>
+
+
+    <a name="authentication">&nbsp;&nbsp;</a><h3>Authentication</h3>
+    <a name="attrib_def">&nbsp;&nbsp;</a><h3>Attribute Definition</h3>
+    <a name="metadata_def">&nbsp;&nbsp;</a><h3>Metadata Definition</h3>
+    <a name="saint_search">&nbsp;&nbsp;</a><h3>Saint Search</h3>
+    <a name="saint_details">&nbsp;&nbsp;</a><h3>Saint Details</h3>
+
+
+
+
+<pre class="prettyprint">
+
+  ##
+  #  This retrieves the basic auth parameters and compares them against
+  #  the user key/secret in the API database
+  def check_auth
+
+    #  Retrieve user associated with this key/secret
+    #  this impl will automatically decode the base64-encoded values
+    @auth_user = authenticate_with_http_basic do |key, secret|
+      ApiUser.find_by_key_and_secret(key, secret) if (key.present? && secret.present?)
+    end
+
+    # No user found: render a 401 and an error json
+    generate_error_response if (@auth_user.nil?)
+
+  end
+</pre>
+
+  </div>
+
+
+
+
+</div>
+
+

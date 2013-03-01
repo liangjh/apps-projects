@@ -5,7 +5,7 @@ require 'gabba'
 #  Here we define our auth mechanism
 #  Saintstir currently uses basic auth for controlling access
 #
-class Api::ApiController < ApplicationController
+class Api::ApiController < ActionController::Base
   before_filter :check_auth
   after_filter :log_request
 
@@ -45,7 +45,7 @@ class Api::ApiController < ApplicationController
       Rails.logger.info "saintstir-api|#{@auth_user.present? ? @auth_user.app_name: "unknown"}|#{request.url}"
 
       # Log to google analytics
-      g = Gabba::Gabba.new(GoogleAnalyticsCredentials::GA_ACCOUNT_ID, GoogleAnalyticsAccountCredentials::GA_ACCOUNT_DOMAIN)
+      g = Gabba::Gabba.new(GoogleAnalyticsCredentials::GA_ACCOUNT_ID, GoogleAnalyticsCredentials::GA_ACCOUNT_DOMAIN)
       g.set_custom_var(1, 'api.app_name', @api_user.app_name, Gabba::Gabba::PAGE)
       g.page_view(request.url)
 
