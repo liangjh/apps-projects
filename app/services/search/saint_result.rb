@@ -49,7 +49,7 @@ class Search::SaintResult
   def results(attribute_lambda = nil, rendering_properties_lambda = nil)
     result_array = @result.inject([]) do |accum_array, element|
       res_hash =  {
-        :id => element.id,
+        # :id => element.id,
         :symbol => element.symbol,
         :name => element.name
       }

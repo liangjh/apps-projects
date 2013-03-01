@@ -4,13 +4,9 @@ Saintstir::Application.routes.draw do
 
   # Root points to singular HomeController
   root :to => "home#show"
-  # Define homepage as singular resource, since all ppl share the same homepage content
   resource :home, :controller => "home", :only => [:show]
-  # "My" page - each user's customized page based on preferences set on site
   resource :my_page, :controller => "my_page", :only => [:show]
-  # Edit my user profile (user model)
   resource :user_profile, :controller => "user_profile", :only => [:edit, :update]
-  # Contact us / emailer
   resource :contact_us, :only => [:create, :show]
 
   # Static pages
@@ -18,16 +14,13 @@ Saintstir::Application.routes.draw do
   match "/statics/about" => "statics#about", :via => :get
   match "/statics/developers" => "statics#developers", :via => :get
 
-  # Auth / Login / Logout
-  # Callback for third party authentication / login callback
-  # note: /auth/:provider URI is mapped by omniauth
+  # Authentication (3rd party) + Login / Logout
+  #   Note: URI /auth/:provider is mapped to omniauth
   match "/auth/:provider/callback" => "authentications#create"
   match "/logout" => "authentications#destroy"
   match "/sign_out" => "authentications#destroy"
 
-  #  Core saints controller
-  match "/saints/embed_featured" => "saints#embed_featured", :via => :get
-  match "/saints/:symbol/embed" => "saints#embed", :as => :embed_saint, :via => :get
+  # Core saints functionality
   resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
     member do
       get :blurb
@@ -36,7 +29,7 @@ Saintstir::Application.routes.draw do
       post :unfavorite
     end
 
-    # Postings feature
+    # Postings Integration
     resources :postings, :only => [:index, :create]
     match "/like_posting/:id" => "postings#like"
     match "/flag_posting/:id" => "postings#flag"
@@ -48,7 +41,13 @@ Saintstir::Application.routes.draw do
     resources :postings
   end
 
-  # Saintstir REST / JSON API
+  ## Developer / External Integrations
+
+  # Embeddable Tiles
+  match "/saints/embed_featured" => "saints#embed_featured", :via => :get
+  match "/saints/:symbol/embed" => "saints#embed", :as => :embed_saint, :via => :get
+
+  # Saintstir API
   namespace :api do
     match "/saints/search" => "saints#search", :via => :get
     match "/saints/attributes" => "saints#attributes", :via => :get
