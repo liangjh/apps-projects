@@ -17,11 +17,13 @@ gem 'nokogiri' # xml parsing
 gem 'airbrake'
 gem 'tire'  # elastic search integration
 gem 'yajl-ruby'
+gem 'gabba'
 
 # Auth plugins
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-twitter'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,18 +1,18 @@
 
-#//
-#//  The posting model is the main model that represents the two types of user postings
-#//  on saintstir:  (1) the prayer, and (2) the story.
-#//
-#//  -- COLUMNS --
-#//
-#//   id, content, status, posting_type, votes, user_id, saint_id
-#//      - where status in ('pending','reject','accept')
-#//      - where posting_type in ('prayer','story')
-#//
+##
+#  The posting model is the main model that represents the two types of user postings
+#  on saintstir:  (1) the prayer, and (2) the story.
+#
+#  -- COLUMNS --
+#
+#   id, content, status, posting_type, votes, user_id, saint_id
+#      - where status in ('pending','reject','accept')
+#      - where posting_type in ('prayer','story')
+#
 
 class Posting < ActiveRecord::Base
 
-  #// Associations
+  # Associations
   belongs_to :user
   belongs_to :saint
   has_many :user_posting_likes
@@ -23,14 +23,14 @@ class Posting < ActiveRecord::Base
   STATUS_REJECT = "reject"
   STATUS_ACCEPT = "accept"
 
-  #// Scopes
+  # Scopes
   scope :by_visible_status, where(:status => [STATUS_ACCEPT, STATUS_PENDING])
   scope :by_saint, lambda { |saint| where(:saint_id => saint.id) }
   scope :by_saint_id, lambda { |saint_id| where(:saint_id => saint_id) }
   scope :sort_by_create, order("id DESC")
   scope :sort_by_popular, order("votes DESC")
 
-  #// Validate existence and within set of values
+  # Validate existence and within set of values
   validates :content, :presence => true
   validates :saint_id, :presence => true
   validates :user_id, :presence => true
@@ -50,20 +50,23 @@ class Posting < ActiveRecord::Base
     (user_posting_likes.where(:user_id => user.id).count > 0)
   end
 
-  #// Increment the vote by 1 (if nil, start w/ 1)
+  ##
+  # Increment the vote by 1 (if nil, start w/ 1)
   def increment_vote
     self.votes.nil? ? 1 : self.votes += 1
   end
 
-  #// Retain user's newlines without disrupting underlying content.
-  #// <pre> is not an option since some browers will use a different font for <pre>
-  #// globally replace all \n with <br/>
+  ##
+  # Retain user's newlines without disrupting underlying content.
+  # <pre> is not an option since some browers will use a different font for <pre>
+  # globally replace all \n with <br/>
   def content_formatted
     content.gsub(/\n/, "<br/>") if (!content.nil?)
   end
 
-  #// Construct a json based on the model's params
-  #// (will be useful if we use backbone for this project)
+  ##
+  # Construct a json based on the model's params
+  # (will be useful if we use backbone for this project)
   def to_json(options={})
     super(options.merge(:only => [:id, :content, :saint_id, :user_id]))
   end

@@ -36,8 +36,9 @@ class Saint < ActiveRecord::Base
 
   ##
   #  Save this saint (and corresponding data) into the search index
+  #  Only add if this saint is marked as published
   def save_to_search_index
-    Search::Saint.add_to_index([self])
+    Search::Saint.add_to_index([self]) if publish?
   end
 
   ##

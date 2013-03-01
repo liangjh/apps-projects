@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121208081238) do
+ActiveRecord::Schema.define(:version => 20130225064828) do
+
+  create_table "api_users", :force => true do |t|
+    t.string   "key"
+    t.string   "secret"
+    t.string   "name"
+    t.string   "email"
+    t.string   "contact_details"
+    t.string   "app_name"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_users", ["key", "secret"], :name => "index_api_users_on_key_and_secret"
+  add_index "api_users", ["key"], :name => "index_api_users_on_key", :unique => true
 
   create_table "attrib_categories", :force => true do |t|
     t.string   "code",        :null => false

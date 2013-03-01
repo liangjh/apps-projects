@@ -46,25 +46,33 @@ class Search::SaintResult
   ##
   #  Returns a array of results (array of hashes)
   #  Accepts a block from caller to add rendering attributes
-  def results(&rendering_attribute_block)
+  def results(attribute_lambda = nil, rendering_properties_lambda = nil)
     result_array = @result.inject([]) do |accum_array, element|
-      accum_array <<  {
+      res_hash =  {
         :id => element.id,
         :symbol => element.symbol,
-        :name => element.name,
-        :attributes => element.attribs
+        :name => element.name
       }
-      # Add any additional properties, if necessary
-      accum_array
+
+      ##
+      # Custom attribute renderer
+      # Use attrib lambda if its passed
+      if (attribute_lambda.present?)
+        res_hash[:attributes] = attribute_lambda.call(element.attribs)
+      else
+        res_hash[:attributes] = element.attribs
+      end
+
+      accum_array << res_hash
     end
 
     ##
     # Adding rendering attributes
     # Since search results dont have knowledge of any add'l rendering attributes
     # added by the caller, allow caller to inject any rendering logic into the results
-    if (rendering_attribute_block.present?)
+    if (rendering_properties_lambda.present?)
       result_array.each do |res|
-        render_attribs = rendering_attribute_block.call(res[:attributes])
+        render_attribs = rendering_properties_lambda.call(res[:attributes])
         res[:render_attributes] = render_attribs
       end
     end

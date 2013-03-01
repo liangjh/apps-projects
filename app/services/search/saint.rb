@@ -80,8 +80,18 @@ module Search::Saint
     ##
     # Refresh the entire index
     def refresh_index_full
-      saints = Saint.all
+      saints = Saint.all_published
       add_to_index(saints, true)
+    end
+
+    ##
+    # Clears out the search index
+    def clear_index
+      Tire.index SAINT_INDEX_NAME do
+        delete
+        create
+        refresh
+      end
     end
 
     ##

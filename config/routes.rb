@@ -16,6 +16,7 @@ Saintstir::Application.routes.draw do
   # Static pages
   match "/statics/volunteer" => "statics#volunteer", :via => :get
   match "/statics/about" => "statics#about", :via => :get
+  match "/statics/developers" => "statics#developers", :via => :get
 
   # Auth / Login / Logout
   # Callback for third party authentication / login callback
@@ -25,13 +26,11 @@ Saintstir::Application.routes.draw do
   match "/sign_out" => "authentications#destroy"
 
   #  Core saints controller
-  match "/saints/embed_featured" => "saints#embed_featured"
+  match "/saints/embed_featured" => "saints#embed_featured", :via => :get
+  match "/saints/:symbol/embed" => "saints#embed", :as => :embed_saint, :via => :get
   resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
     member do
-      # Embeddables, popups
       get :blurb
-      get :embed
-      # Favorites feature
       get :is_favorite
       post :favorite
       post :unfavorite

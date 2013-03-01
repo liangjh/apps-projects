@@ -62,7 +62,7 @@ class SaintsController < ApplicationController
   ##
   # Embeddable page - contains the main saint insignia
   def embed
-    @saint = Saint.find(params[:id])
+    @saint = Saint.find_by_symbol(params[:symbol])
     render :layout => 'clean'
   end
 

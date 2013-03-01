@@ -17,6 +17,12 @@ class Api::SaintsController < Api::ApiController
     attributes = params[:attributes]
     attrib_list = attributes.nil? ? [] : attributes.split(',')
 
+    #  Parameter error checking
+    return generate_error_response(['params'], 'Required parameters missing: either q or attributes must be specified') if (q.nil? && attrib_list.empty?)
+    return generate_error_response(['params'], 'Full-text search string parameter: q must be at least 3 characters long') if (q.present? && q.length < 3 && attrib_list.empty?)
+
+    ##
+    # No Errors
     # Performs search - returns an object of type Search::SaintResult
     search_res = Search::Saint.search(q, attrib_list)
 
@@ -25,15 +31,25 @@ class Api::SaintsController < Api::ApiController
     attrib_categories = AttribCategory.all_visible
     attribs_all = AttribCategory.map_attrib_cat_content(true)
 
-    #  To render insignia badges and colors, a block is passed into the
-    rendered_results = search_res.results do |attribs|
-      {
-        :insignia => SaintInsigniaFilter.get_insignia_by_attribs(attribs),
-        :color => SaintInsigniaFilter.get_color_by_attribs(attribs)
+    ##
+    #  RENDER SEARCH RESULTS
+    #  In order to prevent the search result abstraction from having specific rendering knowledge,
+    #  we pass in lambdas as arguments into the search result rendering method - for attributes and for
+    #  rendering color codes
+    rendered_results = search_res.results(
+      lambda { |attrib_codes|
+        all_attribs_mapped = Attrib.all_mapped
+        attrib_codes.inject([]) do |accum_ar, attrib_code|
+          accum_ar << {:code => attrib_code, :name => all_attribs_mapped[attrib_code].name}; accum_ar
+        end
+      },
+      lambda { |attribs|
+          {:insignia => SaintInsigniaFilter.get_insignia_by_attribs(attribs), :color => SaintInsigniaFilter.get_color_by_attribs(attribs)}
       }
-    end
+    )
 
-    #  Construct search results
+    ##
+    #  Render JSON
     res = {
       :attribute_hierarchy => render_attrib_hierarchy(attrib_categories, attribs_all, search_res.attrib_map, true),
       :results => rendered_results
@@ -77,9 +93,14 @@ class Api::SaintsController < Api::ApiController
   ##
   #  Returns saint details, given a list of saint identifiers
   def details
+
     # Assemble a list of all saints
-    saint_id_list = params[:saint_ids].split(',')
-    saints = Saint.where(:id => saint_id_list)
+    symbol_list = params[:symbols].present? ? params[:symbols].split(',') : []
+
+    # Parameter error checking
+    return generate_error_response(["params"], "Required parameter missing: symbols") if (symbol_list.empty?)
+
+    saints = Saint.where(:symbol => symbol_list)
 
     # Construct saints rendering
     res = {:results => render_saints(saints)}
@@ -128,10 +149,10 @@ class Api::SaintsController < Api::ApiController
 
       # Collect rendering
       saint_data = {
-        :id => saint.id,
+        # :id => saint.id,
         :symbol => saint.symbol,
         :name => saint.get_metadata_value(MetadataKey::NAME),
-        :attributes => attribs.map(&:code),
+        :attributes => render_attribs(attribs),
         :metadata => mv_rendered
       }
 
@@ -141,6 +162,15 @@ class Api::SaintsController < Api::ApiController
     # Return rendered hash
     saint_renderings
 
+  end
+
+  ##
+  #  Render a list of attributes
+  def render_attribs(attribs = [])
+    attribs.each.inject([]) do |accum_ar, attrib|
+      accum_ar << {:code => attrib.code, :name => attrib.name}
+      accum_ar
+    end
   end
 
 
