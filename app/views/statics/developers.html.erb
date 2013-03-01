@@ -1,6 +1,8 @@
 
-
+<!--
 <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autload=true&lang=javascript"></script>
+-->
+
 
 <div class="row">
 
@@ -8,66 +10,700 @@
   <div class="span2">
 
 
-    <h3><a href="#embed">Embed</a></h3><br/>
-    &nbsp;&nbsp;<a href="#saint_embed">Saint Embed</a><br/>
-    &nbsp;&nbsp;<a href="#saint_of_day">Saint of the Day</a>
+    <h3><a href="#embed">Embeds</a></h3><br/>
+    &nbsp;&nbsp;Saint Tiles<br/>
+    &nbsp;&nbsp;Saint of the Day Tile
 
     <br/><br/><br/>
 
 
     <h3><a href="#search_api">Search API</a></h3><br/>
-    &nbsp;&nbsp;<a href="#authentication">Authentication</a><br/>
-    &nbsp;&nbsp;<a href="#attrib_def">Attribute Definition</a><br/>
-    &nbsp;&nbsp;<a href="#metadata_def">Metadata Definition</a><br/>
-    &nbsp;&nbsp;<a href="#saint_search">Saint Search</a><br/>
-    &nbsp;&nbsp;<a href="#saint_details">Saint Details</a><br/>
+    &nbsp;&nbsp;Authentication<br/>
+    &nbsp;&nbsp;Attribute Definition<br/>
+    &nbsp;&nbsp;Metadata Definition<br/>
+    &nbsp;&nbsp;Saint Details<br/>
+    &nbsp;&nbsp;Saint Search<br/>
 
   </div>
 
   <!--// API Specification  -->
   <div class="span10">
 
-    <a name="embed">&nbsp;&nbsp;</a><h2>Embed</h2>
+    <h2>Developer's Guide</h2><br/>
 
-    Saintstir can be easily integrated into your website
+    <p>Saintstir is the world's first database that exposes a taxonomy for the saints of the Catholic Church.
+    Now the site's content: attribute filtering, full text search capabilities, and our extensive research
+    is available to you.</p>
 
+    <p>Integrating saintstir on to your website, blog, or app is easy.  Embedding profile tiles on to your site
+    is as simple as copying / pasting HTML code.  There is also an extensive JSON over HTTP API for application
+    developers.</p>
 
+    <a name="embed">&nbsp;&nbsp;</a>
+    <h2>Embeds</h2><br/>
 
-    <a name="saint_embed">&nbsp;&nbsp;</a><h3>Saint Embed</h3>
-    <a name="saint_of_day">&nbsp;&nbsp;</a><h3>Saint of the Day</h3>
+    <p>Saint profile tiles are easy to embed on your website.  There are two embeddable objects available on saintstir.com:
+    (1) the saint profile tile, and (2) the saint of the day tile.  HTML snippets are provided for both, and are also
+    available on each saint's profile page. </p>
 
+    <h3>Saint Tiles</h3><br/>
 
-
-    <a name="search_api">&nbsp;&nbsp;</a><h2>Search API</h2>
-
-
-    <a name="authentication">&nbsp;&nbsp;</a><h3>Authentication</h3>
-    <a name="attrib_def">&nbsp;&nbsp;</a><h3>Attribute Definition</h3>
-    <a name="metadata_def">&nbsp;&nbsp;</a><h3>Metadata Definition</h3>
-    <a name="saint_search">&nbsp;&nbsp;</a><h3>Saint Search</h3>
-    <a name="saint_details">&nbsp;&nbsp;</a><h3>Saint Details</h3>
-
-
-
-
-<pre class="prettyprint">
-
-  ##
-  #  This retrieves the basic auth parameters and compares them against
-  #  the user key/secret in the API database
-  def check_auth
-
-    #  Retrieve user associated with this key/secret
-    #  this impl will automatically decode the base64-encoded values
-    @auth_user = authenticate_with_http_basic do |key, secret|
-      ApiUser.find_by_key_and_secret(key, secret) if (key.present? && secret.present?)
-    end
-
-    # No user found: render a 401 and an error json
-    generate_error_response if (@auth_user.nil?)
-
-  end
+    <div class="row">
+    <div class="span4">
+    <p>Saint profile embeds allow you to add sainstir's signature saint tile on to your website.  Each saint
+    on saintstir.com has a link icon to the lower left which will contain copyable HTML code.
+    For example, the code to embed the saint tile for Isidore of Seville, and the actual embed is the below.</p><br/><br/>
+<code>
+<pre class="pre-scrollable">
+&lt;iframe src="http://www.saintstir.com/saints/IsiSev/embed" name="IsiSev"
+width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt;/iframe&gt;
 </pre>
+</code>
+    </div>
+    <div class="span6">
+    <iframe src="http://www.saintstir.com/saints/IsiSev/embed" name="IsiSev"
+      width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+    </div>
+    </div>
+
+    <h3>Saint of the Day Tile</h3><br/>
+
+    <p>The saint of the day embeddable tile changes whenever saintstir.com features a new saint.  The same type of
+    tile as the Saint Tile is displayed, but can change on a daily or weekly basis.  The HTML code to add an
+    embeddable saint of the day to your site is the following:</p>
+<code>
+<pre class="pre-scrollable">
+&lt;iframe src="http://www.saintstir.com/saints/embed_featured" name="SaintOfTheDay"
+width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt;iframe&gt;
+</pre>
+</code>
+
+<br/>
+    <a name="search_api">&nbsp;&nbsp;</a>
+    <h2>Search API</h2><br/>
+
+    <p>Saintstir.com exposes a search API for app creators who want to build search and filtering tools against
+    the Saintstir taxonomy and search platform.  The API is all HTTP-based, with JSON results. We are also actively
+    expanding our API to include additional functionality available on the site.  Sign up for an API key and we'll
+    keep you up to date on any new developments.</p>
+    <br/>
+
+    <h3>Authentication</h3><br/>
+
+    <p>Using the Saintstir API requires a application key.  Please contact us and provide your name, a contact email, as well as a link
+    or brief description of your application / blog (button below), and we'll get back to you with a key/secret as soon as possible.
+
+    <br/></br>
+    <%= link_to contact_us_path(:purpose => "ApiRequest", :message => " Name: \n Contact Email: \n App or Blog: \n") do %>
+      <button class="btn btn-info">Request a Saintstir API key</button>
+    <% end %>
+    <br/><br/>
+
+    <p>The saintstir API currently uses basic authentication.  The key/secret must be base-64 encoded and passed via the
+    "Authentication" HTTP header.  We'll show API examples below using CURL, but any language with HTTP support will work.</p>
+
+    <br/>
+    <h3>Attribute Definition</h3><br/>
+
+    <p>Attributes are at the heart of the saintstir taxonomy.  The attribute definition query exposes our entire taxonomy to you in a structured, hierarchical manner.
+    Each attribute belongs to an attribute category.  The code name (which are unique values that are used for querying) as well as a user-friendly name is provided for 
+    each attribute. The query and a snippet of its result in JSON are below</p>
+    <code>
+      <pre>
+#  API URL
+http://www.saintstir.com/api/saints/attributes
+
+#  CURL request (passing basic auth)
+curl -u [key]:[secret] http://www.saintstir.com/api/saints/attributes
+      </pre>
+    </code>
+
+    <code>
+      <pre class="pre-scrollable">
+##
+#  JSON Response 
+#  (truncated for brevity)
+
+{
+   "attribute_hierarchy":{
+      "categories":[
+         {
+            "code":"lifeexperience",
+            "name":"Life Experience",
+            "attributes":[
+               {
+                  "code":"lifeexperience_conversion",
+                  "name":"Conversion"
+               },
+               {
+                  "code":"lifeexperience_darknight",
+                  "name":"Dark Night"
+               },
+               {
+                  "code":"lifeexperience_martyrdom",
+                  "name":"Martyrdom"
+               },
+               {
+                  "code":"lifeexperience_temptation",
+                  "name":"Temptation"
+               },
+               {
+                  "code":"lifeexperience_physsuff",
+                  "name":"Physical Suffering"
+               }
+            ]
+         },
+         {
+            "code":"occupationsector",
+            "name":"Occupation Sector",
+            "attributes":[
+               {
+                  "code":"occupationsector_comm",
+                  "name":"Commerce"
+               },
+               {
+                  "code":"occupationsector_philtheo",
+                  "name":"Philosophy / Theology"
+               },
+               {
+                  "code":"occupationsector_reli",
+                  "name":"Religious"
+               },
+               {
+                  "code":"occupationsector_teach",
+                  "name":"Teaching"
+               },
+               {
+                  "code":"occupationsector_home",
+                  "name":"Homemaker"
+               }
+            ]
+         },
+         {
+            "code":"periodeurocentric",
+            "name":"Period - EuroCentric",
+            "attributes":[
+               {
+                  "code":"periodeurocentric_earlychurch",
+                  "name":"The Early Church"
+               },
+               {
+                  "code":"periodeurocentric_imperialchurch",
+                  "name":"The Imperial Church"
+               },
+               {
+                  "code":"periodeurocentric_earlymiddle",
+                  "name":"Early Middle Ages"
+               },
+               {
+                  "code":"periodeurocentric_highmiddle",
+                  "name":"High Middle Ages"
+               },
+               {
+                  "code":"periodeurocentric_renaissance",
+                  "name":"Renaissance"
+               },
+               {
+                  "code":"periodeurocentric_baroqueenlightenment",
+                  "name":"Baroque / Enlightenment"
+               }
+            ]
+         },
+
+      ]
+   }
+}
+      </pre>
+    </code>
+
+
+    <br/>
+    <h3>Metadata Definition</h3><br/>
+    
+    <p>The saintstir taxonomy, in addition to hierarchical attributes, also exposes metadata fields that allow for free-form, descriptive values on each saint.  The metadata query
+	returns all defined meta fields, which includes each meta field's code and name.</p>
+
+    <code>
+       <pre>
+#  API URL
+http://www.saintstir.com/api/saints/metadata
+
+#  CURL request (passing basic auth)
+curl -u [key]:[secret] http://www.saintstir.com/api/saints/metadata
+       </pre>
+    </code>
+
+    <code>
+       <pre class="pre-scrollable">
+##
+#  JSON Response
+#  (truncated for brevity)
+
+{
+   "metadata":[
+      {
+         "code":"name",
+         "name":"Name"
+      },
+      {
+         "code":"nickname",
+         "name":"Nicknames"
+      },
+      {
+         "code":"born",
+         "name":"Born"
+      },
+      {
+         "code":"died",
+         "name":"Died"
+      },
+      {
+         "code":"feastday",
+         "name":"Feast Day"
+      },
+      {
+         "code":"moderndaycountry",
+         "name":"Modern-day Country"
+      },
+      {
+         "code":"specificgeoperiod",
+         "name":"Specific GeoPeriod"
+      },
+      {
+         "code":"patronage",
+         "name":"Patronage"
+      }
+   ]
+}
+       </pre>
+    </code>
+
+    <br/>
+    <h3>Saint Details</h3><br/>
+
+    <p>The saint details query allows you to retrieve the details for a list of saints.  The API exposes most, but not all information available on the saintstir website.
+    All attributes that apply to the saint, and an abridged set of metadata information is returned</p>
+    <code> 
+      <pre>
+# API URL and query parameters
+http://www.saintstir.com/api/saints/details?symbol=..
+# Parameter: symbols, a comma-separated list of symbols, which is the short name for the saint that appears on the saint's insignia tile.
+#  the symbol is also a value that is returned in the search api for each matching saint
+
+# CURL example, to retrieve Isidore of Seville (symbol: IsiSev), and Saint Monica (symbol: MoNica)
+curl -u [key]:[secret] http://www.saintstir.com/api/saints/details?symbols=IsiSev,MoNica
+      </pre>
+    </code>
+
+    <code>
+       <pre class="pre-scrollable">
+{
+   "results":[
+      {
+         "symbol":"IsiSev",
+         "name":"Isidore of Seville",
+         "attributes":[
+            {
+               "code":"gender_male",
+               "name":"Male"
+            },
+            {
+               "code":"worldregion_weur",
+               "name":"Western Europe"
+            },
+            {
+               "code":"periodeurocentric_earlymiddle",
+               "name":"Early Middle Ages"
+            },
+            {
+               "code":"saintstatus_canonized",
+               "name":"Canonized"
+            },
+            {
+               "code":"feastmonth_apr",
+               "name":"Apr"
+            },
+            {
+               "code":"saintstatus_doctor",
+               "name":"Doctor of Church"
+            },
+            {
+               "code":"century_7th",
+               "name":" 7th"
+            },
+            {
+               "code":"vocation_bishop",
+               "name":"Bishop"
+            },
+            {
+               "code":"occupationsector_philtheo",
+               "name":"Philosophy / Theology"
+            },
+            {
+               "code":"occupationsector_reli",
+               "name":"Religious"
+            },
+            {
+               "code":"occupationsector_teach",
+               "name":"Teaching"
+            },
+            {
+               "code":"graces_diligence",
+               "name":"Diligence"
+            },
+            {
+               "code":"grace_intellectual",
+               "name":"Intellectual"
+            },
+            {
+               "code":"graces_mortification",
+               "name":"Mortification"
+            }
+         ],
+         "metadata":{
+            "born":[
+               "560"
+            ],
+            "died":[
+               "636"
+            ],
+            "feastday":[
+               "04/04"
+            ],
+            "moderndaycountry":[
+               "Spain"
+            ],
+            "specificgeoperiod":[
+               "Middle-Ages, Spain "
+            ],
+            "patronage":[
+               "Internet",
+               "Students",
+               "Computer Programmers"
+            ],
+            "occupation":[
+               "Bishop"
+            ],
+            "canon_year":[
+               "1598"
+            ]
+         }
+      },
+      {
+         "symbol":"MoNica",
+         "name":"Monica",
+         "attributes":[
+            {
+               "code":"vocation_laymarried",
+               "name":"Lay - Married"
+            },
+            {
+               "code":"feastmonth_feb",
+               "name":"Feb"
+            },
+            {
+               "code":"gender_female",
+               "name":"Female"
+            },
+            {
+               "code":"lifeexperience_darknight",
+               "name":"Dark Night"
+            },
+            {
+               "code":"periodeurocentric_imperialchurch",
+               "name":"The Imperial Church"
+            },
+            {
+               "code":"saintstatus_canonized",
+               "name":"Canonized"
+            },
+            {
+               "code":"century_4th",
+               "name":" 4th"
+            },
+            {
+               "code":"worldregion_nafri",
+               "name":"Northern Africa"
+            },
+            {
+               "code":"lifeexperience_temptation",
+               "name":"Temptation"
+            },
+            {
+               "code":"graces_forgiveness",
+               "name":"Forgiveness"
+            },
+            {
+               "code":"graces_patience",
+               "name":"Patience"
+            }
+         ],
+         "metadata":{
+            "born":[
+               "332"
+            ],
+            "died":[
+               "387"
+            ],
+            "feastday":[
+               "08/27"
+            ],
+            "moderndaycountry":[
+               "Algeria"
+            ],
+            "patronage":[
+               "Difficult Marriages",
+               "Victims of Unfaithfulness ",
+               "Alcoholics",
+               "Mothers",
+               "Peacemakers"
+            ],
+            "occupation":[
+               "Mother"
+            ]
+         }
+      }
+   ]
+}
+       </pre>
+    </code>
+
+
+
+    <br/>
+    <h3>Saint Search</h3><br/>
+
+    <p>Saint search allows you to filter by any number of attributes available in the saintstir taxonomy (all of the attributes in the attributes query can be used
+    to filter saint results.  In addition, you can also perform a full-text search on the entire saint profile via the API</p>
+    <p>The query consists of two parameters (at least one is required).  "q", or the full-text search parameter, will initiate a full-text search against the 
+    saint directory with your search question.  All attributes and metadata fields will be searched.  "attributes" is a comma-delimited list of attribute codes (the attributes are 
+    the results of the attributes query</p>
+    <p>Search results consist of two parts:  <br/>
+    Adaptive Attributes: the first is an adaptive list of attributes - this means that the attributes listed in the search results are attributes that apply 
+    to the universe of results after search and filtering.  We also include a count with each attribute that indicates how many saints remain under each attribute.<br/>
+    Search Results: the second part of the search results are the saints that were returned in the query and filters</p>
+
+    <code> 
+      <pre>
+# API URL
+http://www.saintstir.com/api/saints/search?q=..&attributes=..
+# Parameters:  
+#    * q: any string, this will be used to perform a full-text search on saintstir's entire saint directory
+#    * attributes: a comma-delimited list of attributes that will refine the 
+#   (note: at least one parameter above is required)
+#
+
+# CURL request
+curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attributes=periodeurocentric_renaissance,graces_patience
+      </pre>
+    </code>
+    <code>
+       <pre class="pre-scrollable">
+##
+#  Search results 
+#  The attribute_hierarchy property are the remaining results after search/filtering (adaptive attributes)
+#  The results property is my search results 
+#
+
+{
+   "attribute_hierarchy":{
+      "categories":[
+         {
+            "code":"graces",
+            "name":"Graces",
+            "attributes":[
+               {
+                  "code":"graces_patience",
+                  "name":"Patience",
+                  "count":1
+               }
+            ]
+         },
+         {
+            "code":"lifeexperience",
+            "name":"Life Experience",
+            "attributes":[
+               {
+                  "code":"lifeexperience_temptation",
+                  "name":"Temptation",
+                  "count":1
+               },
+               {
+                  "code":"lifeexperience_physsuff",
+                  "name":"Physical Suffering",
+                  "count":1
+               }
+            ]
+         },
+         {
+            "code":"occupationsector",
+            "name":"Occupation Sector",
+            "attributes":[
+               {
+                  "code":"occupationsector_reli",
+                  "name":"Religious",
+                  "count":1
+               }
+            ]
+         },
+         {
+            "code":"periodeurocentric",
+            "name":"Period - EuroCentric",
+            "attributes":[
+               {
+                  "code":"periodeurocentric_renaissance",
+                  "name":"Renaissance",
+                  "count":1
+               }
+            ]
+         },
+         {
+            "code":"saintstatus",
+            "name":"Saint Status",
+            "attributes":[
+               {
+                  "code":"saintstatus_canonized",
+                  "name":"Canonized",
+                  "count":1
+               }
+            ]
+         },
+         {
+            "code":"superpower",
+            "name":"Superpower",
+            "attributes":[
+               {
+                  "code":"superpower_stigmata",
+                  "name":"Stigmata",
+                  "count":1
+               },
+               {
+                  "code":"superpower_ecstasy",
+                  "name":"Ecstasy",
+                  "count":1
+               }
+            ]
+         },
+         {
+            "code":"vocation",
+            "name":"Vocation",
+            "attributes":[
+               {
+                  "code":"vocation_nun",
+                  "name":"Nun",
+                  "count":1
+               }
+            ]
+         },
+         {
+            "code":"worldregion",
+            "name":"World Region",
+            "attributes":[
+               {
+                  "code":"worldregion_weur",
+                  "name":"Western Europe",
+                  "count":1
+               }
+            ]
+         }
+      ]
+   },
+   "results":[
+      {
+         "id":"16",
+         "symbol":"MMdPazz",
+         "name":"Mary Magdalene dei Pazzi",
+         "attributes":[
+            {
+               "code":"worldregion_weur",
+               "name":"Western Europe"
+            },
+            {
+               "code":"consecratedlife_carmelite",
+               "name":"Carmelite"
+            },
+            {
+               "code":"gender_female",
+               "name":"Female"
+            },
+            {
+               "code":"saintstatus_canonized",
+               "name":"Canonized"
+            },
+            {
+               "code":"vocation_nun",
+               "name":"Nun"
+            },
+            {
+               "code":"superpower_stigmata",
+               "name":"Stigmata"
+            },
+            {
+               "code":"periodeurocentric_renaissance",
+               "name":"Renaissance"
+            },
+            {
+               "code":"feastmonth_may",
+               "name":"May"
+            },
+            {
+               "code":"graces_charity",
+               "name":"Charity"
+            },
+            {
+               "code":"lifeexperience_temptation",
+               "name":"Temptation"
+            },
+            {
+               "code":"lifeexperience_physsuff",
+               "name":"Physical Suffering"
+            },
+            {
+               "code":"occupationsector_reli",
+               "name":"Religious"
+            },
+            {
+               "code":"superpower_ecstasy",
+               "name":"Ecstasy"
+            },
+            {
+               "code":"century_16th",
+               "name":"16th"
+            },
+            {
+               "code":"graces_humility",
+               "name":"Humility"
+            },
+            {
+               "code":"graces_meekness",
+               "name":"Meekness"
+            },
+            {
+               "code":"graces_mortification",
+               "name":"Mortification"
+            },
+            {
+               "code":"graces_obedience",
+               "name":"Obedience"
+            },
+            {
+               "code":"graces_patience",
+               "name":"Patience"
+            }
+         ],
+         "render_attributes":{
+            "insignia":"",
+            "color":"basic-elem"
+         }
+      }
+   ]
+}
+
+
+       </pre>
+    </code>
+
+
 
   </div>
 
