@@ -78,8 +78,8 @@ class Api::SaintsController < Api::ApiController
   #  Returns saint details, given a list of saint identifiers
   def details
     # Assemble a list of all saints
-    saint_id_list = params[:saint_ids].split(',')
-    saints = Saint.where(:id => saint_id_list)
+    symbol_list = params[:symbols].split(',')
+    saints = Saint.where(:symbol => symbol_list)
 
     # Construct saints rendering
     res = {:results => render_saints(saints)}
@@ -128,7 +128,7 @@ class Api::SaintsController < Api::ApiController
 
       # Collect rendering
       saint_data = {
-        :id => saint.id,
+        # :id => saint.id,
         :symbol => saint.symbol,
         :name => saint.get_metadata_value(MetadataKey::NAME),
         :attributes => attribs.map(&:code),
