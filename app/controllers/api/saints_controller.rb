@@ -17,6 +17,12 @@ class Api::SaintsController < Api::ApiController
     attributes = params[:attributes]
     attrib_list = attributes.nil? ? [] : attributes.split(',')
 
+    #  Parameter error checking
+    return generate_error_response(['params'], 'Required parameters missing: either q or attributes must be specified') if (q.nil? && attrib_list.empty?)
+    return generate_error_response(['params'], 'Full-text search string parameter: q must be at least 3 characters long') if (q.present? && q.length < 3 && attrib_list.empty?)
+
+    ##
+    # No Errors
     # Performs search - returns an object of type Search::SaintResult
     search_res = Search::Saint.search(q, attrib_list)
 
@@ -87,8 +93,13 @@ class Api::SaintsController < Api::ApiController
   ##
   #  Returns saint details, given a list of saint identifiers
   def details
+
     # Assemble a list of all saints
-    symbol_list = params[:symbols].split(',')
+    symbol_list = params[:symbols].present? ? params[:symbols].split(',') : []
+
+    # Parameter error checking
+    return generate_error_response(["params"], "Required parameter missing: symbols") if (symbol_list.empty?)
+
     saints = Saint.where(:symbol => symbol_list)
 
     # Construct saints rendering

@@ -35,6 +35,16 @@ class Api::ApiController < ActionController::Base
   end
 
   ##
+  #  Generic error response
+  def generate_error_response(errors = [], message = "Unknown Error")
+    render :status => 500,
+           :json => {"success" => "false",
+                     "errors" => errors,
+                     "message" => message}
+  end
+
+
+  ##
   #  Logs this API request to our chosen usage API gateway
   #  To change logging destination, call different code paths
   def log_request
