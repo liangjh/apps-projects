@@ -113,6 +113,7 @@ class Api::SaintsController < Api::ApiController
 
   ##
   #  These are the fields we want to return in the saint details API
+  #  Note that these are all short fields (long meta fields are not handled currently)
   META_FIELDS = [
     MetadataKey::NICKNAME,
     MetadataKey::BORN,
@@ -122,7 +123,6 @@ class Api::SaintsController < Api::ApiController
     MetadataKey::SPECIFICGEOPERIOD,
     MetadataKey::PATRONAGE,
     MetadataKey::OCCUPATION,
-    MetadataKey::BIOGRAPHY,
     MetadataKey::CANONYEAR
   ]
 
