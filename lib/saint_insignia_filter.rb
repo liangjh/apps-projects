@@ -15,18 +15,18 @@ class SaintInsigniaFilter
     #//  Set list of insignias, by priority
     #//  Format: [[attrib_code, insignia, description]]  (array of arrays)
     def insignia_list=(list)
-      @@insignia_list = list
+      @insignia_list = list
     end
 
     #//  Set list of colors, by priority
     #//  Format: [[attrib_code, css_color]] (array of arrays)
     def color_list=(list)
-      @@color_list = list
+      @color_list = list
     end
 
     #//  System defaults
-    def default_insignia=(dinsig); @@default_insignia = dinsig; end
-    def default_color=(dcolor); @@default_color = dcolor; end
+    def default_insignia=(dinsig); @default_insignia = dinsig; end
+    def default_color=(dcolor); @default_color = dcolor; end
 
     ##
     # Returns insignia (and description) for saint, given saint's attribs a
@@ -38,10 +38,10 @@ class SaintInsigniaFilter
     ##
     #  Return the appropriate insignia to render, given a list of attributes
     def get_insignia_by_attribs(attribs = [])
-      res_insignia = @@default_insignia[1]
+      res_insignia = @default_insignia[1]
       if (attribs.present?)
         attrib_set = make_set(attribs)
-        @@insignia_list.each do |insig|
+        @insignia_list.each do |insig|
           if (attrib_set.include?(insig[0]))
             res_insignia = insig[1]
             break
@@ -60,9 +60,9 @@ class SaintInsigniaFilter
     ##
     #  Return the appropriate color to render, given a list of attributes
     def get_color_by_attribs(attribs = [])
-      res_color = @@default_color
+      res_color = @default_color
       attrib_set = make_set(attribs)
-      @@color_list.each do |clr|
+      @color_list.each do |clr|
         if (attrib_set.include?(clr[0]))
             res_color = clr[1]
             break
