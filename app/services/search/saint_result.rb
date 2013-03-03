@@ -20,21 +20,21 @@ class Search::SaintResult
   #  Returns a map of remaining attributes, with counts
   def attrib_map
     # TODO: maybe there's a better way to reference current-tags and standardize it
-    attr_map = @result.facets['current-tags']['terms'].inject({}) do |accum_hash, elem|
+    @attr_map ||= @result.facets['current-tags']['terms'].inject({}) do |accum_hash, elem|
       accum_hash[elem['term']] = elem['count']
       accum_hash
     end
-    attr_map
+    @attr_map
   end
 
   ##
   # Returns a list of remaining attributes with count
   def attrib_list
-    attr_list = @result.facets['current_tags']['terms'].inject([]) do |accum_list, elem|
+    @attr_list ||= @result.facets['current_tags']['terms'].inject([]) do |accum_list, elem|
       accum_list << [elem['term'], elem['count']]
       accum_list
     end
-    attr_list
+    @attr_list
   end
 
 
@@ -42,6 +42,36 @@ class Search::SaintResult
     @result
   end
 
+  def length
+    @result.nil? ? 0 : @result.length
+  end
+
+
+  ##
+  #  Return the saint ids in the results
+  def results_saint_ids
+    id_list = @result.map(&:id)
+    id_list
+  end
+
+  ##
+  #  Return the saint symbols in the results
+  def results_saint_symbols
+    @result.map(&:symbol)
+  end
+
+  ##
+  #  Returns saints in the exact order
+  def results_saints
+    saints_map = ::Saint.where(:id => results_saint_ids).all.inject({}) do |accum_map, saint|
+      accum_map[saint.id] = saint; accum_map
+    end
+    saint_list = []
+    results_saint_ids.each do |saint_id|
+      saint_list << saints_map[saint_id.to_i]
+    end
+    saint_list
+  end
 
   ##
   #  Returns a array of results (array of hashes)

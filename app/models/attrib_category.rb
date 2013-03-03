@@ -42,7 +42,7 @@ class AttribCategory < ActiveRecord::Base
 
   #//  All attribs, keyed by cat code {attrib_cat_code => [attribs]}
   #//  Alternatively, we can return all attribs that are currently in use
-  def self.map_attrib_cat_content(in_use = false)
+  def self.map_attrib_cat_content(in_use = false, attrib_inclusion_lambda = nil)
     attrib_cats_by_id = self.all.inject({}) { |h,e| h[e.id] = e; h}
     attrib_list = []
     if (in_use)
@@ -54,8 +54,17 @@ class AttribCategory < ActiveRecord::Base
     attrib_list.each do |e|
       attrib_cat = attrib_cats_by_id[e.attrib_category_id]
       attrib_map[attrib_cat.code] = [] if (!attrib_map.has_key?(attrib_cat.code))
-      attrib_map[attrib_cat.code] << e
+
+      # Attrib inclusion lambda determines whether a given attribute should be included
+      # (o/w we always add it)
+      if (attrib_inclusion_lambda.present?)
+        attrib_map[attrib_cat.code] << e if (attrib_inclusion_lambda.call(e.code))
+      else
+        attrib_map[attrib_cat.code] << e
+      end
     end
+    #  Reject anything that has empty values
+    attrib_map = attrib_map.reject { |k,v| v.empty? }
     attrib_map
   end
 

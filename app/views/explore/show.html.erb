@@ -1,0 +1,73 @@
+
+<%#
+
+  EXPLORE PAGE, SERVER-SIDE CENTRIC
+
+  Server-side centric: this version does not load all data upfront - it responds to
+  the filters selected, renders the full view, and then uses isotope to perform the
+  final animation.  Server-side centric view is a step towards a rich client-side API, i
+  and allow for adaptive filters to occur.
+
+%>
+
+
+<div class="row">
+
+  <div class="span2">&nbsp;&nbsp;</div>
+
+  <!--// BREAD CRUMBS -->
+  <div id="bread_crumbs" class="span8">
+  </div>
+
+</div>
+
+<div class="row">
+
+  <!--// ALL FILTERS -->
+  <div class="span2">
+
+    <% @attrib_categories.each do |category|
+          next if (!@attribs_all.has_key?(category.code))
+    %>
+      <p>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%>&nbsp;<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <% @attribs_all[category.code].each do |attrib| %>
+            <a href="#" data-filter=".<%=attrib.code%>"><%=attrib.name%>
+            <% if @result_mapped_attribs.has_key?(attrib.code) %>
+              (<%=@result_mapped_attribs[attrib.code]%>)
+            <% end %>
+            </a>
+          <% end %>
+        </ul>
+      </div>
+      </p>
+    <% end %>
+  </div>
+
+  <!--// ALL SAINT TILES -->
+  <div id="isotope_content" class="span10 clickable clearfix">
+    <% @result_saints.each do |saint| %>
+        <%= render :partial => "saints/insignia_mini", :locals => {:saint => saint, :disc_filters => []} %>
+    <% end %>
+  </div>
+
+</div>
+
+<script>
+
+  $(document).ready(function() {
+    var container = $('#isotope_content')
+    var tiles =  $('#isotope_content .element')
+
+    // Isotop initialization
+    // Remvoe and then add elements; this will create the proper animation FX on the screen
+    container.isotope();
+    container.isotope('remove', tiles);
+    container.isotope('insert', tiles);
+  });
+
+</script>
+
+
