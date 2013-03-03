@@ -1,11 +1,11 @@
 
 <%#
 
-  EXPLORE PAGE, SERVER-SIDE CENTRIC
+  --- EXPLORE PAGE, SERVER-SIDE CENTRIC ---
 
   Server-side centric: this version does not load all data upfront - it responds to
   the filters selected, renders the full view, and then uses isotope to perform the
-  final animation.  Server-side centric view is a step towards a rich client-side API, i
+  final animation.  Server-side centric view is a step towards a rich client-side API,
   and allow for adaptive filters to occur.
 
 %>
@@ -17,6 +17,10 @@
 
   <!--// BREAD CRUMBS -->
   <div id="bread_crumbs" class="span8">
+    <% @attrib_list.each do |attrib_code|  %>
+      <a class='btn btn-info' href='#' data-filter'<%=attrib_code%>'>
+        <i class='icon-remove'></i>&nbsp;<%=@attribs_all_map[attrib_code].name%></a>
+    <% end %>
   </div>
 
 </div>
@@ -27,13 +31,13 @@
   <div class="span2">
 
     <% @attrib_categories.each do |category|
-          next if (!@attribs_all.has_key?(category.code))
+          next if (!@attribs_by_category.has_key?(category.code))
     %>
       <p>
       <div class="btn-group">
         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%>&nbsp;<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <% @attribs_all[category.code].each do |attrib| %>
+          <% @attribs_by_category[category.code].each do |attrib| %>
             <a href="#" data-filter=".<%=attrib.code%>"><%=attrib.name%>
             <% if @result_mapped_attribs.has_key?(attrib.code) %>
               (<%=@result_mapped_attribs[attrib.code]%>)

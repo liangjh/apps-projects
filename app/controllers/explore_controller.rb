@@ -17,15 +17,15 @@ class ExploreController < ApplicationController
   def show
 
     # Retrieve search parameters, sync with session
-    q = sync_param_q
-    attrib_list = sync_param_attributes
+    @q = sync_param_q
+    @attrib_list = sync_param_attributes
 
     # Render default results, if search criteria not met
-    return default_results if ((q.nil? || q.length < 3) && attrib_list.empty?)
+    return default_results if ((@q.nil? || @q.length < 3) && @attrib_list.empty?)
 
     #  Perform search, and retrieve associated saints
-    Rails.logger.info "search|q=#{q}|attributes=#{attrib_list}"
-    search_res = Search::Saint.search(q, attrib_list)
+    Rails.logger.info "search|q=#{@q}|attributes=#{@attrib_list}"
+    search_res = Search::Saint.search(@q, @attrib_list)
 
     #  Put results in rendering format
     # @result_saints = Saint.where(:id => search_res.results_saint_ids)
@@ -35,10 +35,11 @@ class ExploreController < ApplicationController
     ##
     #  Rendering attribs and categories
     #  Modify attribs and categories to only include remaining attribs (adaptive filtering)
+    @attribs_all_map = Attrib.all_mapped
     @attrib_categories = AttribCategory.all_visible
-    @attribs_all = AttribCategory.map_attrib_cat_content(true,
+    @attribs_by_category = AttribCategory.map_attrib_cat_content(true,
                             lambda { |attrib_code| @result_mapped_attribs.has_key?(attrib_code) })
-    @attrib_categories = @attrib_categories.reject { |attrib_cat, value| @attribs_all.has_key?(attrib_cat) }
+    @attrib_categories = @attrib_categories.reject { |attrib_cat, value| @attribs_by_category.has_key?(attrib_cat) }
 
   end
 
@@ -52,7 +53,7 @@ class ExploreController < ApplicationController
 
     #  We always render these
     @attrib_categories = AttribCategory.all_visible
-    @attribs_all = AttribCategory.map_attrib_cat_content(true)
+    @attribs_by_category = AttribCategory.map_attrib_cat_content(true)
 
     #  Render this
     render :action => "show"
@@ -62,15 +63,15 @@ class ExploreController < ApplicationController
 
   def sync_param_q
     search_q = params[:q]
-    search_q ||= session[:q]
-    session[:q] = search_q
+    # search_q ||= session[:q]
+    # session[:q] = search_q
     search_q
   end
 
   def sync_param_attributes
     attrib_list = params[:attributes].present? ? params[:attributes].split(',') : []
-    attrib_list ||= session[:attributes]
-    session[:attributes] = attrib_list
+    # attrib_list ||= session[:attributes]
+    # session[:attributes] = attrib_list
     attrib_list
   end
 
