@@ -1,3 +1,4 @@
+require 'attachable_properties'
 
 ##
 #  Saint is the core object in Saintstir
@@ -27,6 +28,9 @@ class Saint < ActiveRecord::Base
   scope :by_symbol, lambda {|symbol| {:conditions => {:symbol => symbol}}}
   scope :all_published, where(:publish => true)
   scope :sort_by_symbol, order("symbol ASC")
+
+  # Attachable: allow this class to take on any additional properties that we want to attach
+  include AttachableProperties
 
   ##
   #  After a saint is saved, flush anything that the saint's data touches

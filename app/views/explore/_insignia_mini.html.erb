@@ -1,0 +1,39 @@
+
+<%#
+    MINIFIED SAINT INSIGNIA
+    *** note, adapted for server-side explore ***
+
+      This accounts for the possibility of attributed values that are attached to the saint
+      (i.e. returned from search results).  It also handles the possiblity that there are no additional
+      values (i.e. if we just select a random group of saints)
+
+    Creates the small logo/insignia for a given saint
+    Expects the following local variable to be passed to the partial:
+      - saint: saint model object from database
+%>
+
+<%
+    # Get attached properties, if exists
+    attached_name = saint.get_attached_property(:name)
+    attached_attribs = saint.get_attached_property(:attributes)
+
+    # Get data we need, either through the attached values or from the database
+    saint_color = attached_attribs.present? ? SaintInsigniaFilter.get_color_by_attribs(attached_attribs) : SaintInsigniaFilter.get_color(saint)
+    saint_insignia = attached_attribs.present? ? SaintInsigniaFilter.get_insignia_by_attribs(attached_attribs) : SaintInsigniaFilter.get_insignia(saint)
+    saint_name  = attached_name.present? ? attached_name : saint.get_metadata_value(MetadataKey::NAME)
+%>
+
+
+
+  <div class="element <%=saint_color%> <%=disc_filters%>"
+    data-symbol="<%=saint.id%>" style="cursor:hand; cursor:pointer;">
+    <%=saint_insignia%><br/>
+    <h3 class="symbol"><%=saint.symbol%></h3>
+    <br/>
+    <p class="name"><%=saint_name%></p>
+  </div>
+
+
+
+
+

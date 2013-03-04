@@ -2,22 +2,26 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
 
+# Core libs
 gem 'pg'
 gem 'json'
 gem 'jquery-rails'
 gem 'newrelic_rpm' # monitoring
 gem 'quiet_assets' # remove asset pipeline requests
-gem 'flickraw-cached' # flickr client
-gem 'dalli' # memcached client
-gem 'memcachier' # for memcachier add-on in heroku environment
 gem 'bson'
 gem 'bson_ext'
 gem 'kaminari' # pagination
 gem 'nokogiri' # xml parsing
-gem 'airbrake'
-gem 'tire'  # elastic search integration
 gem 'yajl-ruby'
+
+# Logging and reporting
+gem 'airbrake'
 gem 'gabba'
+
+# 3rd party data source connectors
+gem 'tire'  # elastic search integration
+gem 'flickraw-cached' # flickr client
+gem 'dalli' # memcached client
 
 # Auth plugins
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -33,7 +37,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-#// include debug only for development 
+# Debugging: include debug only for development 
 group :development do
   gem 'pry'
   gem 'pry-nav'
