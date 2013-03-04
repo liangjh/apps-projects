@@ -21,6 +21,7 @@ gem 'gabba'
 # 3rd party data source connectors
 gem 'tire'  # elastic search integration
 gem 'flickraw-cached' # flickr client
+gem 'memcachier'  # to use memcachier (in heroku env)
 gem 'dalli' # memcached client
 
 # Auth plugins
