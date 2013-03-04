@@ -84,7 +84,7 @@ class ExploreController < ApplicationController
   #  Return a limited sample of saints as default, if no search parameters passed
   #  Only the first (x) results are returned
   def default_saints
-    Saint.first(40)
+    Saint.all_published.first(40)
   end
 
 
