@@ -46,6 +46,12 @@ class Search::SaintResult
     @result.nil? ? 0 : @result.length
   end
 
+  def results_mapped
+    result_map = @result.inject({}) do |accum_hash, element|
+      accum_hash[element.id.to_i] = element; accum_hash
+    end
+    result_map
+  end
 
   ##
   #  Return the saint ids in the results
@@ -61,11 +67,23 @@ class Search::SaintResult
   end
 
   ##
-  #  Returns saints in the exact order
+  #  Returns saint objects, with attached results from search
+  #  in the exact order of the search results (ie by relevance)
   def results_saints
+
+    #  All mapped results
+    results_map = results_mapped
+    #  Retrieve saint object for each result
+    #  Also, attach the attributes and the saint name from the search results
     saints_map = ::Saint.where(:id => results_saint_ids).all.inject({}) do |accum_map, saint|
-      accum_map[saint.id] = saint; accum_map
+      saint.attach_property(:name, results_map[saint.id].name)
+      saint.attach_property(:attributes, results_map[saint.id].attribs)
+      accum_map[saint.id] = saint
+      accum_map
     end
+
+    #  Put into order of search.   The search returns things by relevance, whereas a query does not
+    #  We enforce the search's notion of relevance in in the code block below
     saint_list = []
     results_saint_ids.each do |saint_id|
       saint_list << saints_map[saint_id.to_i]

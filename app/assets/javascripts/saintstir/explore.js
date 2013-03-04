@@ -18,8 +18,8 @@ ExploreApp.prototype.init = function() {
   this.initContainer();
   this.initDropdowns();
   this.bindFilters();
-  this.bindPopovers();
-  this.bindSaintClick();
+  // this.bindPopovers();
+  // this.bindSaintClick();
 }
 
 // This is for initializing ONLY the saint insignia boxes
@@ -88,7 +88,7 @@ ExploreApp.prototype.bindFilters = function() {
     }
   });
 }
-
+/*
 ExploreApp.prototype.bindPopovers = function() {
   $('#isotope_content .element').mouseenter(function() {
     var currElem = $(this);
@@ -128,6 +128,7 @@ ExploreApp.prototype.bindSaintClick = function() {
     window.location = '/saints/' + $(this).attr('data-symbol');
   });
 }
+*/
 
 
 
