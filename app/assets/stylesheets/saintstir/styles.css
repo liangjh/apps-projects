@@ -46,7 +46,7 @@
 }
 
 /**** disabling Isotope CSS3 transitions ****/
-
+/*
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
 .isotope .isotope-item.no-transition {
@@ -56,7 +56,7 @@
        -o-transition-duration: 0s;
           transition-duration: 0s;
 }
-
+*/
 
 /*
  *  ---- SAINTSTIR CUSTOM STYLES ----

@@ -12,8 +12,11 @@
 //= require twitter/bootstrap.min
 //= require fancybox/jquery.fancybox.pack
 //= require isotope/jquery.isotope.min
+//= require underscore/underscore-min
 //= require saintstir/postings
 //= require saintstir/explore
+//= require saintstir/explore_ss
+//= require saintstir/saint_popover
 //= require saintstir/favorites
 //= require tweet/jquery.tweet
 //= require chosen/chosen.jquery

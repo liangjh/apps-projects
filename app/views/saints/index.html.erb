@@ -52,10 +52,12 @@ cache [CacheConfig::PARTITION_SAINTS_ISOTOPE] do %>
 
   <script>
 
-    //  Initialize the ExploreApp object, which has all bindings / behaviors for this screen
+//  Initialize the ExploreApp object, which has all bindings / behaviors for this screen
     $(document).ready(function() {
-      var eap = new ExploreApp();
-      eap.init();
+      var eapp = new ExploreApp();
+      eapp.init();
+      var popp = new SaintPopoverApp();
+      popp.init();
     });
   </script>
 

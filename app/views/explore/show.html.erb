@@ -1,0 +1,86 @@
+
+<%#
+
+  --- EXPLORE PAGE, SERVER-SIDE CENTRIC ---
+
+  Server-side centric: this version does not load all data upfront - it responds to
+  the filters selected, renders the full view, and then uses isotope to perform the
+  final animation.  Server-side centric view is a step towards a rich client-side API,
+  and allow for adaptive filters to occur.
+
+%>
+
+
+<div class="row">
+
+  <!--// SEARCH FORM -->
+  <div class="span2">
+    <%= form_tag("/explore", :method => "get", :id => "saint_search", :class => "form-search") do %>
+      <%= hidden_field_tag("attributes", @attrib_list.join(','), {:id => "attributes"}) %>
+      <%#= label_tag("q", "Search") %>
+      <%= text_field_tag("q", @q, {:id => "q", :placeholder => "Search", :class => "input-small"}) %>
+    <% end %>
+  </div>
+
+  <!--// BREAD CRUMBS -->
+  <div id="bread_crumbs" class="span8">
+    <% @attrib_list.each do |attrib_code|  %>
+      <a class='btn btn-info' href='#' data-filter='<%=attrib_code%>'>
+        <i class='icon-remove'></i>&nbsp;<%=@attribs_all_map[attrib_code].name%></a>
+    <% end %>
+  </div>
+
+</div>
+
+<div class="row">
+
+  <!--// ALL AVAILABLE FILTERS -->
+  <div id="discrete_filters" class="span2">
+
+    <% @attrib_categories.each do |category|
+          next if (!@attribs_by_category.has_key?(category.code))
+    %>
+      <p>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%>&nbsp;<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <% @attribs_by_category[category.code].each do |attrib| %>
+            <a href="#" class="filter" data-filter="<%=attrib.code%>"><%=attrib.name%>
+            <% if @result_mapped_attribs.has_key?(attrib.code) %>
+              (<%=@result_mapped_attribs[attrib.code]%>)
+            <% end %>
+            </a>
+          <% end %>
+        </ul>
+      </div>
+      </p>
+    <% end %>
+  </div>
+
+  <!--// ALL SAINT TILES -->
+  <div id="isotope_content" class="span10 clickable clearfix">
+    <% @result_saints.each do |saint| %>
+        <%= render :partial => "explore/insignia_mini", :locals => {:saint => saint, :disc_filters => []} %>
+    <% end %>
+  </div>
+
+</div>
+
+<script>
+
+  $(document).ready(function() {
+
+    // Data from server-side
+    var search_q =  '<%=@q%>'
+    var attributes = <%= raw(@attrib_list) %>
+
+    // Initialize screen behaviors
+    var eapp = new ExploreSSApp();
+    eapp.init(search_q, attributes);
+    var popp = new SaintPopoverApp();
+    popp.init();
+  });
+
+</script>
+
+

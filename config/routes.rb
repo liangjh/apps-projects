@@ -35,6 +35,10 @@ Saintstir::Application.routes.draw do
     match "/flag_posting/:id" => "postings#flag"
   end
 
+  # Saint Explorer
+  # Server-side based screen
+  resource :explore, :controller => "explore", :only => [:show]
+
   # Administrative modules / editing pages
   namespace :admin do
     resources :saints
