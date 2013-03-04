@@ -21,7 +21,7 @@ Saintstir::Application.routes.draw do
   match "/sign_out" => "authentications#destroy"
 
   # Core saints functionality
-  resources :saints, :only => [:index, :show, :favorite, :unfavorite, :is_favorite] do
+  resources :saints, :only => [:show, :favorite, :unfavorite, :is_favorite] do
     member do
       get :blurb
       get :is_favorite
@@ -38,6 +38,8 @@ Saintstir::Application.routes.draw do
   # Saint Explorer
   # Server-side based screen
   resource :explore, :controller => "explore", :only => [:show]
+  # Re-route /saints to explore page (which is v2 of saintstir explore)
+  match "/saints" => "explore#show", :via => :get, :as => :saints
 
   # Administrative modules / editing pages
   namespace :admin do
