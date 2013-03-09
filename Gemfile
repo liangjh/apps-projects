@@ -13,7 +13,7 @@ gem 'bson_ext'
 gem 'kaminari' # pagination
 gem 'nokogiri' # xml parsing
 gem 'yajl-ruby'
-gem 'multi_json'
+gem 'multi_json', '~> 1.6.1'
 
 # Logging and reporting
 gem 'airbrake'
