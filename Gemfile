@@ -13,13 +13,14 @@ gem 'bson_ext'
 gem 'kaminari' # pagination
 gem 'nokogiri' # xml parsing
 gem 'yajl-ruby'
+gem 'multi_json'
 
 # Logging and reporting
 gem 'airbrake'
 gem 'gabba'
 
 # 3rd party data source connectors
-gem 'tire'  # elastic search integration
+gem 'tire', :git => 'https://github.com/karmi/tire.git' # from src, since i need non-tagged features
 gem 'flickraw-cached' # flickr client
 gem 'memcachier'  # to use memcachier (in heroku env)
 gem 'dalli' # memcached client
