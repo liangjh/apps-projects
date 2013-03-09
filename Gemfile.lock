@@ -188,7 +188,7 @@ DEPENDENCIES
   dalli
   flickraw-cached
   gabba
-  jquery-rails
+  jquery-rails (~> 1.0.19)
   json
   kaminari
   memcachier
