@@ -5,7 +5,7 @@ gem 'rails', '3.1.3'
 # Core libs
 gem 'pg'
 gem 'json'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 1.0.19'
 gem 'newrelic_rpm' # monitoring
 gem 'quiet_assets' # remove asset pipeline requests
 gem 'bson'
