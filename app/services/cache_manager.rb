@@ -11,9 +11,9 @@ class CacheManager
 
     #// Configuration -- contains a array of CacheConfig objects
     def configure=(config_list)
-      @@config_map = {}
+      @config_map = {}
       config_list.each do |cfg|
-        @@config_map[cfg.cache_partition] = cfg
+        @config_map[cfg.cache_partition] = cfg
       end
     end
 
@@ -54,7 +54,7 @@ class CacheManager
     #//  fragment caching works
     def get_rails_key(partition, key=nil)
       rails_key = ""
-      if (!@@config_map[partition].nil? && @@config_map[partition].is_view?)
+      if (!@config_map[partition].nil? && @config_map[partition].is_view?)
         rails_key += "#{CacheConfig::CACHE_PREFIX_VIEWS}/"
       end
       rails_key += "#{partition}"
@@ -64,7 +64,7 @@ class CacheManager
 
     #//  Flushes all caches configured to be flushed w/ a saint update
     def flush_all_for_saint(saint_id)
-      @@config_map.values.each do |ption|
+      @config_map.values.each do |ption|
         if (ption.saint_trg)
           rk = (ption.sgltn ? get_rails_key(ption.cache_partition, nil) : get_rails_key(ption.cache_partition, saint_id))
           Rails.logger.info("CacheManager :: deleting from cache: #{rk}")

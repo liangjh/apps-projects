@@ -8,9 +8,6 @@ require 'yajl/json_gem'
 #
 module Search::Saint
 
-  # Index name
-  SAINT_INDEX_NAME = :saints
-
   # Restrict returned results to specific fields
   RETURNED_FIELDS = [:id, :name, :symbol, :attribs]
 
@@ -26,14 +23,18 @@ module Search::Saint
       return [] if (question.nil? && attribs.empty?)
 
       # Build search query
-      search_query = Tire.search SAINT_INDEX_NAME do
+      search_query = Tire.search :saints do
 
         # Bool search will allow for adaptive facets
         # and full-text string-based search
         query do
           boolean do
             if (question.present?)
-              must { string "*#{question}*" }
+              must do
+                # The rewrite option will apparently reorder the search results
+                # with the relevant boost values
+                string "*#{question}*", :rewrite => :top_terms_10
+              end
             end
             attribs.each do |attrib|
               must { term :attribs, attrib }
@@ -64,17 +65,29 @@ module Search::Saint
       list_etl = etl(saints)
 
       # Index all records (clear out if its a full refresh)
-      Tire.index SAINT_INDEX_NAME do
+      Tire.index :saints do
         # Delete the existing index only if its a full refresh
         if (clear_index)
           delete
           create
+          mapping :saint, :properties => {
+                :id       => {:type => 'integer', :index => 'not_analyzed'},
+                :symbol   => {:type => 'string',  :boost => 2.0, :index => 'analyzed'},
+                :name     => {:type => 'string',  :boost => 2.0, :index => 'analyzed'},
+                :attribs  => {:type => 'string',  :index => 'analyzed'},
+                :metadata => {:type => 'string',  :index => 'analyzed'}
+              }
+
         end
 
         # Full import of generated list
         import list_etl
+        # list_etl.each do |doc|
+          # store doc
+        # end
         refresh
       end
+
     end
 
     ##
@@ -87,7 +100,7 @@ module Search::Saint
     ##
     # Clears out the search index
     def clear_index
-      Tire.index SAINT_INDEX_NAME do
+      Tire.index :saints do
         delete
         create
         refresh
@@ -110,12 +123,12 @@ module Search::Saint
         # TODO: investigate whether storage of names vs codes makes more sense
         # TODO: storage, boost factors, and index optimization
         search_hash = {
+          :type => :saint,
           :id => saint.id,
           :symbol => saint.symbol,
           :name => saint.get_metadata_value(MetadataKey::NAME),
           :attribs => saint.attribs.map(&:code),
-          :metadata => mv.join(' '),
-          :postings => saint.postings.map(&:content).join(' ')
+          :metadata => mv.join(' ')
         }
 
         # Add constructed object to list
