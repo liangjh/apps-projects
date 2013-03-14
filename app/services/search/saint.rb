@@ -32,8 +32,9 @@ module Search::Saint
             if (question.present?)
               must do
                 # The rewrite option will apparently reorder the search results
-                # with the relevant boost values
-                string "*#{question}*", :rewrite => :top_terms_10
+                # with the relevant boost values - render top 1000 (will render any n, but top 1000 will ensure
+                # that we catch as many results as we can)
+                string "*#{question}*", :rewrite => :top_terms_1000
               end
             end
             attribs.each do |attrib|
