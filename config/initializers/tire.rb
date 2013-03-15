@@ -6,6 +6,7 @@ if Rails.env == "development"
   Tire.configure do
     puts "Tire :: Setting elasticsearch destination to: localhost"
     url "http://localhost:9200"
+    # Tire.configure { logger 'log/elasticsearch.log' }
   end
 else
   Tire.configure do

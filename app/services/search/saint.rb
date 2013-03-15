@@ -23,6 +23,7 @@ module Search::Saint
       return [] if (question.nil? && attribs.empty?)
 
       # Build search query
+      query_start = Time.now
       search_query = Tire.search :saints do
 
         # Bool search will allow for adaptive facets
@@ -38,10 +39,15 @@ module Search::Saint
               end
             end
             attribs.each do |attrib|
-              must { term :attribs, attrib }
+              must do
+                term :attribs, attrib
+              end
             end
           end
         end
+
+        # Return as many matching results as we can - default is only 10
+        size 1000
 
         # Restrict fields returned by search result
         fields RETURNED_FIELDS
@@ -49,11 +55,21 @@ module Search::Saint
         # Attributes (facets)
         # Return available facets
         facet 'current-tags' do
-          terms :attribs
+          terms :attribs, :size => 1000
         end
       end
+
+      #  Run query, get results
       query_results = search_query.results
+
+      #  Log elapsed time of the query
+      query_end = Time.now
+      elapsed_millis = (query_end - query_start) * 1000.0
+      Rails.logger.info "search-performance|query:#{question}|filter-count:#{attribs.length}|time:#{elapsed_millis}"
+
+      #  Construct result wrapper
       Search::SaintResult.new(query_results)
+
     end
 
     ##
