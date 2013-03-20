@@ -14,7 +14,7 @@ class Admin::SaintsController < ApplicationController
   before_filter :load_dimensional_data
 
   #// for pagination
-  SAINTS_PER_PAGE = 10
+  SAINTS_PER_PAGE = 20
 
   # Display list of available saints - we implement pagination here as well
   # GET /saints
