@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rvm --create ruby-1.9.2-p290@saintstir
+rvm --create ruby-1.9.3-p392@saintstir
