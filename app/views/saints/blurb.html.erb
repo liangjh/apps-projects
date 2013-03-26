@@ -24,7 +24,7 @@
       <%# Display insignia badge details %>
       <% insig = SaintInsigniaFilter.get_insignia(@saint) %>
       <% if (!insig.blank?) %>
-        <span class="badge badge-success"><%=insig%>: <%=insig%></span>
+        <span class="badge badge-success"><%=insig%>: <%=SaintInsigniaFilter.get_insignia_description(insig)%></span>
       <% end %>
     </td>
     </tr>
