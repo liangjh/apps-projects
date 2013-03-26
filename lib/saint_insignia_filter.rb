@@ -51,6 +51,12 @@ class SaintInsigniaFilter
       res_insignia
     end
 
+    def get_insignia_description(insig)
+      insig_entries = @insignia_list.select { |curr_insig| curr_insig[1] == insig }
+      insig_entries[0][2] if (insig_entries.present? && insig_entries.length > 0)
+    end
+
+
     ##
     #  Returns color for saint, given saint's attribs
     def get_color(saint)
