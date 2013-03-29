@@ -45,6 +45,11 @@ class Saint < ActiveRecord::Base
     Search::Saint.add_to_index([self]) if publish?
   end
 
+  def canonized?
+    self.get_attribs(AttribCategory::SAINTSTATUS).include?(AttribCategory::SAINTSTATUS_CANONIZED)
+  end
+
+
   ##
   #  Given a meta key code, return the associated metadata_value for this saint
   #  Retrieve map of all values first, then retrieve by key

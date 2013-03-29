@@ -35,6 +35,9 @@ class AttribCategory < ActiveRecord::Base
   PERIODEUROCENTRIC = "periodeurocentric"
 
 
+  SAINTSTATUS_CANONIZED = "Canonized"
+
+
   #//  All categories, keyed by code  {attrib_cat_code => attrib_cat}
   def self.map_attrib_cat_by_code
     self.all.inject({}) { |h,e| h[e.code] = e; h}
