@@ -3,7 +3,7 @@
 
     <!--// Top Navbar (do different things depending on user's logged in status and roles) -->
     <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
+      <div class="navbar-inner" style="height:60px;">
           <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
             <span class="i-bar"></span>
@@ -17,8 +17,7 @@
             </h2>
           </a>
           <div style="padding-top:10px;">
-            <h4>
-            <ul class="nav pull-right">
+            <ul class="nav pull-right topnav-menus">
               <li>
                 <%= link_to "Explore", saints_path %>
               </li>
@@ -60,7 +59,6 @@
                 </li>
               <% end %>
             </ul>
-            </h4>
           </div>
         </div>
       </div>
