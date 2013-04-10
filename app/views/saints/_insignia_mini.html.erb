@@ -9,10 +9,9 @@
 
         <div class="element <%=SaintInsigniaFilter.get_color(saint)%> <%=disc_filters%>"
           data-symbol="<%=saint.id%>" style="cursor:hand; cursor:pointer;">
-          <%=SaintInsigniaFilter.get_insignia(saint)%><br/>
-          <h3 class="symbol"><%=saint.symbol%></h3>
-          <br/>
-          <p class="name"><%=saint.get_metadata_value(MetadataKey::NAME)%></p>
+            <span class="saint-insignia-mini"><%=SaintInsigniaFilter.get_insignia(saint)%><br/><br/>
+            <p><span class="saint-title-mini"><%=saint.symbol%></span></p>
+            <p><span class="saint-subtitle-mini"><%=saint.get_metadata_value(MetadataKey::NAME)%></span></p>
         </div>
 
 

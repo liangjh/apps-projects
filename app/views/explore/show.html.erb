@@ -45,11 +45,11 @@
         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%>&nbsp;<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <% @attribs_by_category[category.code].each do |attrib| %>
-            <a href="#" class="filter" data-filter="<%=attrib.code%>"><%=attrib.name%>
+            <li><a href="#" class="filter" data-filter="<%=attrib.code%>"><%=attrib.name%>
             <% if @result_mapped_attribs.has_key?(attrib.code) %>
               (<%=@result_mapped_attribs[attrib.code]%>)
             <% end %>
-            </a>
+          </a></li>
           <% end %>
         </ul>
       </div>
