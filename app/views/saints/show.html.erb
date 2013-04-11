@@ -3,13 +3,15 @@
 
   <!--// Saint insignia and photo section -->
   <div class="span4">
-    <!--// Saint insignia -->
-    <%= render :partial => 'saints/insignia', :locals => {:saint => @saint} %>
-    <!--// Flickr photoset / reel -->
-    <%= render :partial => 'saints/photoreel', :locals => {:saint => @saint} %>
-    <!--// Submit a correction to inaccurate content -->
-    <br/>
-    <%= render :partial => 'saints/linkables', :locals => {:saint => @saint} %>
+    <div id="insignia-section" data-spy="affix" data-offset-top="90">
+      <!--// Saint insignia -->
+      <%= render :partial => 'saints/insignia', :locals => {:saint => @saint} %>
+      <!--// Flickr photoset / reel -->
+      <%= render :partial => 'saints/photoreel', :locals => {:saint => @saint} %>
+      <!--// Submit a correction to inaccurate content -->
+      <br/>
+      <%= render :partial => 'saints/linkables', :locals => {:saint => @saint} %>
+    </div>
   </div>
 
   <!--// Main content : tabs (attribs, metadata, and commentary, etc) -->
@@ -77,10 +79,14 @@
   // (hopefully twitter bootstrap will come up with something better)
   $(document).ready(function() {
     try {
+      // Tab click init
       url = document.location.href.split('#')
       if (url.length > 1 && url[1].length > 0) {
         clickOnTab(url[1]);
       }
+      // Affixed insignia
+      $('#insignia-section').affix();
+
     }
     catch(err) {
     }
