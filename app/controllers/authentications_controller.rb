@@ -56,7 +56,7 @@ class AuthenticationsController < ApplicationController
       # Set a flash message for the user
       flash_msg =  "You've signed in successfully with your #{AUTH_PROVIDER_NAME_MAP[auth.provider]} account.  "
       flash_msg += "A saintstir account has been created for you, since you are a new user. " if (new_user_created)
-      flash[:notice] = flash_msg
+      flash.now[:notice] = flash_msg
 
     end
 

@@ -28,9 +28,9 @@ cache [CacheConfig::PARTITION_SAINTS_ISOTOPE] do %>
         <p>
         <div class="btn-group">
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%><span class="caret"></span></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu filter-menus">
             <% @attribs_all[category.code].each do |attrib| %>
-              <a href="#" data-filter=".<%=attrib.code%>"><%=attrib.name%></a>
+              <li><a href="#" data-filter=".<%=attrib.code%>"><%=attrib.name%></a></li>
             <% end %>
           </ul>
         </div>

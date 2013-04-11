@@ -32,10 +32,10 @@ SaintPopoverApp.prototype.bindPopovers = function() {
         var _this = this;
         $.get(('/saints/' + saintId + '/blurb'),
               function(data){
-                $('.popover').each(function(i,e) { $(e).popover('hide'); });
+                $('.popover').each(function(i,e) { $(this).popover('hide'); });
                 if (saintId == _this._currSaintId) {
                   currElem.attr('data-content', data);
-                  currElem.popover({content: data, delay: {show: 500, hide: 100}});
+                  currElem.popover({content: data, html: true, trigger: 'hover', delay: {show: 500, hide: 100}});
                   currElem.popover('show');
                 }
               });
@@ -44,7 +44,9 @@ SaintPopoverApp.prototype.bindPopovers = function() {
 
   $('#isotope_content .element').mouseleave(function() {
     this._currSaintId = null;
-    $('.popover').each(function(i,e) { $(e).popover('hide'); });
+    $('.popover').each(function(i,e) {
+        $(this).popover('hide');
+    });
   });
 
 }
