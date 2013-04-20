@@ -37,18 +37,28 @@
         <!--// Section: Quotes -->
         <div class="tab-pane" id="quotes" style="padding:7px;">
           <table class="table table-hover">
-            <% @saint.get_metadata_values(MetadataKey::QUOTES).each do |quote| %>
+            <% quotes = @saint.get_metadata_values(MetadataKey::QUOTES) %>
+            <% quotes.each do |quote| %>
               <tr><td><%=quote%></td></tr>
             <% end %>
+            <tr><td><div class="alert alert-info">
+              Hi!  Is there a quote from this saint that you'd like to add?
+              <%= link_to("Submit an addition or correction", contact_us_path(:purpose => "Correction", :message => "Correction or addition for saint: #{@saint.symbol}")) %>
+            </div></td></tr>
           </table>
         </div>
 
         <!--// Section: Prayers -->
         <div class="tab-pane" id="prayers" style="padding:7px;">
           <table class="table table-hover">
-            <% @saint.get_metadata_values(MetadataKey::NOVENASPRAYERS).each do |pry| %>
-              <tr><td><%=pry%></td></tr>
+            <% prayers = @saint.get_metadata_values(MetadataKey::NOVENASPRAYERS) %>
+            <% prayers.each do |nprayer| %>
+              <tr><td><%=nprayer%></td></tr>
             <% end %>
+            <tr><td><div class="alert alert-info">
+              Hi!  Is there a prayer from this saint that you'd like to add?
+              <%= link_to("Submit an addition or correction", contact_us_path(:purpose => "Correction", :message => "Correction or addition for saint: #{@saint.symbol}")) %>
+            </div></td></tr>
           </table>
         </div>
 
