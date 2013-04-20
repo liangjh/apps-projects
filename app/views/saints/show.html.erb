@@ -36,7 +36,7 @@
 
         <!--// Section: Quotes -->
         <div class="tab-pane" id="quotes" style="padding:7px;">
-          <table class="table">
+          <table class="table table-hover">
             <% @saint.get_metadata_values(MetadataKey::QUOTES).each do |quote| %>
               <tr><td><%=quote%></td></tr>
             <% end %>
@@ -45,7 +45,7 @@
 
         <!--// Section: Prayers -->
         <div class="tab-pane" id="prayers" style="padding:7px;">
-          <table class="table">
+          <table class="table table-hover">
             <% @saint.get_metadata_values(MetadataKey::NOVENASPRAYERS).each do |pry| %>
               <tr><td><%=pry%></td></tr>
             <% end %>
