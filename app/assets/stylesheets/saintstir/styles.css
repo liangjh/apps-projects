@@ -107,6 +107,11 @@ h2 {
   line-height: 1.1em;
 }
 
+h3 {
+  font-size: 20px;
+  line-height: 1.1em;
+}
+
 /* insignia */
 .saint-insignia { font-size: 20px; font-weight: bold; line-height:1.1em;}
 .saint-title { font-size: 42px; font-weight: bold; line-height:1.1em; }
