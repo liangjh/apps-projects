@@ -81,10 +81,11 @@ class ExploreController < ApplicationController
   end
 
   ##
-  #  Return a limited sample of saints as default, if no search parameters passed
-  #  Only the first (x) results are returned
+  #  Return limited results - generate up to x saints randomly
   def default_saints
-    Saint.all_published.first(40)
+    max_id = Saint.maximum("id")
+    rand_id_list = 80.times.map { Random.rand(max_id) }
+    @saints = Saint.where(:id => rand_id_list, :publish => true)
   end
 
 
