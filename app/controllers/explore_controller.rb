@@ -84,7 +84,7 @@ class ExploreController < ApplicationController
   #  Return limited results - generate up to x saints randomly
   def default_saints
     max_id = Saint.maximum("id")
-    rand_id_list = 80.times.map { Random.rand(max_id) }
+    rand_id_list = 60.times.map { Random.rand(max_id) }
     @saints = Saint.where(:id => rand_id_list, :publish => true)
   end
 
