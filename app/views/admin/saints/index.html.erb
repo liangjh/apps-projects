@@ -22,7 +22,12 @@
     meta_suffix = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :suffix)
 %>
   <tr>
-    <td><%= link_to saint.symbol, edit_admin_saint_path(saint) %></td>
+    <td>
+      <%= link_to saint_path(saint.id) do %>
+        <i class="icon-share"></i>
+      <% end %>&nbsp;&nbsp;
+      <%= link_to saint.symbol, edit_admin_saint_path(saint) %>
+    </td>
     <td><%= (meta_name.empty? ? "N/A" : meta_name[0].value) %> <%= (meta_suffix.empty? ? "" : meta_suffix[0].value) %></td>
     <td>
       <% if (saint.publish) %>
