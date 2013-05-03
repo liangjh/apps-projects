@@ -35,6 +35,7 @@ SaintPopoverApp.prototype.bindPopovers = function() {
                 $('.popover').each(function(i,e) { $(this).popover('hide'); });
                 if (saintId == _this._currSaintId) {
                   currElem.attr('data-content', data);
+                  currElem.attr('data-container', 'body');
                   currElem.popover({content: data, html: true, trigger: 'hover', delay: {show: 500, hide: 100}});
                   currElem.popover('show');
                 }
