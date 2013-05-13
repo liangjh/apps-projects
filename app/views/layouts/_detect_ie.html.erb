@@ -1,0 +1,39 @@
+<%#
+    WE DISLIKE INTERNET EXPLORER
+    Saintstir.com does not render properly in IE.
+    If the browser is IE, pop up a modal that warns that the site won't work
+%>
+
+
+<div id="ie-warning" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Browser Not Supported</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+    Hi there!  Glad you're here to take a peek.  Please note that saintstir.com currently does not support Internet Explorer.
+    To ensure that you have a great browsing experience on saintstir.com, please follow the links to download any of our supported browsers.<br/>
+    <a href ="https://www.google.com/intl/en/chrome/browser/">Chrome</a>,
+    <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>,
+    <a href="http://www.apple.com/safari/">Safari</a>, or
+    <a href="http://www.opera.com">Opera</a>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" aria-hidden="true" class="btn">Close</a>
+  </div>
+</div>
+
+
+<script>
+// Detect browser (ie) using jquery
+$(document).ready(function() {
+  if ($.browser.msie == true) {
+    $('#ie-warning').modal('show');
+  }
+});
+</script>
+
+
+
