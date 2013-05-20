@@ -69,7 +69,11 @@
     saints of the Church, our extended family, to bring hope and inspire virtue within our family on earth.
     </p>
 
-    <p><%= link_to "Explore Saintstir", saints_path %></p>
+    <p>
+      <%= link_to saints_path do %>
+        <button class="btn btn-info">Start Exploring</button>
+      <% end %>
+    </p>
 
     <br/><br/>
     <p>How Saintstir got started: <%= link_to "About", statics_about_path %></p>
