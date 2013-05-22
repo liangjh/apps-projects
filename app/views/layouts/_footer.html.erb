@@ -8,11 +8,19 @@
             <%= link_to "Contact", contact_us_path %> &nbsp;&nbsp;&nbsp;&nbsp;
             <%= link_to "Volunteer", statics_volunteer_path %>   &nbsp;&nbsp;&nbsp;&nbsp;
             <%= link_to "Developers", statics_developers_path%>   &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="http://twitter.com/saintstir">@Saintstir</a>
+            <a href="http://twitter.com/saintstir">@Saintstir</a>  &nbsp;&nbsp;&nbsp;&nbsp;
+            <a rel="license" href="<%=AppLicensing::CC_LICENSE_LANG_URL%>">
+              <img alt="Creative Commons License" style="border-width:0" src="<%=AppLicensing::CC_LICENSE_ICON_URL%>" /></a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <br/><br/><br/><br/>
           </div>
           <div class="span2">
             &copy; Saintstir <%=Time.now.to_date.strftime("%Y")%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span12">
+
           </div>
         </div>
       </div>
