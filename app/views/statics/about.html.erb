@@ -5,14 +5,14 @@
 
     <h2>About Saintstir &copy;</h2><br/>
 
-    <p>Saintstir is a search engine that makes searching for, learning about and venerating the
+    <p>Saintstir is a search engine that makes searching for and learning about the
     saints of the Catholic Church fun! Through an easy-to-use explore and search, Saintstir will
     help you to discover facts about your favorite saints, discover saints that you've never
     known (but wish you had), and share your personal stories and prayers with friends.</p>
 
     <p>Most importantly, you'll learn why each saint is relevant for our modern world, and how our
-    saints can teach, guide, and assist us through our journey on Earth.  Saintstir provides a taxonomy
-    on the saints by factoring in life experiences, graces, along with biographical details such as
+    saints can teach, guide, and assist us through our journey on Earth.  Saintstir provides an intuitive
+    taxonomy on the saints by factoring in life experiences, graces, along with biographical details such as
     historical time periods, to make the saints more accessible to everyone.  We believe that its a saint's
     virtues and personal stories that capture the essence of who they are - and that lies at the center
     of the saints featured on Saintstir.</p>
@@ -27,13 +27,24 @@
     an app developer, our search and filtering API is available to the public.
     See the <a href="/statics/developers">Developer's Guide</a></p>
 
-    <p>We sincerely hope that Saintstir will help you to discover that the saints, our extended family in heaven, are
+    <p>The concept for saintstir began a couple of years ago when I was trying to find a patron saint
+    for my Catholic confirmation. With so many books in long prose form, it was difficult to find a saint
+    with virtues that I wanted to emulate or particular life experiences that I admired. I finally did find
+    a saint but it was a tough search. If only there were a taxonomy!</p>
+
+    <p>We sincerely hope that Saintstir will help you to discover that the saints, our family in heaven, are
     indeed alive and yearning to help us to reach the beatific vision that God will us all to share in.</p>
 
     <br/>
 
     <p>Sincerely, </p>
     <p>Jonathan, Julia, and the Saintstir &copy; Team</p>
+
+    <br/>
+    <p>
+    <i>Note: all data on Saintstir is licensed under the <%=AppLicensing::CC_LICENSE_BLURB%>.  For more details on
+      how you can utilize and distribute data on Saintstir, <%= link_to "Click here", AppLicensing::CC_LICENSE_LANG_URL %></i>
+    </p>
 
 
   </div>
@@ -49,7 +60,7 @@
     // Initialize twitter js plugin
     $('.tweet').tweet({
       avatar_size: 32,
-      count: 8,
+      count: 6,
       username: ['saintstir'],
       loading_text: "loading tweets..."
     });

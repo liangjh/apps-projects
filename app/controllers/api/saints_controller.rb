@@ -54,7 +54,7 @@ class Api::SaintsController < Api::ApiController
       :attribute_hierarchy => render_attrib_hierarchy(attrib_categories, attribs_all, search_res.attrib_map, true),
       :results => rendered_results
     }
-    render :json => res
+    render_response(res)
   end
 
   ##
@@ -69,7 +69,7 @@ class Api::SaintsController < Api::ApiController
 
     # Render response in JSON
     res = {:attribute_hierarchy => render_attrib_hierarchy(attrib_categories, attribs_all) }
-    render :json => res
+    render_response(res)
   end
 
 
@@ -86,7 +86,7 @@ class Api::SaintsController < Api::ApiController
 
     # Render results in json
     res = {:metadata => meta_list}
-    render :json => res
+    render_response(res)
   end
 
 
@@ -104,7 +104,7 @@ class Api::SaintsController < Api::ApiController
 
     # Construct saints rendering
     res = {:results => render_saints(saints)}
-    render :json => res
+    render_response(res)
   end
 
 
