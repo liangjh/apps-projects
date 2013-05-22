@@ -43,6 +43,24 @@ class Api::ApiController < ActionController::Base
                      "message" => message}
   end
 
+  ##
+  # This is the API wrapper around the render method.
+  # This will ensure that the license is added to any downstream api calls
+  def render_response(resp)
+    #  Add the licensing parameters to this
+    resp[:license] = license_details
+    render :json => resp
+  end
+
+  ##
+  #  Generate rendering for the license
+  def license_details
+    {
+      :description => AppLicensing::CC_LICENSE_BLURB,
+      :link => AppLicensing::CC_LICENSE_LANG_URL
+    }
+  end
+
 
   ##
   #  Logs this API request to our chosen usage API gateway
