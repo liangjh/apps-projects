@@ -43,10 +43,11 @@ class TousController < ApplicationController
     else
       # Response keyed: fork to specific page
       if (terms_accept == 'accept')
-        @api_user.update_attributes(:accepted_tou => true, :accepted_tou_ts => Time.zone.now)
+        @api_user.accept_tou
+        SaintMailer.api_welcome(@api_user).deliver
         render :template => 'tous/accept'
       else
-        @api_user.update_attributes(:accepted_tou => false, :accepted_tou_ts => Time.zone.now)
+        @api_user.reject_tou
         render :template => 'tous/reject'
       end
     end
