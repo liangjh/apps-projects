@@ -37,7 +37,7 @@ Saintstir::Application.routes.draw do
 
   # Saint Explorer
   # Server-side based screen
-  resource :explore, :controller => "explore", :only => [:show]
+  resource :explore,:controller => "explore", :only => [:show]
   # Re-route /saints to explore page (which is v2 of saintstir explore)
   match "/saints" => "explore#show", :via => :get, :as => :saints
 
@@ -48,6 +48,10 @@ Saintstir::Application.routes.draw do
   end
 
   ## Developer / External Integrations
+
+  # Terms of use acceptance
+  # Note that :id in the resource isn't actually the id of the record, but will be the api key
+  resources :tous, :only => [:show, :update]
 
   # Embeddable Tiles
   match "/saints/embed_featured" => "saints#embed_featured", :via => :get

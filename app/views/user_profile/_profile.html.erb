@@ -13,14 +13,13 @@
   <label for="user_anonymous">
     <%= formobj.check_box :anonymous %> <b>Anonymous</b>: check to remain anonymous on the site. Your username will by default not be displayed on the site (you can always change your mind of course)
   </label>
-
-  <br/>
+  <br
   <b>A bit more about you...</b><br/>
   <i>(None of these below are required, but we'd love to know a bit about you and where you're from)</i>
   <br/><br/>
 
   <%#= formobj.label :age_group %>
-  <%#= select :user, :age_group, age_group_options, {:prompt => "Age Group"} %>
+  <%#= select :user, :age_group, ns, {:prompt => "Age Group"} %>
 
   <%= formobj.label :gender %>
   <%= select :user, :gender, gender_options %>

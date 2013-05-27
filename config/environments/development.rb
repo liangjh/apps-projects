@@ -16,8 +16,6 @@ Saintstir::Application.configure do
   config.action_controller.perform_caching = true
   config.cache_store = :dalli_store
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -25,15 +23,18 @@ Saintstir::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
+
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
   ActionMailer::Base.smtp_settings = {
     :port           => 587,
     :address        => 'smtp.mailgun.org',
     :user_name      => 'postmaster@app2912649.mailgun.org',
     :password       => '73c3j-42aow9',
-    :domain         => 'www.saintstir.com',
+    :domain         => 'saintstir-staging.herokuapp.com',
     :authentication => :plain
   }
-  ActionMailer::Base.delivery_method = :smtp
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Do not compress assets
