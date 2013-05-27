@@ -1,0 +1,20 @@
+
+<p>Dear <%=(@api_user.name || @api_user.email)%>,</p>
+
+<p>
+Thanks for accepting the Saintstir terms of use.  Below are your API credentials.
+Please store your credentials in a safe location.
+</p>
+
+<p>
+<b>
+API Key: <%=@api_user.key%><br/>
+API Secret: <%=@api_user.secret%>
+</b>
+</p>
+
+<p><i>Saintstir is licensed under the <%=link_to AppLicensing::CC_LICENSE_BLURB, AppLicensing::CC_LICENSE_LANG_URL %></i></p>
+
+<p>God bless,</p>
+<p>The Saintstir Team</p>
+

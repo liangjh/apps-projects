@@ -21,8 +21,26 @@ class Api::ApiController < ActionController::Base
     end
 
     # No user found: render a 401 and an error json
-    generate_auth_error_response if (@auth_user.nil?)
+    if (@auth_user.nil?)
+      generate_auth_error_response
+      return
+    end
 
+    # Check whether api user has been enabled
+    if (!@auth_user.accepted_tou)
+      generate_disabled_tou_response
+      return
+    end
+
+  end
+
+  ##
+  #  Account has either been disabled, or user has not accepted TOU
+  def generate_disabled_tou_response
+    render :status => 500,
+           :json => {"success" => "false",
+                     "errors" => ["tou_unaccepted"],
+                     "message" => "Terms of use not accepted"}
   end
 
   ##

@@ -1,0 +1,38 @@
+<div class="span10">
+
+  <h2>Saintstir API Terms of Use</h2>
+
+  <h4>Application Name: <b><%=@api_user.app_name%></b></h4><br/>
+
+  <p>Hi there!  Thanks for your interest in the Saintstir API!  </p>
+
+  <p>We want to be as transparent as possible about acceptable uses of the search API.  In order to
+  gain access to the API, please read and understand our general terms of use below.  Once you finish
+  reading our terms of use, accept (or reject) the terms of use using the buttons below.
+  </p>
+
+  <p>You may freely utilize the API to write applications and functionality and the full taxonomy on Saintstir.
+  However, the Saintstir taxonomy and classification system belongs to Saintstir, and attribution must be provided
+  in your applications.</p>
+
+  <p>We'll try our best to accomodate your usage of the API, but we do reserve the right to revoke your access to
+  the API at any point in time for any reason, without recourse. </p>
+
+  <p>Our data and taxonomy is licensed under Creative Commons.  The specifics of the license version that we are using
+  are below.  Please do read through the creative commons license summary below </p>
+
+  <p>As always, feel free to contact us if you have any questions.</p>
+
+  <br/><br/>
+  <iframe src="<%=AppLicensing::CC_LICENSE_LANG_URL%>" width="800" height="600"></iframe>
+  <br/><br/><br/>
+
+  <p>Do you accept the Saintstir terms of use?</p><br/>
+
+  <%# Accept or reject the terms of use %>
+  <%= form_tag(tou_path(@api_user.key), {:method => :put}) do %>
+    <%= button_tag "Accept", :class => "btn-large btn-success", :name => "terms_accept", :value => "accept" %>&nbsp;&nbsp;&nbsp;&nbsp;
+    <%= button_tag "Reject", :class => "btn-large btn-danger",  :name =>"terms_accept", :value => "reject"  %>
+  <% end %>
+
+</div>
