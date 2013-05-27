@@ -13,6 +13,10 @@ API Secret: <%=@api_user.secret%>
 </b>
 </p>
 
+<p>Below are the terms of use you've agreed to</p>
+
+<%= render :partial => 'tous/tou' %>
+
 <p><i>Saintstir is licensed under the <%=link_to AppLicensing::CC_LICENSE_BLURB, AppLicensing::CC_LICENSE_LANG_URL %></i></p>
 
 <p>God bless,</p>
