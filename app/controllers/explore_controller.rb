@@ -56,6 +56,7 @@ class ExploreController < ApplicationController
     Rails.logger.info("search|q=#{@q}|atttributes=#{@attrib_list}")
     search_res = Search::Saint.search(@q, @attrib_list)
     @result_saints = search_res.results_saints
+    render :layout => 'clean', :template => 'explore/embed_search'
   end
 
   ##
