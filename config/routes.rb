@@ -57,6 +57,9 @@ Saintstir::Application.routes.draw do
   match "/saints/embed_featured" => "saints#embed_featured", :via => :get
   match "/saints/:symbol/embed" => "saints#embed", :as => :embed_saint, :via => :get
 
+  # Embeddable Search
+  match "/saints/embed_search" => "explore#embed_search", :via => :get
+
   # Saintstir API
   namespace :api do
     match "/saints/search" => "saints#search", :via => :get

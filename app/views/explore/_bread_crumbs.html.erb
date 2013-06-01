@@ -1,0 +1,13 @@
+
+<%#
+  Search Path Breadcrumbs Rendering
+  Expected Parameters
+    1. attrib_list - list of search selected attributes
+    2. attribs_all_map - all attributes, mapped by attrib code (to render name)
+%>
+
+
+    <% attrib_list.each do |attrib_code|  %>
+      <a class='btn btn-info' href='#' data-filter='<%=attrib_code%>'>
+        <i class='icon-remove'></i>&nbsp;<%=attribs_all_map[attrib_code].name%></a>
+    <% end %>

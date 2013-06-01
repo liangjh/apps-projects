@@ -49,6 +49,16 @@ class ExploreController < ApplicationController
   end
 
   ##
+  #  Embed the search results
+  def embed_search
+    @q = sync_param_q
+    @attrib_list = sync_param_attributes
+    Rails.logger.info("search|q=#{@q}|atttributes=#{@attrib_list}")
+    search_res = Search::Saint.search(@q, @attrib_list)
+    @result_saints = search_res.results_saints
+  end
+
+  ##
   # Default results, if search is invalid
   def default_results(error_message = nil)
 
