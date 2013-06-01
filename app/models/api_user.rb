@@ -21,7 +21,7 @@ class ApiUser < ActiveRecord::Base
   ##
   #  Create user, including a randomly generated UUID for key and secret.
   #  Send email invitation to user
-  def self.api_invitation(name, app_name, email)
+  def self.api_invitation(name, app_name, email, send_email = true)
 
     if (ApiUser.find_by_app_name(app_name))
       raise Exception.new("Registration with app name already created")
@@ -32,7 +32,7 @@ class ApiUser < ActiveRecord::Base
     random_secret = UUIDTools::UUID.random_create.hexdigest[0..12]
     api_user = ApiUser.create(:name => name, :app_name => app_name, :email => email, :key => random_key, :secret => random_secret)
     #  Send TOU invitation to api user
-    SaintMailer.api_invite_tou(api_user).deliver
+    SaintMailer.api_invite_tou(api_user).deliver if (send_email)
 
   end
 
