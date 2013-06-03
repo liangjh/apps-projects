@@ -9,21 +9,22 @@
   <!--// Navigation -->
   <div class="span2">
 
+    <div id="toc-section" data-spy="affix" data-offset-top="90">
+      <h3><a href="#embed">Embeds</a></h3>
+      &nbsp;&nbsp;Saint Tiles<br/>
+      &nbsp;&nbsp;Saint of the Day Tile<br/>
+      &nbsp;&nbsp;Search Tiles<br/>
 
-    <h3><a href="#embed">Embeds</a></h3>
-    &nbsp;&nbsp;Saint Tiles<br/>
-    &nbsp;&nbsp;Saint of the Day Tile<br/>
-    &nbsp;&nbsp;Search Tiles<br/>
+      <br/><br/>
 
-    <br/><br/>
+      <h3><a href="#search_api">Search API</a></h3>
+      &nbsp;&nbsp;Authentication<br/>
+      &nbsp;&nbsp;Attribute Definition<br/>
+      &nbsp;&nbsp;Metadata Definition<br/>
+      &nbsp;&nbsp;Saint Details<br/>
+      &nbsp;&nbsp;Saint Search<br/>
 
-    <h3><a href="#search_api">Search API</a></h3>
-    &nbsp;&nbsp;Authentication<br/>
-    &nbsp;&nbsp;Attribute Definition<br/>
-    &nbsp;&nbsp;Metadata Definition<br/>
-    &nbsp;&nbsp;Saint Details<br/>
-    &nbsp;&nbsp;Saint Search<br/>
-
+    </div>
   </div>
 
   <!--// API Specification  -->
@@ -731,4 +732,8 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attribu
 
 </div>
 
-
+<script>
+$(document).ready(function(){
+    $('#toc-section').affix();
+  });
+</script>
