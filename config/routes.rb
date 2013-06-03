@@ -37,9 +37,10 @@ Saintstir::Application.routes.draw do
 
   # Saint Explorer
   # Server-side based screen
-  resource :explore,:controller => "explore", :only => [:show]
+  resource :explore,:controller => "explore", :only => [:show, :embed_search]
   # Re-route /saints to explore page (which is v2 of saintstir explore)
   match "/saints" => "explore#show", :via => :get, :as => :saints
+  match "/explore/embed_search" => "explore#embed_search", :via => :get
 
   # Administrative modules / editing pages
   namespace :admin do
@@ -56,6 +57,9 @@ Saintstir::Application.routes.draw do
   # Embeddable Tiles
   match "/saints/embed_featured" => "saints#embed_featured", :via => :get
   match "/saints/:symbol/embed" => "saints#embed", :as => :embed_saint, :via => :get
+
+  # Embeddable Search
+  match "/saints/embed_search" => "explore#embed_search", :via => :get
 
   # Saintstir API
   namespace :api do

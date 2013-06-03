@@ -49,6 +49,24 @@ class ExploreController < ApplicationController
   end
 
   ##
+  #  Embed the search results
+  def embed_search
+    @q = sync_param_q
+    @attrib_list = sync_param_attributes
+    Rails.logger.info("search|q=#{@q}|atttributes=#{@attrib_list}")
+    search_res = Search::Saint.search(@q, @attrib_list)
+    @result_saints = search_res.results_saints
+    render :layout => 'clean', :template => 'explore/embed_search'
+  end
+
+  ##
+  #  This constructs the URI that will call embeddable search w/ the current search parameters
+  def embeddable_search_path
+    "#{explore_embed_search_path}?q=#{params[:q]}&attributes=#{params[:attributes]}"
+  end
+  helper_method :embeddable_search_path
+
+  ##
   # Default results, if search is invalid
   def default_results(error_message = nil)
 
@@ -84,7 +102,7 @@ class ExploreController < ApplicationController
   #  Return limited results - generate up to x saints randomly
   def default_saints
     max_id = Saint.maximum("id")
-    rand_id_list = 60.times.map { Random.rand(max_id) }
+    rand_id_list = 40.times.map { Random.rand(max_id) }
     @saints = Saint.where(:id => rand_id_list, :publish => true)
   end
 

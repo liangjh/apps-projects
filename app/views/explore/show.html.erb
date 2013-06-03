@@ -24,10 +24,7 @@
 
   <!--// BREAD CRUMBS -->
   <div id="bread_crumbs" class="span8">
-    <% @attrib_list.each do |attrib_code|  %>
-      <a class='btn btn-info' href='#' data-filter='<%=attrib_code%>'>
-        <i class='icon-remove'></i>&nbsp;<%=@attribs_all_map[attrib_code].name%></a>
-    <% end %>
+    <%= render :partial => "explore/bread_crumbs", :locals => {:attrib_list => @attrib_list, :attribs_all_map => @attribs_all_map} %>
   </div>
 
 </div>
@@ -36,32 +33,13 @@
 
   <!--// ALL AVAILABLE FILTERS -->
   <div id="discrete_filters" class="span2">
-
-    <% @attrib_categories.each do |category|
-          next if (!@attribs_by_category.has_key?(category.code))
-    %>
-      <p>
-      <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%>&nbsp;<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <% @attribs_by_category[category.code].each do |attrib| %>
-            <li><a href="#" class="filter" data-filter="<%=attrib.code%>"><%=attrib.name%>
-            <% if @result_mapped_attribs.has_key?(attrib.code) %>
-              (<%=@result_mapped_attribs[attrib.code]%>)
-            <% end %>
-          </a></li>
-          <% end %>
-        </ul>
-      </div>
-      </p>
-    <% end %>
+    <%= render :partial => "explore/search_filters",
+      :locals => {:attrib_categories => @attrib_categories, :attribs_by_category => @attribs_by_category, :result_mapped_attribs => @result_mapped_attribs} %>
   </div>
 
   <!--// ALL SAINT TILES -->
   <div id="isotope_content" class="span10 clickable clearfix">
-    <% @result_saints.each do |saint| %>
-        <%= render :partial => "explore/insignia_mini", :locals => {:saint => saint, :disc_filters => []} %>
-    <% end %>
+    <%= render :partial => "explore/search_tiles", :locals => {:result_saints => @result_saints} %>
   </div>
 
 </div>
