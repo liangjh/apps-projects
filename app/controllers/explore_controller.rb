@@ -60,6 +60,13 @@ class ExploreController < ApplicationController
   end
 
   ##
+  #  This constructs the URI that will call embeddable search w/ the current search parameters
+  def embeddable_search_path
+    "#{explore_embed_search_path}?q=#{params[:q]}&attributes=#{params[:attributes]}"
+  end
+  helper_method :embeddable_search_path
+
+  ##
   # Default results, if search is invalid
   def default_results(error_message = nil)
 
