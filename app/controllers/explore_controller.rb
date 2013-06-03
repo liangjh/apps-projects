@@ -79,7 +79,7 @@ class ExploreController < ApplicationController
     @attribs_by_category = AttribCategory.map_attrib_cat_content(true)
 
     flash.now[:error] = error_message if (error_message.present?)
-    flash.now[:notice] = "Hi!  Only a limited set of results are returned.  To perform a search on all of our saints, enter a valid search or use any of the filters above."
+    flash.now[:notice] = "Hi!  Only a limited set of results are returned.  To perform a search on all of our saints, enter a valid search or use any of the filters below."
     render :action => "show"
 
   end
