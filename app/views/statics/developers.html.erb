@@ -9,43 +9,46 @@
   <!--// Navigation -->
   <div class="span2">
 
+    <div id="toc-section" data-spy="affix" data-offset-top="90">
+      <h3><a href="#embed">Embeds</a></h3>
+      &nbsp;&nbsp;Saint Tiles<br/>
+      &nbsp;&nbsp;Saint of the Day Tile<br/>
+      &nbsp;&nbsp;Search Tiles<br/>
 
-    <h3><a href="#embed">Embeds</a></h3><br/>
-    &nbsp;&nbsp;Saint Tiles<br/>
-    &nbsp;&nbsp;Saint of the Day Tile
+      <br/><br/>
 
-    <br/><br/><br/>
+      <h3><a href="#search_api">Search API</a></h3>
+      &nbsp;&nbsp;Authentication<br/>
+      &nbsp;&nbsp;Attribute Definition<br/>
+      &nbsp;&nbsp;Metadata Definition<br/>
+      &nbsp;&nbsp;Saint Details<br/>
+      &nbsp;&nbsp;Saint Search<br/>
 
-
-    <h3><a href="#search_api">Search API</a></h3><br/>
-    &nbsp;&nbsp;Authentication<br/>
-    &nbsp;&nbsp;Attribute Definition<br/>
-    &nbsp;&nbsp;Metadata Definition<br/>
-    &nbsp;&nbsp;Saint Details<br/>
-    &nbsp;&nbsp;Saint Search<br/>
-
+    </div>
   </div>
 
   <!--// API Specification  -->
   <div class="span10">
 
-    <h2>Developer's Guide</h2><br/>
+    <h1>Developer's Guide</h1><br/>
 
-    <p>Saintstir is the world's first database that exposes a taxonomy for the saints of the Catholic Church.
+    <p>Saintstir is the world's first online taxonomy of the saints of the Catholic Church.
     Now the site's content: attribute filtering, full text search capabilities, and our extensive research
     is available to you.</p>
 
     <p>Integrating saintstir on to your website, blog, or app is easy.  Embedding profile tiles on to your site
-    is as simple as copying / pasting HTML code.  There is also an extensive JSON over HTTP API for application
+    is as simple as copying / pasting HTML code.  We also have an extensive API (json over http) for application
     developers.</p>
 
     <a name="embed">&nbsp;&nbsp;</a>
-    <h2>Embeds</h2><br/>
+    <h1>Embeds</h1><br/>
 
-    <p>Saint profile tiles are easy to embed on your website.  There are two embeddable objects available on saintstir.com:
-    (1) the saint profile tile, and (2) the saint of the day tile.  HTML snippets are provided for both, and are also
-    available on each saint's profile page. </p>
+    <p>Saint profile tiles are easy to embed on your website.  There are three main embeddable objects available on saintstir.com:
+    The saint profile tile, the saint of the day tile, and the search tile.  Code to embed each tile is readily available on both the
+    saint profile page as well as the main explore page.  Just click on the share icon button <i class="icon-share"></i> and the
+    embeddable code will be displayed.</p>
 
+    <br/>
     <h3>Saint Tiles</h3><br/>
 
     <div class="row">
@@ -61,7 +64,7 @@ width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt
 </code>
     </div>
     <div class="span6">
-    <iframe src="http://www.saintstir.com/saints/IsiSev/embed" name="IsiSev"
+    <iframe src="/saints/IsiSev/embed" name="IsiSev"
       width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"></iframe>
     </div>
     </div>
@@ -78,9 +81,25 @@ width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt
 </pre>
 </code>
 
+    <h3>Search Tile</h3><br/>
+
+    <p>The search tile allows you to embed any searches that you've performed on the saintstir website into your
+    own.  After a series of search / filters, click on the <i class="icon-share"></i> icon button next to your search filters,
+    which will give you iframe code that can be embedded on any website.  Below is an example of a code snippet and a sample search result</p>
+
+<code>
+<pre class="pre-scrollable">
+&lt;iframe src="http://www.saintstir.com/explore/embed_search?q=&amp;attributes=century_3rd,periodeurocentric_earlychurch"
+width="800" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;;&lt;/iframe&gt;
+</pre>
+</code>
+
+<img src="/assets/earlychurch_3rdcentury.png"></img>
+
+
 <br/>
     <a name="search_api">&nbsp;&nbsp;</a>
-    <h2>Search API</h2><br/>
+    <h1>Search API</h1><br/>
 
     <p>Saintstir.com exposes a search API for app creators who want to build search and filtering tools against
     the Saintstir taxonomy and search platform.  The API is all HTTP-based, with JSON results. We are also actively
@@ -713,4 +732,8 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attribu
 
 </div>
 
-
+<script>
+$(document).ready(function(){
+    $('#toc-section').affix();
+  });
+</script>

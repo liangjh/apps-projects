@@ -1,0 +1,13 @@
+
+<!--// SAINT TILES -->
+<div id ="isotope_content" class="span10 clickable clearfix">
+  <%= render :partial => "explore/search_tiles", :locals => {:result_saints => @result_saints} %>
+</div>
+
+<script>
+$(document).ready(function() {
+    var popp = new SaintPopoverApp();
+    popp.init();
+  });
+</script>
+

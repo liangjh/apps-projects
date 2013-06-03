@@ -1,0 +1,13 @@
+
+<%#
+  Search Results Rendering
+  This renders all tiles that have been returned in a search
+  Expected Parameters:
+    1. result_saints - list of saints (SearchResult array) that matches the current search criteria
+%>
+
+  <% result_saints.each do |saint| %>
+    <%= render :partial => "explore/insignia_mini", :locals => {:saint => saint, :disc_filters => []} %>
+  <% end %>
+
+

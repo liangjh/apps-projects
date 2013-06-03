@@ -1,0 +1,54 @@
+
+<%#
+  Search Path Breadcrumbs Rendering
+  Expected Parameters
+    1. attrib_list - list of search selected attributes
+    2. attribs_all_map - all attributes, mapped by attrib code (to render name)
+%>
+
+
+<%# Render Embeddable (only if there is currently a search) %>
+
+<% if (attrib_list.present?) %>
+
+<span class="btn" style="padding:5px;" id="share" data-toggle="modal" data-target="#share-modal">
+  <i class="icon-share"></i>
+</span>
+
+  <div id="share-modal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Share or Embed on Website</h3>
+    </div>
+    <div class="modal-body">
+      To embed this search on your website or blog:<br/></br>
+<pre>
+&lt;iframe src="http://www.saintstir.com<%=embeddable_search_path%>"
+width="800" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt;/iframe&gt;
+</pre>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+
+<script>
+$(document).ready(function(){
+    $('#share').tooltip({title: "Share / embed this search on your website"})
+});
+</script>
+
+<% end %>
+
+
+<%# Render Bread Crumbs %>
+
+<% attrib_list.each do |attrib_code|  %>
+  <a class='btn btn-info' href='#' data-filter='<%=attrib_code%>'>
+    <i class='icon-remove'></i>&nbsp;<%=attribs_all_map[attrib_code].name%></a>
+<% end %>
+
+
+<script>
+</script>
+
+
