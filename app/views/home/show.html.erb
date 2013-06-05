@@ -9,7 +9,7 @@
 
         <div class="active item" style="height:325px;">
           <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Search.</h1></div>
-          <%= link_to image_tag("banner_1.jpg"), saints_path %>
+          <%= link_to image_tag("banner_1.jpg"), explore_path %>
           <div class="carousel-caption">
             <p>Search and learn about the saints of the Catholic Church using Saintstir's interactive filter buttons.  Every wonder which saints are
             known for particular virtues or superpowers?  Interested in finding saints who went through the same struggles that you are going through?
@@ -19,7 +19,7 @@
 
         <div class="item" style="height:325px;">
           <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Discover.</h1></div>
-          <%= link_to image_tag("banner_2.jpg"), saints_path %>
+          <%= link_to image_tag("banner_2.jpg"), explore_path %>
           <div class="carousel-caption">
             <p>Find out more about the Catholic saints, beyond facts and biographies.  Read their quotes for inspiration, and discover other
             saints with similar traits and graces.  Read stories, testimonies, and prayers from site members.</p>
@@ -28,7 +28,7 @@
 
         <div class="item" style="height:325px;">
           <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Share.</h1></div>
-          <%= link_to image_tag("banner_3.jpg"), saints_path %>
+          <%= link_to image_tag("banner_3.jpg"), explore_path %>
           <div class="carousel-caption">
             <p>Honor and venerate the saints of the church with other members and contributors.  Share your reflections with others on Facebook, Google, and Twitter.
             Leave reflections and prayers on the saint's "wall".  "Like" other member's reflections.  Build a community through Saintstir.</p>
@@ -37,7 +37,7 @@
 
         <div class="item" style="height:325px;">
           <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Integrate.</h1></div>
-          <%= link_to image_tag("banner_4.jpg"), statics_developers_path %>
+          <%= link_to image_tag("banner_4.jpg"), page_path('developers') %>
           <div class="carousel-caption">
             <p>Integrate Saintstir's extensive saint catalogue on your website or blog via embeds - just copy and paste code into your website.
             For developers: build apps on top of Saintstir's saint search API. </p>
@@ -70,15 +70,15 @@
     </p>
 
     <p>
-      <%= link_to saints_path do %>
+      <%= link_to explore_path do %>
         <button class="btn btn-info">Start Exploring</button>
       <% end %>
     </p>
 
     <br/><br/>
-    <p>How Saintstir got started: <%= link_to "About", statics_about_path %></p>
-    <p>Interested in helping? <%= link_to "Volunteer", statics_volunteer_path %></p>
-    <p>Use our search API: <%= link_to "Developers", statics_developers_path %></p>
+    <p>How Saintstir got started: <%= link_to "About", page_path('about') %></p>
+    <p>Interested in helping? <%= link_to "Volunteer", page_path('volunteer') %></p>
+    <p>Use our search API: <%= link_to "Developers", page_path('developers') %></p>
     <p>Have a question or comment? <%= link_to "Contact Us", contact_us_path %></p>
     <p>Follow us on twitter: <a href="http://twitter.com/saintstir">@saintstir</a></p>
 

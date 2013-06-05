@@ -9,11 +9,6 @@ Saintstir::Application.routes.draw do
   resource :user_profile, :controller => "user_profile", :only => [:edit, :update]
   resource :contact_us, :only => [:create, :show]
 
-  # Static pages
-  match "/statics/volunteer" => "statics#volunteer", :via => :get
-  match "/statics/about" => "statics#about", :via => :get
-  match "/statics/developers" => "statics#developers", :via => :get
-
   # Authentication (3rd party) + Login / Logout
   #   Note: URI /auth/:provider is mapped to omniauth
   match "/auth/:provider/callback" => "authentications#create"
