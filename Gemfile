@@ -15,6 +15,7 @@ gem 'nokogiri' # xml parsing
 gem 'yajl-ruby'
 gem 'multi_json', '~> 1.6.1'
 gem 'uuidtools'
+gem 'high_voltage'
 
 # Logging and reporting
 gem 'airbrake'
