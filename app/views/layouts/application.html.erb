@@ -61,7 +61,9 @@
           </div>
         </div>
         <div class="span3">
-          <%= render :partial => 'layouts/fblike' %>
+          <% if (fb_like_enabled?) %>
+            <%= render :partial => 'layouts/fblike' %>
+          <% end %>
         </div>
       </div>
     </div>
