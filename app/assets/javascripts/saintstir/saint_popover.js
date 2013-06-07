@@ -55,7 +55,7 @@ SaintPopoverApp.prototype.bindPopovers = function() {
 SaintPopoverApp.prototype.bindSaintClick = function() {
   //  Direct user to saint page upon click
   $('#isotope_content .element').click(function() {
-    window.location = '/saints/' + $(this).attr('data-symbol');
+    window.parent.location.href = '/saints/' + $(this).attr('data-symbol');
   });
 }
 
