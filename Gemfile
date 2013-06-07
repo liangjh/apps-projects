@@ -15,13 +15,14 @@ gem 'nokogiri' # xml parsing
 gem 'yajl-ruby'
 gem 'multi_json', '~> 1.6.1'
 gem 'uuidtools'
+gem 'high_voltage'
 
 # Logging and reporting
 gem 'airbrake'
 gem 'gabba'
 
 # 3rd party data source connectors
-gem 'tire', :git => 'https://github.com/karmi/tire.git' # from src, since i need non-tagged features
+gem 'tire', :git => 'https://github.com/karmi/tire.git', :tag => 'v0.5.8' # from src, since i need non-tagged features
 gem 'flickraw-cached' # flickr client
 gem 'memcachier'  # to use memcachier (in heroku env)
 gem 'dalli' # memcached client

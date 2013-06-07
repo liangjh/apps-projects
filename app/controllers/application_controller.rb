@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   # page preferences methods - expose as helper methods
-  helper_method :fb_like_enabled?, :favorite_link_enabled?, :page_title
+  helper_method :fb_like_enabled?, :favorite_link_enabled?, :page_title, :set_page_title
   # session auth methods - expose as helper methods
   helper_method :current_user, :check_logged_in, :sign_in, :sign_out
 
