@@ -18,7 +18,6 @@
 //= require saintstir/explore_ss
 //= require saintstir/saint_popover
 //= require saintstir/favorites
-//= require tweet/jquery.tweet
 //= require chosen/chosen.jquery
 
 

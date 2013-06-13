@@ -27,20 +27,8 @@
   <div class="span4">
     <%= image_tag "logo_white.jpg" %>
     <br/><br/>
-    <h2>News <a href="http://twitter.com/saintstir">@saintstir</a></h2><br/>
-    <div class="tweet"></div>
+    <%= render :partial => "layouts/embed_twitter" %>
   </div>
 
-<script>
-  $(document).ready(function() {
-    // Initialize twitter js plugin
-    $('.tweet').tweet({
-      avatar_size: 32,
-      count: 4,
-      username: ['saintstir'],
-      loading_text: "loading tweets..."
-    });
-  });
-</script>
 </div>
 

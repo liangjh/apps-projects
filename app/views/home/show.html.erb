@@ -91,8 +91,7 @@
 
   <!--// Integrate saintstir twitter feed -->
   <div class="span4">
-    <h2>News <a href="http://twitter.com/saintstir">@saintstir</a></h2><br/>
-    <div class="tweet"></div>
+    <%= render :partial => "layouts/embed_twitter" %>
   </div>
 </div>
 
@@ -102,14 +101,6 @@
   $(document).ready(function() {
     // Initialize banner carousel
     $('.carousel').carousel({interval:5000});
-
-    // Initialize twitter js plugin
-    $('.tweet').tweet({
-      avatar_size: 32,
-      count: 5,
-      username: ['saintstir'],
-      loading_text: "loading tweets..."
-    });
   });
 </script>
 
