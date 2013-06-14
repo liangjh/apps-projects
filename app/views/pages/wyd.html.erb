@@ -1,6 +1,6 @@
 <%
     # Set title for page using helper method utilities on controller
-    set_page_title('WYD 2013')
+    set_page_title('World Youth Day 2013')
 %>
 <div class="row">
   <div class="span9">&nbsp;</div>
@@ -10,17 +10,43 @@
 </div>
 <div class="row">
   <div class="span8">
-    <h1>World Youth Day 2013</h1>
+    <%= image_tag "wyd_lg.png", :style => 'float:right' %>
+    <h1>World Youth Day 2013</h1>    <br/>
+    <i>Rio de Janiero, Brazil</i><br/><br/>
 
-      <br/>
-      <p><i>Hi there!  We're currently working on refining this page - check us out again later! </i></p>
 
-      <br/>
-      <iframe src="/explore/embed_search?q=&attributes=collections_wyd2013"
-        width="800" height="400" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+    <p>World Youth Day will be from July 23 - 28 in Rio.  It'll be the first World Youth Day for our new pope, Francis, and for many young pilgrims around the world.</p>
+
+    <p>At Saintstir, we've been really interested in the event's official patrons and intercessors, and have been  touched by their life stories and examples.  Some highlights:</p>
+    <br/><br/>
+
+    <p><b>Chiara Luce Badano</b>, when faced with terminal cancer, united her pain and suffering with Jesus, saying:  <i>"There’s only one thing I can do now: to offer my suffering to Jesus because I want to share as much as possible in his sufferings on the cross".</i>  We're reminded by her example that we should always unite our daily sufferings with Christ for the sanctification of the world.</p>
+
+    <p><b>Laura Vicuna</b>, who suffered through physical and emotional trauma as a child, offered her life freely in exchange for her mother's salvation.</p>
+
+    <p><b>Teresa of the Andes</b> transformed her self-centered personality into a model of Christian charity and compassion.  Her example and life experiences teach us that sainthood is within our reach.</p>
+
+    <p>The martyrs <b>George of Lydda</b>, <b>Sebastian</b>, and <b>Andrew Kim Taegon</b> suffered terrible tortures and died for their faith under extremely repressive regimes.  Inspired by their example , we're reminded that we should always be prepared to witness with courage.</p>
+
+    <p><b>Pier Giorgio Frassati</b> reminds us that a strong faith should go beyond contemplation and prayer towards action and participation in social justice.  His funeral was lined with thousands of mourners who were touched by his charity, compassion, and activism.</p>
+
+    <p><b>Jose de Anchieta</b>, the founder of the cities of Sao Paolo and Rio de Janiero, teaches us the value of patience and the human right to dignity as he labored tirelessly to gain the trust of Native American tribes in Brazil.  Thousands of Indians mourned his death</p>
+
+    <p><b>Sister Irma Dulce</b> shows us that a single person can impact an entire nation.  The poverty she saw during a childhood trip instilled in her a deep compassion for the poor and a inspired a life mission to give them dignity.</p>
+
+    <br/><br/>
+    <p>We truly hope that these saints will inspire you as well.  Click on their profiles below and learn more about them.  Ask our saints for intercession as you prepare your pilgrimage, or as you watch from home.  Leave a comment or a prayer on each saint's wall.  Pray for the many pilgrims who will be in Rio, especially our youth upon whom God will continue His work in the world.</p>
+
+
+    <br/><br/>
+    <iframe src="/explore/embed_search?q=&attributes=collections_wyd2013"
+      width="800" height="400" frameborder="0" marginheight="0" marginwidth="0"></iframe>
 
   </div>
   <div class="span4">
+    <%= image_tag "logo_white.jpg" %>
+    <br/><br/>
+    <%= render :partial => "layouts/embed_twitter" %>
   </div>
 </div>
 
