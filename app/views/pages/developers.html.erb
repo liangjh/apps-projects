@@ -21,7 +21,9 @@
       &nbsp;&nbsp;Authentication<br/>
       &nbsp;&nbsp;Attribute Definition<br/>
       &nbsp;&nbsp;Metadata Definition<br/>
-      &nbsp;&nbsp;Saint Details<br/>
+      <% if (current_user.try(:super_user?)) %>
+        &nbsp;&nbsp;Saint Details<br/>
+      <% end %>
       &nbsp;&nbsp;Saint Search<br/>
 
     </div>
@@ -297,6 +299,7 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/metadata
        </pre>
     </code>
 
+  <% if (current_user.try(:super_user?)) %>
     <br/>
     <h3>Saint Details</h3><br/>
 
@@ -486,7 +489,7 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/details?symbols=IsiSe
 }
        </pre>
     </code>
-
+  <% end %>
 
 
     <br/>
