@@ -21,7 +21,9 @@
       &nbsp;&nbsp;Authentication<br/>
       &nbsp;&nbsp;Attribute Definition<br/>
       &nbsp;&nbsp;Metadata Definition<br/>
-      &nbsp;&nbsp;Saint Details<br/>
+      <% if (current_user.try(:super_user?)) %>
+        &nbsp;&nbsp;Saint Details<br/>
+      <% end %>
       &nbsp;&nbsp;Saint Search<br/>
 
     </div>
@@ -297,6 +299,7 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/metadata
        </pre>
     </code>
 
+  <% if (current_user.try(:super_user?)) %>
     <br/>
     <h3>Saint Details</h3><br/>
 
@@ -486,7 +489,7 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/details?symbols=IsiSe
 }
        </pre>
     </code>
-
+  <% end %>
 
 
     <br/>
@@ -517,6 +520,8 @@ http://www.saintstir.com/api/saints/search?q=..&attributes=..
 curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attributes=periodeurocentric_renaissance,graces_patience
       </pre>
     </code>
+
+<% if (current_user.try(:super_user?)) %>
     <code>
        <pre class="pre-scrollable">
 ##
@@ -722,8 +727,100 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attribu
 
        </pre>
     </code>
+  <% else %>
 
+  <code>
 
+    <pre class="pre-scrollable">
+results":[
+      {
+         "id":"156",
+         "symbol":"HyaMari",
+         "name":"Hyacintha of Mariscotti",
+         "url":"saintstir.com/saints/156",
+         "render_attributes":{
+            "insignia":"RLGS",
+            "color":"cstm3-elem"
+         }
+      },
+      {
+         "id":"202",
+         "symbol":"AntZac",
+         "name":"Anthony Mary Zaccaria",
+         "url":"saintstir.com/saints/202",
+         "render_attributes":{
+            "insignia":"RLGS",
+            "color":"cstm3-elem"
+         }
+      },
+      {
+         "id":"239",
+         "symbol":"RobeBell",
+         "name":"Robert Bellarmine",
+         "url":"saintstir.com/saints/239",
+         "render_attributes":{
+            "insignia":"DCTR",
+            "color":"cstm1-elem"
+         }
+      },
+      {
+         "id":"229",
+         "symbol":"Casimi",
+         "name":"Casimir",
+         "url":"saintstir.com/saints/229",
+         "render_attributes":{
+            "insignia":"",
+            "color":"basic-elem"
+         }
+      },
+      {
+         "id":"108",
+         "symbol":"CathBol",
+         "name":"Catherine of Bologna",
+         "url":"saintstir.com/saints/108",
+         "render_attributes":{
+            "insignia":"RLGS",
+            "color":"cstm3-elem"
+         }
+      },
+      {
+         "id":"158",
+         "symbol":"JaValo",
+         "name":"Jane of Valois",
+         "url":"saintstir.com/saints/158",
+         "render_attributes":{
+            "insignia":"RLGS",
+            "color":"cstm3-elem"
+         }
+      },
+      {
+         "id":"16",
+         "symbol":"MMdPazz",
+         "name":"Mary Magdalene dei Pazzi",
+         "url":"saintstir.com/saints/16",
+         "render_attributes":{
+            "insignia":"RLGS",
+            "color":"cstm3-elem"
+         }
+      },
+      {
+         "id":"129",
+         "symbol":"AloyGonz",
+         "name":"Aloysius Gonzaga",
+         "url":"saintstir.com/saints/129",
+         "render_attributes":{
+            "insignia":"RLGS",
+            "color":"cstm3-elem"
+         }
+      }
+   ],
+   "license":{
+      "description":"Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License",
+      "link":"http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"
+   }
+    </pre>
+  </code>
+<% end %>
 
   </div>
 
