@@ -94,21 +94,20 @@ class Search::SaintResult
   ##
   #  Returns a array of results (array of hashes)
   #  Accepts a block from caller to add rendering attributes
-  def results(attribute_lambda = nil, rendering_properties_lambda = nil)
+  def results(attribute_proc = nil, rendering_properties_proc = nil)
     result_array = @result.inject([]) do |accum_array, element|
       res_hash =  {
-        # :id => element.id,
+        :id => element.id,
         :symbol => element.symbol,
-        :name => element.name
+        :name => element.name,
+        :url => "saintstir.com/saints/#{element.id}"  # Construct URL to saint
       }
 
       ##
       # Custom attribute renderer
       # Use attrib lambda if its passed
-      if (attribute_lambda.present?)
-        res_hash[:attributes] = attribute_lambda.call(element.attribs)
-      else
-        res_hash[:attributes] = element.attribs
+      if (attribute_proc.present?)
+        res_hash[:attributes] = attribute_proc.call(element.attribs)
       end
 
       accum_array << res_hash
@@ -118,9 +117,14 @@ class Search::SaintResult
     # Adding rendering attributes
     # Since search results dont have knowledge of any add'l rendering attributes
     # added by the caller, allow caller to inject any rendering logic into the results
-    if (rendering_properties_lambda.present?)
+    # TODO: may need to look into cleaning this up
+    #
+
+    if (rendering_properties_proc.present?)
+      results_map = results_mapped  # Get results mapped by the saint id
       result_array.each do |res|
-        render_attribs = rendering_properties_lambda.call(res[:attributes])
+        result_element = results_map[res[:id].to_i]  # Retrieve result element, so that we can...
+        render_attribs = rendering_properties_proc.call(result_element.attribs)  # Get attributes for rendering
         res[:render_attributes] = render_attribs
       end
     end
