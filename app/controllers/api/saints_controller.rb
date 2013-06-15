@@ -36,25 +36,34 @@ class Api::SaintsController < Api::ApiController
     #  In order to prevent the search result abstraction from having specific rendering knowledge,
     #  we pass in lambdas as arguments into the search result rendering method - for attributes and for
     #  rendering color codes
-    rendered_results = search_res.results(
-      lambda { |attrib_codes|
+
+    ## Only render all attributes if the api user is a privileged user
+    attrib_proc = nil
+    if (@auth_user.privileged?)
+      attrib_proc = Proc.new { |attrib_codes|
         all_attribs_mapped = Attrib.all_mapped
         attrib_codes.inject([]) do |accum_ar, attrib_code|
           accum_ar << {:code => attrib_code, :name => all_attribs_mapped[attrib_code].name}; accum_ar
         end
-      },
-      lambda { |attribs|
+      }
+    end
+
+
+    rendered_results = search_res.results(
+      attrib_proc,
+      Proc.new { |attribs|
           {:insignia => SaintInsigniaFilter.get_insignia_by_attribs(attribs), :color => SaintInsigniaFilter.get_color_by_attribs(attribs)}
       }
     )
 
     ##
     #  Render JSON
-    res = {
-      :attribute_hierarchy => render_attrib_hierarchy(attrib_categories, attribs_all, search_res.attrib_map, true),
-      :results => rendered_results
-    }
+    #  Return attribute hierarchy IFF the user is a privileged user
+    res = {}
+    res[:attribute_hierarchy] = render_attrib_hierarchy(attrib_categories, attribs_all, search_res.attrib_map, true) if (@auth_user.privileged?)
+    res[:results] = rendered_results
     render_response(res)
+
   end
 
   ##
@@ -92,7 +101,11 @@ class Api::SaintsController < Api::ApiController
 
   ##
   #  Returns saint details, given a list of saint identifiers
+  #  Note: only for privileged api users
   def details
+
+    # This api call is only for privileged api users
+    return generate_error_response(["unauthorized"], "Unauthorized use of API") if (!@auth_user.privileged?)
 
     # Assemble a list of all saints
     symbol_list = params[:symbols].present? ? params[:symbols].split(',') : []
