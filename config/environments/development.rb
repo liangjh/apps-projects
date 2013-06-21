@@ -37,6 +37,9 @@ Saintstir::Application.configure do
   }
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
+  # Lograge configuration
+  config.lograge.enabled = true
+
   # Do not compress assets
   config.assets.compress = false
   config.assets.debug = false
