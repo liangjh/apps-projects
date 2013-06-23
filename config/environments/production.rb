@@ -56,6 +56,8 @@ Saintstir::Application.configure do
   ActionMailer::Base.delivery_method = :smtp
   config.action_mailer.default_url_options = { :host => 'saintstir.com' }
 
+  # Lograge configuration
+  config.lograge.enabled = true
 
 
   # Disable delivery errors, bad email addresses will be ignored

@@ -20,6 +20,7 @@ gem 'high_voltage'
 # Logging and reporting
 gem 'airbrake'
 gem 'gabba'
+gem 'lograge'
 
 # 3rd party data source connectors
 gem 'tire', :git => 'https://github.com/karmi/tire.git', :tag => 'v0.5.8' # from src, since i need non-tagged features
