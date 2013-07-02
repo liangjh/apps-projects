@@ -50,7 +50,7 @@ Saintstir::Application.routes.draw do
   resources :tous, :only => [:show, :update]
 
   # Embeddable Tiles
-  match "/saints/embed_featured" => "saints#embed_featured", :via => :get
+  match "/saints_embed_featured" => "saints#embed_featured", :via => :get
   match "/saints/:symbol/embed" => "saints#embed", :as => :embed_saint, :via => :get
 
   # Embeddable Search
