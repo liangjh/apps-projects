@@ -525,7 +525,8 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attribu
     <code>
        <pre class="pre-scrollable">
 ##
-#  Search results
+#  Search results*
+#  * Note: this response is only for privileged access to the API
 #  The attribute_hierarchy property are the remaining results after search/filtering (adaptive attributes)
 #  The results property is my search results
 #
@@ -727,11 +728,15 @@ curl -u [key]:[secret] http://www.saintstir.com/api/saints/search?q=mary&attribu
 
        </pre>
     </code>
-  <% else %>
-
+  <% end %>
   <code>
 
     <pre class="pre-scrollable">
+
+##
+#  Search results contain a hyperlink to the saintstir.com site
+#
+
 results":[
       {
          "id":"156",
@@ -820,7 +825,6 @@ results":[
    }
     </pre>
   </code>
-<% end %>
 
   </div>
 
