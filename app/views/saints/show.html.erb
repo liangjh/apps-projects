@@ -69,7 +69,7 @@
 
         <!--// Section: Bio -->
         <div class="tab-pane" id="bio" style="padding:7px;">
-          <%  bio = WikipediaBioScraper.get(@saint.id, @saint.get_metadata_value(MetadataKey::WIKIPEDIA_LINK)) %>
+          <%  bio = WikipediaService.get(@saint.id, @saint.get_metadata_value(MetadataKey::WIKIPEDIA_LINK)) %>
           <% if (bio.present?) %>
             <div class="alert alert-info">Biography source: <%= link_to 'Wikipedia', @saint.get_metadata_value(MetadataKey::WIKIPEDIA_LINK)%></div>
             <div><%= raw(bio) %></div>
