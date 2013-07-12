@@ -8,7 +8,7 @@ require 'net/http'
 #  and that it is possible to extract and excise until we get pure HTML content
 #
 
-class WikipediaBioScraper
+class WikipediaService
 
   class << self
 

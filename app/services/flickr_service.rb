@@ -5,7 +5,7 @@ require 'flickraw'
 #//  We plan to integrate caching of photo urls -
 #//
 
-class FlickrIntegration
+class FlickrService
 
   #// Flickr API details
   #// Attribs necessary for api (key, secret, owner_id)
@@ -77,7 +77,7 @@ class FlickrIntegration
         result = flickr.photosets.getPhotos(:photoset_id => photoset_id,
                                    :extras => "#{SIZE_SQUARE_SMALL},#{SIZE_SMALL},#{SIZE_MEDIUM}").photo
       rescue Exception => err
-        Rails.logger.error("FlickrIntegration :: failed to retrieve photo data from Flickr (photoset_id => #{photoset_id}): #{err}")
+        Rails.logger.error("FlickrService :: failed to retrieve photo data from Flickr (photoset_id => #{photoset_id}): #{err}")
       end
       result
     end

@@ -6,10 +6,10 @@
     <tr>
       <td>
         <%# Set image size explicitly (weird bugs in non-chrome browser) %>
-        <%= image_tag FlickrIntegration.get_photo(@saint.id,
-                                                  @saint.get_metadata_value(MetadataKey::FLICKR_SET),
-                                                  @saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
-                                                  FlickrIntegration::SIZE_SMALL), :size => "100x100" %>
+        <%= image_tag FlickrService.get_photo(@saint.id,
+                                              @saint.get_metadata_value(MetadataKey::FLICKR_SET),
+                                              @saint.get_metadata_value(MetadataKey::FLICKR_PROFILE),
+                                              FlickrService::SIZE_SMALL), :size => "100x100" %>
       </td>
       <td>&nbsp;</td>
       <td valign="top" nowrap>
