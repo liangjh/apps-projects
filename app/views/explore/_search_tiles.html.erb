@@ -6,8 +6,19 @@
     1. result_saints - list of saints (SearchResult array) that matches the current search criteria
 %>
 
+
+<% if result_saints.present? %>
   <% result_saints.each do |saint| %>
     <%= render :partial => "explore/insignia_mini", :locals => {:saint => saint, :disc_filters => []} %>
   <% end %>
+<% else %>
+  <%#// No results found - in this case, display a friendly error message and link to submit a saint request %>
+  <div class="alert alert-info">
+    Hi there!  It looks like the saint you were looking for doesn't currently exist on Saintstir yet.  <br/>
+    We're actively working on it!  If there is a particular saint you'd like to see on the site, please
+    <%= link_to "contact us", contact_us_path %>.</br>
+    Thanks for visiting!
+  </div>
+<% end %>
 
 
