@@ -21,7 +21,15 @@ class Admin::SaintsController < ApplicationController
   def index
     @page = (params[:page] || session[:saints_page] || "1")
     session[:saints_page] = @page
-    @saints = Saint.sort_by_symbol.page(@page).per(SAINTS_PER_PAGE)
+
+  # saint search by symbol in admin -> saints
+  if (params[:search])
+     @saints = Saint.admin_search(params[:search]).sort_by_symbol.page(@page).per(SAINTS_PER_PAGE)
+  else
+     @saints = Saint.sort_by_symbol.page(@page).per(SAINTS_PER_PAGE)
+  end
+
+    
   end
 
   # Return form to create a new saint
@@ -159,6 +167,5 @@ class Admin::SaintsController < ApplicationController
       yield
     end
   end
-
-
+ 
 end
