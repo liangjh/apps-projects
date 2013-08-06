@@ -37,6 +37,9 @@ Saintstir::Application.routes.draw do
   match "/saints" => "explore#show", :via => :get, :as => :saints
   match "/explore/embed_search" => "explore#embed_search", :via => :get
 
+  # Timeline Explorer
+  resource :timeline, :controller => "timeline", :only => [:show]
+
   # Administrative modules / editing pages
   namespace :admin do
     resources :saints
