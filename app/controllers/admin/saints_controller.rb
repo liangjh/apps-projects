@@ -19,9 +19,19 @@ class Admin::SaintsController < ApplicationController
   # Display list of available saints - we implement pagination here as well
   # GET /saints
   def index
+
+    # Read in all params
     @page = (params[:page] || session[:saints_page] || "1")
     session[:saints_page] = @page
-    @saints = Saint.sort_by_symbol.page(@page).per(SAINTS_PER_PAGE)
+    @search_q = params[:search]
+
+    #  If there is a search q, perform it; otherwise, get all w/ pagination
+    if @search_q.present?
+      @saints = Saint.admin_search(@search_q).sort_by_symbol
+    else
+      @saints = Saint.sort_by_symbol.page(@page).per(SAINTS_PER_PAGE)
+    end
+
   end
 
   # Return form to create a new saint
@@ -159,6 +169,5 @@ class Admin::SaintsController < ApplicationController
       yield
     end
   end
-
 
 end

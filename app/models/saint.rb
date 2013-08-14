@@ -147,4 +147,19 @@ class Saint < ActiveRecord::Base
     attribs_to_delete.each { |del_attrib| SaintAttrib.by_saint_and_attrib(self, del_attrib).first.destroy  }
   end
 
+
+  # search method by symbol for admin -> search
+  def self.admin_search (search)
+    if search.blank? == false
+      return where("symbol ilike ?", "%#{search}%")
+    else
+      return scoped
+    end
+  end
+
+
+
+
+
+
 end
