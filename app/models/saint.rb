@@ -161,7 +161,7 @@ class Saint < ActiveRecord::Base
       from saints, metadata_keys, metadata_values
       where saints.id = metadata_values.saint_id
         and metadata_keys.id = metadata_values.metadata_key_id
-        and metadata_keys.code = 'name' and metadata_values.value ilike '%#{search_q}%'
+        and metadata_keys.code = '#{MetadataKey::NAME}' and metadata_values.value ilike '%#{search_q}%'
     SQL
     saints_by_name = Saint.find_by_sql(sql)
 
