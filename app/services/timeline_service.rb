@@ -18,21 +18,31 @@ class TimelineService
 
     end
 
-    def render_by_type(type)
-      case type
-        when FEASTDAY
-          render_feast
-        else
-          render_feast
-      end
-    end
+    def render_by_type(type, refresh = false)
 
+      #  Retrieve data from cache - return if its not nil and we're not explicitly refreshing
+      data_json = CacheManager.read(CacheConfig::PARTITION_TIMELINE, type)
+      return data_json if !refresh && data_json.present?
+
+      #  Retrieve fresh data
+      data = case type
+        when Types::FEASTDAY
+          render_feast
+        when Types::CENTURY
+          render_century
+        when Types::EUROPERIOD
+          render_europeriod
+      end
+
+      #  Write to cache for this partition
+      CacheManager.write(CacheConfig::PARTITION_TIMELINE, type, data.to_json)
+      data.to_json
+    end
 
     ##
     #  Render the feast day
     def render_feast
 
-      ##
       #  Get all saints, and construct their feast day hashes
       saints = Saint.all_published
       saint_dates = saints.map do |saint|
@@ -85,7 +95,7 @@ class TimelineService
     def get_pic(saint)
       FlickrService.get_photo(saint.id,
                               saint.get_metadata_value(MetadataKey::FLICKR_SET),
-                              saint.get_metadata_value(MetadataKey::FLICKR_PROFILE)
+                              saint.get_metadata_value(MetadataKey::FLICKR_PROFILE))
     end
 
 
