@@ -1,0 +1,22 @@
+
+
+
+<div id="timeline-embed">
+</div>
+
+<script>
+
+var dataObject = <%= raw @timeline_data.to_json %>
+
+    createStoryJS({
+        type:       'timeline',
+        width:      '900',
+        height:     '650',
+        source:     dataObject,
+        embed_id:   'timeline-embed'
+    });
+
+</script>
+
+
+

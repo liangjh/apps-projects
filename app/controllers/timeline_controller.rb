@@ -10,9 +10,7 @@ class TimelineController < ApplicationController
     # feast => feast day (all in current year)
     # century => 1..21
     # eurocentric_period => [(defined in configurations / taxonomy)]
-    @type = params[:type]
-    data = TimelineService.render_by_type(@type)
-    data.to_json
+    @timeline_data = TimelineService.render_feast
 
   end
 
