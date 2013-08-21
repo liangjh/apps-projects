@@ -1,7 +1,7 @@
 
 ##
-#  Performs logic of retrieveing data for particular timeline views, and
-#  constructing JSON data
+#  Performs logic of retrieveing data for particular timeline views in json
+#  Compatible with timelinejs rendering library
 #
 class TimelineService
 
@@ -14,8 +14,23 @@ class TimelineService
 
   class << self
 
-    def timeline_types
+    def render_timeline_options
+      [
+        [name_by_type(Types::FEASTDAY), Types::FEASTDAY],
+        [name_by_type(Types::CENTURY), Types::CENTURY],
+        [name_by_type(Types::EUROPERIOD), Types::EUROPERIOD]
+      ]
+    end
 
+    def name_by_type(type)
+      case type
+      when Types::FEASTDAY
+        "Feast Day"
+      when Types::CENTURY
+        "Century"
+      when Types::EUROPERIOD
+        "Euro Period"
+      end
     end
 
     def render_by_type(type, refresh = false)
@@ -38,6 +53,7 @@ class TimelineService
       CacheManager.write(CacheConfig::PARTITION_TIMELINE, type, data.to_json)
       data.to_json
     end
+
 
     ##
     #  Render the feast day
@@ -75,13 +91,20 @@ class TimelineService
         :timeline => {
           :headline => "Saint Feast Days",
           :type => "default",
-          :text => "Saints in saintstir, by feast day",
+          :text => "Timeline of all saints in saintstir, by feast day",
           :asset => {},
           :date => saint_dates
         }
       }
     end
 
+    def render_century
+      {}
+    end
+
+    def render_europeriod
+      {}
+    end
 
     private
 

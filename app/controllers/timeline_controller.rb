@@ -4,16 +4,11 @@
 class TimelineController < ApplicationController
 
   def show
-
-    ##
-    # Type of timeline
-    # feast => feast day (all in current year)
-    # century => 1..21
-    # eurocentric_period => [(defined in configurations / taxonomy)]
-    @timeline_data = TimelineService.render_feast
-
+    # Retrieve data by type, default to feast day
+    @type = params[:type] || TimelineService::Types::FEASTDAY
+    # Get cached data
+    @timeline_data = TimelineService.render_by_type(@type)
   end
-
 
 
 end

@@ -1,16 +1,38 @@
 
-
-
-<div id="timeline-embed">
+<!--// Form -->
+<div class="row">
+  <div class="span6">
+    <h2><%= TimelineService.name_by_type(@type) %> Timeline</h2>
+  </div>
+  <div class="span6 pull-right" style="text-align:right">
+    <%= form_tag timeline_path, {:method => :get} do %>
+      <%= select_tag :type, options_for_select(timeline_options, :selected => @type) %>
+    <% end %>
+  </div>
 </div>
+
+<!--// Rendering div -->
+<div class="row">
+  <div id="timeline-embed" class="span12">
+  </div>
+</div>
+
 
 <script>
 
-var dataObject = <%= raw @timeline_data.to_json %>
+// Bind dropdown to form submission
+$('#type').change(function() {
+  document.forms[0].submit();
+});
+
+
+// Render Timeline
+// Data object is set by server-side
+var dataObject = <%= raw @timeline_data %>
 
     createStoryJS({
         type:       'timeline',
-        width:      '900',
+        width:      '950',
         height:     '650',
         source:     dataObject,
         embed_id:   'timeline-embed'
