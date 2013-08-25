@@ -1,8 +1,9 @@
 
+<br/><br/>
+
 <!--// Form -->
 <div class="row">
   <div class="span6">
-    <h2><%= TimelineService.name_by_type(@type) %> Timeline</h2>
   </div>
   <div class="span6 pull-right" style="text-align:right">
     <%= form_tag timeline_path, {:method => :get} do %>
@@ -20,23 +21,25 @@
 
 <script>
 
-// Bind dropdown to form submission
-$('#type').change(function() {
-  document.forms[0].submit();
+$(document).ready(function() {
+
+  // Bind dropdown to form submission
+  $('#type').change(function() {
+    document.forms[0].submit();
+  });
+
+  // Render Timeline based on type set in the controller
+  var dataUri = '<%=api_timeline_path(@type)%>';
+  createStoryJS({
+      type:       'timeline',
+      width:      '950',
+      height:     '600',
+      source:     dataUri,
+      embed_id:   'timeline-embed',
+      start_zoom_adjust: <%=@zoom_adjustment%>
+  });
 });
 
-
-// Render Timeline
-// Data object is set by server-side
-var dataObject = <%= raw @timeline_data %>
-
-    createStoryJS({
-        type:       'timeline',
-        width:      '950',
-        height:     '650',
-        source:     dataObject,
-        embed_id:   'timeline-embed'
-    });
 
 </script>
 

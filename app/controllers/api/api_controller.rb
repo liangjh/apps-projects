@@ -64,9 +64,9 @@ class Api::ApiController < ActionController::Base
   ##
   # This is the API wrapper around the render method.
   # This will ensure that the license is added to any downstream api calls
-  def render_response(resp)
+  def render_response(resp, include_license = true)
     #  Add the licensing parameters to this
-    resp[:license] = license_details
+    resp[:license] = license_details if include_license
     render :json => resp
   end
 

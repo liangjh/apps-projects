@@ -65,6 +65,7 @@ Saintstir::Application.routes.draw do
     match "/saints/attributes" => "saints#attributes", :via => :get
     match "/saints/metadata" => "saints#metadata", :via => :get
     match "/saints/details" => "saints#details", :via => :get
+    match "/timelines/:type" => "timelines#data", :via => :get, :as => 'timeline'
   end
 
 
