@@ -26,9 +26,10 @@ class Admin::SaintsController < ApplicationController
     @search_q = params[:search]
 
     #  If there is a search q, perform it; otherwise, get all w/ pagination
-    if @search_q.present?
-      @saints = Saint.admin_search(@search_q).sort_by_symbol
+    if @search_q.present? && @search_q.length > 1
+      @saints = Saint.search_by_name_and_symbol(@search_q)
     else
+      @search_q = nil
       @saints = Saint.sort_by_symbol.page(@page).per(SAINTS_PER_PAGE)
     end
 

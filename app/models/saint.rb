@@ -147,19 +147,32 @@ class Saint < ActiveRecord::Base
     attribs_to_delete.each { |del_attrib| SaintAttrib.by_saint_and_attrib(self, del_attrib).first.destroy  }
   end
 
+  ##
+  #  Search for saint by symbol and name
+  #  This is for the admin screen
+  def self.search_by_name_and_symbol(search_q)
 
-  # search method by symbol for admin -> search
-  def self.admin_search (search)
-    if search.blank? == false
-      return where("symbol ilike ?", "%#{search}%")
-    else
-      return scoped
-    end
+    # Find all matching saint by symbol
+    saints = Saint.where("symbol ilike ?", "#{search_q}%")
+
+    # Find all matching saints by name
+    sql = <<-SQL
+      select saints.*
+      from saints, metadata_keys, metadata_values
+      where saints.id = metadata_values.saint_id
+        and metadata_keys.id = metadata_values.metadata_key_id
+        and metadata_keys.code = '#{MetadataKey::NAME}' and metadata_values.value ilike '%#{search_q}%'
+    SQL
+    saints_by_name = Saint.find_by_sql(sql)
+
+    # De-dupe by symbol, get unique list of saint results
+    saint_symbols = saints.map(&:symbol)
+    saints_by_name.reject { |saint| saint_symbols.include?(saint.symbol) }
+    saints += saints_by_name
+
+    # Sort alphabetically, by symbol
+    saints = saints.sort { |a,b| a.symbol <=> b.symbol }
+
   end
-
-
-
-
-
 
 end

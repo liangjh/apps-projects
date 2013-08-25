@@ -64,9 +64,9 @@ class Api::ApiController < ActionController::Base
   ##
   # This is the API wrapper around the render method.
   # This will ensure that the license is added to any downstream api calls
-  def render_response(resp)
+  def render_response(resp, include_license = true)
     #  Add the licensing parameters to this
-    resp[:license] = license_details
+    resp[:license] = license_details if include_license
     render :json => resp
   end
 
@@ -91,9 +91,11 @@ class Api::ApiController < ActionController::Base
       Rails.logger.info "saintstir-api|#{@auth_user.present? ? @auth_user.app_name: "unknown"}|#{request.url}"
 
       # Log to google analytics
-      g = Gabba::Gabba.new(GoogleAnalyticsCredentials::GA_ACCOUNT_ID, GoogleAnalyticsCredentials::GA_ACCOUNT_DOMAIN)
-      g.set_custom_var(1, 'api.app_name', @api_user.app_name, Gabba::Gabba::PAGE)
-      g.page_view(request.url)
+      if @api_user
+        g = Gabba::Gabba.new(GoogleAnalyticsCredentials::GA_ACCOUNT_ID, GoogleAnalyticsCredentials::GA_ACCOUNT_DOMAIN)
+        g.set_custom_var(1, 'api.app_name', @api_user.app_name, Gabba::Gabba::PAGE)
+        g.page_view(request.url)
+      end
 
     rescue Exception => ex
       Rails.logger.error "Failed to log request.  Reason: #{ex}"

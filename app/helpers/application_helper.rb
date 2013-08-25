@@ -55,5 +55,8 @@ module ApplicationHelper
     ]
   end
 
+  def timeline_options
+    TimelineService.render_timeline_options
+  end
 
 end
