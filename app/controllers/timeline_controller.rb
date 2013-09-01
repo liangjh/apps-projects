@@ -12,7 +12,7 @@ class TimelineController < ApplicationController
     # To retrieve the timeline we intend to render
     @type = params[:type].present? ? params[:type] : TimelineService.timelines.first.type
     @zoom_adjustment = TimelineService.timeline_by_type(@type).zoom_adjustment
-    set_page_title(TimelineService.timeline_by_type(@type).name)
+    set_page_title("Timeline: #{TimelineService.timeline_by_type(@type).name}")
   end
 
 
