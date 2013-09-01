@@ -19,6 +19,6 @@
 //= require saintstir/saint_popover
 //= require saintstir/favorites
 //= require chosen/chosen.jquery
-//= require timelinejs/timeline
-//= require timelinejs/storyjs-embed
+//= require timeline/timeline
+//= require timeline/storyjs-embed
 
