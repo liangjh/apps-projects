@@ -23,6 +23,11 @@
               </li>
               <li class="divider"></li>
 
+              <li>
+                <%= link_to "Timelines", timeline_path %>
+              </li>
+              <li class="divider"></li>
+
               <% if (current_user && current_user.super_user?) %>
                 <li class="dropdown" id="menu1">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">

@@ -44,6 +44,14 @@
         </div>
 
 
+        <div class="item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Timelines.</h1></div>
+          <%= link_to image_tag("banner_5.jpg"), timeline_path %>
+          <div class="carousel-caption" style="background-color:#7d7d7d; padding:8px">
+            <p>Explore the saints through history, or just through the year with our timelines</p>
+          </div>
+        </div>
+
       </div>
 
       <!-- Carousel nav -->
@@ -75,6 +83,7 @@
     </p>
 
     <br/><br/>
+    <p>Saintstir Timelines: <%= link_to "Timelines", timeline_path %></p>
     <p>How Saintstir got started: <%= link_to "About", page_path('about') %></p>
     <p>Interested in helping? <%= link_to "Volunteer", page_path('volunteer') %></p>
     <p>Use our search API: <%= link_to "Developers", page_path('developers') %></p>
