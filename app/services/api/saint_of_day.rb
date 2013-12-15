@@ -41,7 +41,7 @@ class Api::SaintOfDay
 
       # All saints w/ same date as next_feast_mv - choose one at random
       candidate_mvs = sorted_mvs.select { |mv| mv.value == next_feast_mv.value }
-      winner_mv = candidate_mvs[rand(candidate_mvs.length)]
+      candidate_mvs[rand(candidate_mvs.length)]
     end
 
   end
