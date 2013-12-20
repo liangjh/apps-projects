@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Saintstir::Application.load_tasks
+Statsly::Application.load_tasks
