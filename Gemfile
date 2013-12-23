@@ -4,6 +4,16 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'pg'
 
+
+#  User interface
+gem 'twitter-bootstrap-rails'
+gem 'bootstrap-switch-rails'
+
+#  Logging silencers
+gem 'quiet_assets'
+gem 'lograge'
+
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -14,6 +24,7 @@ end
 
 group :development, :test do
   gem 'pry-debugger'
+  gem 'thin'
 end
 
 gem 'jquery-rails'
