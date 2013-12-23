@@ -1,3 +1,5 @@
+require 'linear_interpolation'
+
 ##
 #  Binomial Distribution
 class BinomialDist < ActiveRecord::Base
@@ -8,8 +10,8 @@ class BinomialDist < ActiveRecord::Base
     ##
     #  Returns distribution (cum and point),
     #  (given n, x, and p)
-    def distribution(n_trials, x_success, p_population)
-      BinomialDist.find_by_n_trials_s_success_and_p_population(n_trails, x_success, p_population)
+    def by_n_x_p(n, x, p)
+      BinomialDist.find_by_n_trials_x_success_and_p_population(n, x, p)
     end
 
   end
