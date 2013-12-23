@@ -18,6 +18,10 @@ module Distributions
       def min_ps; ps.first; end
       def max_ps; ps.last; end
 
+      # Returns array of xs, given an n value
+      def xs(n)
+        (0..n-1).to_a
+      end
 
       ##
       #  Returns distribution (cum and point),

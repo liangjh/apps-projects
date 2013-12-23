@@ -1,0 +1,27 @@
+
+<div class="page-header"><h3>Binomial Distribution Table</h3>
+</div>
+
+<div class="span6">
+
+<%= form_tag(binomial_path, :method => 'get') do %>
+
+  <%= label_tag(:n, "N Trials") %>
+  <%= text_field_tag(:n) %>
+
+  <%= label_tag(:x, "X Successes") %>
+  <%= text_field_tag(:x) %>
+
+  <%= label_tag(:p, "P Population") %>
+  <%= text_field_tag(:p) %>
+
+
+
+<% end %>
+
+</div>
+<div class="span3">
+  hello
+</div>
+
+

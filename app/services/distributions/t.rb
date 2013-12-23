@@ -1,6 +1,6 @@
 require 'linear_interpolation'
 
-module Distribution
+module Distributions
   class T
 
     class << self
