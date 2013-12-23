@@ -11,6 +11,6 @@
  *= require_self
  *= require application
  *= require bootstrap_and_overrides
- *= require bootstrap-switch
+ *= require bootstrap3-switch
  *= require_tree .
  */
