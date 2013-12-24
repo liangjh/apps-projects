@@ -15,17 +15,16 @@ module Distributions
 
 
       def solve(alpha, tv, df)
-        if !df.present? || (!alpha.present? && !tv.present?)
-          nil
-        else
+        t_dist = nil
+        if df.present? && (alpha.present? || tv.present?)
           if alpha.present? && !tv.present?
-            by_alpha_and_df(alpha, df)
+            t_dist = by_alpha_and_df(alpha, df)
           elsif !alpha.present? && tv.present?
-            by_tv_one_sided_and_df(tv, df)
+            t_dist = by_tv_one_sided_and_df(tv, df)
           else
-            nil
           end
         end
+        t_dist
       end
 
       def validate(alpha, tv, df)
@@ -42,7 +41,9 @@ module Distributions
       end
 
       def by_tv_one_sided_and_df(tv, df)
-        TDist.find_by_tv_1t_and_df(tv, df)
+        tdist = TDist.find_by_tv_1t_and_df(tv, df)
+        tdist = interpolated_by_tv_one_sided(tv, df)
+        tdist
       end
 
       def interpolated_by_alpha(alpha, df)
@@ -62,7 +63,7 @@ module Distributions
         lower, upper = TDist.range_by_tv_one_sided(tv, df)
         return nil if lower.nil? || upper.nil?
         intp_alpha = LinearInterpolation.interpolate(lower.alpha, upper.alpha, lower.tv_1t, upper.tv_1t, tv)
-        td = TDist.new(alpha: intp_alpha, df: df, tv_1t: tv, p_cum: (1.0 - alpha))
+        td = TDist.new(alpha: intp_alpha, df: df, tv_1t: tv, p_cum: (1.0 - intp_alpha))
         td.range = [lower, upper]
         td
       end

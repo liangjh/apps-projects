@@ -2,7 +2,6 @@ class TdistController < ApplicationController
 
   def show
 
-    # binding.pry
     @solve_alpha = params[:solve_alpha].present? ? params[:solve_alpha] == "true" : false
     @alpha = params[:alpha].present? ? params[:alpha].to_f : nil
     @tv    = params[:tv].present? ? params[:tv].to_f : nil

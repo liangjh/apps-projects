@@ -14,7 +14,6 @@ class TDist < ActiveRecord::Base
 
   class << self
 
-
     def range_by_alpha(alpha, df)
       [lt_alpha(alpha, df).last, gt_alpha(alpha, df).first]
     end
@@ -26,7 +25,6 @@ class TDist < ActiveRecord::Base
     def range_by_tv_two_sided(tv, df)
       [lt_tv_two(tv, df).last, gt_tv_two(tv, df).first]
     end
-
 
   end
 

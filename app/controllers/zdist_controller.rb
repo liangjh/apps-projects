@@ -6,6 +6,12 @@ class ZdistController < ApplicationController
     @alpha = params[:alpha].present? ? params[:alpha].to_f : nil
     @zv    = params[:zv].present? ? params[:zv].to_f : nil
 
+    if @solve_alpha
+      @alpha = nil
+    else
+      @zv = nil
+    end
+
     if submitted_form?
       errors = Distributions::Z.validate(@alpha, @zv)
       if errors.present?
