@@ -16,8 +16,8 @@
 //= require twitter/bootstrap/bootstrap-popover
 //= require twitter/bootstrap/bootstrap-collapse
 //= require twitter/bootstrap/bootstrap-alert
-//= require twitter/bootstrap/bootstrap-modal
 //= require twitter/bootstrap/bootstrap-button
+//= require twitter/bootstrap/bootstrap-tab
 //= require bootstrap
 //= require bootstrap-switch
 //= require_tree .

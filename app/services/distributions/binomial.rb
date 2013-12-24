@@ -30,6 +30,19 @@ module Distributions
         BinomialDist.find_by_n_trials_and_x_success_and_p_population(n, x, p)
       end
 
+
+      def validate(n, x, p)
+        errors = []
+        if !n.present? || !x.present? || !p.present?
+          errors << "Missing required fields: n, x, or p"
+        else
+          if x < 1 || x >= n
+            errors << "x must be a number between 1 and #{n.to_i - 1}"
+          end
+        end
+        errors
+      end
+
     end
 
   end

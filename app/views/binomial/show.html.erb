@@ -1,10 +1,6 @@
-
-<div class="page-header"><h3>Binomial Distribution Table</h3>
-</div>
-
 <div class="span5">
 
-  <%= form_tag(binomial_path, :method => 'get', :role => 'form') do %>
+  <%= form_tag(binomial_path, :method => :get, :role => 'form') do %>
 
   <%= label_tag(:n, "N Trials") %>
   <%= select_tag :n, options_for_select(Distributions::Binomial.ns, :selected => @n) %>
@@ -25,8 +21,7 @@
 <div class="span5">
   Solution section:  <br/><br/>
 <% if @bin_dist %>
-    Cumulative: <%=@bin_dist.p_cum%><br/>
-    Point: <%=@bin_dist.p_point%>
+  <%= @bin_dist.inspect %>
 <% end %>
 </div>
 

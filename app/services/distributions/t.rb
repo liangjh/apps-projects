@@ -13,6 +13,28 @@ module Distributions
       def min_alpha; alphas.first; end
       def max_alpha; alphas.last; end
 
+
+      def solve(alpha, tv, df)
+        if !df.present? || (!alpha.present? && !tv.present?)
+          nil
+        else
+          if alpha.present? && !tv.present?
+            by_alpha_and_df(alpha, df)
+          elsif !alpha.present? && tv.present?
+            by_tv_one_sided_and_df(tv, df)
+          else
+            nil
+          end
+        end
+      end
+
+      def validate(alpha, tv, df)
+        errors = []
+        errors << "df is required" if !df.present?
+        errors << "At least alpha or tvalue are required" if !alpha.present? && !tv.present?
+        errors << "Alpha is out of range" if alpha.present? && (alpha < min_alpha || alpha > max_alpha)
+      end
+
       def by_alpha_and_df(alpha, df)
         tdist = TDist.find_by_alpha_and_df(alpha, df)
         tdist = interpolated_by_alpha(alpha, df) if tdist.nil?
@@ -21,10 +43,6 @@ module Distributions
 
       def by_tv_one_sided_and_df(tv, df)
         TDist.find_by_tv_1t_and_df(tv, df)
-      end
-
-      def by_tv_two_sided_and_df(tv, df)
-        TDist.find_by_tv_2t_and_df(tv, df)
       end
 
       def interpolated_by_alpha(alpha, df)
@@ -37,6 +55,9 @@ module Distributions
         td
       end
 
+      ##
+      #  If you're given a t-value, you solve w/ it one-sided and
+      #  extrapolate to 2*alpha in the event of solving for a 2-sided distribution
       def interpolated_by_tv_one_sided(tv, df)
         lower, upper = TDist.range_by_tv_one_sided(tv, df)
         return nil if lower.nil? || upper.nil?
@@ -46,14 +67,6 @@ module Distributions
         td
       end
 
-      def interpolated_by_tv_two_sided(tv, df)
-        lower, upper = TDist.range_by_tv_two_sided(tv, df)
-        return nil if lower.nil? || upper.nil?
-        intp_alpha = LinearInterpolation.interpolate(lower.alpha, upper.alpha, lower.tv_2t, upper.tv_2t, tv)
-        td = TDist.new(alpha: intp_alpha, df: df, tv_2t: tv, p_cum: (1.0 - alpha))
-        td.range = [lower, upper]
-        td
-      end
     end
 
   end

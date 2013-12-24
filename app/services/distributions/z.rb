@@ -12,6 +12,31 @@ module Distributions
       def min_alpha; @min_alpha ||= ZDist.minimum(:p_lt_zv); end
       def max_alpha; @max_alpha ||= ZDist.maximum(:p_lt_zv); end
 
+
+      ##
+      #  Determine what we're trying to solve for, and do it
+      #  If both given or not given, then return nil
+      def solve(alpha, zvalue)
+        if zvalue.present? && !alpha.present?
+          by_zvalue(zvalue)
+        elsif !zvalue.present? && alpha.present?
+          by_alpha(alpha)
+        else
+          nil
+        end
+      end
+
+      def validate(alpha, zv)
+        errors = []
+        if !alpha.present? && !zv.present?
+          errors << "Either alpha or zv must be provided"
+        else
+          "Alpha out of range"  if alpha.present? && (alpha < min_alpha || alpha > max_alpha)
+          "ZValue out of range" if zv.present? && (zv < min_zvalue || zv > max_zvalue)
+        end
+        errors
+      end
+
       def by_zvalue(zvalue)
         zdist = ZDist.find_by_zv(zvalue)
         zdist = interpolated_by_zvalue(zvalue) if zdist.nil?

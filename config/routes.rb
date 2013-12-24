@@ -4,10 +4,9 @@ Statsly::Application.routes.draw do
   root :to => "home#show"
   resource :home, :controller => "home", :only => [:show]
 
-  #  Distributions
+  # Interactive Screens
   resource :binomial, :controller => "binomial", :only => [:show]
-  # resource :zdist, :controller => "zdist", :only => [:show]
-  # resource :tdist, :controller => "tdist", :only => [:show]
-
+  resource :zdist, :controller => "zdist", :only => [:show]
+  resource :tdist, :controller => "tdist", :only => [:show]
 
 end

@@ -5,14 +5,13 @@ class BinomialController < ApplicationController
 
   def show
 
-    @n = params[:n]
-    @x = params[:x]
-    @p = params[:p]
+    @n = params[:n].to_i
+    @p = params[:p].to_f
+    @x = params[:x].present? ? params[:x].to_i : nil
 
     #  If the form has been explicitly submitted (i.e. user clicked on "go statsly go")
     if submitted_form?
-
-      errors = validate(@n, @x, @p)
+      errors = Distributions::Binomial.validate(@n, @x, @p)
       if errors.present?
         flash.now[:error] = errors
       else
@@ -22,19 +21,5 @@ class BinomialController < ApplicationController
 
   end
 
-
-  private
-
-  def validate(n, x, p)
-    errors = []
-    if !n.present? || !x.present? || !p.present?
-      errors << "Missing required fields: n, x, or p"
-    else
-      if x.to_i < 1 || x.to_i >= n.to_i
-        errors << "x must be a number between 1 and #{n.to_i - 1}"
-      end
-    end
-    errors
-  end
 
 end
