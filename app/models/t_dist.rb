@@ -3,7 +3,7 @@
 #  T Distribution (Student's Distribution)
 class TDist < ActiveRecord::Base
   attr_accessible :alpha, :df, :p_cum, :tv_1t, :tv_2t
-  attr_accessor :left_dist, :right_dist
+  attr_accessor :left_dist, :right_dist, :interpolated
 
   scope :lt_alpha,  lambda { |alpha, df| where("alpha < ? and df = ?", alpha, df).order(:alpha) }
   scope :lt_tv_one, lambda { |tval,  df| where("tv_1t < ? and df = ?", tval,  df).order(:tv_1t) }

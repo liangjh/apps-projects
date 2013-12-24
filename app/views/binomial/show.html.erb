@@ -19,10 +19,10 @@
 </div>
 <!-- solutions section -->
 <div class="span5">
-  Solution section:  <br/><br/>
-<% if @bin_dist %>
-  <%= @bin_dist.inspect %>
-<% end %>
+  <% if @bin_dist %>
+    <%= render :partial => 'binomial/results',
+               :locals => {:bin_dist => @bin_dist} %>
+  <% end %>
 </div>
 
 

@@ -27,7 +27,9 @@ module Distributions
       #  Returns distribution (cum and point),
       #  (given n, x, and p)
       def by_n_x_p(n, x, p)
-        BinomialDist.find_by_n_trials_and_x_success_and_p_population(n, x, p)
+        bin_dist = BinomialDist.find_by_n_trials_and_x_success_and_p_population(n, x, p)
+        bin_dist.range = BinomialDist.range_by_x_success(x)
+        bin_dist
       end
 
 

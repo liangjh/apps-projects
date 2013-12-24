@@ -30,11 +30,11 @@
 
 <div class="span5">
 
-  <% if @z_dist.present? %>
-    Result: <%= @z_dist.inspect %><br/>
-    Left: <%= @z_dist.left_dist.inspect %><br/>
-    Right: <%= @z_dist.right_dist.inspect %>
-  <% end %>
+<% if @z_dist %>
+  <%= render :partial => 'zdist/results',
+             :locals => {:z_dist => @z_dist} %>
+<% end %>
+
 </div>
 
 <script>

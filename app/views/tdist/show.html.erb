@@ -31,11 +31,9 @@
 </div>
 
 <div class="span5">
-
-  <% if @t_dist.present? %>
-    Result: <%= @t_dist.inspect %><br/>
-    Left: <%= @t_dist.left_dist.inspect %><br/>
-    Right: <%= @t_dist.right_dist.inspect %>
+  <% if @t_dist %>
+    <%= render :partial => 'tdist/results',
+               :locals => {:t_dist => @t_dist} %>
   <% end %>
 </div>
 

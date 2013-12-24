@@ -3,7 +3,7 @@
 #  Z Distribution
 class ZDist < ActiveRecord::Base
   attr_accessible :p_gt_zv, :p_lt_zv, :zv
-  attr_accessor :left_dist, :right_dist
+  attr_accessor :left_dist, :right_dist, :interpolated
 
   # Scopes - query assist
   scope :lt_zv,    lambda { |zvalue| where("zv < ?", zvalue).order(:zv) }

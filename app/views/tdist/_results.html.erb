@@ -1,0 +1,47 @@
+<%#
+  T distribution: rendering
+  Local vars:
+    - t_dist
+%>
+
+<%
+  row_span  = 2
+  row_span += 1 if t_dist.left_dist.present?
+  row_span += 1 if t_dist.right_dist.present?
+%>
+
+<table class="table table-bordered table-hover">
+  <thead>
+    <th>df</th>
+    <th>alpha</th>
+    <th>1T: p(T(df)&gt;tv(alpha,df))</th>
+    <th>2T: p(T(df)&gt;tv(alpha/2,df)</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="<%=row_span%>">
+        <%=t_dist.df%>
+      </td>
+    </tr>
+    <% if t_dist.left_dist.present? %>
+      <tr>
+        <td><%=t_dist.left_dist.alpha%></td>
+        <td><%=t_dist.left_dist.tv_1t%></td>
+        <td><%=t_dist.left_dist.tv_2t%></td>
+      </tr>
+    <% end %>
+    <tr class="success">
+      <td><%=t_dist.alpha%></td>
+      <td><%=t_dist.tv_1t%></td>
+      <td><%=t_dist.tv_2t%></td>
+    </tr>
+    <% if t_dist.right_dist.present? %>
+      <tr>
+        <td><%=t_dist.right_dist.alpha%></td>
+        <td><%=t_dist.right_dist.tv_1t%></td>
+        <td><%=t_dist.right_dist.tv_2t%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
