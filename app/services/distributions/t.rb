@@ -53,6 +53,7 @@ module Distributions
         intp_tv_two = LinearInterpolation.interpolate(lower.tv_1t, upper.tv_2t, lower.alpha, upper.alpha, alpha)
         td = TDist.new(alpha: alpha, df: df, tv_1t: intp_tv_one, tv_2t: intp_tv_two, p_cum: (1.0 - alpha))
         td.range = [lower, upper]
+        td.interpolated = true
         td
       end
 
@@ -65,6 +66,7 @@ module Distributions
         intp_alpha = LinearInterpolation.interpolate(lower.alpha, upper.alpha, lower.tv_1t, upper.tv_1t, tv)
         td = TDist.new(alpha: intp_alpha, df: df, tv_1t: tv, p_cum: (1.0 - intp_alpha))
         td.range = [lower, upper]
+        td.interpolated
         td
       end
 
