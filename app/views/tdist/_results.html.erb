@@ -25,21 +25,21 @@
     </tr>
     <% if t_dist.left_dist.present? %>
       <tr>
-        <td><%=t_dist.left_dist.alpha%></td>
-        <td><%=t_dist.left_dist.tv_1t%></td>
-        <td><%=t_dist.left_dist.tv_2t%></td>
+        <td><%=format_precision(t_dist.left_dist.alpha)%></td>
+        <td><%=format_precision(t_dist.left_dist.tv_1t)%></td>
+        <td><%=format_precision(t_dist.left_dist.tv_2t)%></td>
       </tr>
     <% end %>
     <tr class="success">
-      <td><%=t_dist.alpha%></td>
-      <td><%=t_dist.tv_1t%></td>
-      <td><%=t_dist.tv_2t%></td>
+      <td><%=format_precision(t_dist.alpha)%></td>
+      <td><%=format_precision(t_dist.tv_1t)%></td>
+      <td><%=format_precision(t_dist.tv_2t)%></td>
     </tr>
     <% if t_dist.right_dist.present? %>
       <tr>
-        <td><%=t_dist.right_dist.alpha%></td>
-        <td><%=t_dist.right_dist.tv_1t%></td>
-        <td><%=t_dist.right_dist.tv_2t%></td>
+        <td><%=format_precision(t_dist.right_dist.alpha)%></td>
+        <td><%=format_precision(t_dist.right_dist.tv_1t)%></td>
+        <td><%=format_precision(t_dist.right_dist.tv_2t)%></td>
       </tr>
     <% end %>
   </tbody>

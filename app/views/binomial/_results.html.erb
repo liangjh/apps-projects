@@ -14,10 +14,10 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
-        <th>N / P</th>
+        <th>Parameters</th>
         <th>X</th>
-        <th><%=image_tag 'binomial_cumulative.jpg'%></th>
-        <th><%=image_tag 'binomial_point.jpg'%></th>
+        <th><%=image_tag 'p_leq_x.jpg'%></th>
+        <th><%=image_tag 'p_eq_x.jpg'%></th>
     </tr>
   </thead>
   <tbody>
@@ -30,21 +30,27 @@
   <% if bin_dist.left_dist.present? %>
     <tr>
       <td><%=bin_dist.left_dist.x_success%></td>
-      <td><%=bin_dist.left_dist.p_cum%></td>
-      <td><%=bin_dist.left_dist.p_point%></td>
+      <td><%=format_precision(bin_dist.left_dist.p_cum)%></td>
+      <td><%=format_precision(bin_dist.left_dist.p_point)%></td>
     </tr>
   <% end %>
   <tr class="success">
     <td><%=bin_dist.x_success%></td>
-    <td><%=bin_dist.p_cum%></td>
-    <td><%=bin_dist.p_point%></td>
+    <td><%=format_precision(bin_dist.p_cum)%></td>
+    <td><%=format_precision(bin_dist.p_point)%></td>
   </tr>
   <% if bin_dist.right_dist.present? %>
     <tr>
       <td><%=bin_dist.right_dist.x_success%></td>
-      <td><%=bin_dist.right_dist.p_cum%></td>
-      <td><%=bin_dist.right_dist.p_point%></td>
+      <td><%=format_precision(bin_dist.right_dist.p_cum)%></td>
+      <td><%=format_precision(bin_dist.right_dist.p_point)%></td>
     </tr>
   <% end %>
   </tbody>
 </table>
+<br/>
+<%=image_tag 'binomial_cumulative.jpg'%><br/>
+<%=image_tag 'binomial_point.jpg'%><br/>
+
+
+

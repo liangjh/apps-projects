@@ -22,21 +22,21 @@
   <tbody>
     <% if z_dist.left_dist.present? %>
       <tr>
-        <td><%=z_dist.left_dist.zv%></td>
-        <td><%=z_dist.left_dist.p_lt_zv%></td>
-        <td><%=z_dist.left_dist.p_gt_zv%></td>
+        <td><%=format_precision(z_dist.left_dist.zv)%></td>
+        <td><%=format_precision(z_dist.left_dist.p_lt_zv)%></td>
+        <td><%=format_precision(z_dist.left_dist.p_gt_zv)%></td>
       </tr>
     <% end %>
     <tr class="success">
-      <td><%=z_dist.zv%></td>
-      <td><%=z_dist.p_lt_zv%></td>
-      <td><%=z_dist.p_gt_zv%></td>
+      <td><%=format_precision(z_dist.zv)%></td>
+      <td><%=format_precision(z_dist.p_lt_zv)%></td>
+      <td><%=format_precision(z_dist.p_gt_zv)%></td>
     </tr>
     <% if z_dist.right_dist.present? %>
       <tr>
-        <td><%=z_dist.right_dist.zv%></td>
-        <td><%=z_dist.right_dist.p_lt_zv%></td>
-        <td><%=z_dist.right_dist.p_gt_zv%></td>
+        <td><%=format_precision(z_dist.right_dist.zv)%></td>
+        <td><%=format_precision(z_dist.right_dist.p_lt_zv)%></td>
+        <td><%=format_precision(z_dist.right_dist.p_gt_zv)%></td>
       </tr>
     <% end %>
   </tbody>
