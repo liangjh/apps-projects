@@ -1,5 +1,5 @@
 
-<div class="span5">
+<div class="col-xs-6 col-md-6">
 
   <%= form_tag(tdist_path, :method => :get, :role => 'form') do %>
 
@@ -30,7 +30,7 @@
 
 </div>
 
-<div class="span5">
+<div class="col-xs-6 col-md-6">
   <% if @t_dist %>
     <%= render :partial => 'tdist/results',
                :locals => {:t_dist => @t_dist} %>

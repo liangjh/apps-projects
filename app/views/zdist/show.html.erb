@@ -1,6 +1,6 @@
 
 
-<div class="span5">
+<div class="col-xs-6 col-md-6">
 
   <%= form_tag(zdist_path, :method => :get, :role => 'form') do %>
 
@@ -28,7 +28,7 @@
 
 </div>
 
-<div class="span5">
+<div class="col-xs-6 col-md-6">
 
 <% if @z_dist %>
   <%= render :partial => 'zdist/results',

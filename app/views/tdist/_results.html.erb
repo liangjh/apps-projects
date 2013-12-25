@@ -12,15 +12,15 @@
 
 <table class="table table-bordered table-hover">
   <thead>
-    <th>df</th>
-    <th><%=image_tag 'alpha.jpg'%></th>
-    <th><%=image_tag 'tdist_1t.jpg'%></th>
-    <th><%=image_tag 'tdist_2t.jpg'%></th>
+    <th>Parameters</th>
+    <th><%=image_tag 'alpha.jpg' %></th>
+    <th><%=image_tag 'tdist_1t.jpg' %></th>
+    <th><%=image_tag 'tdist_2t.jpg' %></th>
   </thead>
   <tbody>
     <tr>
       <td rowspan="<%=row_span%>">
-        <%=t_dist.df%>
+        df = <%=t_dist.df%>
       </td>
     </tr>
     <% if t_dist.left_dist.present? %>
