@@ -26,14 +26,14 @@ module Distributions
       ##
       #  Returns distribution (cum and point),
       #  (given n, x, and p)
-      def by_n_x_p(n, x, p)
-        bin_dist = BinomialDist.find_by_n_trials_and_x_success_and_p_population(n, x, p)
-        bin_dist.range = BinomialDist.range_by_x_success(x)
+      def by_n_p_x(n, p, x)
+        bin_dist = BinomialDist.find_by_n_trials_and_p_population_and_x_success(n, p, x)
+        bin_dist.range = BinomialDist.range_by_x_success(n, p, x)
         bin_dist
       end
 
 
-      def validate(n, x, p)
+      def validate(n, p, x)
         errors = []
         if !n.present? || !x.present? || !p.present?
           errors << "Missing required fields: n, x, or p"
