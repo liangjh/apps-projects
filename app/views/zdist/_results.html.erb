@@ -16,8 +16,8 @@
 <table class="table table-bordered table-hover">
   <thead>
     <th>z-value</th>
-    <th>alpha<br/>p(Z&lt;z)</th>
-    <th>p(Z&gt;z)</th>
+    <th><%=image_tag 'zdist_lt_zv.jpg', :alt => 'p(Z&lt;z)'%></th>
+    <th><%=image_tag 'zdist_gt_zv.jpg', :alt => 'p(Z&gt;z)'%></th>
   </thead>
   <tbody>
     <% if z_dist.left_dist.present? %>
