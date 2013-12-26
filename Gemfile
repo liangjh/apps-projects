@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 #  Core libraries
 gem 'rails', '3.2.13'
 gem 'pg'
-
+gem 'high_voltage'
 
 #  User interface
 gem 'twitter-bootstrap-rails'
