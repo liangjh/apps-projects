@@ -26,7 +26,6 @@ end
 
 group :development, :test do
   gem 'pry-debugger'
-  gem 'thin'
 end
 
 gem 'jquery-rails'
