@@ -31,5 +31,5 @@ Statsly::Application.configure do
 
   # Do not compress assets
   config.assets.compress = true
-  config.assets.debug = true
+  config.assets.debug = false
 end
