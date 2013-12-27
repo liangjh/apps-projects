@@ -66,7 +66,7 @@ module Distributions
         intp_alpha = LinearInterpolation.interpolate(lower.alpha, upper.alpha, lower.tv_1t, upper.tv_1t, tv)
         td = TDist.new(alpha: intp_alpha, df: df, tv_1t: tv, p_cum: (1.0 - intp_alpha))
         td.range = [lower, upper]
-        td.interpolated
+        td.interpolated = true
         td
       end
 

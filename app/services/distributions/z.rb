@@ -54,6 +54,7 @@ module Distributions
         intp_p_gt_zv = LinearInterpolation.interpolate(lower.p_gt_zv, upper.p_gt_zv, lower.zv, upper.zv, zvalue)
         zd = ZDist.new(zv: zvalue, p_lt_zv: intp_p_lt_zv, p_gt_zv: intp_p_gt_zv)
         zd.range = [lower, upper]
+        zd.interpolated = true
         zd
       end
 
@@ -63,6 +64,7 @@ module Distributions
         intp_zv = LinearInterpolation.interpolate(lower.zv, upper.zv, lower.p_lt_zv, upper.p_lt_zv, alpha)
         zd = ZDist.new(zv: intp_zv, p_lt_zv: alpha, p_gt_zv: (1.0 - alpha))
         zd.range = [lower, upper]
+        zd.interpolated = true
         zd
       end
 
