@@ -25,6 +25,7 @@
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <li><%= link_to "Home", "/" %></li>
+              <li><%= link_to "About", "/about" %></li>
               <li><%= link_to "Binomial Table", "/binomial"  %></li>
               <li><%= link_to "Z-Table", "/zdist"  %></li>
               <li><%= link_to "T-Table", "/tdist"  %></li>
@@ -41,7 +42,7 @@
         <%= bootstrap_flash %>
         <%= yield %>
       </div>
-
+      <br/><br/>
       <footer>
         <%= render :partial => 'layouts/social' %>&nbsp;&nbsp;&nbsp;
         &copy; Stats.ly <%=Date.today.year%>
