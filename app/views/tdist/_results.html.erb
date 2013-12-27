@@ -1,0 +1,51 @@
+<%#
+  T distribution: rendering
+  Local vars:
+    - t_dist
+%>
+
+<%
+  row_span  = 2
+  row_span += 1 if t_dist.left_dist.present?
+  row_span += 1 if t_dist.right_dist.present?
+%>
+
+<table class="table table-bordered table-hover">
+  <thead>
+    <th>Parameters</th>
+    <th><%=image_tag 'alpha.jpg' %></th>
+    <th><%=image_tag 'tdist_1t.jpg' %></th>
+    <th><%=image_tag 'tdist_2t.jpg' %></th>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="<%=row_span%>">
+        df = <%=t_dist.df%>
+      </td>
+    </tr>
+    <% if t_dist.left_dist.present? %>
+      <tr>
+        <td><%=format_precision(t_dist.left_dist.alpha)%></td>
+        <td><%=format_precision(t_dist.left_dist.tv_1t)%></td>
+        <td><%=format_precision(t_dist.left_dist.tv_2t)%></td>
+      </tr>
+    <% end %>
+    <tr class="success">
+      <td><%=format_precision(t_dist.alpha)%></td>
+      <td><%=format_precision(t_dist.tv_1t)%></td>
+      <td><%=format_precision(t_dist.tv_2t)%></td>
+    </tr>
+    <% if t_dist.right_dist.present? %>
+      <tr>
+        <td><%=format_precision(t_dist.right_dist.alpha)%></td>
+        <td><%=format_precision(t_dist.right_dist.tv_1t)%></td>
+        <td><%=format_precision(t_dist.right_dist.tv_2t)%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if t_dist.interpolated %>
+  <i class="icon-exclamation-sign"></i>&nbsp;&nbsp;<i>Results interpolated</i>
+<% end %>
+<br/><br/>
+

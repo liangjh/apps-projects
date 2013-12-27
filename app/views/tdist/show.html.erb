@@ -1,0 +1,69 @@
+
+<div class="col-xs-6 col-md-6">
+
+  <h3>T-Table</h3><br/>
+
+  <%= form_tag(tdist_path, :method => :get, :role => 'form') do %>
+
+    <div id="alpha-tv-switch" class="make-switch" style="width:200px"
+        data-on-label="Solve Alpha" data-off-label="Solve T-Value"
+        data-on="success" data-off="success" data-animated="true">
+        <%= check_box_tag :solve_alpha, "true", @solve_alpha %>
+    </div>
+
+    <br/><br/>
+
+    <div id="alpha-section">
+      <%= label_tag(:alpha, "Alpha") %>
+      <%= text_field_tag :alpha, @alpha %>
+    </div>
+
+    <div id="tval-section">
+      <%= label_tag(:tv, "T-Value") %>
+      <%= text_field_tag :tv, @tv %>
+    </div>
+
+    <%= label_tag(:df, "Degrees of Freedom") %>
+    <%= select_tag :df, options_for_select(Distributions::T.dfs, :selected => @df) %>
+
+    <br/><br/>
+    <%= submit_tag ApplicationController::GO_STATSLY_GO, class: "btn btn-lg btn-info" %>
+  <% end %>
+
+</div>
+
+<div class="col-xs-6 col-md-6">
+  <% if @t_dist %>
+    <%= render :partial => 'tdist/results',
+               :locals => {:t_dist => @t_dist} %>
+  <% end %>
+</div>
+
+<script>
+
+// Depending on chosen switch, hides/shows various UI elements
+function toggleAlphaTval(solve_alpha_checked) {
+  if (solve_alpha_checked) {
+    // solve for alpha
+    $('#alpha-section').hide();
+    $('#tval-section').show();
+  }
+  else {
+    // solve for t-value
+    $('#alpha-section').show();
+    $('#tval-section').hide();
+  }
+}
+
+$(document).ready(function() {
+  $('#solve_alpha').change(function() {
+    toggleAlphaTval(this.checked);
+  });
+  toggleAlphaTval($('#solve_alpha')[0].checked)
+});
+
+
+</script>
+
+
+
