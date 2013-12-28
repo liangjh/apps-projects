@@ -4,25 +4,19 @@
     - t_dist
 %>
 
-<%
-  row_span  = 2
-  row_span += 1 if t_dist.left_dist.present?
-  row_span += 1 if t_dist.right_dist.present?
-%>
 
 <table class="table table-bordered table-hover">
   <thead>
-    <th>Parameters</th>
-    <th><%=image_tag 'alpha.jpg' %></th>
-    <th><%=image_tag 'tdist_1t.jpg' %></th>
-    <th><%=image_tag 'tdist_2t.jpg' %></th>
+    <tr colspan="3">
+      <th>df = <%=t_dist.df%></th>
+    </tr>
+    <tr>
+      <th><%=image_tag 'alpha.jpg' %></th>
+      <th><%=image_tag 'tdist_1t.jpg' %></th>
+      <th><%=image_tag 'tdist_2t.jpg' %></th>
+    </tr>
   </thead>
   <tbody>
-    <tr>
-      <td rowspan="<%=row_span%>">
-        df = <%=t_dist.df%>
-      </td>
-    </tr>
     <% if t_dist.left_dist.present? %>
       <tr>
         <td><%=format_precision(t_dist.left_dist.alpha)%></td>
