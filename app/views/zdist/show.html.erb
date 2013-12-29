@@ -11,11 +11,12 @@
         data-on="success" data-off="success" data-animated="true">
         <%= check_box_tag :solve_alpha, "true", @solve_alpha %>
     </div>
+    <span class="help-block">(<i>toggle what you want to solve</i>)</span>
 
-    <br/><br/>
+    <br/>
 
     <div id="alpha-section">
-      <%= label_tag(:alpha, "Alpha") %>
+      <%= label_tag(:alpha, "Alpha (or p-value)") %>
       <%= text_field_tag :alpha, @alpha %>
     </div>
 
