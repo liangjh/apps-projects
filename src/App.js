@@ -4,11 +4,12 @@ import { Button, Container, Row, Col } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
 
-
+let API_URL = process.env.REACT_APP_API_URL;
+if (API_URL == null) 
+  API_URL = 'http://localhost:8080'
 
 // Render generated spires
 class SpiresGenerated extends React.Component {
-
   render(){
     return(
       <Masonry>
@@ -34,13 +35,12 @@ class Spire extends React.Component {
   }
 }
 
-
 class Form extends React.Component {
-
   // Generate button
   handleSubmit = async (event) => {
     event.preventDefault();
-    const resp = await axios.get('http://localhost:8080/api/generate')
+    const generateEndpoint = API_URL + '/api/generate';
+    const resp = await axios.get(generateEndpoint);
     this.props.onSubmit(resp.data);
   }
 
@@ -78,13 +78,13 @@ class App extends React.Component {
   };
 
   loadRecents = async(event) => {
-    const resp = await axios.get('http://localhost:8080/api/recents');
+    const recentEndpoint = API_URL + '/api/recents';
+    const resp = await axios.get(recentEndpoint);
     this.handleRecents(resp.data);
   };
 
   // Initialize latest spires 
   componentDidMount() {
-    console.log("in component did mount()")
     this.loadRecents();
   }
 
