@@ -2,28 +2,29 @@ import os
 from flask import Flask
 from .api import api
 
-#  Initialize application
+
+#  Initialize flask app / server
 app = Flask(__name__)
 
-
-# --- Load Configurations ---
-
-#  Load base configuration
+#  Load environment variables 
 app.config.from_object('config.default')
+app.config.from_object('config.development')
 
-#  Load environment-specific configuration
-if not os.environ.get('APP_CONFIG_FILE'):
-    print('Setting to development')
-    os.environ['APP_CONFIG_FILE'] = '../config/development.py'
-
-app.config.from_envvar('APP_CONFIG_FILE')
-
-
-# --- Register Subdomains / Blueprints ---
-
+#  Load blueprints
 app.register_blueprint(api)
 
-if __name__ == '__main__':
-    app.run()
+#  Enviroment initialization
+envobj = {
+    'development': 'config.development',
+    'staging': 'config.staging',
+    'production': 'config.production'
+}[os.environ.get('FLASK_ENV', 'development')]
 
+print('Loading environments: {}'.format(', '.join(['config.default', envobj])))
+app.config.from_object('config.default')
+app.config.from_object(envobj)
+
+
+
+#  TODO: toggle environment to load
 

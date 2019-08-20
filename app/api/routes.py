@@ -2,6 +2,7 @@ from flask import jsonify
 import random
 from . import api
 
+
 # TODO: this is only temporary
 TMP_SPIRES = [
         {'text': 'I grab and grab','image': {'small': 'http://localhost:8080/static/im-001.jpeg', 'large': 'http://localhost:8080/static/im-001.jpeg'}},

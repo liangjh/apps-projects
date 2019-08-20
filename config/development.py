@@ -1,1 +1,1 @@
-print('loading development config...')
+MY_ENV='development'
