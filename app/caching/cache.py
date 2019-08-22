@@ -20,11 +20,13 @@ def memoize(func: types.FunctionType) -> types.FunctionType:
         '''
 
         #  Assemble key for cache
-        argkey = '_'.join(args)
+        argkey = '_'.join([str(arg) for arg in args])
         kwargkey = '_'.join(['{}:{}'.format(str(k), str(v)) for k,v in kwargs])
         key = '{}__{}'.format(argkey, kwargkey)
+        print('checking key: {}'.format(key))
 
         if key not in cache.keys():
+            print('key dne -- reinitializing...')
             value = func(*args, **kwargs)
             cache[key] = value
         
