@@ -10,5 +10,21 @@ MARKOV_MODELS = {
     ]
 }
 
+#  Name entities on the doc (spans tokens)
+#  Allow entities that are not in the below
+TOPIC_PARSE_DOC_ENT_LAMBDAS = [
+    (lambda ent: ent.label_ not in ['PERSON', 'NORP', 'EVENT', 'DATE',
+            'LAW', 'DATE', 'TIME', 'PERCENT', 'MONEY', 'CARDINAL'])
+]
+
+#  Token-based topics, by priority
+#  This constructs tokens according to the rules below.  
+TOPIC_PARSE_DOC_TOK_LAMBDAS = [
+    (lambda tok: tok.pos_ == 'NOUN' and tok.dep_ == 'ROOT'),
+    (lambda tok: tok.pos_ == 'NOUN' and tok.dep_ == 'dobj'),
+    (lambda tok: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ != 'PRON')
+]
+
+
 
 

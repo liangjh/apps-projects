@@ -1,3 +1,4 @@
+import typing
 import copy
 import random
 import json
@@ -5,15 +6,13 @@ import markovify
 import spacy
 from app.caching import cache
 
-#nlp = spacy.load('en_core_web_sm')
-
+nlp = spacy.load('en_core_web_sm')
 
 class POSifiedText(markovify.Text):
     '''
     POSified text is used for both construction and sentence sythesis
     Includes POS (parts of speech) to allow for more sensible sentence structure.
   '''
-
     def word_split(self, sentence):
         return ['::'.join((word.orth_, word.pos_)) for word in nlp(sentence)]
 
@@ -81,4 +80,33 @@ def check_valid_persona(persona: str, params: dict):
     '''
     if (persona == None or persona not in params['PERSONAS']):
         raise Exception('Persona: {} is not supported.  '.format(persona))
+
+
+def sentence_topic_parse_filter(text: str, rules: typing.List[typing.Dict], parse_type: str='tok',
+        short_circuit: bool=True) -> list:
+    '''
+    Find the "topic" of a given sentence
+    Based on a set of rules (lambda functions), operate on either document-level 
+    named entities, or on tokens in the document
+    This will inform image search + document title
+
+    Parameters:
+      text (str): the sentence / string to search
+      parse_type (str) [tok,ent]: tokens, or entities
+      rules (list): a list of lambdas
+      short_circuit (bool) - if a prioritied match is found, return first matching
+    '''
+    # TODO: if a named ent is all caps, check that the lower() version is not a verb (i.e. "DO" classified as org)
+
+    doc = nlp(text)
+    matches = []
+    for rule in rules:
+        search_elem = [ent for ent in doc.ents] if parse_type == 'ent' else [tok for tok in doc]
+        curr_matches = [elem for elem in search_elem if rule(elem)]
+        matches += curr_matches
+        if short_circuit and len(curr_matches) > 0:
+            break
+
+    return matches
+
 
