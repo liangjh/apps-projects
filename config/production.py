@@ -1,2 +1,3 @@
-MY_ENV='production'
 
+
+MODEL_DIRECTORY=None

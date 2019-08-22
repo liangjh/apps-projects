@@ -1,1 +1,3 @@
-MY_ENV='staging'
+
+MODEL_DIRECTORY=None
+
