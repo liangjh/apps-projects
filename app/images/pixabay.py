@@ -1,5 +1,6 @@
 import requests
 import uuid
+import PIL
 
 
 PIXABAY_SEARCH_URL = 'https://pixabay.com/api/'
@@ -24,7 +25,8 @@ def search_images(q: str, api_key: str, attrib:str=None):
     return results
 
 
-def download_image(url_location: str, params: dict={}, file_extension: str='jpg') -> tuple:
+def download_image(url_location: str, params: dict={}, 
+        file_extension: str='jpg', optimize: bool=True) -> tuple:
     '''
     Given a URL, download object, and save result to file system
     w/ generated UUID. Returns a tuple (UUID, filepath)
@@ -41,9 +43,15 @@ def download_image(url_location: str, params: dict={}, file_extension: str='jpg'
     filename = '{}{}.{}'.format(image_directory, guid, file_extension)
 
     # Download & save file to name/location
+    # Use PIL library to optimize size / reduce quality
     img_data = requests.get(url_location).content
-    with open(filename, 'wb') as handler:
+    with open(filename, 'w') as handler:
         handler.write(img_data)
+
+    #  Optimization, greatly reduces image size w/o noticeable quality change
+    if optimize:
+        img = PIL.Image.open(filename)
+        img.save(filename, optimize=True, quality=60)
 
     return (guid, filename)
 
