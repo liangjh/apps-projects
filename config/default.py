@@ -25,6 +25,6 @@ TOPIC_PARSE_DOC_TOK_LAMBDAS = [
     (lambda tok: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ != 'PRON')
 ]
 
-
-
+#  Image search / sourcing API - not env specific
+PIXABAY_API_KEY='13392888-cce06623972ac1de0f32096a6'
 
