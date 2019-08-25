@@ -6,7 +6,6 @@ import markovify
 import spacy
 from app.caching import cache
 
-nlp = spacy.load('en_core_web_sm')
 
 class POSifiedText(markovify.Text):
     '''
@@ -14,7 +13,8 @@ class POSifiedText(markovify.Text):
     Includes POS (parts of speech) to allow for more sensible sentence structure.
   '''
     def word_split(self, sentence):
-        return ['::'.join((word.orth_, word.pos_)) for word in nlp(sentence)]
+        nlp_model = get_nlp_model('en_core_web_sm')
+        return ['::'.join((word.orth_, word.pos_)) for word in nlp_model(sentence)]
 
     def word_join(self, words):
         sentence = ' '.join(word.split('::')[0] for word in words)
@@ -41,7 +41,12 @@ def markov_generate(persona: str='Trump', params: dict={}) -> str:
     text = model.make_short_sentence(max_chars = model_spec['max_chars'])
     print('Markov text ({}): {}'.format(persona, text))
     return text
-    
+
+
+@cache.memoize
+def get_nlp_model(lang_module='en_core_web_sm') -> spacy.nlp:
+    return spacy.load(lang_module)
+
 
 @cache.memoize  # Cache decorator; save to memory
 def get_models(persona: str='Trump', params: dict={}) -> list:
@@ -96,6 +101,7 @@ def sentence_topic_parse_filter(text: str, rules: typing.List[typing.Dict], shor
     '''
     # TODO: if a named ent is all caps, check that the lower() version is not a verb (i.e. "DO" classified as org)
 
+    nlp = get_nlp_model('en_core_web_sm')
     doc = nlp(text)
     matches = []
     for rule in rules:
