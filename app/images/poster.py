@@ -30,10 +30,12 @@ def make_poster(img: Image, params: dict, data_dir: str,
     signature       = params['signature']
 
     # from image + calculated
+    signaturergb    = (255,255,255)
+    signature_offset_px = 20
+    font_size_signature = 15
     image_width_px  = img.size[0]
     text_width_px = image_width_px - (2 * margin_px)
     approx_chars_line = (text_width_px / approx_char_px)
-
     #  Construct quote lines
     #  Line Breaks / Separate Text Body
     #  Break the quote into individual lines to center later
@@ -48,11 +50,10 @@ def make_poster(img: Image, params: dict, data_dir: str,
         else:
             currtxt = peektxt
     quotelines.append(currtxt)  # sweep in remainder
-    quotelines.append(signature)  #  add signature (same font size)
 
     # Construct Quote Canvas
     # Initialize quote image length, based on size of textb
-    quoteimg_len = margin_px + text_start_y_px + text_gap_y_px * len(quotelines)
+    quoteimg_len = margin_px + text_start_y_px + text_gap_y_px * len(quotelines) + signature_offset_px
     quoteimg = Image.new('RGB', (image_width_px, quoteimg_len), color=imgbgrgb)
 
     #  Write title (+ centering)
@@ -63,12 +64,19 @@ def make_poster(img: Image, params: dict, data_dir: str,
 
     #  Write content (+ centering via text size calculation / positioning)
     curr_y_pos = text_start_y_px
-    for line in quotelines:
+    for i,line in enumerate(quotelines):
         dquote = ImageDraw.Draw(quoteimg)    
         txt_len_px = dquote.textsize(line, font=ImageFont.truetype(font_ttf_loc, font_size_body))[0]
         dquote.text((image_width_px / 2 - txt_len_px / 2, curr_y_pos), 
-                    line, fill=textrgb, font=ImageFont.truetype(font_ttf_loc, font_size_body))
+                    text=line, fill=textrgb, font=ImageFont.truetype(font_ttf_loc, font_size_body))
         curr_y_pos += text_gap_y_px
+    
+    #  Write signature (+ centering)
+    #  Yes, there is duplication here, but easier to debug
+    dsign = ImageDraw.Draw(quoteimg)
+    txt_len_px = dsign.textsize(signature, font=ImageFont.truetype(font_ttf_loc, font_size_signature))[0]
+    dsign.text((image_width_px / 2 - txt_len_px / 2, curr_y_pos + signature_offset_px),
+               signature, fill=signaturergb, font=ImageFont.truetype(font_ttf_loc, font_size_signature))
 
     #  Assemble Final Canvas (image + quote image)
     #  Create final canvas image
