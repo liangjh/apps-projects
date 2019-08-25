@@ -82,8 +82,7 @@ def check_valid_persona(persona: str, params: dict):
         raise Exception('Persona: {} is not supported.  '.format(persona))
 
 
-def sentence_topic_parse_filter(text: str, rules: typing.List[typing.Dict], parse_type: str='tok',
-        short_circuit: bool=True) -> list:
+def sentence_topic_parse_filter(text: str, rules: typing.List[typing.Dict], short_circuit: bool=True) -> list:
     '''
     Find the "topic" of a given sentence
     Based on a set of rules (lambda functions), operate on either document-level 
@@ -92,8 +91,7 @@ def sentence_topic_parse_filter(text: str, rules: typing.List[typing.Dict], pars
 
     Parameters:
       text (str): the sentence / string to search
-      parse_type (str) [tok,ent]: tokens, or entities
-      rules (list): a list of lambdas
+      rules (list): a list of rules (defined in default.py configuration)
       short_circuit (bool) - if a prioritied match is found, return first matching
     '''
     # TODO: if a named ent is all caps, check that the lower() version is not a verb (i.e. "DO" classified as org)
@@ -101,8 +99,8 @@ def sentence_topic_parse_filter(text: str, rules: typing.List[typing.Dict], pars
     doc = nlp(text)
     matches = []
     for rule in rules:
-        search_elem = [ent for ent in doc.ents] if parse_type == 'ent' else [tok for tok in doc]
-        curr_matches = [elem for elem in search_elem if rule(elem)]
+        search_elem = [ent for ent in doc.ents] if rule['type'] == 'ent' else [tok for tok in doc]
+        curr_matches = [elem for elem in search_elem if rule['lambda'](elem, nlp)]
         matches += curr_matches
         if short_circuit and len(curr_matches) > 0:
             break

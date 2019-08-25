@@ -4,7 +4,6 @@ Main controller for inspire generation
 '''
 from . import spiremodel
 
-
 def inspire(persona: str='Trump', config: dict={}) -> dict:
     '''
     Main controller
