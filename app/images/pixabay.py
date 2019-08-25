@@ -1,57 +1,45 @@
+import io
 import requests
-import uuid
-import PIL
+from PIL import Image
 
 
 PIXABAY_SEARCH_URL = 'https://pixabay.com/api/'
 
+ATTRIB_MAP = {
+    'id': 'id',
+    'webformatURL': 'url',
+    'webformatWidth': 'width',
+    'webformatHeight': 'height'
+}
 
-def search_images(q: str, api_key: str, attrib:str=None):
+def search_images(q: str, api_key: str):
     '''
     Performs a search against the pixabay API
-    Returns a list of available images
+    Returns a list of available images, and key attributes
+    (to keep it easier, retrieve attribs and map to internal names)
 
     Parameters:
         q (str): query string
         api_key (str): API key, as assigned by Pixabay
-        attrib (str): attrib to retrieve, if passed (or will return all)
     '''
 
-    response = requests.get(PIXABAY_SEARCH_URL, params = {'q': q, 'key': api_key})
+    response = requests.get(PIXABAY_SEARCH_URL, params = {'q': q, 'key': api_key, 'type':'photo'})
     results  = response.json().get('hits', [])
-    if attrib != None:
-        results = [res[attrib] for res in results]
 
-    return results
+    #  Return a subset of resulting attributes
+    parsed_results = []
+    for res in results:
+        parsed_results.append(
+                {ATTRIB_MAP[attrib_key]:res[attrib_key] for attrib_key in ATTRIB_MAP})
+    return parsed_results
 
 
-def download_image(url_location: str, params: dict={}, 
-        file_extension: str='jpg', optimize: bool=True) -> tuple:
+def download_image(result: dict) -> Image:
     '''
-    Given a URL, download object, and save result to file system
-    w/ generated UUID. Returns a tuple (UUID, filepath)
-    Expects property "IMAGE_DIRECTORY" to be initialized
-
-    Parameters:
-        url_location
-        params: 
-        file_extension;
+    Given result element returned in "search_images", 
+    Perform GET request to download image;  return raw image content
+    Pre-initialized to PIL Image type object
     '''
-    #  File name (+ guid)
-    image_directory = params['IMAGE_DIRECTORY']
-    guid = uuid.uuid4().hex
-    filename = '{}{}.{}'.format(image_directory, guid, file_extension)
-
-    # Download & save file to name/location
-    # Use PIL library to optimize size / reduce quality
-    img_data = requests.get(url_location).content
-    with open(filename, 'w') as handler:
-        handler.write(img_data)
-
-    #  Optimization, greatly reduces image size w/o noticeable quality change
-    if optimize:
-        img = PIL.Image.open(filename)
-        img.save(filename, optimize=True, quality=60)
-
-    return (guid, filename)
+    img_content = requests.get(result['url']).content
+    return Image.open(io.BytesIO(img_content))
 
