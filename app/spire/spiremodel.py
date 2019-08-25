@@ -87,7 +87,7 @@ def check_valid_persona(persona: str, params: dict):
         raise Exception('Persona: {} is not supported.  '.format(persona))
 
 
-def sentence_topic_parse_filter(text: str, rules: typing.List[typing.Dict], short_circuit: bool=True) -> list:
+def sentence_topic_extract(text: str, rules: typing.List[typing.Dict], short_circuit: bool=True) -> list:
     '''
     Find the "topic" of a given sentence
     Based on a set of rules (lambda functions), operate on either document-level 
