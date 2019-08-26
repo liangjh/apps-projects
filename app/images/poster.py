@@ -112,11 +112,11 @@ def save_poster(img: Image, save_path: str, save_small: bool=True) -> dict:
 
     img_file_lg = '{}-lg.jpg'.format(guid)
     img_file_sm = '{}-sm.jpg'.format(guid)
-    img.save('{}{}'.format(save_path, img_file_lg), optimize=True, quality=45)
+    img.save('{}{}'.format(save_path, img_file_lg), optimize=True, quality=35)
     
     if save_small:
         img.resize((int(img_width / 2), int(img_height / 2)), Image.ANTIALIAS)\
-           .save('{}{}'.format(save_path, img_file_sm), optimize=True, quality=35)
+           .save('{}{}'.format(save_path, img_file_sm), optimize=True, quality=30)
     
     return {
         'guid': guid,
