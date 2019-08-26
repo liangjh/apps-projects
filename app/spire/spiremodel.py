@@ -44,7 +44,7 @@ def markov_generate(persona: str='Trump', params: dict={}) -> str:
 
 
 @cache.memoize
-def get_nlp_model(lang_module='en_core_web_sm') -> spacy.nlp:
+def get_nlp_model(lang_module='en_core_web_sm'):
     return spacy.load(lang_module)
 
 
