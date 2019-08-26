@@ -17,11 +17,11 @@ TOPIC_PARSE_RULES = [
     {'type': 'ent',
      'lambda': (lambda ent,nlp: ent.label_ not in ['PERSON', 'NORP', 'EVENT', 'DATE',
                         'LAW', 'DATE', 'TIME', 'PERCENT', 'MONEY', 'CARDINAL'] and not
-                        (ent.text.split() <= 1 and  nlp(ent.text.lower()[0].pos_) == 'VERB'))},
+                        (len(ent.text.split()) <= 1 and nlp(ent.text.lower()[0].pos_) == 'VERB'))},
     #  Token-based topics, by priority
     #  This constructs tokens according to the rules below.  
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ == 'NOUN' and tok.dep_ == 'ROOT')},
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ == 'NOUN' and tok.dep_ == 'dobj')},
+    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ == 'ROOT')},
+    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ == 'dobj')},
     {'type': 'tok', 'lambda': (lambda tok,nlp: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ != 'PRON')},
     {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ == 'VERB' and tok.dep_ == 'ROOT')}
 ]
@@ -37,7 +37,7 @@ POSTER_PARAMS = {
         'margin_px': 25,
         'approx_char_px': 15,
         'font_ttf_loc': 'stymie-bold-bt.ttf',
-        'font_size_title': 50,
+        'font_size_title': 45,
         'font_size_body': 25,
         'base_gap_px': 10,
         'text_start_y_px': 70,
