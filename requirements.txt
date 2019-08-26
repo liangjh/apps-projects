@@ -1,4 +1,6 @@
 requests
+pandas
+psycopg2
 uuid
 Pillow
 markovify
