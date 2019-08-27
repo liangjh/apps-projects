@@ -45,7 +45,8 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     # Usage logging  (if exists)
     # Return image locations + metadata (in dict)
     persisted_info = image_full_path(persisted_info, config['IMAGE_SERVER_BASE'])
-    return persisted_info
+    addl_info = {'persona': persona, 'title': title, 'text': text}
+    return {**persisted_info, **addl_info}
 
 
 
