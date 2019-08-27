@@ -56,11 +56,13 @@ def make_poster(img: Image, params: dict, data_dir: str,
     quoteimg_len = margin_px + text_start_y_px + text_gap_y_px * len(quotelines) + signature_offset_px
     quoteimg = Image.new('RGB', (image_width_px, quoteimg_len), color=imgbgrgb)
 
-    #  Write title (+ centering)
-    dtitle = ImageDraw.Draw(quoteimg)
-    txt_len_px = dtitle.textsize(title, font=ImageFont.truetype(font_ttf_loc, font_size_title))[0]
-    dtitle.text((image_width_px / 2 - txt_len_px / 2, base_gap_px),  # (x,y) positioning, calculated
-                title, fill=textrgb, font=ImageFont.truetype(font_ttf_loc, font_size_title))
+    # Title may be null, so adjust accordingly
+    if title is not None:
+        #  Write title (+ centering)
+        dtitle = ImageDraw.Draw(quoteimg)
+        txt_len_px = dtitle.textsize(title, font=ImageFont.truetype(font_ttf_loc, font_size_title))[0]
+        dtitle.text((image_width_px / 2 - txt_len_px / 2, base_gap_px),  # (x,y) positioning, calculated
+                    title, fill=textrgb, font=ImageFont.truetype(font_ttf_loc, font_size_title))
 
     #  Write content (+ centering via text size calculation / positioning)
     curr_y_pos = text_start_y_px

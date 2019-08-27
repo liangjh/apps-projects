@@ -36,3 +36,11 @@ def api_recents():
     return jsonify(results) 
 
 
+# TODO: enable this for development, otherwise comment out
+#   (not sure why this now needs to be sent by the server)
+@api.after_request
+def apply_cors(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
