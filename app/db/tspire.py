@@ -20,7 +20,7 @@ def tspire_save(guid: str, persona: str, img_file_lg: str, img_file_sm: str,
 
 
 @dbrelational.dbaccess_read(datasource='tspire')
-def tspire_latest(persona: str, num_spires: int=10) -> pandas.DataFrame:
+def tspire_latest(persona: str, num_spires: int=15) -> pandas.DataFrame:
     
     return "select * from t_spire where persona='{}' order by created_at desc limit {};".format(persona, num_spires)
 

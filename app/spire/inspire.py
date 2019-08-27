@@ -27,7 +27,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     # Retrieve image using unsplash integration
     # Use existing image library (i.e. alt between dynamic search and general inspire)
     img = pixabay.predl_image_random(config['IMAGE_RAW_DIRECTORY'])
-    if title is None:
+    if title is not None:
         img_results = pixabay.search_images(title, config['PIXABAY_API_KEY'])
         if len(img_results) > 0:
             img = pixabay.download_image(img_results[random.randint(0, len(img_results))])
