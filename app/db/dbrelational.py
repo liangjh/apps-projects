@@ -1,14 +1,13 @@
 import pandas
 import psycopg2
 import types
-from app import app
-
+from flask import current_app
 
 # Note: in the below, we assume that app.config has already been initialized
 # by the application (if not passed in).  Otherwise, need to pass in database connections
 # Additionally, database assumed to be postgres
 
-def dbaccess_read(datasource:str, config: dict=app.config['DATABASE_CONNECTIONS']):
+def dbaccess_read(datasource:str):
     '''
     Wrapper function for READ access to the database
 
@@ -20,6 +19,7 @@ def dbaccess_read(datasource:str, config: dict=app.config['DATABASE_CONNECTIONS'
 
         def decorated(*args, **kwargs) -> pandas.DataFrame:
 
+            config = current_app.config['DATABASE_CONNECTIONS']
             connparams = config[datasource]
             sql  = func(*args, **kwargs)
             
@@ -38,7 +38,7 @@ def dbaccess_read(datasource:str, config: dict=app.config['DATABASE_CONNECTIONS'
 
 
 #  TODO: can make this more generic, currently func needs to generate inesrt / update statement
-def dbaccess_write(datasource: str, config: dict=app.config['DATABASE_CONNECTIONS']):
+def dbaccess_write(datasource: str):
     '''
     Executes SQL to write to database
     The function returns the actual SQL for now, 
@@ -52,6 +52,8 @@ def dbaccess_write(datasource: str, config: dict=app.config['DATABASE_CONNECTION
         def decorated(*args, **kwargs):
 
             sql = func(*args, **kwargs)
+
+            config = current_app.config['DATABASE_CONNECTIONS']
             connparams = config[datasource]
             
             try: 
