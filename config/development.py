@@ -6,7 +6,7 @@ MODEL_DIRECTORY = '/Users/liangjh/Workspace/tspire-api/data/model/'
 
 IMAGE_RAW_DIRECTORY = '/Users/liangjh/Workspace/tspire-api/data/images/raw/'
 IMAGE_GEN_DIRECTORY = '/Users/liangjh/Workspace/tspire-api/data/images/generated/'
-IMAGE_SERVER_BASE = 'http://localhost:8080/'
+IMAGE_SERVER_BASE = 'http://localhost:8081/'
 
 
 
