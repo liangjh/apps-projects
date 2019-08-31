@@ -60,4 +60,22 @@ def inspire_latest(persona: str, config: dict={}) -> list:
     return results
 
 
+def inspire_search(persona: str, q: str, config: dict={}) -> list:
+    '''
+    Parameters
+        persona: 
+        q: search string
+        config: environment configuration
+    '''
+
+    #  Nothing worth searching;  return blank
+    if len(q.split()) < 1:
+        return []
+    
+    search_results = db_tspire.tspire_search(persona, q)
+    results = search_results.to_dict('records')
+    for res in results:
+        res['img_file'] = '{}{}'.format(config['IMAGE_SERVER_BASE'], res['img_file'])
+    return results
+
 

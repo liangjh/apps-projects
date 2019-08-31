@@ -3,14 +3,6 @@ from . import api
 from app.spire import inspire
 
 
-@api.route('/test')
-def api_search():
-    '''
-    This is just a roundtrip test
-    '''
-    return jsonify({'abc':1, 'xyz':2, 'ijk':3})
-
-
 @api.route('/generate')
 def api_generate():
     '''
@@ -34,6 +26,19 @@ def api_recents():
     
     results = inspire.inspire_latest(persona, current_app.config)
     return jsonify(results) 
+
+
+@api.route('/search')
+def api_search():
+    '''
+    This is just a roundtrip test
+    '''
+    persona = request.args.get('persona')
+    persona = 'Trump' if persona is None else persona
+    q = request.args.get('q')
+
+    results = inspire.inspire_search(persona, q, current_app.config)
+    return jsonify(results)
 
 
 # TODO: enable this for development, otherwise comment out
