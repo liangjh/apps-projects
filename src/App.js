@@ -30,19 +30,18 @@ class Spire extends React.Component {
     }
   }
 
-  showModal = () => { console.log('in showModal()'); this.setState(prevState => ({modalShow: true  })); }
-  hideModal = () => { console.log('in hideModal()'); this.setState(prevState => ({modalShow: false })); }
+  showModal = () => { this.setState(prevState => ({modalShow: true  })); }
+  hideModal = () => { this.setState(prevState => ({modalShow: false })); }
 
   render() {
-    const spire = this.props;
     // const util = require('util');
-    // console.log('current spire: '+ util.inspect(spire));
+    // console.log('current spire: '+ util.inspect(this.props));
     return(
-      <div key={spire.guid} className="tile">
+      <div key={this.props.guid} className="tile">
           <a href="#" onClick={this.showModal}>
-            <img src={spire.img_file_sm} className="imgstyle" alt={spire.text}/>
+            <img src={this.props.img_file_sm} className="imgstyle" alt={this.props.text}/>
           </a>
-          <ModalWindow currentspire={spire} show={this.state.modalShow} onHide={this.hideModal} />
+          <ModalWindow currentspire={this.props} show={this.state.modalShow} onHide={this.hideModal} />
       </div>
     );
   }
@@ -52,7 +51,7 @@ class Form extends React.Component {
   // Generate button
   handleSubmit = async (event) => {
     event.preventDefault();
-    const generateEndpoint = API_URL + '/api/generate';
+    const generateEndpoint = `${API_URL}/api/generate`;
     const resp = await axios.get(generateEndpoint);
     this.props.onSubmit(resp.data);
   }
@@ -90,7 +89,7 @@ class App extends React.Component {
   };
 
   loadRecents = async(event) => {
-    const recentEndpoint = API_URL + '/api/recents';
+    const recentEndpoint = `${API_URL}/api/recents`;
     const resp = await axios.get(recentEndpoint);
     this.handleRecents(resp.data);
   };
