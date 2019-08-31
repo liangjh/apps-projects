@@ -93,7 +93,7 @@ def make_poster(img: Image, params: dict, data_dir: str,
 
     # Narrow to correct final image size based on proportional size ratio
     size_ratio = merged_img.size[0] / final_image_width
-    merged_img = merged_img.resize((int(size_ratio * merged_img.size[0]) / int(size_ratio * merged_img.size[1])), Image.ANTIALIAS)
+    merged_img = merged_img.resize((int(size_ratio * merged_img.size[0]), int(size_ratio * merged_img.size[1])), Image.ANTIALIAS)
 
     return merged_img
 

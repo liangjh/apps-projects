@@ -30,7 +30,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     if title is not None:
         img_results = pixabay.search_images(title, config['PIXABAY_API_KEY'])
         if len(img_results) > 0:
-            img = pixabay.download_image(img_results[random.randint(0, len(img_results))])
+            img = pixabay.download_image(img_results[random.randint(0, len(img_results)-1)])
 
     # Generate poster image, save to location
     poster_img = poster.make_poster(img, config['POSTER_PARAMS'][persona], config['DATA_DIRECTORY'], 
@@ -38,7 +38,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
 
     # Save image + information
     persisted_info = poster.save_poster(poster_img, save_path=config['IMAGE_GEN_DIRECTORY'])
-    db_tspire.tspire_save(guid=persisted_info['guid'], persona=persona, image_file=persisted_info['img_file'],
+    db_tspire.tspire_save(guid=persisted_info['guid'], persona=persona, img_file=persisted_info['img_file'],
                           title=title, text=text)
     
     # Usage logging  (if exists)
