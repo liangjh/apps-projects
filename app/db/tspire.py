@@ -14,7 +14,10 @@ def tspire_save(guid: str, persona: str, img_file: str, title: str, text: str):
     sql = ''' 
         insert into t_spire (guid, persona, img_file, title, text, search_vector, created_at) 
         values ('{guid}', '{persona}', '{img_file}', '{title}', '{text}', to_tsvector('{text}'), '{created_at}');
-    '''.format(guid=guid, persona=persona, img_file=img_file, title=title, text=text, created_at=datetime.datetime.now())
+    '''.format(guid=guid, persona=persona, img_file=img_file, 
+               title=(title.replace("'", r"\'") if title is not None else title), 
+               text=(text.replace("'", r"\'") if text is not None else text), 
+               created_at=datetime.datetime.now())
 
     return sql
 
@@ -46,7 +49,7 @@ def tspire_search(persona: str, q: str, num_spires: int=15) -> pandas.DataFrame:
         and query @@ search_vector 
     order by rank desc
     limit {num_spires};
-    '''.format(persona=persona, search_ts='|'.join(q_tokens), num_spires=num_spires)
+    '''.format(persona=persona, search_ts='|'.join(q_tokens.replace("'", r"\'")), num_spires=num_spires)
 
     return sql
 
