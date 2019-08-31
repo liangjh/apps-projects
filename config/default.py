@@ -42,7 +42,9 @@ POSTER_PARAMS = {
         'base_gap_px': 10,
         'text_start_y_px': 70,
         'text_gap_y_px': 30,
-        'signature': '@TrumpSpire (trumpspire.com)'
+        'final_image_width': 400,
+        'signature': '@TrumpSpired',
+        'signature_url': '(trumpspired.com)'
     }
 }
 

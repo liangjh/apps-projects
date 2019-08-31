@@ -36,8 +36,8 @@ Table definition
 */
 
 Grant privileges
-  create user tspire with encrypted password ‘MAGA’;
-  grant all privileges on database aspire to aspire;
+  create user tspire with encrypted password ‘magamagamaga’;
+  grant all privileges on database tspire to tspire;
 
 Useful psql commands
   \l  : list databases

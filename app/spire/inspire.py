@@ -38,16 +38,14 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
 
     # Save image + information
     persisted_info = poster.save_poster(poster_img, save_path=config['IMAGE_GEN_DIRECTORY'])
-    db_tspire.tspire_save(guid=persisted_info['guid'], persona=persona,
-                          img_file_lg=persisted_info['img_file_lg'], img_file_sm=persisted_info['img_file_sm'],
+    db_tspire.tspire_save(guid=persisted_info['guid'], persona=persona, image_file=persisted_info['img_file'],
                           title=title, text=text)
     
     # Usage logging  (if exists)
     # Return image locations + metadata (in dict)
-    persisted_info = image_full_path(persisted_info, config['IMAGE_SERVER_BASE'])
+    persisted_info['img_file']  = '{}{}'.format(config['IMAGE_SERVER_BASE'], persisted_info['img_file'])
     addl_info = {'persona': persona, 'title': title, 'text': text}
     return {**persisted_info, **addl_info}
-
 
 
 @cache.memoize
@@ -57,14 +55,9 @@ def inspire_latest(persona: str, config: dict={}) -> list:
     '''
     latest = db_tspire.tspire_latest(persona)
     results = latest.to_dict('records')
-    results = [image_full_path(res, config['IMAGE_SERVER_BASE']) for res in results]
+    for res in results:
+        res['img_file'] = '{}{}'.format(config['IMAGE_SERVER_BASE'], res['img_file'])
     return results
 
-
-def image_full_path(result: dict, serverbase: int):
-    
-    result['img_file_lg'] = '{}{}'.format(serverbase, result['img_file_lg'])
-    result['img_file_sm'] = '{}{}'.format(serverbase, result['img_file_sm'])
-    return result
 
 

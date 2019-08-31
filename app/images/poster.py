@@ -27,7 +27,8 @@ def make_poster(img: Image, params: dict, data_dir: str,
     text_start_y_px = params['text_start_y_px']
     text_gap_y_px   = params['text_gap_y_px']
     base_gap_px     = params['base_gap_px']
-    signature       = params['signature']
+    final_image_width = params['final_image_width']
+    signature         = '{} {}'.format(params['signature'], params['signature_url'])
 
     # from image + calculated
     signaturergb    = (255,255,255)
@@ -90,10 +91,14 @@ def make_poster(img: Image, params: dict, data_dir: str,
     merged_img.paste(img, (margin_px, margin_px))
     merged_img.paste(quoteimg, (margin_px, margin_px + img.size[1]))
 
+    # Narrow to correct final image size based on proportional size ratio
+    size_ratio = merged_img.size[0] / final_image_width
+    merged_img = merged_img.resize((int(size_ratio * merged_img.size[0]) / int(size_ratio * merged_img.size[1])), Image.ANTIALIAS)
+
     return merged_img
 
 
-def save_poster(img: Image, save_path: str, save_small: bool=True) -> dict:
+def save_poster(img: Image, save_path: str) -> dict:
     '''
     Given image, saves to save_path, and returns a dict with the GUID,
     large and small image names (saved to save path)
@@ -106,24 +111,12 @@ def save_poster(img: Image, save_path: str, save_small: bool=True) -> dict:
 
     # Generate GUID for this file
     guid = uuid.uuid4().hex
-
-    # Save images
-    # Save @ lower quality (high quality not necessary)
-    img_width  = img.size[0]
-    img_height = img.size[1]
-
-    img_file_lg = '{}-lg.jpg'.format(guid)
-    img_file_sm = '{}-sm.jpg'.format(guid)
-    img.save('{}{}'.format(save_path, img_file_lg), optimize=True, quality=35)
-    
-    if save_small:
-        img.resize((int(img_width / 2), int(img_height / 2)), Image.ANTIALIAS)\
-           .save('{}{}'.format(save_path, img_file_sm), optimize=True, quality=30)
+    img_file = '{}-lg.jpg'.format(guid)
+    img.save('{}{}'.format(save_path, img_file), optimize=True, quality=35)
     
     return {
         'guid': guid,
-        'img_file_lg': img_file_lg,
-        'img_file_sm': img_file_sm
+        'img_file': img_file,
     }
 
 
