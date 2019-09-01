@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Trumpspired",
+  "name": "Trumpspired",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,15 +8,20 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "trumpspired-logo_160x250.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "160x250"
     },
     {
-      "src": "logo512.png",
+      "src": "trumpspired-logo_192x300.png",
       "type": "image/png",
-      "sizes": "512x512"
-    }	    
+      "sizes": "192x300"
+    },
+    {
+      "src": "trumpspired-logo_512x800.png",
+      "type": "image/png",
+      "sizes": "512x800"
+    },
   ],
   "start_url": ".",
   "display": "standalone",
