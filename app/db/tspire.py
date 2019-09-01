@@ -49,7 +49,8 @@ def tspire_search(persona: str, q: str, num_spires: int=15) -> pandas.DataFrame:
         and query @@ search_vector 
     order by rank desc
     limit {num_spires};
-    '''.format(persona=persona, search_ts='|'.join(q_tokens.replace("'", r"\'")), num_spires=num_spires)
+    '''.format(persona=persona, num_spires=num_spires, 
+               search_ts='|'.join([tok.replace("'", r"\'") for tok in q_tokens]))
 
     return sql
 
