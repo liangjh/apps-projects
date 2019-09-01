@@ -38,9 +38,7 @@ def tspire_search(persona: str, q: str, num_spires: int=15) -> pandas.DataFrame:
     also returns a search rank score.
     '''
     q_tokens = q.split()
-    if len(q_tokens) < 1:
-        return None
-    if len(q_tokens[0]) < 3:
+    if (len(q_tokens) < 1 or len(q_tokens[0]) < 3):
         return None
 
     sql = '''
