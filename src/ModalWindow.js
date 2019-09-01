@@ -24,12 +24,12 @@ class ModalWindow extends React.Component {
           <Modal.Title>View / Publish Poster</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img src={this.props.currentspire.img_file_sm} className="imgstyledetailed"/><br/>
-          <FacebookShareButton url={this.props.currentspire.img_file_sm} 
+          <img src={this.props.currentspire.img_file} className="imgstyledetailed"/><br/>
+          <FacebookShareButton url={this.props.currentspire.img_file} 
                                quote={this.props.currentspire.text} >
             <FacebookIcon size={45} />
           </FacebookShareButton>
-          <TwitterShareButton url={this.props.currentspire.img_file_sm} 
+          <TwitterShareButton url={this.props.currentspire.img_file} 
                               title={this.props.currentspire.text} >
             <TwitterIcon size={45} />
           </TwitterShareButton>
