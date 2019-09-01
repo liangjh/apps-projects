@@ -28,6 +28,12 @@ def search_images(q: str, api_key: str):
     # Only search for photos
     response = requests.get(PIXABAY_SEARCH_URL, 
                     params = {'q': q, 'key': api_key, 'image_type':'photo'})
+    
+    # Server down, or rate limit exceed (error code 429)
+    # Return empty (need to handle contingencies in caller)
+    if response.status_code != 200:
+        return []
+    
     results  = response.json().get('hits', [])
 
     #  Return a subset of resulting attributes

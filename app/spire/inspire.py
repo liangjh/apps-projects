@@ -24,8 +24,8 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     title = topics[0].text if len(topics) > 0 else None
 
     # TODO: pixabay dynamic search may not be needed
-    # Retrieve image using unsplash integration
-    # Use existing image library (i.e. alt between dynamic search and general inspire)
+    # Retrieve image using pixabay API integration
+    # Otherwise, use existing image library (i.e. alt between dynamic search and general inspire)
     img = pixabay.predl_image_random(config['IMAGE_RAW_DIRECTORY'])
     if title is not None:
         img_results = pixabay.search_images(title, config['PIXABAY_API_KEY'])
@@ -62,6 +62,9 @@ def inspire_latest(persona: str, config: dict={}) -> list:
 
 def inspire_search(persona: str, q: str, config: dict={}) -> list:
     '''
+    Performs full-text search on all spires generated for a given persona
+    (db object takes care of this)
+
     Parameters
         persona: 
         q: search string
@@ -69,7 +72,7 @@ def inspire_search(persona: str, q: str, config: dict={}) -> list:
     '''
 
     #  Nothing worth searching;  return blank
-    if len(q.split()) < 1:
+    if (q is None or len(q.split()) < 1):
         return []
     
     search_results = db_tspire.tspire_search(persona, q)

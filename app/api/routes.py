@@ -31,7 +31,7 @@ def api_recents():
 @api.route('/search')
 def api_search():
     '''
-    This is just a roundtrip test
+    Performs search (full text) on all generated spires for a given persona
     '''
     persona = request.args.get('persona')
     persona = 'Trump' if persona is None else persona

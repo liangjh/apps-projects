@@ -1,6 +1,8 @@
 import types
 
 
+
+
 def memoize(func: types.FunctionType) -> types.FunctionType:
     '''
     Decorator for memoization / caching
@@ -26,10 +28,10 @@ def memoize(func: types.FunctionType) -> types.FunctionType:
         # print('checking key: {}'.format(key))
 
         if key not in cache.keys():
-            print('key dne -- reinitializing...')
             value = func(*args, **kwargs)
             cache[key] = value
         
         return cache[key]
 
     return decorated
+
