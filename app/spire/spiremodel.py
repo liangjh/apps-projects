@@ -31,7 +31,6 @@ def markov_generate(persona: str='Trump', params: dict={}) -> str:
     - persona
     - params  
     '''
-    check_valid_persona(persona, params)
     print('Generating markov text for persona: {}'.format(persona))
 
     #  Retreive list fo models applicable
@@ -59,8 +58,6 @@ def get_models(persona: str='Trump', params: dict={}) -> list:
         persona: 
         params: 
     '''
-    check_valid_persona(persona, params)
-    
     # Initialize all available models specified
     model_dir   = params['MODEL_DIRECTORY']
     model_specs = copy.deepcopy(params['MARKOV_MODELS'][persona])
@@ -76,15 +73,6 @@ def get_models(persona: str='Trump', params: dict={}) -> list:
         models.append(model_spec)
 
     return models
-
-
-def check_valid_persona(persona: str, params: dict):
-    '''
-    Checks that the persona is valid 
-    (i.e. exists in the list of supported personas)
-    '''
-    if (persona == None or persona not in params['PERSONAS']):
-        raise Exception('Persona: {} is not supported.  '.format(persona))
 
 
 def sentence_topic_extract(text: str, rules: typing.List[typing.Dict], short_circuit: bool=True) -> list:
