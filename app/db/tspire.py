@@ -40,6 +40,8 @@ def tspire_search(persona: str, q: str, num_spires: int=15) -> pandas.DataFrame:
     q_tokens = q.split()
     if len(q_tokens) < 1:
         return None
+    if len(q_tokens[0]) < 3:
+        return None
 
     sql = '''
     select t_spire.*, 

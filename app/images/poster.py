@@ -33,7 +33,7 @@ def make_poster(img: Image, params: dict, data_dir: str,
     # from image + calculated
     signaturergb    = (255,255,255)
     signature_offset_px = 20
-    font_size_signature = 15
+    font_size_signature = 20
     image_width_px  = img.size[0]
     text_width_px = image_width_px - (2 * margin_px)
     approx_chars_line = (text_width_px / approx_char_px)
