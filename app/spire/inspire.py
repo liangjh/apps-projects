@@ -48,7 +48,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     return {**persisted_info, **addl_info}
 
 
-@cache.memoize
+@cache.memoize(ttl_sec=10800)  # 3 hrs
 def inspire_latest(persona: str, config: dict={}) -> list:
     '''
     Return the latest spires to be generated, for the current persona

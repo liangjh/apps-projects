@@ -43,12 +43,12 @@ def markov_generate(persona: str='Trump', params: dict={}) -> str:
     return text
 
 
-@cache.memoize
+@cache.memoize()
 def get_nlp_model(lang_module='en_core_web_sm'):
     return spacy.load(lang_module)
 
 
-@cache.memoize  # Cache decorator; save to memory
+@cache.memoize()  # Cache decorator; save to memory
 def get_models(persona: str='Trump', params: dict={}) -> list:
     '''
     Initializes list of models specified for this persona
