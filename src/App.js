@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Button, Spinner, Form } from 'react-bootstrap';
+import { Button, Spinner, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
 import ModalWindow from './ModalWindow.js';
@@ -41,9 +41,13 @@ class Spire extends React.Component {
     // console.log('current spire: '+ util.inspect(this.props));
     return(
       <div key={this.props.guid} className="tile">
-          <a href="#" onClick={this.showModal}>
-            <img src={this.props.img_file} className="imgstyle" alt={this.props.text}/>
-          </a>
+          <OverlayTrigger key='right' placement='right' overlay={
+            <Tooltip id={`tooltip-${this.props.guid}`}>{this.props.text}</Tooltip>
+          }>
+            <a href="#" onClick={this.showModal}>
+              <img src={this.props.img_file} className="imgstyle" alt={this.props.text}/>
+            </a>
+          </OverlayTrigger>
           <ModalWindow currentspire={this.props} show={this.state.modalShow} onHide={this.hideModal} />
       </div>
     );
