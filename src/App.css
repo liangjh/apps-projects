@@ -10,7 +10,7 @@
 
 .App-header {
   /* background-color:#282c34; */
-  background-color:#c5b358;
+  /* background-color:#c5b358; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -38,9 +38,6 @@ html,body{
   padding: 0;
 }
 
-.bg {
-  background-color: #c5b358;
-}
 
 .container-fluid {
     padding-right:0;
@@ -54,13 +51,13 @@ html,body{
 	margin: auto;
 	margin-top: 10px;
 	/* border: 1px solid rgba(0,0,0,.1); */
-  background-color: #c5b358;
+  /* background-color: #c5b358; */
 	p{
 		text-align: center;
 		padding: 4px;
 		font-family: monospace;
 		/* background: #222; */
-		background-color: #c5b358;
+		/* background-color: #c5b358; */
     /* color: #efefef; */
     color: #c5b358;
 	}

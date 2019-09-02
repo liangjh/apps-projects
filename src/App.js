@@ -130,7 +130,7 @@ class App extends React.Component {
 
   render() {
     return (
-        <div className="container-fluid bg">
+        <div className="container-fluid">
          
           <div className="container-fluid">
               <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/> 
