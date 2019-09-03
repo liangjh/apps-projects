@@ -1,5 +1,6 @@
 import uuid
 from PIL import Image, ImageDraw, ImageFont 
+from flask import current_app
 
 
 def make_poster(img: Image, params: dict, data_dir: str,
@@ -21,7 +22,8 @@ def make_poster(img: Image, params: dict, data_dir: str,
     textrgb         = params['textrgb']
     margin_px       = params['margin_px']
     approx_char_px  = params['approx_char_px']
-    font_ttf_loc    = '{}{}'.format(data_dir, params['font_ttf_loc'])
+    font_ttf_loc    = '{app_root}/{data_dir}{font_file}'.format(app_root=current_app.root_path, 
+                                                                data_dir=data_dir, font_file=params['font_ttf_loc'])
     font_size_title = params['font_size_title']
     font_size_body  = params['font_size_body']
     text_start_y_px = params['text_start_y_px']

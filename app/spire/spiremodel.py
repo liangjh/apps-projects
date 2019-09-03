@@ -2,9 +2,11 @@ import typing
 import copy
 import random
 import json
+import gzip
 import markovify
 import spacy
 from app.caching import cache
+from flask import current_app
 
 
 class POSifiedText(markovify.Text):
@@ -59,20 +61,31 @@ def get_models(persona: str='Trump', params: dict={}) -> list:
         params: 
     '''
     # Initialize all available models specified
-    model_dir   = params['MODEL_DIRECTORY']
     model_specs = copy.deepcopy(params['MARKOV_MODELS'][persona])
-
+    model_dir   = params['MODEL_DIRECTORY']
+    
     print('Initializing markov model for persona: {}'.format(persona))
     models = []
     for model_spec in model_specs:
-        model_file = model_spec['filename']
-        with open('{}{}'.format(model_dir, model_file)) as json_file:
-            model_json = json.load(json_file)
+        model_json = read_model_file(model_dir, model_spec['filename'])
         model_obj  = POSifiedText.from_json(model_json)
         model_spec['model'] = model_obj
         models.append(model_spec)
 
     return models
+
+
+def read_model_file(model_dir, model_file):
+    '''
+    The models should be in compressed (zipped) format)
+    Additionally, we are reading from within the application
+    '''
+    model_file_path = '{app_root}/{resource_dir}{model_file}'.format(app_root=current_app.root_path,
+                                                                     resource_dir=model_dir, model_file=model_file)
+    with gzip.GzipFile(model_file_path, 'r') as fin:
+        model_json = json.loads(fin.read().decode('utf-8'))
+    
+    return model_json
 
 
 def sentence_topic_extract(text: str, rules: typing.List[typing.Dict], short_circuit: bool=True) -> list:

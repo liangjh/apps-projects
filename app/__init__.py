@@ -17,8 +17,10 @@ envobj = {
     'production':   'config.production'
 }[os.environ.get('FLASK_ENV', 'development')]
 
+print('Application root located at: {}'.format(app.root_path))
 print('Loading environments: {}'.format(', '.join(['config.default', envobj])))
 app.config.from_object('config.default')
 app.config.from_object(envobj)
+
 
 

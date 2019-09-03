@@ -33,7 +33,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
             img = pixabay.download_image(img_results[random.randint(0, len(img_results)-1)])
 
     # Generate poster image, save to location
-    poster_img = poster.make_poster(img, config['POSTER_PARAMS'][persona], config['DATA_DIRECTORY'], 
+    poster_img = poster.make_poster(img, config['POSTER_PARAMS'][persona], config['RESOURCE_DIRECTORY'], 
                                     title=(title.upper() if title is not None else title), quote=text)
 
     # Save image + information

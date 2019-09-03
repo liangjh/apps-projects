@@ -1,8 +1,9 @@
 
 # Data directory (i.e. models, etc) 
 
-DATA_DIRECTORY  = '/Users/liangjh/Workspace/tspire-api/data/'
-MODEL_DIRECTORY = '/Users/liangjh/Workspace/tspire-api/data/model/'
+RESOURCE_DIRECTORY  = 'resources/'
+MODEL_DIRECTORY = 'resources/models/' # this is resource dir within the application
+
 
 IMAGE_RAW_DIRECTORY = '/Users/liangjh/Workspace/tspire-api/data/images/raw/'
 IMAGE_GEN_DIRECTORY = '/Users/liangjh/Workspace/tspire-api/data/images/generated/'

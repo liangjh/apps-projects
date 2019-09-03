@@ -1,5 +1,5 @@
 import os
-from flask import jsonify, request, current_app, redirect, url_for, flash
+from flask import jsonify, request, current_app, redirect, flash
 from werkzeug.utils import secure_filename
 from . import api
 from app.spire import inspire
