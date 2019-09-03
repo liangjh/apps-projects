@@ -100,26 +100,4 @@ def make_poster(img: Image, params: dict, data_dir: str,
     return merged_img
 
 
-def save_poster(img: Image, save_path: str) -> dict:
-    '''
-    Given image, saves to save_path, and returns a dict with the GUID,
-    large and small image names (saved to save path)
-
-    Parameters:
-        img
-        save_path
-        save_small
-    '''
-
-    # Generate GUID for this file
-    guid = uuid.uuid4().hex
-    img_file = '{}-lg.jpg'.format(guid)
-    img.save('{}{}'.format(save_path, img_file), optimize=True, quality=35)
-    
-    return {
-        'guid': guid,
-        'img_file': img_file,
-    }
-
-
 

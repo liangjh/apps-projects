@@ -55,7 +55,7 @@ def gcs_client():
 def predl_image_random(persist_medium: str, image_persist_properties: dict={}):
 
     filenames = image_list(persist_medium, image_persist_properties)
-    filename  = filenames[random.randint(0, len(filenames))]
+    filename  = filenames[random.randint(0, len(filenames) - 1)]
 
     print('Retrieving random image: {}, from source: {}'.format(filename, persist_medium))
     if (persist_medium == 'GCS'):

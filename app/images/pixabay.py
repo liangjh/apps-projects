@@ -56,15 +56,4 @@ def download_image(result: dict) -> Image:
     return Image.open(io.BytesIO(img_content))
 
 
-def predl_image_random(image_directory: str) -> Image:
-    '''
-    Return an image from pre downloaded images 
-    (in the event that pixabay api fails or limit reached)
-    '''
-    
-    filenames = os.listdir(image_directory)
-    file_rand = filenames[random.randint(0, len(filenames))]
-    img = Image.open('{}{}'.format(image_directory, file_rand))
-    return img
-
 
