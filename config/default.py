@@ -31,6 +31,9 @@ TOPIC_PARSE_RULES = [
 #  Image search / sourcing API - not env specific
 PIXABAY_API_KEY='13392888-cce06623972ac1de0f32096a6'
 
+#  Google API credentials, TODO: not an ideal setup here
+GOOGLE_API_CREDS_FILE = 'gcs-tspire-creds.json'  
+
 #  For poster construction / creation
 POSTER_PARAMS = {
     'Trump': {
