@@ -24,7 +24,7 @@ TOPIC_PARSE_RULES = [
     #  This constructs tokens according to the rules below.  
     {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ == 'ROOT')},
     {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ == 'dobj')},
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ not in ['PRON', 'ADJ'])},
+    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ not in ['PRON', 'ADJ' ,'DET'])},
     {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ == 'VERB' and tok.dep_ == 'ROOT')}
 ]
 
