@@ -25,7 +25,7 @@ IMAGE_PERSIST_PROPERTIES = {
 
 #  Connections, by key
 DATABASE_CONNECTIONS = {
-    'tspire': {'host': 'localhost', 'dbname': 'tspire', 'user': 'tspire', 'password': 'MAGA'}  # local postgres database
+    'tspire': {'host': 'localhost', 'port': 5432, 'dbname': 'tspire', 'user': 'tspire', 'password': 'MAGA'}  # local postgres database
 }
 
 
