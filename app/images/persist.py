@@ -86,7 +86,7 @@ def save_image(image: Image, persist_medium: str, image_persist_properties: dict
         byte_io = io.BytesIO()
         image.save(byte_io, 'jpeg', optimize=True, quality=35)  # save to byte stream; this will get uploaded
         filepath = '{}/{}'.format(image_persist_properties['image_gen_directory'], img_file)
-        bucket.blob(filepath).upload_from_string(byte_io.getvalue())
+        bucket.blob(filepath).upload_from_string(byte_io.getvalue(), content_type='image/jpeg')
     
     else:
         #  Save to file system
