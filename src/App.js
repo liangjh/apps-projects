@@ -75,6 +75,11 @@ class GenerateForm extends React.Component {
 
 // Handles search of existing spires (i.e. within spire database)
 class SearchForm extends React.Component {
+
+  state = {
+    q: ''
+  };
+
   handleSubmit = async (event) => {
     event.preventDefault();
     // const util = require('util');
@@ -84,23 +89,25 @@ class SearchForm extends React.Component {
     this.props.onSubmit(resp.data)
   }  
 
+  handleClear = (event) => {
+    this.setState(prevState => ({q: ''}));
+    this.props.onClear();
+  }
+
+  handleInputChange = (event) => {
+    this.setState ({ q: event.target.value});
+  }
+
   render() {
     return(
       <Form inline onSubmit={this.handleSubmit} method="get">
-        <FormControl type="text" placeholder="Search all Trumpspires" className="mr-sm-2" id="q" name="q"/>
-        <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search</Button>
+        <FormControl type="text" placeholder="Search all Trumpspires" className="mr-sm-2" id="q" name="q" value={this.state.q} onChange={this.handleInputChange}/>
+        <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search Trumpspires</Button>&nbsp;
+        {this.props.hasSearchResults ? <Button variant='outline-primary' onClick={this.handleClear}>Clear Search</Button>: null}
       </Form>
     );
   }
 }
-
-/*
-      <form onSubmit={this.handleSubmit} method='get'>
-        <Form.Control size='lg' type='text' id='q' name='q'/>
-        <Button variant='primary' size='lg' type='submit' onClick={this.props.onClick}>Search</Button>    
-      </form>
-
-*/
 
 class App extends React.Component {
 
@@ -129,6 +136,10 @@ class App extends React.Component {
     this.spinnerOff();
   }
   
+  clearSearchResults = () => {
+    this.setState(prevState => ({searchspires: []}));
+  }
+
   // Recent spires
   handleRecents = (recentData) => { 
     this.setState(prevState => ({recentspires: recentData})); 
@@ -151,7 +162,7 @@ class App extends React.Component {
           <Navbar.Brand href="#">
             <img src="trumpspired-logo_64x100.png" height="50" width="32"/>&nbsp;&nbsp;
           </Navbar.Brand>
-          <SearchForm onSubmit={this.handleSearchResults} onClick={this.spinnerOn}/>&nbsp;&nbsp;
+          <SearchForm onSubmit={this.handleSearchResults} onClick={this.spinnerOn} onClear={this.clearSearchResults} hasSearchResults={(this.state.searchspires.length > 0)}/>&nbsp;&nbsp;
           { this.state.loading ? <Spinner animation='border' role='status'/> : null }              
         </Navbar>
 
