@@ -55,7 +55,7 @@ def inspire_latest(persona: str, config: dict={}) -> list:
     '''
     Return the latest spires to be generated, for the current persona
     '''
-    latest = db_tspire.tspire_latest(persona)
+    latest = db_tspire.tspire_latest(persona, num_spires=30)
     results = latest.to_dict('records')
     for res in results:
         res['img_file'] = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES']['image_server_base'], res['img_file'])
@@ -77,7 +77,7 @@ def inspire_search(persona: str, q: str, config: dict={}) -> list:
     if (q is None or len(q.split()) < 1):
         return []
     
-    search_results = db_tspire.tspire_search(persona, q)
+    search_results = db_tspire.tspire_search(persona, q, num_results=25)
     results = search_results.to_dict('records')
     for res in results:
         res['img_file'] = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES']['image_server_base'], res['img_file'])
