@@ -6,11 +6,16 @@ import { Button, Spinner, Form, OverlayTrigger,
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
 import ModalWindow from './ModalWindow.js';
+import ReactGA from 'react-ga'
 
 // Passed in by starting server; treat as constants within application
 let PERSONA = process.env.REACT_APP_PERSONA; PERSONA = (PERSONA == null ? 'Trump' : PERSONA)
 let API_URL = process.env.REACT_APP_API_URL; API_URL = (API_URL == null ? 'http://localhost:8080' : API_URL)
 let MAX_GEN = process.env.REACT_APP_MAX_GEN; MAX_GEN = (MAX_GEN == null ? 5 : MAX_GEN);
+let GA_KEY  = process.env.REACT_APP_GA_KEY;  GA_KEY  = (GA_KEY  == null ? 'UA-147177121-1' : GA_KEY);
+
+// Initialize hook to google analytics 
+ReactGA.initialize(GA_KEY);
 
 // Render generated spires
 class SpiresGenerated extends React.Component {
@@ -32,8 +37,14 @@ class Spire extends React.Component {
     }
   }
 
-  showModal = () => { this.setState(prevState => ({modalShow: true  })); }
-  hideModal = () => { this.setState(prevState => ({modalShow: false })); }
+  showModal = () => { 
+    try { ReactGA.modalview('/app/detail'); } catch(err) {console.log('error sending GA event');}
+    this.setState(prevState => ({modalShow: true  })); 
+  }
+
+  hideModal = () => { 
+    this.setState(prevState => ({modalShow: false })); 
+  }
 
   render() {
     // const util = require('util');
@@ -63,6 +74,7 @@ class GenerateForm extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     this.incremGenCount();
+    try { ReactGA.pageview(`/app/generate?persona=${PERSONA}`); } catch(err) {console.log('error sending GA event');}
     const resp = await axios.get(`${API_URL}/api/generate`, {params: {persona: PERSONA}});
     this.props.onSubmit(resp.data);
   }
@@ -97,6 +109,7 @@ class SearchForm extends React.Component {
     // const util = require('util');
     // console.log('current spire: '+ util.inspect(event.target.elements.q.value));
     const searchq = event.target.elements.q.value;
+    try { ReactGA.pageview(`/app/search?q=${searchq}`); } catch(err) {console.log('error sending GA event');}
     const resp = await axios.get(`${API_URL}/api/search`, {params: {q: searchq, persona: PERSONA}})
     this.props.onSubmit(resp.data)
   }  
@@ -158,12 +171,16 @@ class App extends React.Component {
   }
 
   loadRecents = async(event) => {
+    try { ReactGA.pageview('/app/recents'); } catch(err) {console.log('error sending GA event');}
     const resp = await axios.get(`${API_URL}/api/recents`, {params: {persona: PERSONA}});
     this.handleRecents(resp.data);
   }
 
   //  Get latest spires upon app (component) load
-  componentDidMount() { this.loadRecents(); }
+  componentDidMount() { 
+    try { ReactGA.pageview('/app'); } catch(err) {console.log('error sending GA event');}
+    this.loadRecents(); 
+  }
 
   render() {
 
