@@ -99,6 +99,14 @@ html,body{
   */
 }
 
+.shareNetwork {
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 5pm;
+  text-align: center;
+}
+
 .imgstyle {
     box-shadow: 0 1px 1px 2px rgba(0,0,0, .15);
     border-radius: 10px;
