@@ -21,7 +21,7 @@ IMAGE_PERSIST_PROPERTIES = {
     # 'gcs_bucket_name':    'images-dev.trumpspired.com',
     # 'image_raw_directory': 'raw',
     # 'image_gen_directory': 'generated',
-    # 'image_server_base':   'https://images-dev.trumpspired.com/generated/'
+    # 'image_server_base':   'http://images-dev.trumpspired.com/generated/'
 # }
 
 #  Connections, by key
