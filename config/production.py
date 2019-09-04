@@ -17,10 +17,10 @@ PERSIST_MEDIUM = 'GCS'  #  FS, or GCS
 
 #  GCS Settings 
 IMAGE_PERSIST_PROPERTIES = {
-    'gcs_bucket_name':    'tspire-img-assets',
+    'gcs_bucket_name':    'images.trumpspired.com',
     'image_raw_directory': 'raw',
     'image_gen_directory': 'generated',
-    'image_server_base':   'https://storage.googleapis.com/tspire-img-assets/generated/'
+    'image_server_base':   'https://images.trumpspired.com/generated/'
 }
 
 #  Connections, by key
