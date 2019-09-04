@@ -144,6 +144,7 @@ class App extends React.Component {
 
   render() {
 
+    let generatedandrecent = this.state.genspires.concat(this.state.recentspires);
     return (
       <div>
         <Navbar bg="light" variant="light" fluid>
@@ -172,13 +173,10 @@ class App extends React.Component {
 
         <Container fluid className="noPadding">
           <Row className="noMargin">
-            <Col className="noPadding">{ (this.state.genspires.length > 0) ? <SpiresGenerated spires={this.state.genspires} /> : null }</Col>
-          </Row>
-          <Row className="noMargin">
             <Col className="noPadding">{ (this.state.searchspires.length > 0) ? <SpiresGenerated spires={this.state.searchspires} /> : null }</Col>
           </Row>
           <Row className="noMargin">
-            <Col className="noPadding">{ (this.state.searchspires.length > 0) ? null : <SpiresGenerated spires={this.state.recentspires} /> }</Col>          
+            <Col className="noPadding">{ (this.state.searchspires.length > 0) ? null : <SpiresGenerated spires={generatedandrecent} /> }</Col>          
           </Row>
         </Container>
       </div>
