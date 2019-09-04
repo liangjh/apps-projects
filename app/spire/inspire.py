@@ -77,7 +77,7 @@ def inspire_search(persona: str, q: str, config: dict={}) -> list:
     if (q is None or len(q.split()) < 1):
         return []
     
-    search_results = db_tspire.tspire_search(persona, q, num_results=25)
+    search_results = db_tspire.tspire_search(persona, q, num_spires=25)
     results = search_results.to_dict('records')
     for res in results:
         res['img_file'] = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES']['image_server_base'], res['img_file'])
