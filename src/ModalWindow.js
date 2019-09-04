@@ -6,16 +6,11 @@ import {FacebookShareButton, TwitterShareButton, FacebookIcon, TwitterIcon} from
 
 class ModalWindow extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  
   render() {
 
     // const util = require('util');    
     // console.log('props: ' + util.inspect(this.props));
-    if (this.props.currentspire == null || this.props.currentspire == undefined) 
+    if (this.props.currentspire === null || this.props.currentspire === undefined) 
       return null;    
 
     return (

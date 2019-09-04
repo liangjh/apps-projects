@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Button, Spinner, Form, OverlayTrigger, 
-         Tooltip, Container, Row, Col, Image, Navbar, Nav, 
+         Tooltip, Container, Row, Col, Navbar, 
          FormControl, Jumbotron } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
@@ -147,7 +147,7 @@ class App extends React.Component {
     let generatedandrecent = this.state.genspires.concat(this.state.recentspires);
     return (
       <div>
-        <Navbar bg="light" variant="light" fluid>
+        <Navbar bg="light" variant="light" fluid="true">
           <Navbar.Brand href="#">
             <img src="trumpspired-logo_64x100.png" height="50" width="32"/>&nbsp;&nbsp;
           </Navbar.Brand>
@@ -155,7 +155,7 @@ class App extends React.Component {
           { this.state.loading ? <Spinner animation='border' role='status'/> : null }              
         </Navbar>
 
-        <Jumbotron fluid class="mb-0">
+        <Jumbotron fluid="true" className="jumbotron">
           <Container fluid className="noPadding">
           <Row className="noMargin">
             <Col sm={2}>
@@ -164,7 +164,7 @@ class App extends React.Component {
             <Col lg>
             <h1>Trumpspired</h1><br/>
             <h4>Inspirational sayings from the <a href="https://en.wikipedia.org/wiki/Donald_Trump">45th President of the United States</a></h4>
-            <p>We've taken a bunch of the President's tweets and speeches from the 2016 campaign and built a Markov matrix.  <br/>Each Trumpspire is an original work that will leave you inspired -  <b>*Trumpspired*</b>.</p>
+            <p>We've taken a bunch of the President's tweets and speeches and built a Markov matrix.  <br/>Each Trumpspire is an original work that will leave you inspired -  <b>*Trumpspired*</b>.</p>
             <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/>                      
             </Col>
           </Row>
