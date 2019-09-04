@@ -88,10 +88,16 @@ html,body{
 */
 }
 
+.jumbotron {
+  margin: 0;
+  padding: 20px 0 20px 0;
+  margin-bottom: 0;
+}
+
 .imgstyle {
     box-shadow: 0 1px 1px 2px rgba(0,0,0, .15);
     border-radius: 10px;
-    width:300px;
+    width:350px;
 }
 
 .imgstyledetailed {

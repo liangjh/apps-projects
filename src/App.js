@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import { Button, Spinner, Form, OverlayTrigger, 
-         Tooltip, Container, Row, Col, Image, Navbar, Nav, FormControl } from 'react-bootstrap';
+         Tooltip, Container, Row, Col, Image, Navbar, Nav, 
+         FormControl, Jumbotron } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
 import ModalWindow from './ModalWindow.js';
@@ -66,7 +67,7 @@ class GenerateForm extends React.Component {
   render() {
     return(
       <Form inline onSubmit={this.handleSubmit} method="get">
-        <Button variant='primary' type='submit' onClick={this.props.onClick}>Generate Trumpspire</Button>
+        <Button variant='primary' size="lg" type='submit' onClick={this.props.onClick}>Robot, Generate New Trumpspire!</Button>
       </Form>
     );
   }
@@ -86,7 +87,7 @@ class SearchForm extends React.Component {
   render() {
     return(
       <Form inline onSubmit={this.handleSubmit} method="get">
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" id="q" name="q"/>
+        <FormControl type="text" placeholder="Search all Trumpspires" className="mr-sm-2" id="q" name="q"/>
         <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search</Button>
       </Form>
     );
@@ -150,9 +151,25 @@ class App extends React.Component {
             <img src="trumpspired-logo_64x100.png" height="50" width="32"/>&nbsp;&nbsp;
           </Navbar.Brand>
           <SearchForm onSubmit={this.handleSearchResults} onClick={this.spinnerOn}/>&nbsp;&nbsp;
-          <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/>          
           { this.state.loading ? <Spinner animation='border' role='status'/> : null }              
         </Navbar>
+
+        <Jumbotron fluid class="mb-0">
+          <Container fluid className="noPadding">
+          <Row className="noMargin">
+            <Col sm={2}>
+              <img src="trumpspired-logo_160x250.png"/>
+            </Col>
+            <Col lg>
+            <h1>Trumpspired</h1><br/>
+            <h4>Inspirational sayings from the <a href="https://en.wikipedia.org/wiki/Donald_Trump">45th President of the United States</a></h4>
+            <p>We've taken a bunch of the President's tweets and speeches from the 2016 campaign and built a Markov matrix.  <br/>Each Trumpspire is an original work that will leave you inspired -  <b>*Trumpspired*</b>.</p>
+            <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/>                      
+            </Col>
+          </Row>
+          </Container>
+        </Jumbotron>
+
         <Container fluid className="noPadding">
           <Row className="noMargin">
             <Col className="noPadding">{ (this.state.genspires.length > 0) ? <SpiresGenerated spires={this.state.genspires} /> : null }</Col>
@@ -170,23 +187,4 @@ class App extends React.Component {
 }
 
 export default App;
-/*
-        <div className="container-fluid">         
-          <div className="container-fluid">
-              <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/> 
-          </div>
-          <div className="container-fluid">
-              <SearchForm onSubmit={this.handleSearchResults} onClick={this.spinnerOn}/>
-          </div>
-          <div className="container-fluid">
-              <SpiresGenerated spires={this.state.genspires} />
-          </div>
-          <div className="container-fluid">
-              <SpiresGenerated spires={this.state.searchspires} />
-          </div>
-          <div className="container-fluid">
-              <SpiresGenerated spires={this.state.recentspires} />
-          </div>
 
-        </div>
-*/
