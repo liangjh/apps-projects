@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import { Button, Spinner, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button, Spinner, Form, OverlayTrigger, 
+         Tooltip, Container, Row, Col, Image, Navbar, Nav } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
 import ModalWindow from './ModalWindow.js';
@@ -51,7 +52,7 @@ class Spire extends React.Component {
           <ModalWindow currentspire={this.props} show={this.state.modalShow} onHide={this.hideModal} />
       </div>
     );
-  }
+  }gcs
 }
 
 // Handles generating a new spire
@@ -64,9 +65,9 @@ class GenerateForm extends React.Component {
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit}>
-        <Button variant='primary' size='lg' type='submit' onClick={this.props.onClick}>Generate</Button>
-      </form>
+      <Form inline onSubmit={this.handleSubmit} method="get">
+        <Button variant='primary' type='submit' onClick={this.props.onClick}>Generate Trumpspire</Button>
+      </Form>
     );
   }
 }
@@ -84,13 +85,21 @@ class SearchForm extends React.Component {
 
   render() {
     return(
+      <Form inline onSubmit={this.handleSubmit} method="get">
+        <Form.Control type="text" placeholder="Search" className="mr-sm-2" id="q" name="q"/>
+        <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search</Button>
+      </Form>
+    );
+  }
+}
+
+/*
       <form onSubmit={this.handleSubmit} method='get'>
         <Form.Control size='lg' type='text' id='q' name='q'/>
         <Button variant='primary' size='lg' type='submit' onClick={this.props.onClick}>Search</Button>    
       </form>
-    );
-  }
-}
+
+*/
 
 class App extends React.Component {
 
@@ -133,12 +142,40 @@ class App extends React.Component {
   componentDidMount() { this.loadRecents(); }
 
   render() {
+
+    let showsearch = (this.state.searchspires.length > 0);
+    let showgenrtd = !showsearch && (this.state.searchspires.length > 0);
+    let showrecent = !showsearch && !showgenrtd && (this.state.recentspires.length > 0)
+
     return (
-        <div className="container-fluid">
-         
+      <div>
+        <Navbar bg="light" variant="light" fluid>
+          <img src="trumpspired-logo_64x100.png" height="50" width="32"/>&nbsp;&nbsp;
+          { this.state.loading ? <Spinner animation='border' role='status'/> : null }              
+          <SearchForm onSubmit={this.handleSearchResults} onClick={this.spinnerOn}/>&nbsp;&nbsp;
+          <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/>
+        </Navbar>
+        <Container fluid className="noPadding">
+          <Row className="noMargin">
+            <Col className="noPadding">{ showsearch ? <SpiresGenerated spires={this.state.searchspires} /> : null }</Col>
+          </Row>
+          <Row className="noMargin">
+            <Col className="noPadding">{ showgenrtd ? <SpiresGenerated spires={this.state.genspires} /> : null }</Col>
+          </Row>
+          <Row className="noMargin">
+            <Col className="noPadding">{ showrecent ?  <SpiresGenerated spires={this.state.recentspires} /> : null }</Col>          
+          </Row>
+        </Container>
+      </div>
+    );
+  }
+}
+
+export default App;
+/*
+        <div className="container-fluid">         
           <div className="container-fluid">
               <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/> 
-              { this.state.loading ? <Spinner animation='border' role='status'/> : null }
           </div>
           <div className="container-fluid">
               <SearchForm onSubmit={this.handleSearchResults} onClick={this.spinnerOn}/>
@@ -154,8 +191,4 @@ class App extends React.Component {
           </div>
 
         </div>
-    );
-  }
-}
-
-export default App;
+*/
