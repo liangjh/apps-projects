@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Button, Spinner, Form, OverlayTrigger, 
-         Tooltip, Container, Row, Col, Image, Navbar, Nav } from 'react-bootstrap';
+         Tooltip, Container, Row, Col, Image, Navbar, Nav, FormControl } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
 import ModalWindow from './ModalWindow.js';
@@ -86,7 +86,7 @@ class SearchForm extends React.Component {
   render() {
     return(
       <Form inline onSubmit={this.handleSubmit} method="get">
-        <Form.Control type="text" placeholder="Search" className="mr-sm-2" id="q" name="q"/>
+        <FormControl type="text" placeholder="Search" className="mr-sm-2" id="q" name="q"/>
         <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search</Button>
       </Form>
     );
@@ -143,27 +143,25 @@ class App extends React.Component {
 
   render() {
 
-    let showsearch = (this.state.searchspires.length > 0);
-    let showgenrtd = !showsearch && (this.state.searchspires.length > 0);
-    let showrecent = !showsearch && !showgenrtd && (this.state.recentspires.length > 0)
-
     return (
       <div>
         <Navbar bg="light" variant="light" fluid>
-          <img src="trumpspired-logo_64x100.png" height="50" width="32"/>&nbsp;&nbsp;
-          { this.state.loading ? <Spinner animation='border' role='status'/> : null }              
+          <Navbar.Brand href="#">
+            <img src="trumpspired-logo_64x100.png" height="50" width="32"/>&nbsp;&nbsp;
+          </Navbar.Brand>
           <SearchForm onSubmit={this.handleSearchResults} onClick={this.spinnerOn}/>&nbsp;&nbsp;
-          <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/>
+          <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/>          
+          { this.state.loading ? <Spinner animation='border' role='status'/> : null }              
         </Navbar>
         <Container fluid className="noPadding">
           <Row className="noMargin">
-            <Col className="noPadding">{ showsearch ? <SpiresGenerated spires={this.state.searchspires} /> : null }</Col>
+            <Col className="noPadding">{ (this.state.genspires.length > 0) ? <SpiresGenerated spires={this.state.genspires} /> : null }</Col>
           </Row>
           <Row className="noMargin">
-            <Col className="noPadding">{ showgenrtd ? <SpiresGenerated spires={this.state.genspires} /> : null }</Col>
+            <Col className="noPadding">{ (this.state.searchspires.length > 0) ? <SpiresGenerated spires={this.state.searchspires} /> : null }</Col>
           </Row>
           <Row className="noMargin">
-            <Col className="noPadding">{ showrecent ?  <SpiresGenerated spires={this.state.recentspires} /> : null }</Col>          
+            <Col className="noPadding">{ (this.state.searchspires.length > 0) ? null : <SpiresGenerated spires={this.state.recentspires} /> }</Col>          
           </Row>
         </Container>
       </div>
