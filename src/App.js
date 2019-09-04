@@ -7,13 +7,10 @@ import Masonry from 'react-masonry-component';
 import axios from 'axios';
 import ModalWindow from './ModalWindow.js';
 
-// Passed in by server process
-// These are settings, but constant for the duration of the application
-let PERSONA = process.env.REACT_APP_PERSONA
-PERSONA = (PERSONA == null ? 'Trump' : PERSONA)
-let API_URL = process.env.REACT_APP_API_URL;
-API_URL = (API_URL == null ? 'http://localhost:8080' : API_URL)
-
+// Passed in by starting server; treat as constants within application
+let PERSONA = process.env.REACT_APP_PERSONA; PERSONA = (PERSONA == null ? 'Trump' : PERSONA)
+let API_URL = process.env.REACT_APP_API_URL; API_URL = (API_URL == null ? 'http://localhost:8080' : API_URL)
+let MAX_GEN = process.env.REACT_APP_MAX_GEN; MAX_GEN = (MAX_GEN == null ? 5 : MAX_GEN);
 
 // Render generated spires
 class SpiresGenerated extends React.Component {
@@ -58,16 +55,31 @@ class Spire extends React.Component {
 
 // Handles generating a new spire
 class GenerateForm extends React.Component {
+
+  state = {
+    gencount: 1
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
+    this.incremGenCount();
     const resp = await axios.get(`${API_URL}/api/generate`, {params: {persona: PERSONA}});
     this.props.onSubmit(resp.data);
+  }
+
+  incremGenCount = () => {
+    this.setState(prevState => ({gencount: this.state.gencount + 1}));
   }
 
   render() {
     return(
       <Form inline onSubmit={this.handleSubmit} method="get">
-        <Button variant='primary' size="lg" type='submit' onClick={this.props.onClick}>Robot, Generate New Trumpspire!</Button>
+        <Button variant='primary' size="lg" type='submit' 
+              onClick={this.props.onClick} 
+              disabled={this.state.gencount > MAX_GEN}>
+              Generate New Trumpspire!
+        </Button>&nbsp;&nbsp;
+        {(this.state.gencount > MAX_GEN) ? <i><small><font color="red">Maximum of {MAX_GEN} allowed.</font></small></i> : null }
       </Form>
     );
   }
@@ -188,6 +200,20 @@ class App extends React.Component {
           </Row>
           <Row className="noMargin">
             <Col className="noPadding">{ (this.state.searchspires.length > 0) ? null : <SpiresGenerated spires={generatedandrecent} /> }</Col>          
+          </Row>
+          <Row className="noMargin">
+            <Col>
+              <hr width='100%'/>
+              About Trumpspired&nbsp;&nbsp;|&nbsp;&nbsp;
+              About Markov Models&nbsp;&nbsp;|&nbsp;&nbsp;
+              <a href="http://twitter.com/trumpspired">Follow @Trumpspired</a><br/>
+              <small>
+              <b>A Production of Trellis Media LLC. &copy;</b><br/><br/>
+              <i>** Note: the inspirational (Trumpspirational) quotes generated above are based on actual speeches and tweets delivered by Donald Trump <br/>(45th President of the USA), but are <b>not actual quotes</b>. We thought we'd add a moment (or several moments) of levity to your day. </i>
+              </small>
+              <hr width='100%'/>
+              <br/><br/><br/><br/>
+            </Col>
           </Row>
         </Container>
       </div>
