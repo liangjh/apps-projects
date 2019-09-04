@@ -105,6 +105,7 @@ html,body{
   margin-right: 5px;
   margin-top: 5pm;
   text-align: center;
+  cursor: pointer;
 }
 
 .imgstyle {

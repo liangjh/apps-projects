@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal, Container, Row, Col } from 'react-bootstrap'
 import './App.css';
-import {FacebookShareButton, TwitterShareButton, FacebookIcon, TwitterIcon} from 'react-share'
+import {FacebookShareButton, TwitterShareButton, PinterestShareButton, 
+        FacebookIcon, TwitterIcon, PinterestIcon} from 'react-share'
 
 // Constants / passed from system
 let ACCT_NAME = process.env.REACT_APP_ACCT_NAME; ACCT_NAME = (ACCT_NAME == null ? "@TrumpSpired" : ACCT_NAME);
@@ -31,18 +32,23 @@ class ModalWindow extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col>
-                  <div class="shareNetwork">
+              <Col><br/>
+                  <div className="shareNetwork">
                     <FacebookShareButton url={this.props.currentspire.img_file} quote={msgtext} >
-                      <FacebookIcon size={45} />
+                      <FacebookIcon size={45} round/>
                     </FacebookShareButton>
                   </div>
-                  <div class="shareNetwork">
+                  <div className="shareNetwork">
                     <TwitterShareButton url={this.props.currentspire.img_file} title={msgtext} >
-                      <TwitterIcon size={45} />
+                      <TwitterIcon size={45} round/>
                     </TwitterShareButton>
                   </div>
-                  <div class="shareNetwork">
+                  <div className="shareNetwork">
+                    <PinterestShareButton url={this.props.currentspire.img_file} media={this.props.currentspire.img_file} description={msgtext} >
+                      <PinterestIcon size={45} round/>
+                    </PinterestShareButton>
+                  </div>
+                  <div className="shareNetwork">
                   <i>(click on icons to share)</i>
                   </div>
               </Col>
