@@ -127,7 +127,7 @@ class SearchForm extends React.Component {
     return(
       <Form inline onSubmit={this.handleSubmit} method="get">
         <FormControl type="text" placeholder="Search all Trumpspires" className="mr-sm-2" id="q" name="q" value={this.state.q} onChange={this.handleInputChange}/>
-        <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search Trumpspires</Button>&nbsp;
+        <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search</Button>&nbsp;
         {this.props.hasSearchResults ? <Button variant='outline-primary' onClick={this.handleClear}>Clear Search</Button>: null}
       </Form>
     );
