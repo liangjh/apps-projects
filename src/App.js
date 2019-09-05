@@ -203,8 +203,8 @@ class App extends React.Component {
             </Col>
             <Col lg>
             <h1>Trumpspired</h1><br/>
-            <h4>Inspirational sayings from the <a href="https://en.wikipedia.org/wiki/Donald_Trump">45th President of the United States</a></h4>
-            <p>We've taken a bunch of the President's tweets and speeches and built a Markov matrix.  <br/>Each Trumpspire is an original work that will leave you inspired -  <b>*Trumpspired*</b>.</p>
+            <h4>Sayings inspired by the <a href="https://en.wikipedia.org/wiki/Donald_Trump">45th President of the United States</a></h4>
+            <p>We've taken a bunch of 45's tweets and speeches and built a Markov matrix.  <br/>Each Trumpspire is an original work that will leave you inspired.  <b>*Trumpspired*</b>.</p>
             <GenerateForm onSubmit={this.addNewSpire} onClick={this.spinnerOn}/>                      
             </Col>
           </Row>
@@ -226,7 +226,7 @@ class App extends React.Component {
               <a href="http://twitter.com/trumpspired">Follow @Trumpspired</a><br/>
               <small>
               <b>A Production of Trellis Media LLC. &copy;</b><br/><br/>
-              <i>** Note: the inspirational (Trumpspirational) quotes generated above are based on actual speeches and tweets delivered by Donald Trump <br/>(45th President of the USA), but are <b>not actual quotes</b>. We thought we'd add a moment (or several moments) of levity to your day. </i>
+              <i>** Note: the quotes generated above are based on actual speeches and tweets delivered by Donald Trump, <br/> but are <b>not actual things he has said.</b> We thought we'd add a moment (or several moments) of levity to your day. </i>
               </small>
               <hr width='100%'/>
               <br/><br/><br/><br/>
