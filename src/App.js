@@ -5,14 +5,19 @@ import { Button, Spinner, Form, OverlayTrigger,
          FormControl, Jumbotron } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
-import ModalWindow from './ModalWindow.js';
+// import ModalWindow from './ModalWindow.js';
 import ReactGA from 'react-ga'
+import {FacebookShareButton, TwitterShareButton, PinterestShareButton, 
+        FacebookIcon, TwitterIcon, PinterestIcon} from 'react-share'
+
 
 // Passed in by starting server; treat as constants within application
-let PERSONA = process.env.REACT_APP_PERSONA; PERSONA = (PERSONA == null ? 'Trump' : PERSONA)
-let API_URL = process.env.REACT_APP_API_URL; API_URL = (API_URL == null ? 'http://localhost:8080' : API_URL)
-let MAX_GEN = process.env.REACT_APP_MAX_GEN; MAX_GEN = (MAX_GEN == null ? 5 : MAX_GEN);
-let GA_KEY  = process.env.REACT_APP_GA_KEY;  GA_KEY  = (GA_KEY  == null ? 'UA-147177121-1' : GA_KEY);
+let PERSONA   = process.env.REACT_APP_PERSONA; PERSONA = (PERSONA == null ? 'Trump' : PERSONA)
+let API_URL   = process.env.REACT_APP_API_URL; API_URL = (API_URL == null ? 'http://localhost:8080' : API_URL)
+let MAX_GEN   = process.env.REACT_APP_MAX_GEN; MAX_GEN = (MAX_GEN == null ? 5 : MAX_GEN);
+let GA_KEY    = process.env.REACT_APP_GA_KEY;  GA_KEY  = (GA_KEY  == null ? 'UA-147177121-1' : GA_KEY);
+let ACCT_NAME = process.env.REACT_APP_ACCT_NAME; ACCT_NAME = (ACCT_NAME == null ? "@TrumpSpired" : ACCT_NAME);
+
 
 // Initialize hook to google analytics 
 ReactGA.initialize(GA_KEY);
@@ -29,40 +34,37 @@ class SpiresGenerated extends React.Component {
 }
 
 class Spire extends React.Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      modalShow: false
-    }
-  }
-
-  showModal = () => { 
-    try { ReactGA.modalview('/app/detail'); } catch(err) {console.log('error sending GA event');}
-    this.setState(prevState => ({modalShow: true  })); 
-  }
-
-  hideModal = () => { 
-    this.setState(prevState => ({modalShow: false })); 
-  }
-
+  
   render() {
     // const util = require('util');
     // console.log('current spire: '+ util.inspect(this.props));
+    let msgtext = `${this.props.text} ${ACCT_NAME}`;
     return(
-      <div key={this.props.guid} className="tile">
-          <OverlayTrigger key='right' placement='right' overlay={
-            <Tooltip id={`tooltip-${this.props.guid}`}>{this.props.text}</Tooltip>
-          }>
-            <a href="#" onClick={this.showModal}>
-              <img src={this.props.img_file} className="imgstyle" alt={this.props.text}/>
-            </a>
-          </OverlayTrigger>
-          <ModalWindow currentspire={this.props} show={this.state.modalShow} onHide={this.hideModal} />
+      <div key={this.props.guid} className="tilecontainer">
+          <img src={this.props.img_file} className="imgstyle tileimage" alt={this.props.text}/>
+ 
+          <div className="topright">
+            <div className="shareNetwork">
+              <FacebookShareButton url={this.props.img_file} quote={msgtext} >
+                <FacebookIcon size={25} round/>
+              </FacebookShareButton>
+            </div>
+            <div className="shareNetwork">
+              <TwitterShareButton url={this.props.img_file} title={msgtext} >
+                <TwitterIcon size={25} round/>
+              </TwitterShareButton>
+            </div>
+            <div className="shareNetwork">
+              <PinterestShareButton url={this.props.img_file} media={this.props.img_file} description={msgtext} >
+                <PinterestIcon size={25} round/>
+              </PinterestShareButton>
+            </div>
+          </div>
       </div>
     );
-  }gcs
+  }
 }
+
 
 // Handles generating a new spire
 class GenerateForm extends React.Component {

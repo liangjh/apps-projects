@@ -77,16 +77,48 @@ html,body{
 	align-content: stretch;
 	flex-grow: 1;
 }
-.tile{
+
+.tilecontainer {
 	margin: 4px;
-/*
-  img {
-        box-shadow: 0 1px 1px 2px rgba(0,0,0, .15);
-        border-radius: 10px;
-        width: 100%;
-  };
-*/
+  position: relative;
+  width: 350px;
 }
+
+.tileimage {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.topright {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.tilecontainer:hover .tileimage {
+  opacity: 0.7;
+}
+
+.tilecontainer:hover .topright {
+  opacity: 1;
+}
+
+.text {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+
 
 .jumbotron {
   margin: 0;
