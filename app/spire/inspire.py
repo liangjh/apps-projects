@@ -55,7 +55,7 @@ def inspire_latest(persona: str, config: dict={}) -> list:
     '''
     Return the latest spires to be generated, for the current persona
     '''
-    latest = db_tspire.tspire_latest(persona, num_spires=30)
+    latest = db_tspire.tspire_latest(persona, num_spires=60)
     results = latest.to_dict('records')
     for res in results:
         res['img_file'] = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES']['image_server_base'], res['img_file'])
