@@ -227,9 +227,7 @@ class App extends React.Component {
                 <Popover id="popover-about">
                   <Popover.Title as="h3">About Trumpspired</Popover.Title>
                   <Popover.Content>
-                    <p>
-                      Trumpspired was created in jest and good fun, as a bot that can emulate the style of our 45th President.  45 is the most prolific tweeter to occupy high office, and his spontaneous, incoherent speaking style lends well to automated processes (more on this in the Markov Model link).</p>  <p>Each trumpspire created is new.  We immortalize these sayings with inspirational images framed in the manner of inspirational posters from the 1990's.  </p><p>Enjoy, and feel free to share on social media.</p>
-                    </p>
+                    <p>Trumpspired was created in jest and good fun, as a bot that can emulate the style of our 45th President.  45 is the most prolific tweeter to occupy high office, and his spontaneous, incoherent speaking style lends well to automated processes (more on this in the Markov Model link).</p>  <p>Each trumpspire created is new.  We immortalize these sayings with inspirational images framed in the manner of inspirational posters from the 1990's.  </p><p>Enjoy, and feel free to share on social media.</p>
                   </Popover.Content>
                 </Popover>
               }>
