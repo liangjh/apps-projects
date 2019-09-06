@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Button, Spinner, Form, OverlayTrigger, 
          Tooltip, Container, Row, Col, Navbar, 
-         FormControl, Jumbotron } from 'react-bootstrap';
+         FormControl, Jumbotron, Popover } from 'react-bootstrap';
 import Masonry from 'react-masonry-component';
 import axios from 'axios';
 // import ModalWindow from './ModalWindow.js';
@@ -223,8 +223,31 @@ class App extends React.Component {
           <Row className="noMargin">
             <Col>
               <hr width='100%'/>
-              About Trumpspired&nbsp;&nbsp;|&nbsp;&nbsp;
-              About Markov Models&nbsp;&nbsp;|&nbsp;&nbsp;
+              <OverlayTrigger trigger ="hover" placement="top" overlay={
+                <Popover id="popover-about">
+                  <Popover.Title as="h3">About Trumpspired</Popover.Title>
+                  <Popover.Content>
+                    <p>
+                      Trumpspired was created in jest and good fun, as a bot that can emulate the style of our 45th President.  45 is the most prolific tweeter to occupy high office, and his spontaneous, incoherence speaking style lends well to automated processes (more on this in the Markov Model link).  Each trumpspire created is new.  We immortalize these sayings with inspirational images framed in the manner of inspirational posters from the 1990's.  Enjoy, and feel free to share on social media.
+                    </p>
+                  </Popover.Content>
+                </Popover>
+              }>
+                <a href="javascript:void(0);">About Trumpspired</a>
+              </OverlayTrigger>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+              <OverlayTrigger trigger ="hover" placement="top" overlay={
+                <Popover id="popover-markov">
+                  <Popover.Title as="h3">About Markov Models</Popover.Title>
+                  <Popover.Content>
+                  <i>Coming soon</i>
+                  </Popover.Content>
+                </Popover>
+              }>
+                <a href="javascript:void(0);">About Markov Models</a>
+              </OverlayTrigger>
+
+                &nbsp;&nbsp;|&nbsp;&nbsp;
               <a href="http://twitter.com/trumpspired">Follow @Trumpspired</a><br/>
               <small>
               <b>A Production of Trellis Media LLC. &copy;</b><br/><br/>
