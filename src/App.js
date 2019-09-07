@@ -70,7 +70,7 @@ class Spire extends React.Component {
 class GenerateForm extends React.Component {
 
   state = {
-    gencount: 1
+    gencount: 0
   }
 
   handleSubmit = async (event) => {
@@ -113,7 +113,7 @@ class SearchForm extends React.Component {
     const searchq = event.target.elements.q.value;
     try { ReactGA.pageview(`/app/search?q=${searchq}`); } catch(err) {console.log('error sending GA event');}
     const resp = await axios.get(`${API_URL}/api/search`, {params: {q: searchq, persona: PERSONA}})
-    this.props.onSubmit(resp.data)
+    this.props.onSubmit(searchq, resp.data);
   }  
 
   handleClear = (event) => {
@@ -130,7 +130,7 @@ class SearchForm extends React.Component {
       <Form inline onSubmit={this.handleSubmit} method="get">
         <FormControl type="text" placeholder="Search all Trumpspires" className="mr-sm-2" id="q" name="q" value={this.state.q} onChange={this.handleInputChange}/>
         <Button variant="outline-primary" type="submit" onClick={this.props.onClick}>Search</Button>&nbsp;
-        {this.props.hasSearchResults ? <Button variant='outline-primary' onClick={this.handleClear}>Clear Search</Button>: null}
+        {this.state.q != null ? <Button variant='outline-primary' onClick={this.handleClear}>Clear Search</Button>: null}
       </Form>
     );
   }
