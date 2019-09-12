@@ -26,7 +26,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     # TODO: pixabay dynamic search may not be needed
     # Retrieve image using pixabay API integration
     # Otherwise, use existing image library (i.e. alt between dynamic search and general inspire)
-    img = img_persist.predl_image_random(config['PERSIST_MEDIUM'], config['IMAGE_PERSIST_PROPERTIES'])
+    img = img_persist.predl_image_random(config['PERSIST_MEDIUM'], config['IMAGE_PERSIST_PROPERTIES'][persona])
     if title is not None:
         img_results = pixabay.search_images(title, config['PIXABAY_API_KEY'])
         if len(img_results) > 0:
@@ -37,13 +37,13 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
                                     title=(title.upper() if title is not None else title), quote=text)
 
     # Save image + information
-    persisted_info = img_persist.save_image(poster_img, config['PERSIST_MEDIUM'], config['IMAGE_PERSIST_PROPERTIES'])
+    persisted_info = img_persist.save_image(poster_img, config['PERSIST_MEDIUM'], config['IMAGE_PERSIST_PROPERTIES'][persona])
     db_tspire.tspire_save(guid=persisted_info['guid'], persona=persona, img_file=persisted_info['img_file'],
                           title=title, text=text)
     
     # Usage logging  (if exists)
     # Return image locations + metadata (in dict)
-    persisted_info['img_file']  = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES']['image_server_base'], persisted_info['img_file'])
+    persisted_info['img_file']  = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES'][persona]['image_server_base'], persisted_info['img_file'])
     addl_info = {'persona': persona, 'title': title, 'text': text}
     return {**persisted_info, **addl_info}
 
@@ -53,7 +53,7 @@ def inspire_latest(persona: str, config: dict={}) -> list:
     '''
     Return the latest spires to be generated, for the current persona
     '''
-    latest = db_tspire.tspire_latest(persona, num_spires=60)
+    latest = db_tspire.tspire_latest(persona, num_spires=45)
     results = latest.to_dict('records')
     for res in results:
         res['img_file'] = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES']['image_server_base'], res['img_file'])
@@ -78,7 +78,7 @@ def inspire_search(persona: str, q: str, config: dict={}) -> list:
     search_results = db_tspire.tspire_search(persona, q, num_spires=25)
     results = search_results.to_dict('records')
     for res in results:
-        res['img_file'] = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES']['image_server_base'], res['img_file'])
+        res['img_file'] = '{}{}'.format(config['IMAGE_PERSIST_PROPERTIES'][persona]['image_server_base'], res['img_file'])
     return results
 
 

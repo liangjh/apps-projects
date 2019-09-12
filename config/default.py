@@ -7,6 +7,10 @@ MARKOV_MODELS = {
     'Trump': [
         {'name': 'model-speech', 'filename': 'trumpspire-model-01.gz', 'max_chars': 200},
         {'name': 'model-tweet',  'filename': 'trumpspire-model-02.gz', 'max_chars': 150}
+    ],
+    'Brexit': [
+        {'name': 'model-tweet-boris', 'filename': 'brexitspire-model-borisjohnson.gz', 'max_chars': 150},
+        {'name': 'model-tweet-nigel', 'filename': 'brexitspire-model-nigel_farage.gz', 'max_chars': 150}
     ]
 }
 
@@ -47,6 +51,21 @@ POSTER_PARAMS = {
         'final_image_width': 450,
         'signature': '@TrumpSpired',
         'signature_url': '(trumpspired.com)'
+    },
+    'Brexit': {
+        'imgbgrgb': (0,0,0),
+        'textrgb': (197,179,88),
+        'margin_px': 25,
+        'approx_char_px': 15,
+        'font_ttf_loc': 'stymie-bold-bt.ttf',
+        'font_size_title': 45,
+        'font_size_body': 25,
+        'base_gap_px': 10,
+        'text_start_y_px': 70,
+        'text_gap_y_px': 30,
+        'final_image_width': 450,
+        'signature': '@BrexitSpired',
+        'signature_url': '(brexitspired.com)'
     }
 }
 
