@@ -113,7 +113,7 @@ class SearchForm extends React.Component {
     const searchq = event.target.elements.q.value;
     try { ReactGA.pageview(`/app/search?q=${searchq}`); } catch(err) {console.log('error sending GA event');}
     const resp = await axios.get(`${API_URL}/api/search`, {params: {q: searchq, persona: PERSONA}})
-    this.props.onSubmit(searchq, resp.data);
+    this.props.onSubmit(resp.data);
   }  
 
   handleClear = (event) => {
