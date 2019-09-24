@@ -1,6 +1,6 @@
 
 #  All supported personas
-PERSONAS = ['Trump']
+PERSONAS = ['Trump', 'Brexit']
 
 # Trump corpus calibrated markov models - based on (1) speeches, (2) tweets
 MARKOV_MODELS = {
@@ -20,13 +20,17 @@ TOPIC_PARSE_RULES = [
     #  If the named entity is a single token and is a VERB, the also ignore
     {'type': 'ent',
      'lambda': (lambda ent,nlp: ent.label_ not in ['PERSON', 'NORP', 'DATE',
-                        'TIME', 'PERCENT', 'MONEY', 'CARDINAL'] and not
-                        (len(ent.text.split()) <= 1 and nlp(ent.text.lower())[0].pos_ == 'VERB'))},
+                        'TIME', 'PERCENT', 'MONEY', 'CARDINAL'] 
+                        and not (len(ent.text.split()) <= 1 and nlp(ent.text.lower())[0].pos_ == 'VERB') 
+                        and not ent.startswith('\'') and not ent.startswith('\"'))},
     #  Token-based topics, by priority
     #  This constructs tokens according to the rules below.  
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ in ['ROOT', 'dobj'])},
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ not in ['PRON', 'ADJ' ,'DET'])},
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ == 'VERB' and tok.dep_ == 'ROOT')}
+    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ in ['ROOT', 'dobj'] 
+                                    and not tok.startswith('\'') and not tok.startswith('\"'))},
+    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ not in ['PRON', 'ADJ' ,'DET'] 
+                                    and not tok.startswith('\'') and not tok.startswith('\"'))},
+    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ == 'VERB' and tok.dep_ == 'ROOT' 
+                                    and not tok.startswith('\'') and not tok.startswith('\"'))}
 ]
 
 #  Image search / sourcing API - not env specific
