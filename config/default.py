@@ -56,8 +56,8 @@ POSTER_PARAMS = {
         'signature_url': '(trumpspired.com)'
     },
     'Brexit': {
-        'imgbgrgb': (0,0,0),
-        'textrgb': (197,179,88),
+        'imgbgrgb': (9,14,158),
+        'textrgb': (245,245,245),
         'margin_px': 25,
         'approx_char_px': 15,
         'font_ttf_loc': 'stymie-bold-bt.ttf',
