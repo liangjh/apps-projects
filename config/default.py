@@ -21,7 +21,8 @@ TOPIC_PARSE_RULES = [
     {'type': 'ent',
      'lambda': (lambda ent,nlp: ent.label_ not in ['PERSON', 'NORP', 'DATE',
                         'TIME', 'PERCENT', 'MONEY', 'CARDINAL'] 
-                        and not (len(ent.text.split()) <= 1 and nlp(ent.text.lower())[0].pos_ == 'VERB'))},
+                        and not (len(ent.text.split()) <= 1 and nlp(ent.text.lower())[0].pos_ == 'VERB')
+                        and not ent.text.startswith('\'') and not ent.text.startswith('\"'))},
     #  Token-based topics, by priority
     #  This constructs tokens according to the rules below.  
     {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ in ['ROOT', 'dobj'] 
