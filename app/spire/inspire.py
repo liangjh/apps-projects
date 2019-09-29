@@ -29,7 +29,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     img = img_persist.predl_image_random(config['PERSIST_MEDIUM'], config['IMAGE_PERSIST_PROPERTIES'][persona])
     if title is not None:
         img_results = pixabay.search_images(title, config['PIXABAY_API_KEY'])
-        if len(img_results) > 0:
+        if len(img_results) > 5:  #  need to have more than a handful of results
             img = pixabay.download_image(img_results[random.randint(0, len(img_results)-1)])
 
     # Generate poster image, save to location
