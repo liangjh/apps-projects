@@ -1,27 +1,27 @@
 {
-  "short_name": "Trumpspired",
-  "name": "Trumpspired",
+  "short_name": "Brexitspired",
+  "name": "Brexitspired",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "favicon-brexitspired.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "trumpspired-logo_160x250.png",
+      "src": "brexitspired-logo_64x64.png",
       "type": "image/png",
-      "sizes": "160x250"
+      "sizes": "64x64"
     },
     {
-      "src": "trumpspired-logo_192x300.png",
+      "src": "brexitspired-logo_128x128.png",
       "type": "image/png",
-      "sizes": "192x300"
+      "sizes": "128x128"
     },
     {
-      "src": "trumpspired-logo_512x800.png",
+      "src": "brexitspired-logo_129x192.png",
       "type": "image/png",
-      "sizes": "512x800"
-    },
+      "sizes": "192x192"
+    }
   ],
   "start_url": ".",
   "display": "standalone",
