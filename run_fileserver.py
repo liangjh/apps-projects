@@ -16,3 +16,9 @@ os.chdir(directory)
 server = http.server.ThreadingHTTPServer(('',port), http.server.SimpleHTTPRequestHandler)
 server.serve_forever()
 
+#
+#  Execution Instructions: 
+#  ----------------------------------------
+#  python run_fileserver.py (port) (root-directory)
+#  python run_fileserver.py 8081 /Users/liangjh/Workspace/tspire-api/data/images/generated/
+# 
