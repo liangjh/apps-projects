@@ -25,12 +25,15 @@ TOPIC_PARSE_RULES = [
                         and not ent.text.startswith('\'') and not ent.text.startswith('\"'))},
     #  Token-based topics, by priority
     #  This constructs tokens according to the rules below.  
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ in ['ROOT', 'dobj'] 
-                                    and not tok.text.startswith('\'') and not tok.text.startswith('\"'))},
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ not in ['PRON', 'ADJ' ,'DET'] 
-                                    and not tok.text.startswith('\'') and not tok.text.startswith('\"'))},
-    {'type': 'tok', 'lambda': (lambda tok,nlp: tok.pos_ == 'VERB' and tok.dep_ == 'ROOT' 
-                                    and not tok.text.startswith('\'') and not tok.text.startswith('\"'))}
+    {'type': 'tok', 
+     'lambda': (lambda tok,nlp: tok.pos_ in ['NOUN', 'PROPN'] and tok.dep_ in ['ROOT', 'dobj'] 
+                        and not tok.text.startswith('\'') and not tok.text.startswith('\"'))},
+    {'type': 'tok', 
+     'lambda': (lambda tok,nlp: tok.dep_ in ['nsubj', 'nsubjpass'] and tok.pos_ not in ['PRON', 'ADJ' ,'DET'] 
+                        and not tok.text.startswith('\'') and not tok.text.startswith('\"'))},
+    {'type': 'tok', 
+     'lambda': (lambda tok,nlp: tok.pos_ == 'VERB' and tok.dep_ == 'ROOT' 
+                        and not tok.text.startswith('\'') and not tok.text.startswith('\"'))}
 ]
 
 #  Image search / sourcing API - not env specific
