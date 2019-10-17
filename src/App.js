@@ -207,8 +207,8 @@ class App extends React.Component {
         'splash': <div>
                     <h1>Brexitspired</h1><br/>
                     <h4>Sayings inspired by the twin heroes of Brexit: <a href="https://en.wikipedia.org/wiki/Boris_Johnson">Boris</a> and <a href="https://en.wikipedia.org/wiki/Nigel_Farage">Nigel</a></h4>
-                    <p>We've built a bot trained on the twitter streams of Boris Johnson and Nigel Farage, the two most visible champions of the Leave initiative.
-                      Each Brexit is an original work that will leave you inspired.  <b>*BrexitSpired</b></p>
+                    <p>We've built a bot trained on the twitter streams of Boris and Nigel, the twin champions of Leave.
+                      Each Brexitspire is an original work that will leave you inspired.  <b>*Brexitspired</b></p>
                   </div>,
         'about': <div>
                     <p>Brexitspired is a bot that emulates the tweet style of the twin champions of the Brexit movement.
