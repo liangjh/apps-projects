@@ -20,7 +20,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     # Retrieve markov model(s)
     # Generate sensible quote (alt. between the two models)
     text = spiremodel.markov_generate(persona, config)
-    topics = spiremodel.sentence_topic_extract(text, config['TOPIC_PARSE_RULES'])
+    topics = spiremodel.sentence_topic_extract(text, random.shuffle(config['TOPIC_PARSE_RULES'])) # randomize ruleset
     title = topics[0].text if len(topics) > 0 else None
 
     # TODO: pixabay dynamic search may not be needed
