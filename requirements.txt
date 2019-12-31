@@ -1,0 +1,7 @@
+# Assembly 
+# ---------------------------
+assembly
+scikit-learn==0.22
+requests
+pandas==0.23.4
+gunicorn
