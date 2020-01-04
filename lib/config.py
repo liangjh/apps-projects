@@ -39,34 +39,19 @@ class BaseConfig(object):
     """
 
     #: Site's name or Name of the application
-    APPLICATION_NAME = "Assembly"
-
+    APPLICATION_NAME = "Tweemio"
     #: The application url
     APPLICATION_URL = ""
-
     #: Version of application
     APPLICATION_VERSION = "0.0.1"
-
     #: Google Analytics ID
     GOOGLE_ANALYTICS_ID = ""
-
     #: Required to setup. This email will have SUPER USER role
     ADMIN_EMAIL = None
-
     #: The address to receive email when using the contact page
     CONTACT_EMAIL = None
-
-    #: PAGINATION_PER_PAGE : Total entries to display per page
-    PAGINATION_PER_PAGE = 20
-
-    # MAX_CONTENT_LENGTH
-    # If set to a value in bytes, Flask will reject incoming requests with a
-    # content length greater than this by returning a 413 status code
-    MAX_CONTENT_LENGTH = 2 * 1024 * 1024
-
     # To remove whitespace off the HTML result
     COMPRESS_HTML = False
-
     # Data directory
     DATA_DIR = DATA_DIR
 
@@ -93,23 +78,33 @@ class BaseConfig(object):
         "time": "hh:mm a",
         "long_datetime": "dddd, MMMM D, YYYY hh:mm a",
     }
+    
+    # -------- API (Twitter) ----------
 
-    #--------- AWS Credentials ----------
-    #: AWS Credentials
-    # AWS is used by lots of extensions
-    # For: S3, SES Mailer, flask S3.
+    TWITTER_API_CREDS = {
+        'consumer_key':        'wbz78wFd0ywcShiTvqgDUV2ry',
+        'consumer_secret':     '2qj0P3fygqa0n2LqU6M8LV485OWIAvXWEQOEVLWFNUBdKDcgjz',
+        'access_token_key':    '80578720-t7bH4zwD6Q6sUQEFeCb8211wH04Y9ul0EWECo2ofU',
+        'access_token_secret': 'PSsX8R4agpxAII9XCYHqE74KObPRWfl9tdG4Xd07olOn6'
+    }
 
-    # The AWS Access KEY
-    AWS_ACCESS_KEY_ID = ""
+    # ------- APPLICATION SETTINGS ------
 
-    # Secret Key
-    AWS_SECRET_ACCESS_KEY = ""
+    #  Groups of twitter handles to perform similarity scoring / matches for
+    TWITTER_HANDLES_GROUPS = {
+        'default': [
+            'realdonaldtrump',
+            'jimmyfallon', 'trevornoah', 'billmaher', 'stephenathome',
+            'britneyspears', 'selenagomez', 'kimkardashian', 'jtimberlake',
+            'arianagrande', 'theellenshow', 'ladygaga', 'rihanna', 'taylorswift13', 'justinbieber',
+            'katyperry', 'billgates', 'mileycyrus', 'jlo', 'kingjames', 'brunomars',
+            'chrissyteigen', 'oprah', 'drake', 'pink', 'liltunechi', 'kevinhart4real', 'elonmusk',
+            'kyliejenner', 'conanobrien', 'mariahcarey', 'davidguetta', 'jk_rowling'
+        ]
+    }
 
-    # The bucket name for S3
-    AWS_S3_BUCKET_NAME = ""
-
-    # The default region name
-    AWS_REGION_NAME = "us-east-1"
+    #  Tweets to merge into a single tweet, for model training and interpretation
+    TWEET_CONDENSE_FACTOR = 2
 
 
     #--------- DATABASES URL ----------
@@ -129,35 +124,6 @@ class BaseConfig(object):
     DB_REDIS_URL = None
 
 
-    #--------- ASSETS DELIVERY ----------
-    # ASSETS DELIVERY allows to serve static files from S3, Cloudfront or other CDN
-    # The delivery method:
-    #   - None: will use the local static files
-    #   - S3: Will use AWS S3. By default it will use the bucket name set in AWS_S3_BUCKET_NAME
-    #       When S3, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are required to upload files
-    #   - CDN: To use a CDN. ASSETS_DELIVERY_DOMAIN need to have the CDN domain
-    ASSETS_DELIVERY_METHOD = None
-
-    # Set the base domain of the CDN
-    ASSETS_DELIVERY_DOMAIN = None
-
-    #--------- SESSION ----------
-    #: SESSION
-    #: Flask-KVSession is used to save the user's session
-    #: Set the SESSION_URL by using these examples below to set KVSession
-    #: To use local session, just set SESSION_URL to None
-    #:
-    #: Redis: redis://username:password@host:6379/db
-    #: S3: s3://username:password@s3.aws.amazon.com/bucket
-    #: Google Storage: google_storage://username:password@cloud.google.com/bucket
-    #: SQL: postgresql://username:password@host:3306/db
-    #:      mysql+pysql://username:password@host:3306/db
-    #:      sqlite://
-    #: Memcached: memcache://host:port
-    #:
-    SESSION_URL = None
-
-
     #--------- STORAGE ----------
     #: STORAGE
     #: Flask-Cloudy is used to save upload on S3, Google Storage,
@@ -170,18 +136,18 @@ class BaseConfig(object):
         # You can use:
         # LOCAL, S3, GOOGLE_STORAGE, AZURE_BLOBS, CLOUDFILES
         "PROVIDER": "LOCAL",
-
+        
         #: STORAGE_KEY
         # The storage key. Leave it blank if PROVIDER is LOCAL
-        "KEY": AWS_ACCESS_KEY_ID,
+        "KEY": None,
 
         #: STORAGE_SECRET
         #: The storage secret key. Leave it blank if PROVIDER is LOCAL
-        "SECRET": AWS_SECRET_ACCESS_KEY,
+        "SECRET": None,
 
         #: STORAGE_REGION_NAME
         #: The region for the storage. Leave it blank if PROVIDER is LOCAL
-        "REGION_NAME": AWS_REGION_NAME,
+        "REGION_NAME": None,
 
         #: STORAGE_CONTAINER
         #: The Bucket name (for S3, Google storage, Azure, cloudfile)
@@ -215,67 +181,6 @@ class BaseConfig(object):
             }
         }
 
-    }
-
-    #--------- MAIL ----------
-    # To send emails
-    #
-    # from assembly import send_mail
-    # send_mail(to="user@email.com", subject="Hi", body="How are you?")
-
-    MAIL = {
-        # OPTIONS
-        #
-        # AWS SES
-        # To use AWS SES to send email
-        #:
-        #: - To use the default AWS credentials (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-        #: set MAIL_URL = "ses://"
-        #: * To use a different credential:
-        #: set MAIL_URL = "ses://{access_key}:{secret_key}@{region}"
-        #:
-        #: *** uncomment if you are using SMTP instead
-        # "URL": "ses://",
-
-        # SMTP
-        #: If you are using SMTP, it will use Flask-Mail
-        #: The uri for the smtp connection. It will use Flask-Mail
-        #: format: smtp://USERNAME:PASSWORD@HOST:PORT
-        #: with sll -> smtp+ssl://USERNAME:PASSWORD@HOST:PORT
-        #: with ssl and tls -> smtp+ssl+tls://USERNAME:PASSWORD@HOST:PORT
-        #:
-        "URL": "smtp+ssl://{username}:{password}@{host}:{port}"\
-            .format(username="", password="", host="smtp.gmail.com", port=465),
-
-        #: MAIL_SENDER - The sender of the email by default
-        #: For SES, this email must be authorized
-        "MAIL_SENDER": ADMIN_EMAIL,
-
-        #: MAIL_REPLY_TO
-        #: The email to reply to by default
-        "MAIL_REPLY_TO": ADMIN_EMAIL,
-
-        #: MAIL_TEMPLATES_DIR
-        #: files based templates
-        "TEMPLATES_DIR": os.path.join(DATA_DIR, 'mail-templates'),
-
-        #: MAIL_TEMPLATES_DICT
-        #: dict based templates 
-        # "TEMPLATES_DICT": {
-        #     "welcome.txt": """
-        #     {% block subject %}Welcome{% endblock %}
-        #     {% block body %}Welcome to the site {{name}}?{% endblock %}        
-        #     """
-        # },
-
-        #: MAIL_TEMPLATE_CONTEXT
-        #: a dict of all context to pass to the email by default
-        "TEMPLATE_CONTEXT": {
-            "params": {
-                "site_name": APPLICATION_NAME,
-                "site_url": APPLICATION_URL
-            }
-        }
     }
 
     #--------- CACHING ----------
@@ -321,7 +226,8 @@ class BaseConfig(object):
         #: 'needs refresh' page.
         "needs_refresh_message_category": "message",
     }
-    
+ 
+
 # -------------------------- ENVIRONMENT BASED CONFIG ---------------------------
 """
 The environment based config is what will be loaded.
