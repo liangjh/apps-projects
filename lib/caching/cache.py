@@ -23,10 +23,11 @@ def memoize(ttl_sec: int=None) -> types.FunctionType:
             then return from cache; otherwise initialize and place into cache
             '''
 
+
             #  Assemble key for cache
-            argkey = '_'.join([str(arg) for arg in args])
-            kwargkey = '_'.join(['{}:{}'.format(str(k), str(v)) for k,v in kwargs])
-            key = '{}__{}'.format(argkey, kwargkey)
+            argkey = ';'.join([str(arg) for arg in args])
+            kwargkey = ';'.join([f'{str(k)}:{str(v)}' for k,v in kwargs.items()])
+            key = f'{argkey};{kwargkey}'
 
             #  Cache cleanup
             if (ttl_sec is not None and key in cache_datetime.keys()):

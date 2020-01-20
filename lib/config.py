@@ -90,17 +90,20 @@ class BaseConfig(object):
 
     # ------- APPLICATION SETTINGS ------
 
-    #  Groups of twitter handles to perform similarity scoring / matches for
-    TWITTER_HANDLES_GROUPS = {
-        'default': [
-            'realdonaldtrump',
-            'jimmyfallon', 'trevornoah', 'billmaher', 'stephenathome',
-            'britneyspears', 'selenagomez', 'kimkardashian', 'jtimberlake',
-            'arianagrande', 'theellenshow', 'ladygaga', 'rihanna', 'taylorswift13', 'justinbieber',
-            'katyperry', 'billgates', 'mileycyrus', 'jlo', 'kingjames', 'brunomars',
-            'chrissyteigen', 'oprah', 'drake', 'pink', 'liltunechi', 'kevinhart4real', 'elonmusk',
-            'kyliejenner', 'conanobrien', 'mariahcarey', 'davidguetta', 'jk_rowling'
-        ]
+    #  Groups of screen_names and similarity model to apply to each group
+    SIMILARITY_COMPARISONS = {
+        'default': {
+            'screen_names': [
+                'realdonaldtrump',
+                'jimmyfallon', 'trevornoah', 'billmaher', 'stephenathome',
+                'britneyspears', 'selenagomez', 'kimkardashian', 'jtimberlake',
+                'arianagrande', 'theellenshow', 'ladygaga', 'rihanna', 'taylorswift13', 'justinbieber',
+                'katyperry', 'billgates', 'mileycyrus', 'jlo', 'kingjames', 'brunomars',
+                'chrissyteigen', 'oprah', 'drake', 'pink', 'liltunechi', 'kevinhart4real', 'elonmusk',
+                'kyliejenner', 'conanobrien', 'mariahcarey', 'davidguetta', 'jk_rowling'
+            ],
+            'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
+        }
     }
 
     #  Tweets to merge into a single tweet, for model training and interpretation

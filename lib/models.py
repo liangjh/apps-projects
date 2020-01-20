@@ -74,12 +74,11 @@ class TwmSnModel(db.Model):
     Stores the screen name model binary
     Model binary is a pickle of the respective scikit-learn model
     '''
-    screen_name = db.Column(db.String(255))
+    model_name = db.Column(db.String(255))
     version  = db.Column(db.Integer)
     active   = db.Column(db.Boolean)
     grp      = db.Column(db.String(100))
     pckl     = db.Column(db.PickleType)
-
 
 
 
