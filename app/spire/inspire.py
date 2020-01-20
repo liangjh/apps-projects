@@ -14,7 +14,7 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
     Main controller
     Generates an inspirational quotes, constructs an inspirational "poster"
     Saves images and returns a direct link to saved image
-    (+ other actions, as necessary)
+    (+ other actions, as necessary
     '''
 
     # Retrieve markov model(s)
