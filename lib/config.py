@@ -152,7 +152,7 @@ class BaseConfig(object):
         #: STORAGE_CONTAINER
         #: The Bucket name (for S3, Google storage, Azure, cloudfile)
         #: or the directory name (LOCAL) to access
-        "CONTAINER": os.path.join(DATA_DIR, "uploads"),
+        "CONTAINER": DATA_DIR, #os.path.join(DATA_DIR, "uploads"),
 
         #: STORAGE_SERVER
         #: Bool, to serve local file
@@ -251,6 +251,12 @@ class Development(BaseConfig):
     SERVER_NAME = None
     DEBUG = True
     SECRET_KEY = "PLEASE CHANGE ME"
+
+    #: DB_URL
+    #: Assembly uses Active-Alchemy to work with DB 
+    #: Postgresql: postgresql+pg8000://user:password@host:port/dbname
+    #  DB_URL = "sqlite:////%s/db.sqlite" % DATA_DIR
+    DB_URL = "postgresql+pg8000://tspire:sa1lb0at@localhost:5432/tspire"
 
 
 class Production(BaseConfig):

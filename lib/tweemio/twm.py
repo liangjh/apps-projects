@@ -7,6 +7,10 @@ from lib.tweemio import twm
 from assembly import config as asmbl_config
 
 
+class UserNotFoundException(Exception):
+    pass
+
+
 def calculate(screen_name: str, group: str='default') -> dict:
     '''
     Given twitter user screen name, calculate similarity to a selection of
@@ -27,14 +31,19 @@ def calculate(screen_name: str, group: str='default') -> dict:
     twitter_creds = asmbl_config.TWITTER_API_CREDS
     tapi = twm.TwitterApi(twitter_creds)
     
-    if (not tapi.user_exists(screen_name)):
-        return {} # Return error message
+    if (not tapi.user_exists(screen_name)): 
+        raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
 
     #  Download user timeline;  condense / merge tweets, based on settings
     tweet_timeline = tapi.timeline(screen_name)
     timeline_text = list(reversed([tli._json['full_text'] for tli in tweet_timeline])) 
     timeline_text = condense_timeline(timeline_text, condense_factor=asmbl_config.TWEET_CONDENSE_FACTOR)
     
+
+    #  Get all users associated with group
+    screen_names = asmbl_config.TWITTER_HANDLES_GROUPS[group]
+    similarity_scores = {screen_names : similarity_model() for screen_name in screen_names}
+
 
     return None
 

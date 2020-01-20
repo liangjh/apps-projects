@@ -6,3 +6,4 @@ requests
 pandas==0.23.4
 gunicorn
 python-twitter
+active-alchemy
