@@ -11,7 +11,7 @@ class UserNotFoundException(Exception):
     pass
 
 
-def calculate(config, screen_name: str, group: str='default', compare_to_screen_names: list=None) -> dict:
+def calculate(config: dict, screen_name: str, group: str='default', compare_to_screen_names: list=None) -> dict:
     '''
     Given twitter user screen name, calculate similarity to a selection of
     model-calibrated twitter handles.  There is an allowance for multiple "groups" of 
@@ -27,7 +27,7 @@ def calculate(config, screen_name: str, group: str='default', compare_to_screen_
         [7] save top-line results into database table
 
     Parameters:
-        config: assembly config object;  passing in allows us to init separately and run in notebook
+        config: assembly config object (dict-like); allows for run in notebook, etc
     '''
 
     twitter_creds = config['TWITTER_API_CREDS']

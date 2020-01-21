@@ -26,7 +26,7 @@ def mdl_multinomialnbvect_v1(grp: str, screen_name: str, tweets: list) -> pd.Dat
     #  This model is trained to classify as true or false; 
     #  We want probability of TRUE, will constitute similarity score
     y_prob = screen_mdl.predict_proba(x_vect)
-    y_true_idx  = 0 if (screen_mdl.classes_[0]) else 1
+    y_true_idx  = 0 if (screen_mdl.classes_[0]) else 1  # Which label is true? class: 0,1 
     y_prob_aligned = y_prob[:, y_true_idx]
 
 
@@ -48,7 +48,8 @@ def get_model(grp: str, model_name: str):
     Each screen name has a particular model of concern
     '''
 
-    #  There should be a single active row per screen name
+    #  There should be a single *active* row per model name
+    #  TODO: perhaps move queries like this to model object?
     model_rows = asmbl_models.TwmSnModel.query().filter(
                     asmbl_models.TwmSnModel.model_name == model_name and \
                     asmbl_models.TwmSnModel.active == True)

@@ -23,7 +23,6 @@ def memoize(ttl_sec: int=None) -> types.FunctionType:
             then return from cache; otherwise initialize and place into cache
             '''
 
-
             #  Assemble key for cache
             argkey = ';'.join([str(arg) for arg in args])
             kwargkey = ';'.join([f'{str(k)}:{str(v)}' for k,v in kwargs.items()])

@@ -107,7 +107,7 @@ class BaseConfig(object):
     }
 
     #  Tweets to merge into a single tweet, for model training and interpretation
-    TWEET_CONDENSE_FACTOR = 2
+    TWEET_CONDENSE_FACTOR = 4
 
 
     #--------- DATABASES URL ----------
