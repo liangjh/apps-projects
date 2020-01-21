@@ -1,4 +1,5 @@
 import twitter
+import re
 
 
 class TwitterApi:
@@ -33,8 +34,26 @@ class TwitterApi:
             return False
         return True
 
-    
-    def timeline(self, screen_name: str, recent: bool=True) -> list:
+
+    def timeline(self, screen_name: str, recent: bool=True, condense_factor: int=1) -> list:
+        '''
+        Returns a 'refined' timeline;  reverse ordered and condensed to the passed factor 
+        '''
+
+        tweet_timeline = timeline_raw(screen_name)
+
+        timeline_text  = list(reversed([tli._json['full_text'] for tli in tweet_timeline]))
+        timeline_text  = [' '.join([('' if (re.search(filter_regex, word) != None) else word) for word in text.split()]) for text in timeline_text]
+        timeline_text  = [t for t in timeline_text if len(t.strip()) > 0]
+
+        #  Group by condense factor (i.e. grouping multiple tweets into single tweet)
+        timeline_text = [' '.join(timeline_group) for timeline_group in
+                                zip(*[timeline_text[n::condense_factor] for n in range(0, condense_factor)])]
+
+        return timeline_text
+
+
+    def timeline_raw(self, screen_name: str, recent: bool=True) -> list:
         '''
         Retrieves a user's tweet timelines
         Excludes retweets, so only original content for the user
