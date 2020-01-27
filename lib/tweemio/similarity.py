@@ -1,4 +1,7 @@
+import re
+import spacy
 import pandas as pd
+
 from lib.caching import cache
 from assembly import models as asmbl_models
 
@@ -13,11 +16,25 @@ def mdl_multinomialnbvect_v1(grp: str, screen_name: str, tweets: list) -> pd.Dat
     Returns: pandas dataframe of probability of tweet belonging to particular author
         dataframe allows for manipulation / behavior spec further up the stack
     '''
-   
+  
+    #  Create synthetic tweet stream for model
+    #  Separate mentions from regular text tweet stream
+    #  Derive lemmatized words;  then add mentions;  this gets transformed
+
+    #  Separate mentions, to lemmatize
+    tline_text = tweets.copy()
+    # tline_text_nomention = [' '.join([('' if (re.match(r'^(@|#|http)', word) != None) else word) for word in text.split()]).strip() for text in tline_text]    
+    # tline_text_mention   = [' '.join([('' if (re.match(r'^(@|#)', word) == None) else word) for word in text.split()]).strip() for text in tline_text]
+
+    # #  Lemmatize, then reconstitute mentions with lemmatized non-mentioned text field
+    # nlp = get_nlp_basic()
+    # tline_text_nomention = [' '.join([tok.lemma_ for tok in nlp(text)]) for text in tline_text_nomention]
+    # tline_text = [nom + ' ' + mn for nom,mn in list(zip(tline_text_nomention, tline_text_mention))]
+
     #  Transform tweets to vectorizer
     #  Transform incoming tweets to vectorized values
     vect_mdl = get_model(grp=grp, model_name='transformation-countvectorizer')
-    x_vect = vect_mdl.transform(tweets)
+    x_vect = vect_mdl.transform(tline_text)
 
     #  Predict probability via model
     screen_mdl = get_model(grp=grp, model_name=screen_name)
@@ -28,7 +45,6 @@ def mdl_multinomialnbvect_v1(grp: str, screen_name: str, tweets: list) -> pd.Dat
     y_prob = screen_mdl.predict_proba(x_vect)
     y_true_idx  = 0 if (screen_mdl.classes_[0]) else 1  # Which label is true? class: 0,1 
     y_prob_aligned = y_prob[:, y_true_idx]
-
 
     #  Construct DF of predicted values
     #  Return full results
@@ -42,17 +58,28 @@ def mdl_multinomialnbvect_v1(grp: str, screen_name: str, tweets: list) -> pd.Dat
 
 
 @cache.memoize()
+def get_nlp_basic():
+    '''
+    NLP parser with most features disabled
+    We can expand this in the future to have more features if needed
+    '''
+    nlp = spacy.load("en_core_web_sm")
+    nlp.disable_pipes(*['tagger','parser','ner'])
+    return nlp
+
+
+@cache.memoize()
 def get_model(grp: str, model_name: str):
     '''
     Retrieves the appropriate calibrated model for a given "group"
     Each screen name has a particular model of concern
     '''
-
     #  There should be a single *active* row per model name
     #  TODO: perhaps move queries like this to model object?
     model_rows = asmbl_models.TwmSnModel.query().filter(
-                    asmbl_models.TwmSnModel.model_name == model_name and \
-                    asmbl_models.TwmSnModel.active == True)
+                    (asmbl_models.TwmSnModel.grp == grp) & \
+                    (asmbl_models.TwmSnModel.model_name == model_name) & \
+                    (asmbl_models.TwmSnModel.active == True))
 
     #  If DNE, will break (its okay)
     model_obj = model_rows[0].pckl

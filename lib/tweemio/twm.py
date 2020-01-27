@@ -1,11 +1,7 @@
-#  Tweemio: main controller
-#  Main controller & production implementation logic
-#
-
-import re
 import inspect
 from lib.tweemio import similarity
 from lib.tweemio import twitter
+
 
 class UserNotFoundException(Exception):
     pass
@@ -33,9 +29,7 @@ def calculate(config: dict, screen_name: str, group: str='default', compare_to_s
     if (compare_to_screen_names is None):
         compare_to_screen_names = config['SIMILARITY_COMPARISONS'][group]['screen_names']
 
-    twitter_creds = config['TWITTER_API_CREDS']
-    tapi = twitter.TwitterApi(twitter_creds)
-    
+    tapi = twitter.TwitterApi(config['TWITTER_API_CREDS'])
     if (not tapi.user_exists(screen_name)): 
         raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
 

@@ -81,5 +81,3 @@ class TwmSnModel(db.Model):
     pckl     = db.Column(db.PickleType)
 
 
-
-

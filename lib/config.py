@@ -92,15 +92,60 @@ class BaseConfig(object):
 
     #  Groups of screen_names and similarity model to apply to each group
     SIMILARITY_COMPARISONS = {
-        'default': {
+        # TODO: "default" category to be deleted...
+        # 'default': {
+            # 'name': 'Default',
+            # 'screen_names': [
+                # 'realdonaldtrump',
+                # 'jimmyfallon', 'trevornoah', 'billmaher', 'stephenathome',
+                # 'britneyspears', 'selenagomez', 'kimkardashian', 'jtimberlake',
+                # 'arianagrande', 'theellenshow', 'ladygaga', 'rihanna', 'taylorswift13', 'justinbieber',
+                # 'katyperry', 'billgates', 'mileycyrus', 'jlo', 'kingjames', 'brunomars',
+                # 'chrissyteigen', 'oprah', 'drake', 'pink', 'liltunechi', 'kevinhart4real', 'elonmusk',
+                # 'kyliejenner', 'conanobrien', 'mariahcarey', 'davidguetta', 'jk_rowling'
+            # ],
+            # 'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
+        # },
+        'trumpian': {
+            'name': 'Trumpian Bigwig Orbit',
+            'screen_names': [ 
+                'realdonaldtrump', 'kellyannepolls', 'secpompeo', 'mike_pence', 'devinnunes', 'lindseygrahamsc',
+                'donaldjtrumpjr', 'rudygiuliani', 'govmikehuckabee', 'alandersh', 'repmattgaetz', 'jim_jordan', 
+                'repmarkmeadows', 'gopleader', 'gtconway3d', 'scaramucci'
+            ],
+            'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
+        },
+        'dempres2020': {
+           'name': 'Dem. Presidential 2020',
             'screen_names': [
-                'realdonaldtrump',
-                'jimmyfallon', 'trevornoah', 'billmaher', 'stephenathome',
-                'britneyspears', 'selenagomez', 'kimkardashian', 'jtimberlake',
-                'arianagrande', 'theellenshow', 'ladygaga', 'rihanna', 'taylorswift13', 'justinbieber',
-                'katyperry', 'billgates', 'mileycyrus', 'jlo', 'kingjames', 'brunomars',
-                'chrissyteigen', 'oprah', 'drake', 'pink', 'liltunechi', 'kevinhart4real', 'elonmusk',
-                'kyliejenner', 'conanobrien', 'mariahcarey', 'davidguetta', 'jk_rowling'
+                'andrewyang', 'kamalaharris', 'petebuttigieg', 'joebiden', 'ewarren',  'berniesanders', 'corybooker',
+                'amyklobuchar', 'tulsigabbard', 'juliancastro', 'mikebloomberg'
+            ],
+            'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
+        },
+        'techbiz': {
+            'name': 'Tech/Business Personalities',
+            'screen_names': [
+                'elonmusk', 'billgates', 'sundarpichai', 'tim_cook', 'jeffbezos', 'karaswisher', 'davidcohen', 
+                'jeffweiner', 'guyraz', 'andrewyng', 'davidu', 'richardbranson', 'jack', 'bchesky'
+            ],
+            'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
+        },
+        'entertainment': {
+            'name': 'Entertainment Personalities',
+            'screen_names': [
+                'chrissyteigen', 'jtimberlake', 'pink', 'britneyspears', 'mindykaling', 'katyperry', 'selenagomez',
+                'ladygaga', 'rihanna', 'brunomars', 'justinbieber', 'drake', 'pink', 'davidguetta',
+                'mileycyrus', 'jlo', 'georgetakei'
+            ],
+            'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
+        },
+        'comedians': {
+            'name': 'Comedic Personalities',
+            'screen_names': [
+                'billmaher', 'conanobrien', 'jimmyfallon', 'jimmykimmel', 'trevornoah', 'jimgaffigan',
+                'sarahksilverman', 'stevemartintogo', 'stephenathome', 'badbanana', 'jerryseinfeld', 
+                'sethmeyers', 'theellenshow'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         }

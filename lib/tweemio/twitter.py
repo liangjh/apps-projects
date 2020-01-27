@@ -34,13 +34,12 @@ class TwitterApi:
             return False
         return True
 
-
-    def timeline(self, screen_name: str, recent: bool=True, condense_factor: int=1) -> list:
+    def timeline(self, screen_name: str, recent: bool=True, condense_factor: int=1, filter_regex: str='^(http)') -> list:
         '''
         Returns a 'refined' timeline;  reverse ordered and condensed to the passed factor 
         '''
 
-        tweet_timeline = timeline_raw(screen_name)
+        tweet_timeline = self.timeline_raw(screen_name)
 
         timeline_text  = list(reversed([tli._json['full_text'] for tli in tweet_timeline]))
         timeline_text  = [' '.join([('' if (re.search(filter_regex, word) != None) else word) for word in text.split()]) for text in timeline_text]
