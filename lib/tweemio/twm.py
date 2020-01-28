@@ -1,3 +1,4 @@
+import numpy as np
 import inspect
 from lib.tweemio import similarity
 from lib.tweemio import twitter
@@ -7,7 +8,7 @@ class UserNotFoundException(Exception):
     pass
 
 
-def calculate(config: dict, screen_name: str, group: str='default', compare_to_screen_names: list=None)-> dict:
+def calculate(config: dict, screen_name: str, group: str='trumpian')-> dict:
     '''
     Given twitter user screen name, calculate similarity to a selection of
     model-calibrated twitter handles.  There is an allowance for multiple "groups" of 
@@ -23,31 +24,48 @@ def calculate(config: dict, screen_name: str, group: str='default', compare_to_s
         [7] save top-line results into database table
 
     Parameters:
-        config: assembly config object (dict-like); allows for run in notebook, etc
+        config: application configuration (dict-like object)
+        screen_name: twitter handle to compare
+        group: group of twitter handles to compare to
+    Returns:
+        dict of screen_names (in group to compare to), along with comparison metrics
     '''
-
-    if (compare_to_screen_names is None):
-        compare_to_screen_names = config['SIMILARITY_COMPARISONS'][group]['screen_names']
 
     tapi = twitter.TwitterApi(config['TWITTER_API_CREDS'])
     if (not tapi.user_exists(screen_name)): 
         raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
 
     #  Download user timeline;  condense / merge tweets, based on condense factor 
-    print(f'Downloading user timeline for: {screen_name}')
     tweet_timeline = tapi.timeline(screen_name, condense_factor=config['TWEET_CONDENSE_FACTOR'])
 
-    #  Get model implementation group
+    #  User complexity scores
+    user_complexity_scores = similarity.mdl_readability_scores(tweet_timeline)
+
+    #  Get similarity model implementation group
     similarity_model_fn_name = config['SIMILARITY_COMPARISONS'][group]['similarity_function'] 
-    similarity_model = dict(inspect.getmembers(similarity, inspect.isfunction))[similarity_model_fn_name]
+    similarity_model_fn = dict(inspect.getmembers(similarity, inspect.isfunction))[similarity_model_fn_name]
     
-    #  Evaluate similarity to all in group
+    #  Evaluate similarity to all members of group (each member has a calibrated model)
     similarity_analysis = {}
+    compare_to_screen_names = config['SIMILARITY_COMPARISONS'][group]['screen_names']
     for screen_name in compare_to_screen_names:
-        print(f'Evaluating similarity to {screen_name} with model: {similarity_model_fn_name}');
-        similarity_analysis[screen_name] = similarity_model(group, screen_name, tweet_timeline)
+        similarity_analysis[screen_name] = similarity_model_fn(group, screen_name, tweet_timeline)
+   
+    #  -- Post Processing / Results Formatting --
+    #  Extract average similarity score per reference personality
+    #  Extract top / most similar tweets for each reference personality (>= 75% similarity)
+    similarity_results = {}
+    for screen_name, similarity_df in similarity_analysis.items():
+        avg_score = np.mean(similarity_df.y_prob)
+        top_df = similarity_df[similarity_df.y_prob >= 0.75].sort_values('y_prob', ascending=False)
+        top_similar = top_df.iloc[:3, :]
+        similarity_results[screen_name] = {
+                    'avg_similarity_score': avg_score,
+                    'top_similar': top_similar.to_dict('records')
+                }
     
-    return similarity_analysis
-
-
+    return {
+        'complexity_score': user_complexity_scores,
+        'similarity': similarity_results
+    }
 
