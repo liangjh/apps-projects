@@ -40,7 +40,11 @@ class Api(Assembly):
             return generate_api_error(f'Group must be one of the following: {group_set}')
 
         # Invoke calculation gateway and return
-        results = twm.calculate(asmbl_config, screen_name, group, force)
+        try:
+            results = twm.calculate(asmbl_config, screen_name.lower(), group, force)
+        except Exception as ex:
+            results = generate_api_error(str(ex))
+
         return results
 
 
