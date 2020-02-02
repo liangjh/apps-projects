@@ -92,21 +92,7 @@ class BaseConfig(object):
 
     #  Groups of screen_names and similarity model to apply to each group
     SIMILARITY_COMPARISONS = {
-        # TODO: "default" category to be deleted...
-        # 'default': {
-            # 'name': 'Default',
-            # 'screen_names': [
-                # 'realdonaldtrump',
-                # 'jimmyfallon', 'trevornoah', 'billmaher', 'stephenathome',
-                # 'britneyspears', 'selenagomez', 'kimkardashian', 'jtimberlake',
-                # 'arianagrande', 'theellenshow', 'ladygaga', 'rihanna', 'taylorswift13', 'justinbieber',
-                # 'katyperry', 'billgates', 'mileycyrus', 'jlo', 'kingjames', 'brunomars',
-                # 'chrissyteigen', 'oprah', 'drake', 'pink', 'liltunechi', 'kevinhart4real', 'elonmusk',
-                # 'kyliejenner', 'conanobrien', 'mariahcarey', 'davidguetta', 'jk_rowling'
-            # ],
-            # 'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
-        # },
-        'trumpian': {
+       'trumpian': {
             'name': 'Trumpian Bigwig Orbit',
             'screen_names': [ 
                 'realdonaldtrump', 'kellyannepolls', 'secpompeo', 'mike_pence', 'devinnunes', 'lindseygrahamsc',
