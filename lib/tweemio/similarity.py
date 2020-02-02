@@ -108,10 +108,10 @@ def get_model(grp: str, model_name: str):
     '''
     #  There should be a single *active* row per model name
     #  TODO: perhaps move queries like this to model object?
-    model_rows = asmbl_models.TwmSnModel.query().filter(
-                    (asmbl_models.TwmSnModel.grp == grp) & \
-                    (asmbl_models.TwmSnModel.model_name == model_name) & \
-                    (asmbl_models.TwmSnModel.active == True))
+    model_rows = list(asmbl_models.TwmSnModel.query().filter(
+                                (asmbl_models.TwmSnModel.grp == grp) & \
+                                (asmbl_models.TwmSnModel.model_name == model_name) & \
+                                (asmbl_models.TwmSnModel.active == True)))
 
     #  If DNE, will break (its okay)
     model_obj = model_rows[0].pckl

@@ -154,6 +154,9 @@ class BaseConfig(object):
     #  Tweets to merge into a single tweet, for model training and interpretation
     TWEET_CONDENSE_FACTOR = 4
 
+    #  Days between when similarity scores can be recomputed
+    SIMILARITY_DAYS_RECALC = 30
+
 
     #--------- DATABASES URL ----------
 
@@ -306,6 +309,17 @@ class Development(BaseConfig):
     #  DB_URL = "sqlite:////%s/db.sqlite" % DATA_DIR
     DB_URL = "postgresql+pg8000://tspire:sa1lb0at@localhost:5432/tspire"
 
+    # Persistence Method
+    # For saving / reading User Data
+
+    PERSISTENCE = {
+        'methodology': 'local',   # gcs or local (default)
+        'root': '/Users/liangjh/workspace/tweemio-api/data',
+        'datadir': 'userdata'
+    }
+
+
+
 
 class Production(BaseConfig):
     """ Config for Production environment """
@@ -314,7 +328,15 @@ class Production(BaseConfig):
     SECRET_KEY = None
     COMPRESS_HTML = True
 
-
+    # Database in production
+    DB_URL = ''
+  
+    # For saving / caching calculated user similarity scores
+    PERSISTENCE = {
+        'methodology': 'gcs',
+        'root': 'data.tweem.io',  
+        'datadir': 'userdata'
+    }
 
 
 
