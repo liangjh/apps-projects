@@ -34,31 +34,6 @@ class Test(db.Model):
 
 # ----- MODELS FOR TWEEMIO -----
 
-
-'''
-twm_user_calc
-  - screen_name (string)
-  - group (string)
-  - uuid (string)
-    ( + calc time will be created_at)
-    pk: screen_name, uuid, created_at
-
-twm_sn_model
-  - screen_name (string)
-  - version (int)
-  - active (bool) 
-  - group (string)
-  - pytype (string)  # instantiate using reflection
-  - pckl (blob/binary): binary object (
-    pk: screen_name, version, active
-
-twm_model_group
-  - group
-  - name
-  - desc
-    pk: group
-'''
-
 class TwmUserCalc(db.Model):
     '''
     Each time a person requests a calculation, a UUID is generated which stores
