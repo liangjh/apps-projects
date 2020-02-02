@@ -3,8 +3,8 @@ from google.cloud import storage
 from google.oauth2 import service_account
 import importlib.resources as pkg_resources
 
-from lib import tweemio
 from lib.caching import cache
+import resources
 
 #
 #  Simple file persistence to either local or google cloud services
@@ -19,7 +19,7 @@ def gcs_client():
     Initialize GCS from local credentials file (assumed to be in same directory as package)
     '''
     
-    creds_txt  = pkg_resources.read_text(tweemio, 'gcs-creds.json')
+    creds_txt  = pkg_resources.read_text(resources, 'gcs-creds.json')
     creds_info = json.loads(creds_txt)
 
     credentials = service_account.Credentials.from_service_account_info(creds_info)
