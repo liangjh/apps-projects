@@ -14,7 +14,9 @@ class UserNotFoundException(Exception):
 
 def user_details(screen_name: str, force: bool=False):
     '''
-    Retrieve user + download timeline and calculate information
+    Invoked by API endpoint
+    Retrieve user, download timeline and calculate readability score for user
+    Returns in dict, serialize to json
     '''
     
     #  Retrieve persisted user info, or re-download / recalculate
@@ -35,6 +37,7 @@ def user_details(screen_name: str, force: bool=False):
 
 def calculate_similarity(screen_name: str, group: str='trumpian', force: bool=False) -> dict:
     '''
+    Invoked by API endpoint
     Gateway function to similarity score calculation
     Check if user has calculated using this group within last N days (N = analysis barrier)
     If so, then pull latest results from persistent store location (gcs or local)
@@ -70,6 +73,7 @@ def calculate_similarity(screen_name: str, group: str='trumpian', force: bool=Fa
 def calculate_user(screen_name: str, force: bool=False):
     '''
     Retrieve and process user by screen name
+    Retrieve only if user profile has not been downloaded since threshold 
      (1) user details (2) timeline, (3) calculates user readability scores
     '''
     user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)

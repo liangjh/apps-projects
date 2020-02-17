@@ -32,8 +32,9 @@ from lib.tweemio import filepersist
 
 class TwmUserTimeline(db.Model):
     '''
-    Record of user time download
-    This is 
+    User profile information
+    User readability score (from timeline)
+    Reference to user timeline file
     '''
     screen_name = db.Column(db.String(255))
     uuid = db.Column(db.String(200))
