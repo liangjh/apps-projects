@@ -1,12 +1,11 @@
 import datetime
-import uuid
-import numpy as np
 import inspect
+import numpy as np
 from lib.tweemio import similarity
 from lib.tweemio import twitter
-from lib.tweemio import filepersist
 
 from assembly import models as asmbl_models
+from assembly import config as asmbl_config
 
 
 class UserNotFoundException(Exception):
@@ -14,7 +13,7 @@ class UserNotFoundException(Exception):
 
 
 
-def calculate(config: dict, screen_name: str, group: str='trumpian', force: bool=False) -> dict:
+def calculate(screen_name: str, group: str='trumpian', force: bool=False) -> dict:
     '''
     Gateway function to similarity score calculation
     Check if user has calculated using this group within last N days (N = analysis barrier)
@@ -27,57 +26,53 @@ def calculate(config: dict, screen_name: str, group: str='trumpian', force: bool
         group: tweem.io group to evaluate similarities on
         force: force a model re-evaluation
     '''
-  
-    #  Check if user has a prior eval / calc on this group
-    #  Does calc exist for this user
-    user_calc = list(asmbl_models.TwmUserCalc.query().filter(
-            (asmbl_models.TwmUserCalc.grp == group) & (asmbl_models.TwmUserCalc.screen_name == screen_name)))
-    user_calc = user_calc[0] if (user_calc != None and len(user_calc) > 0) else None
 
-    #  Determine if we need to recalc similarity for this group
-    #  Recalc if last calc prior to staleness period (days);  or if "force" is true
-    recalc = (user_calc is None or force)  # no prior calc or we want to force a recalc
-    if (not recalc and user_calc is not None):  # recalc not already set and user_calc actually exists (eval staleness)
-        last_update = user_calc.updated_at.date()
-        days_since  = (datetime.date.today() - last_update).days
-        recalc = days_since > config['SIMILARITY_DAYS_RECALC']
+    #  Get latest tline data, if exists
+    #  Download user timeline (if needed) + persist
+    user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)
+    if (force or user_tline is None or 
+        user_tline.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
+        tapi = twitter.TwitterApi(asmbl_config['TWITTER_API_CREDS'])
+        if (not tapi.user_exists(screen_name)): 
+            raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
+        tline_data = tapi.timeline(screen_name, condense_factor=asmbl_config['TWEET_CONDENSE_FACTOR'])
+        asmbl_models.TwmUserTimeline.persist(screen_name, tline_data)
 
-    #  Execute Similarity Model
-    #  Recalculate (or retrieve prior calculated) 
-    similarity_data = calculate_scores(config, screen_name, group) if recalc else \
-                            filepersist.read_json(config['PERSISTENCE'], assemble_filename(screen_name, group, user_calc.uuid))
-    
-    #  Persist recalculated data (if recalculated)
-    if recalc:
-        guid = uuid.uuid4().hex  # new guid 
-        filepersist.save_json(config['PERSISTENCE'], assemble_filename(screen_name, group, guid), similarity_data)
-        if (user_calc is not None):
-            user_calc.delete()
-        asmbl_models.TwmUserCalc.create(screen_name=screen_name, grp=group, uuid=guid)
-   
-    return similarity_data
+    #  Recalc similarity score (if needed) + persist
+    #  Check that refresh calc is within recalc period
+    #  (same logic as user_tline)
+    user_calc, calc_data = asmbl_models.TwmUserCalc.latest(screen_name, grp=group)
+    if (force or user_calc is None or
+        user_calc.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
+
+        #  Execute Similarity Model
+        #  Recalculate (or retrieve prior calculated) 
+        calc_data = calculate_scores(asmbl_config, screen_name, group, tline_data)
+        asmbl_models.TwmUserCalc.persist(screen_name, group, calc_data)
+
+    return calc_data
 
 
-def calculate_scores(config: dict, screen_name: str, group: str='trumpian')-> dict:
+def calculate_scores(config: dict, screen_name: str, group: str='trumpian', tweet_timeline: list=[])-> dict:
     '''
     Given twitter user screen name, calculate similarity to a selection of
     model-calibrated twitter handles (by group).  Also calcs readability score
     Main controller / implementation; 
 
+    This impl is env agnostic, in that we pass in the expected config objects
+    rather than expect assembly framework
+
     Parameters:
         config: application configuration (dict-like object)
         screen_name: twitter handle to compare
         group: group of twitter handles to compare to
+        tweet_timeline: tweet timeline for this user (list of strings); already processed
     Returns:
         dict of screen_names (in group to compare to), along with comparison metrics
     '''
-
-    tapi = twitter.TwitterApi(config['TWITTER_API_CREDS'])
-    if (not tapi.user_exists(screen_name)): 
-        raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
-
-    #  Download user timeline;  condense / merge tweets, based on condense factor 
-    tweet_timeline = tapi.timeline(screen_name, condense_factor=config['TWEET_CONDENSE_FACTOR'])
+    
+    if tweet_timeline is None or len(tweet_timeline) < 1:
+        raise Exception('User timeline is empty')
 
     #  User complexity scores
     user_complexity_scores = similarity.mdl_readability_scores(tweet_timeline)
@@ -117,11 +112,6 @@ def calculate_scores(config: dict, screen_name: str, group: str='trumpian')-> di
 
     return results
 
-
-def assemble_filename(screen_name: str, grp: str, guid: str) -> str:
-    if (guid is None):
-        guid = uuid.uuid4().hex
-    return f"{screen_name}--{grp}--{guid}.json"
 
 
 

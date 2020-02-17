@@ -2,6 +2,7 @@
 """
 Assembly views.py
 """
+import traceback
 import json
 import importlib.resources as pkg_resources
 
@@ -41,9 +42,10 @@ class Api(Assembly):
 
         # Invoke calculation gateway and return
         try:
-            results = twm.calculate(asmbl_config, screen_name.lower(), group, force)
+            results = twm.calculate(screen_name.lower(), group, force)
         except Exception as ex:
             results = generate_api_error(str(ex))
+            print(traceback.print_exc())
 
         return results
 

@@ -51,7 +51,7 @@ def mdl_multinomialnbvect_v1(grp: str, screen_name: str, tweets: list) -> pd.Dat
         'text': tweets,
         'y_prob': y_prob_aligned,
         'y_sn': [screen_name] * len(tweets)  # set into dataframe, in case caller not tracking this
-    })
+        })
     
     return pred_df
 
@@ -109,9 +109,9 @@ def get_model(grp: str, model_name: str):
     #  There should be a single *active* row per model name
     #  TODO: perhaps move queries like this to model object?
     model_rows = list(asmbl_models.TwmSnModel.query().filter(
-                                (asmbl_models.TwmSnModel.grp == grp) & \
-                                (asmbl_models.TwmSnModel.model_name == model_name) & \
-                                (asmbl_models.TwmSnModel.active == True)))
+                        (asmbl_models.TwmSnModel.grp == grp) & \
+                        (asmbl_models.TwmSnModel.model_name == model_name) & \
+                        (asmbl_models.TwmSnModel.active == True)))
 
     #  If DNE, will break (its okay)
     model_obj = model_rows[0].pckl
