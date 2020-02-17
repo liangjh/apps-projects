@@ -31,7 +31,7 @@ class Api(Assembly):
             return generate_api_error('Missing required parameter: screen_name')
         
         try:
-            user_details = twm.user_details(screen_name, force)
+            user_details = twm.api_user_details(screen_name, force)
         except Exception as ex:
             user_details = generate_api_error(str(ex))
             print(traceback.print_exc())
@@ -59,7 +59,7 @@ class Api(Assembly):
 
         # Invoke calculation gateway and return
         try:
-            results = twm.calculate_similarity(screen_name.lower(), group, force)
+            results = twm.api_calculate_similarity(screen_name.lower(), group, force)
         except Exception as ex:
             results = generate_api_error(str(ex))
             print(traceback.print_exc())

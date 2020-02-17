@@ -12,7 +12,7 @@ class UserNotFoundException(Exception):
     pass
 
 
-def user_details(screen_name: str, force: bool=False):
+def api_user_details(screen_name: str, force: bool=False):
     '''
     Invoked by API endpoint
     Retrieve user, download timeline and calculate readability score for user
@@ -35,7 +35,7 @@ def user_details(screen_name: str, force: bool=False):
     }
 
 
-def calculate_similarity(screen_name: str, group: str='trumpian', force: bool=False) -> dict:
+def api_calculate_similarity(screen_name: str, group: str='trumpian', force: bool=False) -> dict:
     '''
     Invoked by API endpoint
     Gateway function to similarity score calculation
