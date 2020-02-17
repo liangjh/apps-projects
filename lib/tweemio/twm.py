@@ -31,7 +31,8 @@ def calculate(screen_name: str, group: str='trumpian', force: bool=False) -> dic
     #  Download user timeline (if needed) + persist
     user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)
     if (force or user_tline is None or 
-        user_tline.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
+            user_tline.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
+        print(f"Downloading timeline for user: {screen_name}")
         tapi = twitter.TwitterApi(asmbl_config['TWITTER_API_CREDS'])
         if (not tapi.user_exists(screen_name)): 
             raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
@@ -43,10 +44,11 @@ def calculate(screen_name: str, group: str='trumpian', force: bool=False) -> dic
     #  (same logic as user_tline)
     user_calc, calc_data = asmbl_models.TwmUserCalc.latest(screen_name, grp=group)
     if (force or user_calc is None or
-        user_calc.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
+            user_calc.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
 
         #  Execute Similarity Model
         #  Recalculate (or retrieve prior calculated) 
+        print(f"Calculating similarity for user: {screen_name} on group: {group}")
         calc_data = calculate_scores(asmbl_config, screen_name, group, tline_data)
         asmbl_models.TwmUserCalc.persist(screen_name, group, calc_data)
 

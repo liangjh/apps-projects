@@ -32,7 +32,7 @@ def save_json(config: dict, filename: str, contents):
     '''
     Saves text/json file to gcs or local
     '''
-    
+    print(f"Saving to [{config['methodology']}]: {filename}")
     if config['methodology'] == 'gcs':
         client = gcs_client()
         bucket = client.get_bucket(config['root'])
