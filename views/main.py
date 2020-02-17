@@ -6,21 +6,38 @@ import traceback
 import json
 import importlib.resources as pkg_resources
 
-from assembly import (Assembly,
-                      date,
-                      request,
-                      response,
-                      HTTPError)
+from assembly import (Assembly, request, response)
 
 from assembly import config as asmbl_config
 from lib.tweemio import twm
 import resources as asmbl_resources
 
-# ------------------------------------------------------------------------------
 
-
+#  TODO: for restful endpoint, make screen_name / group part of url (howto?)
 #  Primary API endpoint / gateway for tweemio functionality
 class Api(Assembly):
+
+   
+    @request.cors
+    @response.json
+    def user(self):
+        '''
+        Get user details (+ basic readability scores)
+        '''
+        screen_name = request.args.get('screen_name')
+        force = request.args.get('force') == 'true' 
+
+        if (screen_name is None):
+            return generate_api_error('Missing required parameter: screen_name')
+        
+        try:
+            user_details = twm.user_details(screen_name, force)
+        except Exception as ex:
+            user_details = generate_api_error(str(ex))
+            print(traceback.print_exc())
+
+        return user_details
+
 
     @request.cors
     @response.json
@@ -42,7 +59,7 @@ class Api(Assembly):
 
         # Invoke calculation gateway and return
         try:
-            results = twm.calculate(screen_name.lower(), group, force)
+            results = twm.calculate_similarity(screen_name.lower(), group, force)
         except Exception as ex:
             results = generate_api_error(str(ex))
             print(traceback.print_exc())
@@ -84,25 +101,4 @@ class Index(Assembly):
     def index(self):
         return
 
-    @request.cors
-    @response.json
-    def api(self):
-        return {
-            "date": date.utcnow(),
-            "description": "API Endpoint with CORS and JSON response"
-        }
 
-    @response.json
-    @response.cache(timeout=10)
-    def cached(self):
-        return {
-            "description": "This is a cached endpoint",
-            "date": date.utcnow(),
-        }
-
-
-    def error(self):
-        """
-        Accessing /error should trigger the error handlers below
-        """
-        raise HTTPError.NotFound()

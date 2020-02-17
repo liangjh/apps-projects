@@ -12,8 +12,28 @@ class UserNotFoundException(Exception):
     pass
 
 
+def user_details(screen_name: str, force: bool=False):
+    '''
+    Retrieve user + download timeline and calculate information
+    '''
+    
+    #  Retrieve persisted user info, or re-download / recalculate
+    #  All logic handled in calculate_user function
+    #  We don't need to return user timeline
+    user, timeline = calculate_user(screen_name, force=force)
 
-def calculate(screen_name: str, group: str='trumpian', force: bool=False) -> dict:
+    return {
+        'user': {
+            'screen_name': screen_name,
+            'name': user.name,
+            'desc': user.desc,
+            'profile_img': user.profile_img
+        },
+        'readability': user.readability
+    }
+
+
+def calculate_similarity(screen_name: str, group: str='trumpian', force: bool=False) -> dict:
     '''
     Gateway function to similarity score calculation
     Check if user has calculated using this group within last N days (N = analysis barrier)
@@ -29,15 +49,7 @@ def calculate(screen_name: str, group: str='trumpian', force: bool=False) -> dic
 
     #  Get latest tline data, if exists
     #  Download user timeline (if needed) + persist
-    user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)
-    if (force or user_tline is None or 
-            user_tline.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
-        print(f"Downloading timeline for user: {screen_name}")
-        tapi = twitter.TwitterApi(asmbl_config['TWITTER_API_CREDS'])
-        if (not tapi.user_exists(screen_name)): 
-            raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
-        tline_data = tapi.timeline(screen_name, condense_factor=asmbl_config['TWEET_CONDENSE_FACTOR'])
-        asmbl_models.TwmUserTimeline.persist(screen_name, tline_data)
+    user_tline, tline_data = calculate_user(screen_name, force)
 
     #  Recalc similarity score (if needed) + persist
     #  Check that refresh calc is within recalc period
@@ -53,6 +65,40 @@ def calculate(screen_name: str, group: str='trumpian', force: bool=False) -> dic
         asmbl_models.TwmUserCalc.persist(screen_name, group, calc_data)
 
     return calc_data
+
+
+def calculate_user(screen_name: str, force: bool=False):
+    '''
+    Retrieve and process user by screen name
+     (1) user details (2) timeline, (3) calculates user readability scores
+    '''
+    user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)
+    if (force or user_tline is None or 
+            user_tline.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
+        
+        print(f"Downloading user / processing timeline / calc readability for user: {screen_name}")
+        
+        tapi = twitter.TwitterApi(asmbl_config['TWITTER_API_CREDS'])
+        user = tapi.user(screen_name)
+        if user is None:
+            raise UserNotFoundException(f'User: {screen_name} not found or does not exist in twitter')
+
+        #  Download user timeline
+        tline_data = tapi.timeline(screen_name, condense_factor=asmbl_config['TWEET_CONDENSE_FACTOR'])
+
+        #  Calculate readability scores
+        user_readability_scores = similarity.mdl_readability_scores(tline_data)
+
+        #  Persist (user profile, readability scores, timeline)
+        asmbl_models.TwmUserTimeline.persist(screen_name=screen_name, name=user.name, desc=user.description,
+                                             profile_img=user.profile_image_url_https, 
+                                             readability=user_readability_scores, data=tline_data)
+
+        #  Re-retrieve, for consistent handling
+        user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)
+
+    return user_tline, tline_data
+
 
 
 def calculate_scores(config: dict, screen_name: str, group: str='trumpian', tweet_timeline: list=[])-> dict:
@@ -76,10 +122,7 @@ def calculate_scores(config: dict, screen_name: str, group: str='trumpian', twee
     if tweet_timeline is None or len(tweet_timeline) < 1:
         raise Exception('User timeline is empty')
 
-    #  User complexity scores
-    user_complexity_scores = similarity.mdl_readability_scores(tweet_timeline)
-
-    #  Get similarity model implementation group
+   #  Get similarity model implementation group
     similarity_model_fn_name = config['SIMILARITY_COMPARISONS'][group]['similarity_function'] 
     similarity_model_fn = dict(inspect.getmembers(similarity, inspect.isfunction))[similarity_model_fn_name]
     
@@ -108,7 +151,6 @@ def calculate_scores(config: dict, screen_name: str, group: str='trumpian', twee
             'group': group,
             'last_evaluation': datetime.date.today().strftime('%Y%m%d') 
         },
-        'complexity_score': user_complexity_scores,
         'similarity': similarity_results
     }
 

@@ -34,11 +34,23 @@ class TwitterApi:
             return False
         return True
 
+
+    def user(self, screen_name: str) -> bool:
+        '''
+        Get user, if one actually exists w/ this user name
+        '''
+        try:
+            self.check_connection()
+            user = self.twapi.GetUser(screen_name=screen_name)
+            return user
+        except:
+            return None
+
+
     def timeline(self, screen_name: str, recent: bool=True, condense_factor: int=1, filter_regex: str='^(http)') -> list:
         '''
         Returns a 'refined' timeline;  reverse ordered and condensed to the passed factor 
         '''
-
         tweet_timeline = self.timeline_raw(screen_name)
 
         timeline_text  = list(reversed([tli._json['full_text'] for tli in tweet_timeline]))

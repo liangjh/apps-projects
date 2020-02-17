@@ -21,6 +21,7 @@ ie: models.MyModel
 
 import uuid as gen_uuid
 import datetime
+import json
 
 from assembly import db
 from assembly import config as asmbl_config
@@ -36,7 +37,10 @@ class TwmUserTimeline(db.Model):
     '''
     screen_name = db.Column(db.String(255))
     uuid = db.Column(db.String(200))
-
+    name = db.Column(db.String(255))
+    desc = db.Column(db.String(512))
+    profile_img = db.Column(db.String(512))
+    readability_js = db.Column(db.Text())
 
     def should_refresh(self, days_refresh:int=20):
         '''
@@ -47,6 +51,9 @@ class TwmUserTimeline(db.Model):
         recalc = days_since > days_refresh
         return recalc
 
+    @property
+    def readability(self):
+        return json.loads(self.readability_js)
 
     @classmethod
     def latest(cls, screen_name: str):
@@ -66,9 +73,10 @@ class TwmUserTimeline(db.Model):
 
 
     @classmethod
-    def persist(cls, screen_name: str, data: dict):
+    def persist(cls, screen_name: str, name: str, desc: str, profile_img: str, 
+                    readability: dict, data: dict):
         '''
-        Save calc (db) + calc results (file to persistence location)
+        Save calc (db) + calc resul(file to persistence location)
         Delete prior calc (if exists), create a new calca
         '''
         #  Delete prior calc
@@ -80,7 +88,8 @@ class TwmUserTimeline(db.Model):
         guid = gen_uuid.uuid4().hex
         filepersist.save_json(asmbl_config['PERSISTENCE'],
                               filepersist.assemble_filename_tline(screen_name, guid), data)
-        cls.create(screen_name=screen_name, uuid=guid)
+        cls.create(screen_name=screen_name, uuid=guid, name=name, desc=desc, profile_img=profile_img,
+                   readability_js=json.dumps(readability))
         return guid
 
 
