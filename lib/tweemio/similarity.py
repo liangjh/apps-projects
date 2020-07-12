@@ -8,21 +8,20 @@ from lib.caching import cache
 from assembly import models as asmbl_models
 
 
-def mdl_multinomialnbvect_v1(grp: str, screen_name: str, tweets: list) -> pd.DataFrame:
+def mdl_multinomialnbvect_v1(grp: str, tweets: list) -> list:
     '''
     Top-line function for multinomial bayes calculation function
     Contains model-specific calibration behaviors
     The multinomial vect transforms tweet space to word vectors
     Then calcs prob of tweet being similar to screen_name in question
 
-    Returns: pandas dataframe of probability of tweet belonging to particular author
-        dataframe allows for manipulation / behavior spec further up the stack
+    Returns: pandas dataframe of probability of tweet belonging to all authors in group
+        + list of all available classifications
     '''
     
     #  Create synthetic tweet stream for model, separating mentions
     #  Derive lemmatized words;  then add mentions;  this gets transformed
     #  Lemmatize, then reconstitute mentions with lemmatized non-mentioned text field
-
     tline_text = tweets.copy()
 
     # tline_text_nomention = [' '.join([('' if (re.match(r'^(@|#|http)', word) != None) else word) for word in text.split()]).strip() for text in tline_text]    
@@ -31,29 +30,23 @@ def mdl_multinomialnbvect_v1(grp: str, screen_name: str, tweets: list) -> pd.Dat
     # tline_text_nomention = [' '.join([tok.lemma_ for tok in nlp(text)]) for text in tline_text_nomention]
     # tline_text = [nom + ' ' + mn for nom,mn in list(zip(tline_text_nomention, tline_text_mention))]
 
-    #  Transform tweets to vectorized according to training set
-    vect_mdl = get_model(grp=grp, model_name='transformation-countvectorizer')
+    #  Retrieve models (vectorize, similarity)
+    vect_mdl = get_model(grp=grp, model_name='mnbv1-vectorizer')
+    simi_mdl = get_model(grp=grp, model_name='mnbv1-similarity')
+
+    #  Run calibrated model on incoming text
     x_vect = vect_mdl.transform(tline_text)
+    y_prob = simi_mdl.predict_proba(x_vect)
 
-    #  Predict probability via model
-    screen_mdl = get_model(grp=grp, model_name=screen_name)
+    #  Assemble model classification results
+    #  Align classes w/ probabilities (same order)
+    similarity_df = pd.concat([
+                            pd.DataFrame(y_prob, columns=simi_mdl.classes_),  # predicte probabilities, all classes
+                            pd.DataFrame({'text': tline_text})  # original incoming tweet stream
+                        ], axis=1)
 
-    #  Labels and their probabilities
-    #  This model is trained to classify as true or false; 
-    #  We want probability of TRUE, will constitute similarity score
-    y_prob = screen_mdl.predict_proba(x_vect)
-    y_true_idx  = 0 if (screen_mdl.classes_[0]) else 1  # Which label is true? class: 0,1 
-    y_prob_aligned = y_prob[:, y_true_idx]
-
-    #  Construct DF of predicted values
-    #  Return full results
-    pred_df = pd.DataFrame({
-        'text': tweets,
-        'y_prob': y_prob_aligned,
-        'y_sn': [screen_name] * len(tweets)  # set into dataframe, in case caller not tracking this
-        })
-    
-    return pred_df
+    #  Return all probabilities, + all cateogrized classes
+    return similarity_df, list(simi_mdl.classes_)
 
 
 def mdl_readability_scores(tweets: list) -> dict:
