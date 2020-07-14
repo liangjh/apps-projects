@@ -92,53 +92,61 @@ class BaseConfig(object):
 
     #  Groups of screen_names and similarity model to apply to each group
     SIMILARITY_COMPARISONS = {
-       'trumpian': {
-            'name': 'Trumpian Bigwig Orbit',
-            'screen_names': [ 
+        'trumpian': {
+            'name': 'Trumpian Bigwigs',
+            'screen_names': [
                 'realdonaldtrump', 'kellyannepolls', 'secpompeo', 'mike_pence', 'devinnunes', 'lindseygrahamsc',
-                'donaldjtrumpjr', 'rudygiuliani', 'govmikehuckabee', 'alandersh', 'repmattgaetz', 'jim_jordan', 
-                'repmarkmeadows', 'gopleader', 'gtconway3d', 'scaramucci'
+                'donaldjtrumpjr', 'rudygiuliani', 'govmikehuckabee', 'alandersh', 'repmattgaetz', 'jim_jordan',
+                'markmeadows', 'gopleader', 'betsydevosed', 'elisestefanik', 'seanhannity', 'gopchairwoman', 'charliekirk11'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
-        'dempres2020': {
-           'name': 'Dem. Presidential 2020',
+        'antitrump': {
+            'name': 'Prominent Anti-Trumpians',
             'screen_names': [
-                'andrewyang', 'kamalaharris', 'petebuttigieg', 'joebiden', 'ewarren',  'berniesanders', 'corybooker',
-                'amyklobuchar', 'tulsigabbard', 'juliancastro', 'mikebloomberg'
+                'gtconway3d', 'steveschmidtses', 'jwgop', 'therickwilson', 'nhjennifer', 'ronsteslow', 'reedgalen', 'madrid_mike',
+                'donwinslow', 'scaramucci', 'unrealmarytrump', 'justinamash', 'kasparov63' 
+            ],
+            'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
+        },
+        'prominentdems': {
+            'name': 'Prominent Democrats',
+            'screen_names': [
+                'andrewyang', 'kamalaharris', 'petebuttigieg', 'joebiden', 'ewarren', 'berniesanders', 'corybooker',
+                'amyklobuchar', 'juliancastro', 'aoc', 'reptedlieu'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
         'techbiz': {
             'name': 'Tech/Business Personalities',
             'screen_names': [
-                'elonmusk', 'billgates', 'sundarpichai', 'tim_cook', 'jeffbezos', 'karaswisher', 'davidcohen', 
+                'elonmusk', 'billgates', 'sundarpichai', 'tim_cook', 'jeffbezos', 'karaswisher', 'davidcohen',
                 'jeffweiner', 'guyraz', 'andrewyng', 'davidu', 'richardbranson', 'jack', 'bchesky'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
         'entertainment': {
-            'name': 'Entertainment Personalities',
+            'name': 'Entertainment',
             'screen_names': [
                 'chrissyteigen', 'jtimberlake', 'pink', 'britneyspears', 'mindykaling', 'katyperry', 'selenagomez',
                 'ladygaga', 'rihanna', 'brunomars', 'justinbieber', 'drake', 'pink', 'davidguetta',
-                'mileycyrus', 'jlo', 'georgetakei'
+                'mileycyrus', 'jlo', 'georgetakei', 
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
-        },
+            },
         'comedians': {
-            'name': 'Comedic Personalities',
+            'name': 'Comedians',
             'screen_names': [
                 'billmaher', 'conanobrien', 'jimmyfallon', 'jimmykimmel', 'trevornoah', 'jimgaffigan',
-                'sarahksilverman', 'stevemartintogo', 'stephenathome', 'badbanana', 'jerryseinfeld', 
-                'sethmeyers', 'theellenshow'
+                'sarahksilverman', 'stevemartintogo', 'stephenathome', 'badbanana', 'jerryseinfeld',
+                'sethmeyers', 'fullfrontalsamb', 'pattonoswalt'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         }
     }
 
     #  Tweets to merge into a single tweet, for model training and interpretation
-    TWEET_CONDENSE_FACTOR = 4
+    TWEET_CONDENSE_FACTOR = 3
 
     #  Days between when similarity scores can be recomputed
     SIMILARITY_DAYS_RECALC = 30
