@@ -26,6 +26,7 @@ import json
 from assembly import db
 from assembly import config as asmbl_config
 from lib.tweemio import filepersist
+from lib.caching import cache
 
 # ----- MODELS FOR TWEEMIO -----
 
@@ -113,7 +114,6 @@ class TwmUserCalc(db.Model):
         recalc = days_since > days_refresh
         return recalc
 
-    
     @classmethod
     def latest(cls, screen_name: str, grp: str):
         '''
@@ -153,10 +153,28 @@ class TwmSnModel(db.Model):
     Stores the screen name model binary
     Model binary is a pickle of the respective scikit-learn model
     '''
-    model_name = db.Column(db.String(255))
-    version  = db.Column(db.Integer)
-    active   = db.Column(db.Boolean)
-    grp      = db.Column(db.String(100))
-    pckl     = db.Column(db.PickleType)
+    model_name  = db.Column(db.String(255))
+    version     = db.Column(db.Integer)
+    active      = db.Column(db.Boolean)
+    grp         = db.Column(db.String(100))
+    pckl        = db.Column(db.PickleType)
+
+    @classmethod
+    @cache.memoize()
+    def get_model(cls, grp: str, model_name: str):
+        '''
+        Retrieves the appropriate calibrated model for a given "group"
+        Each screen name has a particular model of concern
+        '''
+        #  There should be a single *active* row per model name
+        #  TODO: perhaps move queries like this to model object?
+        model_rows = list(cls.query().filter(
+                            (cls.grp == grp) & \
+                            (cls.model_name == model_name) & \
+                            (cls.active == True)))
+
+        #  If DNE, will break (its okay)
+        model_obj = model_rows[0].pckl
+        return model_obj
 
 

@@ -31,8 +31,8 @@ def mdl_multinomialnbvect_v1(grp: str, tweets: list) -> list:
     # tline_text = [nom + ' ' + mn for nom,mn in list(zip(tline_text_nomention, tline_text_mention))]
 
     #  Retrieve models (vectorize, similarity)
-    vect_mdl = get_model(grp=grp, model_name='mnbv1-vectorizer')
-    simi_mdl = get_model(grp=grp, model_name='mnbv1-similarity')
+    vect_mdl = asmbl_models.TwmSnModel.get_model(grp=grp, model_name='mnbv1-vectorizer')
+    simi_mdl = asmbl_models.TwmSnModel.get_model(grp=grp, model_name='mnbv1-similarity')
 
     #  Run calibrated model on incoming text
     x_vect = vect_mdl.transform(tline_text)
@@ -92,23 +92,6 @@ def get_nlp_readability():
 
     return nlp
 
-
-@cache.memoize()
-def get_model(grp: str, model_name: str):
-    '''
-    Retrieves the appropriate calibrated model for a given "group"
-    Each screen name has a particular model of concern
-    '''
-    #  There should be a single *active* row per model name
-    #  TODO: perhaps move queries like this to model object?
-    model_rows = list(asmbl_models.TwmSnModel.query().filter(
-                        (asmbl_models.TwmSnModel.grp == grp) & \
-                        (asmbl_models.TwmSnModel.model_name == model_name) & \
-                        (asmbl_models.TwmSnModel.active == True)))
-
-    #  If DNE, will break (its okay)
-    model_obj = model_rows[0].pckl
-    return model_obj
 
 
 

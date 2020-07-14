@@ -1,6 +1,5 @@
 import datetime
 import inspect
-import numpy as np
 from lib.tweemio import similarity
 from lib.tweemio import twitter
 
