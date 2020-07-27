@@ -41,12 +41,6 @@ def api_calculate_similarity(screen_name: str, group: str='trumpian', force: boo
     Check if user has calculated using this group within last N days (N = analysis barrier)
     If so, then pull latest results from persistent store location (gcs or local)
     If no, recalculate;  Persist results ref to database, store to persistence location (gcs or local)
-
-    Parameters:
-        config: application configuration dict
-        screen_name: twitter handle being evaluated
-        group: tweem.io group to evaluate similarities on
-        force: force a model re-evaluation
     '''
 
     #  Get latest tline data, if exists
@@ -142,7 +136,7 @@ def calculate_scores(config: dict, screen_name: str, group: str='trumpian', twee
         top_similar = top_df[top_df[comp_screen_name] > 0.75].iloc[:3, :]
         similarity_results[comp_screen_name] = {
                     'avg_similarity_score': avg_score,
-                    'top_similar': top_similar.to_dict('records')
+                    'top_similar': top_similar.rename(columns={comp_screen_name: 'score'}).to_dict('records')  # return score, text (not screen name)
                 }
     
     results = {
