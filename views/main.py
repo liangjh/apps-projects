@@ -17,9 +17,10 @@ import resources as asmbl_resources
 #  Primary API endpoint / gateway for tweemio functionality
 class Api(Assembly):
 
-   
+  
     @request.cors
     @response.json
+    # @response.headers({'Access-Control-Allow-Origin': '*'})
     def user(self):
         '''
         Get user details (+ basic readability scores)
@@ -41,6 +42,7 @@ class Api(Assembly):
 
     @request.cors
     @response.json
+    # @response.headers({'Access-Control-Allow-Origin': '*'})
     def calculate(self):
         '''
         Performs similarity calculation for a given screen_name against a tweem.io preconfigured group
@@ -67,8 +69,9 @@ class Api(Assembly):
         return results
 
 
-    @request.cors
+    @request.cors 
     @response.json
+    # @response.headers({'Access-Control-Allow-Origin': '*'})
     def groupmeta(self):
         '''
         Meta-data for each group;  description, screen names within each group to be evaluated
@@ -78,6 +81,7 @@ class Api(Assembly):
 
     @request.cors
     @response.json
+    # @response.headers({'Access-Control-Allow-Origin': '*'})
     def screenmeta(self):
         '''
         Meta-data for each screen name in sysstem
