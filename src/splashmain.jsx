@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { API_URL, GA_KEY } from './App'
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,12 +23,12 @@ class SplashMain extends React.Component
     };
 
     // Handle user search / submit
-    handleSubmit = async(event) => {
+    handleUserSearchCalc = async(event) => {
         this.setState({hasError: false}); // Ensure clean slate on error
         event.preventDefault();  // do not refresh page (as this is invoked via submit button)
         const userScreenName = event.target.elements.screen_name.value;
         // -- todo: add GA event
-        const resp = await axios.get(`http://localhost:5000/api/user/`, {params: {screen_name: userScreenName}});
+        const resp = await axios.get(`${API_URL}/api/user/`, {params: {screen_name: userScreenName}});
 
         //  Handle Response
         if ('error' in resp.data && resp.data.error)  {
@@ -52,18 +53,16 @@ class SplashMain extends React.Component
         // Set handlers for user profile management
         const handleSetUserDetails = this.props.handleSetUserDetails;
         const handleClearUser = this.props.handleClearUser;
-        
-        if (this.state.validUserFound) 
-        {
-            console.log('valid user found.  sending to details');
-            return(
-                <Redirect push to={{pathname: '/details'}}/>
-            );
+
+        // --- Redirection: User Details Page ---
+        // If valid user found, redirect to details page
+        if (this.state.validUserFound) {
+            return(<Redirect push to={{pathname: '/details'}}/>);
         }
 
         return(
             <div>
-                <Form inline onSubmit={this.handleSubmit} method="get">
+                <Form inline onSubmit={this.handleUserSearchCalc} method="get">
                     <FormControl type="text" placeholder="Enter Twitter Username" className="mr-md-2" name="screen_name" 
                                  onChange={this.handleInputChange}/>
                     <Button variant="outline-primary" type="submit">Find User</Button>

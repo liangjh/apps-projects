@@ -7,7 +7,7 @@ import { SplashMain } from './splashmain';
 import { DetailsMain } from './details/detailsmain';
 
 //  Get shared variables
-let API_URL = process.env.REACT_APP_API_URL; API_URL= (API_URL == null ? 'http://localhost:3000' : API_URL);
+let API_URL = process.env.REACT_APP_API_URL; API_URL = (API_URL == null ? 'http://localhost:5000' : API_URL);
 let GA_KEY = process.env.REACT_APP_GA_KEY; GA_KEY = (GA_KEY == null ? 'n/a' : GA_KEY);
 
 
@@ -24,7 +24,7 @@ class App extends React.Component {
 
   // Set user, user screen name (in state)
   handleSetUserDetails = (userDetails) => {
-    console.log('setting user to: {userScreen}');
+    console.log(`setting user to: ${userDetails['user']['screen_name']}`);
     this.setState({
       userDetails: userDetails,
       userScreenName: userDetails['user']['screen_name']
@@ -54,7 +54,8 @@ class App extends React.Component {
             <Route exact={true} path="/details" 
               render={() => <DetailsMain handleClearUser={this.handleClearUser}  
                                          activeUserDetails={this.activeUserDetails} 
-                                         activeScreenName={this.activeScreenName}  /> } />
+                                         activeScreenName={this.activeScreenName}  
+                                         userScreenName={this.state.userScreenName}/> } />
           </Switch>
         </div>
       </Router>
