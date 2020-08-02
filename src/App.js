@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
- 
+import { Container, Row, Col } from 'react-bootstrap';
 import { SplashMain } from './splashmain';
 import { DetailsMain } from './details/detailsmain';
 
@@ -39,26 +39,26 @@ class App extends React.Component {
     })
   }
 
-  //  Get current user / details
-  activeUserDetails = () => { return(this.state.userDetails); }
-  activeScreenName  = () => { return(this.state.userScreenName); }
 
   render() {
     return(
-      <Router>
-        <div>
-          <Switch>
-            <Route exact={true} path="/"
-              render={() => <SplashMain handleSetUserDetails={this.handleSetUserDetails} 
-                                        handleClearUser={this.handleClearUser} /> } />
-            <Route exact={true} path="/details" 
-              render={() => <DetailsMain handleClearUser={this.handleClearUser}  
-                                         activeUserDetails={this.activeUserDetails} 
-                                         activeScreenName={this.activeScreenName}  
-                                         userScreenName={this.state.userScreenName}/> } />
-          </Switch>
-        </div>
-      </Router>
+      <Container fluid>
+        <Row>
+          <Col>
+            <Router>
+                <Switch>
+                  <Route exact={true} path="/"
+                    render={() => <SplashMain handleSetUserDetails={this.handleSetUserDetails} 
+                                              handleClearUser={this.handleClearUser} /> } />
+                  <Route exact={true} path="/details" 
+                    render={() => <DetailsMain handleClearUser={this.handleClearUser}  
+                                               userDetails={this.state.userDetails}
+                                               userScreenName={this.state.userScreenName}/> } />
+                </Switch>
+            </Router>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

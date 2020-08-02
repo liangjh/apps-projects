@@ -6,22 +6,22 @@ import { API_URL } from '../App';
 import { GroupDetails } from './groupdetails';
 import { Button, Spinner, Form, OverlayTrigger, 
     Tooltip, Container, Row, Col, Navbar, 
-    FormControl, Jumbotron, Popover, Tabs, Tab, Accordion, Card } from 'react-bootstrap';
+    FormControl, Jumbotron, Popover, Tabs, Tab, Accordion, Card, Nav } from 'react-bootstrap';
 
 
 class DetailsMain extends React.Component {
 
     //  -- Event Handlers from parent / App --
-    //      this.props.handleClearUser
-    //      this.props.activeUserDetails
-    //      this.props.activeScreenName
+    //      this.props.handleClearUser  (callback func)
+    //      this.props.userDetails  (current user details)
     //      this.props.userScreenName  (this is current user, not a func)
 
     state = {
         //  Meta-information, settings 
-        screenmeta: null,
-        groupmeta: null,
-        calculations: {}
+        screenMeta: {},
+        groupMeta: {},
+        calculations: {},
+        selectedGroupName: null
     }
 
     constructor(props) {
@@ -37,18 +37,18 @@ class DetailsMain extends React.Component {
     
     //  Get screen meta info, init to state
     initScreenMeta = async(event) => {
-        if (this.state.screenmeta != null)
+        if (Object.keys(this.state.screenMeta).length > 0)
             return;
         const resp = await axios.get(`${API_URL}/api/screenmeta/`);
-        this.setState({screenmeta: resp.data});
+        this.setState({screenMeta: resp.data});
     }
 
     //  Get group meta info, init to state
     initGroupMeta = async(event) => {
-        if (this.state.groupmeta != null)
+        if (Object.keys(this.state.groupMeta).length > 0)
             return;        
         const resp = await axios.get(`${API_URL}/api/groupmeta/`);
-        this.setState({groupmeta: resp.data});
+        this.setState({groupMeta: resp.data});
     }
 
     //  Similarity calculation to API: for current screen name, for selected group
@@ -60,19 +60,18 @@ class DetailsMain extends React.Component {
         //  Add to calculations
         let currCalculations = this.state.calculations;
         currCalculations[groupName] = resp.data;
-        this.setState({
-                calculations: currCalculations
-            });
+        this.setState({calculations: currCalculations});
 
          return resp.data;
     }
 
     //  Handle similarity calc when tab / accordion clicked
+    //  Do not recalc if we already have results for this group
     handleSimilarityGroupCalcTabClick = async(groupName) => {
         if (!(groupName in this.state.calculations)) {
-            console.log(`Running similarity calc for user: ${this.props.userScreenName}, group: ${groupName}`)
             this.calculateSimilarity(this.props.userScreenName, groupName)
         }
+        this.setState({selectedGroupName: groupName});
     }    
     
     render() {
@@ -87,38 +86,34 @@ class DetailsMain extends React.Component {
                 (c) calculation results for group
         */
 
-        //  Tabs for each similarity group
-        let groupTabs = [];
-        if (this.state.groupmeta != null) {
-            groupTabs = Object.entries(this.state.groupmeta).map(([groupName, objval]) => {
-                                return(
-                                    <Card>
-                                        <Accordion.Toggle as={Card.Header} eventKey={groupName}>
-                                            { objval.name }
-                                        </Accordion.Toggle>
-                                        <Accordion.Collapse eventKey={groupName}>
-                                            <Card.Body>
-                                                <GroupDetails
-                                                    groupCalculation={this.state.calculations[groupName] || {}}
-                                                    groupMeta={this.state.groupmeta[groupName] || {}}
-                                                    screenMeta={this.state.screenmeta} 
-                                                    groupName={groupName} />
-                                            </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>
-                                );
-                            });
-        };
+        //  Navs for each similarity group
+        let groupNavs = [];
+        if (this.state.groupMeta != null) {
+            groupNavs = Object.entries(this.state.groupMeta).map(([groupName, objval]) => {
+                return(
+                    <Nav.Item>
+                        <Nav.Link eventKey={groupName}>
+                            { objval.name }
+                        </Nav.Link>
+                    </Nav.Item>
+                )
+            });
+        }
 
         return (
             <div>
                 <div> 
-                    User profile section
+                    User profile section // TBD filled in
                 </div>
                 <div>
-                    <Accordion onSelect={this.handleSimilarityGroupCalcTabClick}>
-                        { groupTabs }
-                    </Accordion>
+                    <Nav variant="pills" onSelect={this.handleSimilarityGroupCalcTabClick}>
+                        { groupNavs }
+                        <GroupDetails
+                                groupCalculation={this.state.calculations[this.state.selectedGroupName] || {}}
+                                groupMeta={this.state.groupMeta[this.state.selectedGroupName] || {}}
+                                screenMeta={this.state.screenMeta} 
+                                groupName={this.state.selectedGroupName} />
+                    </Nav>
                 </div>
             </div>
         );
