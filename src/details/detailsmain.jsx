@@ -4,9 +4,7 @@ import axios from 'axios';
 import { API_URL } from '../App';
 import { GroupDetails } from './groupdetails';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import { Button, Spinner, Form, OverlayTrigger, 
-    Tooltip, Container, Row, Col, Navbar, Image,
-    FormControl, Jumbotron, Popover, Tabs, Tab, Accordion, Card, Nav } from 'react-bootstrap';
+import { Button, Image, Card, Nav, Table, Container, Row, Col, Badge } from 'react-bootstrap';
 
 
 class DetailsMain extends React.Component {
@@ -49,6 +47,14 @@ class DetailsMain extends React.Component {
             return;        
         const resp = await axios.get(`${API_URL}/api/groupmeta/`);
         this.setState({groupMeta: resp.data});
+
+        //  Default selection
+        //  If no group selected, select first available
+        if (this.state.selectedGroupName == null) {
+            const firstGroup = Object.keys(this.state.groupMeta)[0];
+            this.handleSimilarityGroupCalcTabClick(firstGroup);
+        }
+
     }
 
     //  Similarity calculation to API: for current screen name, for selected group
@@ -71,18 +77,14 @@ class DetailsMain extends React.Component {
             this.calculateSimilarity(this.props.userScreenName, groupName);
         this.setState({selectedGroupName: groupName});
     }    
+
+    //  For readability scores
+    roundNumExpr = (rawNum) => {
+        const scaled = Math.round(rawNum * 10) / 10;  // 1 dec point
+        return scaled;
+    }
     
     render() {
-        /*
-            Rendering components (notes)
-            - user section (profile, details)
-            - readability scores
-            - tabs, for each "group"
-            - for each tab, pass down: 
-                (a) group meta for group, 
-                (b) screen meta (full dictionary)
-                (c) calculation results for group
-        */
 
         //  If screen name lost (or reset, etc); redirect back to main splash page
         if (this.props.userScreenName == null) {
@@ -106,34 +108,51 @@ class DetailsMain extends React.Component {
         }
 
         return (
-            <div>
-                <div> 
-                    <Image src={this.props.userDetails.user.profile_img} rounded/><br/>
-                    {this.props.userDetails.user.screen_name}<br/>
-                    {this.props.userDetails.user.name}<br/><br/>
+            <Container fluid>
+                <Row><Col>
+                    <Card bg="light">
+                        <Card.Body>
+                            <Card.Title>
+                                <Table borderless size="sm">
+                                    <colgroup><col style={{width: 50}}></col><col></col></colgroup>
+                                    <tr>
+                                        <td><Image src={this.props.userDetails.user.profile_img} rounded/></td>
+                                        <td valign="middle">{this.props.userDetails.user.name}<br/>@{this.props.userScreenName}</td>
+                                    </tr>
+                                </Table>
+                            </Card.Title>
+                            <Card.Subtitle>
+                                {this.props.userDetails.user.description}
+                            </Card.Subtitle>
+                            <Card.Text>
+                                <br/>
+                                <b>My Readability Scores</b><br/>
+                                Your tweets are written roughly at the <u>grade <b> { Math.round(this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level)) } </b> level</u><br/>
+                                <small><i>(using the Flesch Kincaid Grade Level Score;  other metrics available below)</i></small>
+                                <br/><br/>
 
-                    <b>Readability Scores</b><br/>
-                    Automated Readability: { this.props.userDetails.readability.automated_readability_index }<br/>
-                    Coleman-Liau: { this.props.userDetails.readability.coleman_liau_index }<br/>
-                    Dale-Chall: { this.props.userDetails.readability.dale_chall }<br/>
-                    Flesch-Kincaid Grade Level: { this.props.userDetails.readability.flesch_kincaid_grade_level }<br/>
-                    Flesch-Kincaid Reading Ease: { this.props.userDetails.readability.flesch_kincaid_reading_ease }<br/>
+                                <Badge variant="info">Automated Readability: { this.roundNumExpr(this.props.userDetails.readability.automated_readability_index) }</Badge><br/>
+                                <Badge variant="info">Coleman-Liau: { this.roundNumExpr(this.props.userDetails.readability.coleman_liau_index) }</Badge><br/>
+                                <Badge variant="info">Dale-Chall:  { this.roundNumExpr(this.props.userDetails.readability.dale_chall) }</Badge><br/>
+                                <Badge variant="info">Flesch-Kincaid Grade Level: { this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level) }</Badge><br/>
 
-                </div>
-                <div>
-                    <Nav variant="pills" onSelect={this.handleSimilarityGroupCalcTabClick}>
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col></Row>
+                <Row><Col>
+                    <Nav variant="pills" onSelect={this.handleSimilarityGroupCalcTabClick} activeKey={this.state.selectedGroupName}>
                         { groupNavs }                        
                     </Nav>
-                </div>
-                <div>
+                </Col></Row>
+                <Row><Col>
                     <GroupDetails
-                                    groupCalculation={this.state.calculations[this.state.selectedGroupName] || {}}
-                                    groupMeta={this.state.groupMeta[this.state.selectedGroupName] || {}}
-                                    screenMeta={this.state.screenMeta} 
-                                    groupName={this.state.selectedGroupName} />
-
-                </div>
-            </div>
+                            groupCalculation={this.state.calculations[this.state.selectedGroupName] || {}}
+                            groupMeta={this.state.groupMeta[this.state.selectedGroupName] || {}}
+                            screenMeta={this.state.screenMeta} 
+                            groupName={this.state.selectedGroupName} />
+                </Col></Row>
+            </Container>
         );
     }
 
