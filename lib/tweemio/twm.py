@@ -1,5 +1,7 @@
 import datetime
 import inspect
+import itertools
+
 from lib.tweemio import similarity
 from lib.tweemio import twitter
 
@@ -60,6 +62,21 @@ def api_calculate_similarity(screen_name: str, group: str='trumpian', force: boo
         calc_data = calculate_scores(asmbl_config, screen_name, group, tline_data)
         asmbl_models.TwmUserCalc.persist(screen_name, group, calc_data)
 
+    calc_data = filter_supported_names(calc_data)
+    return calc_data
+
+
+def filter_supported_names(calc_data: dict) -> dict:
+    '''
+    Model-calculated or cached calcs may have unsupported screen names in group
+    (stuff added or removed since last calc);   filter to only names supported - golden list is in configuration
+    '''
+    supported_screen_names = supported_similarity_users()
+    calc_similarity = calc_data['similarity']
+    for screen_name in list(calc_similarity.keys()):  # make copy, don't iterate
+        if screen_name not in supported_screen_names:
+            del calc_similarity[screen_name]
+    calc_data['similarity'] = calc_similarity
     return calc_data
 
 
@@ -149,6 +166,18 @@ def calculate_scores(config: dict, screen_name: str, group: str='trumpian', twee
     }
 
     return results
+
+
+
+def supported_similarity_users():
+    '''
+    Return active screen_names (all groups)
+    '''
+
+    twitter_handles = list(itertools.chain(*[spec['screen_names'] 
+                                             for category,spec in asmbl_config['SIMILARITY_COMPARISONS'].items()]))
+    twitter_handles = sorted(twitter_handles)
+    return twitter_handles
 
 
 

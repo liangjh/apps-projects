@@ -105,7 +105,7 @@ class BaseConfig(object):
             'name': 'Prominent Anti-Trumpians',
             'screen_names': [
                 'gtconway3d', 'steveschmidtses', 'jwgop', 'therickwilson', 'nhjennifer', 'ronsteslow', 'reedgalen', 'madrid_mike',
-                'donwinslow', 'scaramucci', 'unrealmarytrump', 'justinamash', 'kasparov63' 
+                'donwinslow', 'scaramucci', 'justinamash', 'kasparov63' 
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
