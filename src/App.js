@@ -42,23 +42,17 @@ class App extends React.Component {
 
   render() {
     return(
-      <Container fluid>
-        <Row>
-          <Col>
-            <Router>
-                <Switch>
-                  <Route exact={true} path="/"
-                    render={() => <SplashMain handleSetUserDetails={this.handleSetUserDetails} 
-                                              handleClearUser={this.handleClearUser} /> } />
-                  <Route exact={true} path="/details" 
-                    render={() => <DetailsMain handleClearUser={this.handleClearUser}  
-                                               userDetails={this.state.userDetails}
-                                               userScreenName={this.state.userScreenName}/> } />
-                </Switch>
-            </Router>
-          </Col>
-        </Row>
-      </Container>
+        <Router>
+            <Switch>
+              <Route exact={true} path="/"
+                render={() => <SplashMain handleSetUserDetails={this.handleSetUserDetails} 
+                                          handleClearUser={this.handleClearUser} /> } />
+              <Route exact={true} path="/details" 
+                render={() => <DetailsMain handleClearUser={this.handleClearUser}  
+                                           userDetails={this.state.userDetails}
+                                           userScreenName={this.state.userScreenName}/> } />
+            </Switch>
+        </Router>
     );
   }
 }

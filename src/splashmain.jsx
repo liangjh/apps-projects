@@ -10,8 +10,8 @@ import { Button, Spinner, Form, OverlayTrigger,
     FormControl, Jumbotron, Popover } from 'react-bootstrap';
     
 
-class SplashMain extends React.Component
-{
+class SplashMain extends React.Component {
+
     //  -- Event handlers, from App (parent container) --
     //      this.props.handleUseDetails
     //      this.props.handleClearUser
@@ -50,25 +50,36 @@ class SplashMain extends React.Component
 
     render() {
 
-        // Set handlers for user profile management
-        const handleSetUserDetails = this.props.handleSetUserDetails;
-        const handleClearUser = this.props.handleClearUser;
-
         // --- Redirection: User Details Page ---
         // If valid user found, redirect to details page
         if (this.state.validUserFound) {
-            return(<Redirect push to={{pathname: '/details'}}/>);
+            return(
+                <Redirect push to={{pathname: '/details'}}/>
+            );
         }
 
         return(
-            <div>
-                <Form inline onSubmit={this.handleUserSearchCalc} method="get">
-                    <FormControl type="text" placeholder="Enter Twitter Username" className="mr-md-2" name="screen_name" 
-                                 onChange={this.handleInputChange}/>
-                    <Button variant="outline-primary" type="submit">Find User</Button>
-                </Form>
-                <font color='red'>{this.state.hasError ? 'User not found' : ''}</font>
-            </div>
+            <Container fluid>
+                <Row>
+                    <Col>   
+                        <div className="center">
+                            <br/><br/><br/><br/><br/>
+                            <br/><br/><br/><br/><br/>
+                            <br/><br/><br/><br/><br/>
+
+                            <h1>Tweemio</h1><br/>
+
+                            <Form inline onSubmit={this.handleUserSearchCalc} method="get">
+                                <FormControl type="text" placeholder="Twitter Username" className="mr-md-2" name="screen_name" 
+                                            onChange={this.handleInputChange}/>
+                                <Button variant="outline-primary" type="submit">Find</Button>
+                            </Form>
+                            <font color='red'>{this.state.hasError ? `User ${this.state.inputScreenName} not found, or invalid Twitter user` : ''}</font>
+                        </div>
+                    </Col>
+            </Row>
+        </Container>
+
         );
     }
 

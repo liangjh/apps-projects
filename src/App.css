@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+/* take full available window */
+body {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.container-fluid { height: inherit; }
+
+/* For centering within a container */
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
