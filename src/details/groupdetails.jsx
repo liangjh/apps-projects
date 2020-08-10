@@ -23,8 +23,9 @@ class GroupDetails extends React.Component {
         return wholePct;
     }
 
+    //  Badge color spectrum, directed by score 0-100
     badgeColor = (value) => {
-        const clr = (value >= 70 ? 'success' : ( value > 25 ? 'warning' : ( value > 10 ? 'info' : 'secondary' ) ) )
+        const clr = (value >= 60 ? 'success' : ( value >= 25 ? 'warning' : ( value >= 10  ? 'info' : 'secondary' ) ) )
         return clr;
     }
     

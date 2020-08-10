@@ -4,7 +4,7 @@ import axios from 'axios';
 import { API_URL } from '../App';
 import { GroupDetails } from './groupdetails';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import { Button, Image, Card, Nav, Table, Container, Row, Col, Badge } from 'react-bootstrap';
+import { Button, Spinner, Image, Card, Nav, Table, Container, Row, Col, Badge, Navbar, Modal } from 'react-bootstrap';
 
 
 class DetailsMain extends React.Component {
@@ -19,7 +19,9 @@ class DetailsMain extends React.Component {
         screenMeta: {},
         groupMeta: {},
         calculations: {},
-        selectedGroupName: null
+        selectedGroupName: null,
+        loading: false,
+        showReadabilityModal: false
     }
 
     constructor(props) {
@@ -54,7 +56,6 @@ class DetailsMain extends React.Component {
             const firstGroup = Object.keys(this.state.groupMeta)[0];
             this.handleSimilarityGroupCalcTabClick(firstGroup);
         }
-
     }
 
     //  Similarity calculation to API: for current screen name, for selected group
@@ -70,12 +71,20 @@ class DetailsMain extends React.Component {
         return resp.data;
     }
 
+    //  UI Effect Handlers
+    spinnerOn  = () => { this.setState({loading: true }); }
+    spinnerOff = () => { this.setState({loading: false}); }
+    handleShowModal = () => { this.setState({showReadabilityModal: true}); }
+    handleHideModal = () => { this.setState({showReadabilityModal: false}); }
+
     //  Handle similarity calc when tab / accordion clicked
     //  Do not recalc if we already have results for this group
     handleSimilarityGroupCalcTabClick = async(groupName) => {
+        this.spinnerOn();
         if (!(groupName in this.state.calculations))
             this.calculateSimilarity(this.props.userScreenName, groupName);
         this.setState({selectedGroupName: groupName});
+        this.spinnerOff();
     }    
 
     //  For readability scores
@@ -83,7 +92,7 @@ class DetailsMain extends React.Component {
         const scaled = Math.round(rawNum * 10) / 10;  // 1 dec point
         return scaled;
     }
-    
+  
     render() {
 
         //  If screen name lost (or reset, etc); redirect back to main splash page
@@ -110,6 +119,11 @@ class DetailsMain extends React.Component {
         return (
             <Container fluid>
                 <Row><Col>
+                    <Navbar bg="light" variant="light" fluid>
+                        <Navbar.Brand href="/">Tweemio</Navbar.Brand>
+                    </Navbar>
+                </Col></Row>
+                <Row><Col>
                     <Card bg="light">
                         <Card.Body>
                             <Card.Title>
@@ -135,12 +149,31 @@ class DetailsMain extends React.Component {
                                 <Badge variant="info">Coleman-Liau: { this.roundNumExpr(this.props.userDetails.readability.coleman_liau_index) }</Badge><br/>
                                 <Badge variant="info">Dale-Chall:  { this.roundNumExpr(this.props.userDetails.readability.dale_chall) }</Badge><br/>
                                 <Badge variant="info">Flesch-Kincaid Grade Level: { this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level) }</Badge><br/>
+                                <Badge variant="info">Flesch-Kincaid Reading Ease: { this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_reading_ease) }</Badge><br/>
 
+                                <Button variant="link" onClick={this.handleShowModal}>About Readability Scores</Button>
+                                <Modal show={this.state.showReadabilityModal} onHide={this.handleHideModal}>
+                                    <Modal.Header closeButton>About Readability Scores</Modal.Header>
+                                    <Modal.Body>
+                                        A good introduction to the field of readability can be found here:  <a href="https://en.wikipedia.org/wiki/Readability">Wikipedia on Readability</a>.<br/><br/>
+                                        <b>Flesch-Kincaid</b>:<br/>
+                                        Utilizes average sentence length (ASL) and average word length in syllables (ASW) to compose an overall score on reading ease.  
+                                        This formula was extended to derive a grade-level equivalent<br/><br/>
+                                        <b>Dale-Chall</b>:<br/>
+                                        Given a series of words comprehended by 4th grade students, compose an overall score based on percentage of words found
+                                        in list as well as average sentence length to derive a difficulty score.  The score roughly maps: <br/>
+                                        (0-4.9: grade 4, 5-5.9: grades 5-6, 6-6.9: grades 7-8, 7-7.9: grades 9-10; 8-8.9: grades 11-12, 9-9.9: grades 11-12)<br/><br/>
+                                        <b>Coleman-Liau</b>:<br/>
+                                        Utilizes average number of letters in words as well as average number of sentences in 100-word blocks to construct a difficult score.<br/>
+                                    </Modal.Body>
+                                </Modal>
+            
                             </Card.Text>
                         </Card.Body>
                     </Card>
                 </Col></Row>
                 <Row><Col>
+                    { this.state.loading ? <Spinner animation="border" role="status"/> : null }
                     <Nav variant="pills" onSelect={this.handleSimilarityGroupCalcTabClick} activeKey={this.state.selectedGroupName}>
                         { groupNavs }                        
                     </Nav>

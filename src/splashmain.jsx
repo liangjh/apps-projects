@@ -19,13 +19,23 @@ class SplashMain extends React.Component {
     state = {
         inputScreenName: '',    // store form entry value
         hasError: false,        // if true, will render error message
-        validUserFound: false   // if true, will redirect to details page
+        validUserFound: false,  // if true, will redirect to details page
+        loading: false
     };
 
+    // Spinner for all submissions
+    spinnerOn  = () => { this.setState({loading: true }); }
+    spinnerOff = () => { this.setState({loading: false}); }
+
+        
     // Handle user search / submit
     handleUserSearchCalc = async(event) => {
+        //  Override default form submit behavior (form submit => page refresh);
+        event.preventDefault();
+
+        //  Invoke user search/retrieval via API
+        this.spinnerOn();
         this.setState({hasError: false}); // Ensure clean slate on error
-        event.preventDefault();  // do not refresh page (as this is invoked via submit button)
         const userScreenName = event.target.elements.screen_name.value;
         // -- todo: add GA event
         const resp = await axios.get(`${API_URL}/api/user/`, {params: {screen_name: userScreenName}});
@@ -41,6 +51,7 @@ class SplashMain extends React.Component {
             handleSetUserDetails(resp.data);
             this.setState({validUserFound: true});
         }
+        this.spinnerOff();
     };
 
     //  Sync user input to state
@@ -75,7 +86,8 @@ class SplashMain extends React.Component {
                                 <Button variant="outline-primary" type="submit">Find</Button>
                             </Form>
                             <font color='red'>{this.state.hasError ? `User ${this.state.inputScreenName} not found, or invalid Twitter user` : ''}</font>
-                        </div>
+                            { this.state.loading ? <Spinner animation="border" role="status"/> : null }
+                       </div>
                     </Col>
             </Row>
         </Container>
