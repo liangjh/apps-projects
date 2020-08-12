@@ -30,18 +30,10 @@ class GroupDetails extends React.Component {
     }
     
     render() {
-        /*
-            Rendering Components
-            - left panel: all characters and profile details
-                - profile pic, user details
-                - overall similarity score
-            - right panel: 
-                - selected user - list of top-scoring similar tweets from main user
-        */
 
-        //  No group selected or empty group calc details?  Return blank
-        if (this.props.groupName == null || 
-            this.props.groupCalculation == null || Object.entries(this.props.groupCalculation) < 1 ) { 
+        //  No group selected or empty group calc details?  Return blank -- 
+        if (this.props.groupName == null || this.props.groupCalculation == null || 
+            Object.entries(this.props.groupCalculation) < 1 ) { 
             return(
                 <Container fluid>
                     <Row>
@@ -77,7 +69,7 @@ class GroupDetails extends React.Component {
                             //  Construct JSX expr, 
                             similarJsx = <Accordion>
                                             <Card.Text>
-                                                <Accordion.Toggle as={Button} variant="link" eventKey={screenName}>Tweets most like @{screenName}</Accordion.Toggle>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey={screenName}>Highest matching tweets</Accordion.Toggle>
                                                 <Accordion.Collapse eventKey={screenName}>
                                                     <Table size="sm">
                                                         <tbody>{ topSimilar }</tbody>
@@ -97,8 +89,9 @@ class GroupDetails extends React.Component {
                                         <Table borderless size="sm">
                                             <colgroup><col style={{width: 50}}></col><col></col></colgroup>
                                             <tr>
-                                                <td><Image src={metaDetails.profile_img} rounded/></td>
-                                                <td>{metaDetails.name}<br/><Badge variant={this.badgeColor(roundPct)}>{roundPct}% Match</Badge></td>
+                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank"><Image src={metaDetails.profile_img} rounded/></a></td>
+                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank" style={{color:'inherit', textDecoration:'none'}}>
+                                                        {metaDetails.name}</a><br/><Badge variant={this.badgeColor(roundPct)}>{roundPct}% Match</Badge></td>
                                             </tr>
                                         </Table>
                                     </Card.Title>
