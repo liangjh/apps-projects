@@ -139,12 +139,12 @@ class DetailsMain extends React.Component {
                                     </tr>
                                 </Table>
                             </Card.Title>
-                            <Card.Subtitle>
-                                {this.props.userDetails.user.description}
+                            <Card.Subtitle className="mb-2 text-muted">
+                                <div style={{width:"475px"}}>{this.props.userDetails.user.desc}</div>
                             </Card.Subtitle>
                             <Card.Text>    
                                 Your tweets are written roughly at the &nbsp;
-                                    <Badge variant="success" style={{fontSize: "0.9rem"}}>Grade <b> { Math.round(this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level)) } </b> level</Badge><br/>
+                                    <Badge variant="success" style={{fontSize: "0.9rem"}}>Grade <b> { Math.round(this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level)) } </b> Level</Badge><br/>
                                     &nbsp;&nbsp;&nbsp;<small><i>(using the Flesch Kincaid Grade Level Score)</i></small>
                                 <br/><br/>
 
@@ -197,7 +197,8 @@ class DetailsMain extends React.Component {
                             groupCalculation={this.state.calculations[this.state.selectedGroupName] || {}}
                             groupMeta={this.state.groupMeta[this.state.selectedGroupName] || {}}
                             screenMeta={this.state.screenMeta} 
-                            groupName={this.state.selectedGroupName} />
+                            groupName={this.state.selectedGroupName} 
+                            userScreenName={this.props.userScreenName}/>
                 </Col></Row>
             </Container>
         );

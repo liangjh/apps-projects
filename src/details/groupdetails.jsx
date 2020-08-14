@@ -8,6 +8,7 @@ class GroupDetails extends React.Component {
     //      this.props.groupMeta
     //      this.props.groupCalculation
     //      this.props.groupName   (note: this is a property, not an event handler)
+    //      this.props.userScreenName   // user being evaluated 
 
     state = {
         selectedUser: null
@@ -23,6 +24,12 @@ class GroupDetails extends React.Component {
         return wholePct;
     }
 
+    //  For readability scores
+    roundNumExpr = (rawNum) => {
+        const scaled = Math.round(rawNum * 10) / 10;  // 1 dec point
+        return scaled;
+    }
+    
     //  Badge color spectrum, directed by score 0-100
     badgeColor = (value) => {
         const clr = (value >= 60 ? 'success' : ( value >= 25 ? 'warning' : ( value >= 10  ? 'info' : 'secondary' ) ) )
@@ -36,20 +43,16 @@ class GroupDetails extends React.Component {
             Object.entries(this.props.groupCalculation) < 1 ) { 
             return(
                 <Container fluid>
-                    <Row>
-                        <Col>
-                            Click on a category above to see your similarity score
-                        </Col>
-                    </Row>
+                    <Row><Col>Click on a category above to see your similarity score</Col></Row>
                 </Container>
             );
         }
-        
+
         //  Construct response, in card column layout
         const cardEntries = Object.entries(this.props.groupCalculation.similarity).map(
                     ([screenName, similarityDetails]) => {                  
                         const metaDetails = this.props.screenMeta[screenName];  // details for each SN in group
-
+                        console.log(metaDetails);
                         //  Top similar, for currrent screen name
                         let topSimilar = [];
                         let similarJsx = null;
@@ -57,19 +60,17 @@ class GroupDetails extends React.Component {
                             topSimilar = similarityDetails.top_similar.map((similarityElem) => {
                                                     const score = this.roundPctExpr(similarityElem.score);
                                                     return(
-                                                        <tr>
-                                                            <td>
-                                                                <b><Badge variant={this.badgeColor(score)}>{score}% Match</Badge></b><br/>
-                                                                {similarityElem.text}
-                                                            </td>
-                                                        </tr>
+                                                        <tr><td>
+                                                            <b><Badge variant={this.badgeColor(score)}>{score}% Match</Badge></b><br/>
+                                                            {similarityElem.text}
+                                                        </td></tr>
                                                     );
                                     });
 
                             //  Construct JSX expr, 
                             similarJsx = <Accordion>
                                             <Card.Text>
-                                                <Accordion.Toggle as={Button} variant="link" eventKey={screenName}>Highest matching tweets</Accordion.Toggle>
+                                                <Accordion.Toggle as={Button} variant="link" eventKey={screenName}>@{this.props.userScreenName}'s highest matching tweets</Accordion.Toggle>
                                                 <Accordion.Collapse eventKey={screenName}>
                                                     <Table size="sm">
                                                         <tbody>{ topSimilar }</tbody>
@@ -89,15 +90,18 @@ class GroupDetails extends React.Component {
                                         <Table borderless size="sm">
                                             <colgroup><col style={{width: 50}}></col><col></col></colgroup>
                                             <tr>
-                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank"><Image src={metaDetails.profile_img} rounded/></a></td>
+                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank"><Image src={metaDetails.user.profile_img} rounded/></a></td>
                                                 <td><a href={`http://www.twitter.com/${screenName}`} target="_blank" style={{color:'inherit', textDecoration:'none'}}>
-                                                        {metaDetails.name}</a><br/><Badge variant={this.badgeColor(roundPct)}>{roundPct}% Match</Badge></td>
+                                                        {metaDetails.user.name}</a><br/>
+                                                        <Badge variant={this.badgeColor(roundPct)}>{roundPct}% Match</Badge>
+                                                </td>
                                             </tr>
                                         </Table>
                                     </Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">
                                         <b>@{screenName}</b><br/>
-                                        { metaDetails.description }
+                                        { metaDetails.user.desc }<br/>
+                                        <Badge variant="light">Grade {Math.round(this.roundNumExpr(metaDetails.readability.flesch_kincaid_grade_level))} Level</Badge><br/>                                         
                                     </Card.Subtitle>
                                     { similarJsx }
                                 </Card.Body>
