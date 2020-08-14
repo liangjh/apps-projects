@@ -52,16 +52,8 @@ class TwitterApi:
         Returns a 'refined' timeline;  reverse ordered and condensed to the passed factor 
         '''
         tweet_timeline = self.timeline_raw(screen_name)
-
         timeline_text  = list(reversed([tli._json['full_text'] for tli in tweet_timeline]))
-        timeline_text  = [' '.join([('' if (re.search(filter_regex, word) != None) else word) for word in text.split()]) for text in timeline_text]
-        timeline_text  = [t for t in timeline_text if len(t.strip()) > 0]
-
-        #  Group by condense factor (i.e. grouping multiple tweets into single tweet)
-        timeline_text = [' '.join(timeline_group) for timeline_group in
-                                zip(*[timeline_text[n::condense_factor] for n in range(0, condense_factor)])]
-
-        return timeline_text
+        return self.timeline_filter(timeline_text, condense_factor, filter_regex)
 
 
     def timeline_raw(self, screen_name: str, recent: bool=True) -> list:
@@ -93,4 +85,22 @@ class TwitterApi:
             iterations += 1
             
         return timeline
+
+
+    @classmethod
+    def timeline_filter(cls, timeline_text: list, condense_factor: int=1, filter_regex: str='^(http)') -> list:
+        '''
+        Filters and condenses timeline
+        Separation to allow for utility use
+        '''
+        timeline_text  = [' '.join([('' if (re.search(filter_regex, word) != None) else word) for word in text.split()]) for text in timeline_text]
+        timeline_text  = [t for t in timeline_text if len(t.strip()) > 0]
+
+        #  Group by condense factor (i.e. grouping multiple tweets into single tweet)
+        timeline_text = [' '.join(timeline_group) for timeline_group in
+                                zip(*[timeline_text[n::condense_factor] for n in range(0, condense_factor)])]
+
+        return timeline_text
+
+
 

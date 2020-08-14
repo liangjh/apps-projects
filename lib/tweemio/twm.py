@@ -23,7 +23,7 @@ def api_user_details(screen_name: str, force: bool=False):
     #  Retrieve persisted user info, or re-download / recalculate
     #  All logic handled in calculate_user function
     #  We don't need to return user timeline
-    user, timeline = calculate_user(screen_name, force=force)
+    user, timeline, readability = calculate_user(screen_name, force=force)
 
     return {
         'user': {
@@ -32,7 +32,7 @@ def api_user_details(screen_name: str, force: bool=False):
             'desc': user.desc,
             'profile_img': user.profile_img
         },
-        'readability': user.readability
+        'readability': readability
     }
 
 
@@ -47,7 +47,7 @@ def api_calculate_similarity(screen_name: str, group: str='trumpian', force: boo
 
     #  Get latest tline data, if exists
     #  Download user timeline (if needed) + persist
-    user_tline, tline_data = calculate_user(screen_name, force)
+    user_tline, tline_data, rdbl_data = calculate_user(screen_name, force)
 
     #  Recalc similarity score (if needed) + persist
     #  Check that refresh calc is within recalc period
@@ -86,7 +86,7 @@ def calculate_user(screen_name: str, force: bool=False):
     Retrieve only if user profile has not been downloaded since threshold 
      (1) user details (2) timeline, (3) calculates user readability scores
     '''
-    user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)
+    user_tline, tline_data, readability = asmbl_models.TwmUserTimeline.latest(screen_name)
     if (force or user_tline is None or 
             user_tline.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
         
@@ -109,9 +109,9 @@ def calculate_user(screen_name: str, force: bool=False):
                                              readability=user_readability_scores, data=tline_data)
 
         #  Re-retrieve, for consistent handling
-        user_tline, tline_data = asmbl_models.TwmUserTimeline.latest(screen_name)
+        user_tline, tline_data, readability = asmbl_models.TwmUserTimeline.latest(screen_name)
 
-    return user_tline, tline_data
+    return user_tline, tline_data, readability
 
 
 
@@ -155,7 +155,7 @@ def calculate_scores(config: dict, screen_name: str, group: str='trumpian', twee
                     'avg_similarity_score': avg_score,
                     'top_similar': top_similar.rename(columns={comp_screen_name: 'score'}).to_dict('records')  # return score, text (not screen name)
                 }
-    
+
     results = {
         'evaluation': {
             'screen_name': screen_name,
@@ -175,7 +175,7 @@ def supported_similarity_users():
     '''
 
     twitter_handles = list(itertools.chain(*[spec['screen_names'] 
-                                             for category,spec in asmbl_config['SIMILARITY_COMPARISONS'].items()]))
+                           for category,spec in asmbl_config['SIMILARITY_COMPARISONS'].items()]))
     twitter_handles = sorted(twitter_handles)
     return twitter_handles
 

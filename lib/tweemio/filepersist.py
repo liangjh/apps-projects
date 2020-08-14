@@ -1,4 +1,3 @@
-import uuid
 import json
 from google.cloud import storage
 from google.oauth2 import service_account
@@ -64,14 +63,5 @@ def read_json(config: dict, filename: str) -> dict:
 
     return data
 
-
-def assemble_filename_tline(screen_name: str, guid: str) -> str:
-    guid = uuid.uuid4().hext if (guid is None) else guid
-    return f"{screen_name}--{guid}.json"
-
-
-def assemble_filename_calc(screen_name: str, grp: str, guid: str) -> str:
-    guid = uuid.uuid4().hex if (guid is None) else guid
-    return f"{screen_name}--{grp}--{guid}.json"
 
 

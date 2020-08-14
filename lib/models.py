@@ -19,9 +19,8 @@ ie: models.MyModel
 -----
 """
 
-import uuid as gen_uuid
+import uuid
 import datetime
-import json
 
 from assembly import db
 from assembly import config as asmbl_config
@@ -42,7 +41,7 @@ class TwmUserTimeline(db.Model):
     name = db.Column(db.String(255))
     desc = db.Column(db.String(512))
     profile_img = db.Column(db.String(512))
-    readability_js = db.Column(db.Text())
+
 
     def should_refresh(self, days_refresh:int=20):
         '''
@@ -53,46 +52,56 @@ class TwmUserTimeline(db.Model):
         recalc = days_since > days_refresh
         return recalc
 
-    @property
-    def readability(self):
-        return json.loads(self.readability_js)
 
     @classmethod
     def latest(cls, screen_name: str):
         '''
         Get latest calc (if exists)
         '''
-        user_tlines = list(cls.query().filter(
-                (cls.screen_name == screen_name))\
+        #  TODO: don't get all, get last in sql perhaps
+        records = list(cls.query().filter(
+                        (cls.screen_name == screen_name))\
                     .order_by(cls.created_at.desc()))
-        user_tline = user_tlines[0] if (user_tlines != None and len(user_tlines) > 0) else None
-        if user_tline is None:
-            return (None, None)
+        record = records[0] if (records != None and len(records) > 0) else None
+        if record is None:
+            return (None, None, None)
 
-        data = filepersist.read_json(asmbl_config['PERSISTENCE'],
-                              filepersist.assemble_filename_tline(screen_name, user_tline.uuid))
-        return (user_tline, data)
+        data = filepersist.read_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_tline(screen_name,  record.created_at, record.uuid))
+        rdbl = filepersist.read_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_readbl(screen_name, record.created_at, record.uuid)) 
+
+        return (record, data, rdbl)
 
 
     @classmethod
     def persist(cls, screen_name: str, name: str, desc: str, profile_img: str, 
-                    readability: dict, data: dict):
+                readability: dict, data: dict):
         '''
         Save calc (db) + calc resul(file to persistence location)
         Delete prior calc (if exists), create a new calca
         '''
         #  Delete prior calc
-        tline, tline_data = cls.latest(screen_name)
+        tline, _, _ = cls.latest(screen_name)
         if (tline != None): 
             tline.delete() 
 
-        #  Create new calc; and persist results
-        guid = gen_uuid.uuid4().hex
-        filepersist.save_json(asmbl_config['PERSISTENCE'],
-                              filepersist.assemble_filename_tline(screen_name, guid), data)
-        cls.create(screen_name=screen_name, uuid=guid, name=name, desc=desc, profile_img=profile_img,
-                   readability_js=json.dumps(readability))
+        #  Create new calc; and persist results (timeline, readability score) 
+        guid = uuid.uuid4().hex
+        record = cls.create(screen_name=screen_name, uuid=guid, name=name, desc=desc, profile_img=profile_img)
+        filepersist.save_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_tline(screen_name, record.created_at, guid), data)
+        filepersist.save_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_readbl(screen_name, record.created_at, guid), readability)
+
         return guid
+
+
+    @classmethod
+    def assemble_filename_tline(cls, screen_name: str, tdate: datetime.date, guid: str) -> str:
+        return f"{tdate.strftime('%Y%m%d')}__tl__{screen_name}__{guid}.json"
+
+    @classmethod
+    def assemble_filename_readbl(cls, screen_name:str, tdate: datetime.date, guid: str) -> str:
+        return f"{tdate.strftime('%Y%m%d')}__rd__{screen_name}__{guid}.json"
+
+
 
 
 class TwmUserCalc(db.Model):
@@ -119,15 +128,14 @@ class TwmUserCalc(db.Model):
         '''
         Get latest calc (if exists)
         '''
-        user_calcs = list(cls.query().filter(
+        records = list(cls.query().filter(
                 (cls.grp == grp) & (cls.screen_name == screen_name)).order_by(cls.created_at.desc()))
-        user_calc = user_calcs[0] if (user_calcs != None and len(user_calcs) > 0) else None
-        if user_calc is None:
-            return (user_calc, None)
+        record = records[0] if (records != None and len(records) > 0) else None
+        if record is None:
+            return (record, None)
         
-        data = filepersist.read_json(asmbl_config['PERSISTENCE'],
-                              filepersist.assemble_filename_calc(screen_name, grp, user_calc.uuid))
-        return (user_calc, data)
+        data = filepersist.read_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_calc(screen_name, grp, record.created_at, record.uuid))
+        return (record, data)
 
 
     @classmethod
@@ -140,11 +148,15 @@ class TwmUserCalc(db.Model):
             user_calc.delete() 
 
         #  Create new calc; and persist results
-        guid = gen_uuid.uuid4().hex
-        filepersist.save_json(asmbl_config['PERSISTENCE'],
-                              filepersist.assemble_filename_calc(screen_name, grp, guid), data)
-        cls.create(screen_name=screen_name, grp=grp, uuid=guid)
+        guid = uuid.uuid4().hex
+        record = cls.create(screen_name=screen_name, grp=grp, uuid=guid)
+        filepersist.save_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_calc(screen_name, grp, record.created_at, record.uuid), data)
         return guid
+
+
+    @classmethod 
+    def assemble_filename_calc(cls, screen_name: str, grp: str, tdate: datetime.date, guid: str) -> str:
+        return f"{tdate.strftime('%Y%m%d')}__cl__{screen_name}__{grp}__{guid}.json"
 
 
 
