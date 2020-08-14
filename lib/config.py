@@ -93,19 +93,22 @@ class BaseConfig(object):
     #  Groups of screen_names and similarity model to apply to each group
     SIMILARITY_COMPARISONS = {
         'trumpian': {
-            'name': 'Trumpian Bigwigs',
+            'name': 'Trumpism Elite',
             'screen_names': [
                 'realdonaldtrump', 'kellyannepolls', 'secpompeo', 'mike_pence', 'devinnunes', 'lindseygrahamsc',
                 'donaldjtrumpjr', 'rudygiuliani', 'govmikehuckabee', 'alandersh', 'repmattgaetz', 'jim_jordan',
-                'markmeadows', 'gopleader', 'betsydevosed', 'elisestefanik', 'seanhannity', 'gopchairwoman', 'charliekirk11'
+                'markmeadows', 'gopleader', 'senatemajldr', 'betsydevosed', 'elisestefanik', 'seanhannity', 
+                'gopchairwoman', 'charliekirk11', 'kayleighmcenany', 'parscale', 'seanspicer', 'sarahhuckabee', 
+                'dancrenshawtx', 'jasonmillerindc', 'kanyewest', 'sentedcruz'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
         'antitrump': {
-            'name': 'Prominent Anti-Trumpians',
+            'name': 'Prominent Resistance',
             'screen_names': [
-                'gtconway3d', 'steveschmidtses', 'jwgop', 'therickwilson', 'nhjennifer', 'ronsteslow', 'reedgalen', 'madrid_mike',
-                'donwinslow', 'scaramucci', 'justinamash', 'kasparov63' 
+                'gtconway3d', 'steveschmidtses', 'jwgop', 'therickwilson', 'nhjennifer', 'ronsteslow', 'reedgalen', 
+                'madrid_mike', 'donwinslow', 'scaramucci', 'justinamash', 'kasparov63', 'danrather', 'stephenking',
+                'hamillhimself', 'georgetakei', 'preetbharara', 'sarahcpr'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
@@ -113,37 +116,33 @@ class BaseConfig(object):
             'name': 'Prominent Democrats',
             'screen_names': [
                 'andrewyang', 'kamalaharris', 'petebuttigieg', 'joebiden', 'ewarren', 'berniesanders', 'corybooker',
-                'amyklobuchar', 'juliancastro', 'aoc', 'reptedlieu'
+                'amyklobuchar', 'juliancastro', 'aoc', 'reptedlieu', 'harrisonjaime', 'davidaxelrod', 'drbiden', 
+                'michelleobama', 'barackobama', 'chrismurphyct', 'andrewyang', 'betoorourke'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
         'techbiz': {
-            'name': 'Tech/Business Personalities',
+            'name': 'Tech / Business',
             'screen_names': [
-                'elonmusk', 'billgates', 'sundarpichai', 'tim_cook', 'jeffbezos', 'karaswisher', 'davidcohen',
-                'jeffweiner', 'guyraz', 'andrewyng', 'davidu', 'richardbranson', 'jack', 'bchesky'
+                'elonmusk', 'billgates', 'sundarpichai', 'tim_cook', 'jeffbezos', 'karaswisher', 'mcuban', 'guykawasaki', 
+                'jeffweiner', 'guyraz',  'richardbranson', 'jack', 'mikebloomberg', 'richardbranson',
+                'ariannahuff', 'tferriss', 'reidhoffman', 'sophiaamoruso', 'patflynn', 'barbaracorcoran', 
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
         },
-        'entertainment': {
-            'name': 'Entertainment',
+        'culturalicons': {
+            'name': 'Culture / Entertainment',
             'screen_names': [
-                'chrissyteigen', 'jtimberlake', 'pink', 'britneyspears', 'mindykaling', 'katyperry', 'selenagomez',
-                'ladygaga', 'rihanna', 'brunomars', 'justinbieber', 'drake', 'pink', 'davidguetta',
-                'mileycyrus', 'jlo', 'georgetakei', 
-            ],
-            'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
-            },
-        'comedians': {
-            'name': 'Comedians',
-            'screen_names': [
+                'chrissyteigen', 'pink', 'britneyspears', 'mindykaling', 'katyperry', 
+                'ladygaga', 'brunomars', 'johnlegend',
                 'billmaher', 'conanobrien', 'jimmyfallon', 'jimmykimmel', 'trevornoah', 'jimgaffigan',
-                'sarahksilverman', 'stevemartintogo', 'stephenathome', 'badbanana', 'jerryseinfeld',
-                'sethmeyers', 'fullfrontalsamb', 'pattonoswalt'
+                'sarahksilverman', 'stevemartintogo', 'stephenathome', 'jerryseinfeld',
+                'sethmeyers', 'fullfrontalsamb'
             ],
             'similarity_function': 'mdl_multinomialnbvect_v1' #  function in module: lib.tweemio.similarity
-        }
-    }
+        },
+
+   }
 
     #  Tweets to merge into a single tweet, for model training and interpretation
     TWEET_CONDENSE_FACTOR = 3
