@@ -330,7 +330,7 @@ class Production(BaseConfig):
     # For saving / caching calculated user similarity scores
     PERSISTENCE = {
         'methodology': 'gcs',
-        'root': 'data.tweem.io',  
+        'root': 'images.tweem.io',  
         'datadir': 'userdata'
     }
 
