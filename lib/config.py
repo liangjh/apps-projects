@@ -174,6 +174,7 @@ class BaseConfig(object):
     #: Cloudfiles, Azure Blobs, and Local storage
     #: When using local storage, they can be accessed via http://yoursite/files
     #:
+    '''
     STORAGE = {
         #: STORAGE_PROVIDER:
         # The provider to use. By default it's 'LOCAL'.
@@ -227,6 +228,7 @@ class BaseConfig(object):
         }
 
     }
+    '''
 
     #--------- CACHING ----------
     #: Flask-Cache is used to caching
