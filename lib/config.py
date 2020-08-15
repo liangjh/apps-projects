@@ -174,7 +174,6 @@ class BaseConfig(object):
     #: Cloudfiles, Azure Blobs, and Local storage
     #: When using local storage, they can be accessed via http://yoursite/files
     #:
-    '''
     STORAGE = {
         #: STORAGE_PROVIDER:
         # The provider to use. By default it's 'LOCAL'.
@@ -228,7 +227,6 @@ class BaseConfig(object):
         }
 
     }
-    '''
 
     #--------- CACHING ----------
     #: Flask-Cache is used to caching
@@ -314,13 +312,6 @@ class Development(BaseConfig):
     }
 
 
-    # To allow this to work locally
-    STORAGE = {
-        "PROVIDER": "LOCAL",
-        "CONTAINER": DATA_DIR
-    }
-
-
 class Production(BaseConfig):
     """ Config for Production environment """
     SERVER_NAME = None
@@ -341,11 +332,4 @@ class Production(BaseConfig):
         'datadir': 'userdata'
     }
 
-    # We're not actually using assembly's storage
-    # Just doing this to prevent server startup issues
-    STORAGE = {
-        "PROVIDER": "GOOGLE_STORAGE",
-        "KEY": None,
-        "SECRET": None
-    }
 
