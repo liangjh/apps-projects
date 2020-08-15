@@ -307,7 +307,6 @@ class Development(BaseConfig):
 
     # Persistence Method
     # For saving / reading User Data
-
     PERSISTENCE = {
         'methodology': 'local',   # gcs or local (default)
         'root': '/Users/liangjh/workspace/tweemio-api/data',
@@ -315,6 +314,11 @@ class Development(BaseConfig):
     }
 
 
+    # To allow this to work locally
+    STORAGE = {
+        "PROVIDER": "LOCAL",
+        "CONTAINER": DATA_DIR
+    }
 
 
 class Production(BaseConfig):
@@ -337,5 +341,11 @@ class Production(BaseConfig):
         'datadir': 'userdata'
     }
 
-
+    # We're not actually using assembly's storage
+    # Just doing this to prevent server startup issues
+    STORAGE = {
+        "PROVIDER": "GOOGLE_STORAGE",
+        "KEY": None,
+        "SECRET": None
+    }
 
