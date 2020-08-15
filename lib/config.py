@@ -179,8 +179,7 @@ class BaseConfig(object):
         # The provider to use. By default it's 'LOCAL'.
         # You can use:
         # LOCAL, S3, GOOGLE_STORAGE, AZURE_BLOBS, CLOUDFILES
-        # "PROVIDER": "LOCAL",
-        "PROVIDER": None,
+        "PROVIDER": "LOCAL",
 
         #: STORAGE_KEY
         # The storage key. Leave it blank if PROVIDER is LOCAL
