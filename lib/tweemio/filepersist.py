@@ -36,8 +36,7 @@ def save_json(config: dict, filename: str, contents):
         client = gcs_client()
         bucket = client.get_bucket(config['root'])
         filepath = f"{config['datadir']}/{filename}"
-        blob = bucket.get_blob(filepath)
-        blob.upload_from_string(json.dumps(contents), content_type='text/json')
+        bucket.blob(filepath).upload_from_string(json.dumps(contents), content_type='text/json')
     else:
         filepath = f"{config['root']}/{config['datadir']}/{filename}"
         with open(filepath, 'w+') as fl:
