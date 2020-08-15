@@ -161,7 +161,7 @@ class DetailsMain extends React.Component {
                                         A good introduction to readability metrics can be found here:  <a href="https://en.wikipedia.org/wiki/Readability" target="_blank">Wikipedia on Readability</a>.<br/><br/>
                                         <b>Flesch-Kincaid</b>:<br/>
                                         Utilizes average sentence length and average word length in syllables to compose an overall score on reading ease.  
-                                        This formula is extended to transform the reading ease score to a grade-level equivalent<br/><br/>
+                                        This formula is extended to a grade-level equivalent<br/><br/>
                                         <b>Dale-Chall</b>:<br/>
                                         Given a collections of words at the 4th grade-level, compose an overall score based on percentage of words found
                                         in the 4th grade list and average sentence length.  The score roughly maps to the following grade levels: <br/>
@@ -176,10 +176,10 @@ class DetailsMain extends React.Component {
                                     <Modal.Body>
                                         Tweemio analyzes your tweets and compiles a similarity match against prolific personalities in the Twitterverse.  
                                         The similarity algorithm analyzes style, word frequency and context to compile an average match score.  
-                                        Alongside each personality are the top tweets from *your feed* that the algorithm has determined a high match score.
+                                        Alongside each personality are the top tweets from *your feed* that the algorithm has determined to be a match.
                                         <br/><br/>
                                         We're always looking for feedback, so if there is a personality you'd like to see featured or recommendations on how to improve, 
-                                        tweet us at <a href="http://www.twitter.com/tweemio" target="_blank">@tweemio</a>
+                                        tweet us over at <a href="http://www.twitter.com/tweemio" target="_blank">@Tweemio</a>
                                     </Modal.Body>
                                 </Modal>
                             </Card.Text>
