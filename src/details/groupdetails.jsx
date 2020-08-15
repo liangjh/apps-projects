@@ -43,7 +43,7 @@ class GroupDetails extends React.Component {
             Object.entries(this.props.groupCalculation) < 1 ) { 
             return(
                 <Container fluid>
-                    <Row><Col>Click on a category above to see your similarity score</Col></Row>
+                    <Row><Col>Reading, comparing and thinking hard...</Col></Row>
                 </Container>
             );
         }
