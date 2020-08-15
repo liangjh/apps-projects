@@ -318,12 +318,15 @@ class Production(BaseConfig):
     """ Config for Production environment """
     SERVER_NAME = None
     DEBUG = False
-    SECRET_KEY = None
+    SECRET_KEY = "whatisthis"
     COMPRESS_HTML = True
 
     # Database in production
-    DB_URL = ''
-  
+    DB_URL = 'postgresql://tspire:kj7xxb9jOJ@dpg-blmma9co8cribb2rmokg:5432/tspire'
+ 
+    #  (for remote connectivity)
+    # DB_URL = 'postgres://tspire:kj7xxb9jOJ@oregon-postgres.render.com/tspire'
+
     # For saving / caching calculated user similarity scores
     PERSISTENCE = {
         'methodology': 'gcs',
