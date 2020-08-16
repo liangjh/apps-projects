@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Spinner, Badge, Table, Accordion, Container, Row, Col, Navbar, CardColumns, Card, Image  } from 'react-bootstrap';
+import { Button, Badge, Table, Accordion, Container, Row, Col, CardColumns, Card, Image  } from 'react-bootstrap';
 
 class GroupDetails extends React.Component {
 
@@ -89,8 +89,9 @@ class GroupDetails extends React.Component {
                                         <Table borderless size="sm">
                                             <colgroup><col style={{width: 50}}></col><col></col></colgroup>
                                             <tr>
-                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank"><Image src={metaDetails.user.profile_img} rounded/></a></td>
-                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank" style={{color:'inherit', textDecoration:'none'}}>
+                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank" rel="noopener noreferrer">
+                                                    <Image src={metaDetails.user.profile_img} rounded/></a></td>
+                                                <td><a href={`http://www.twitter.com/${screenName}`} target="_blank" rel="noopener noreferrer" style={{color:'inherit', textDecoration:'none'}}>
                                                         {metaDetails.user.name}</a><br/>
                                                         <Badge variant={this.badgeColor(roundPct)}>{roundPct}% Match</Badge>
                                                 </td>

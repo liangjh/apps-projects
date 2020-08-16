@@ -2,13 +2,10 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { API_URL, GA_KEY } from './App'
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import ReactGA from 'react-ga';
-
-import { Button, Spinner, Form, OverlayTrigger, 
-    Tooltip, Container, Row, Col, Navbar, 
-    FormControl, Jumbotron, Popover } from 'react-bootstrap';
+import { Button, Spinner, Form, Container, Row, Col, FormControl } from 'react-bootstrap';
     
 
 class SplashMain extends React.Component {

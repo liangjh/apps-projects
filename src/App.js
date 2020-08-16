@@ -1,8 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { SplashMain } from './splashmain';
 import { DetailsMain } from './details/detailsmain';
 

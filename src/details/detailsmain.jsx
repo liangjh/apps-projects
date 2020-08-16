@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { API_URL, GA_KEY } from '../App';
 import { GroupDetails } from './groupdetails';
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import { Button, Spinner, Image, Card, Nav, Table, Container, Row, Col, Badge, Navbar, Modal } from 'react-bootstrap';
 import ReactGA from 'react-ga';
 
@@ -140,9 +140,10 @@ class DetailsMain extends React.Component {
                                 <Table borderless size="sm">
                                     <colgroup><col style={{width: 50}}></col><col></col></colgroup>
                                     <tr>
-                                        <td><a href={`http://www.twitter.com/${this.props.userScreenName}`} target="_blank"><Image src={this.props.userDetails.user.profile_img} rounded/></a></td>
-                                        <td><a href={`http://www.twitter.com/${this.props.userScreenName}`} target="_blank" style={{color:'inherit', textDecoration:'none'}}>
-                                                     {this.props.userDetails.user.name}<br/>@{this.props.userScreenName}</a></td>
+                                        <td><a href={`http://www.twitter.com/${this.props.userScreenName}`} target="_blank" rel="noopener noreferrer">
+                                                <Image src={this.props.userDetails.user.profile_img} rounded/></a></td>
+                                        <td><a href={`http://www.twitter.com/${this.props.userScreenName}`} target="_blank" rel="noopener noreferrer" style={{color:'inherit', textDecoration:'none'}}>
+                                                {this.props.userDetails.user.name}<br/>@{this.props.userScreenName}</a></td>
                                     </tr>
                                 </Table>
                             </Card.Title>
@@ -165,7 +166,7 @@ class DetailsMain extends React.Component {
                                 <Modal show={this.state.showReadabilityModal} onHide={this.handleHideReadability}>
                                     <Modal.Header closeButton>About Readability Scores</Modal.Header>
                                     <Modal.Body>
-                                        A good introduction to readability metrics can be found here:  <a href="https://en.wikipedia.org/wiki/Readability" target="_blank">Wikipedia on Readability</a>.<br/><br/>
+                                        A good introduction to readability metrics can be found here:  <a href="https://en.wikipedia.org/wiki/Readability" target="_blank" rel="noopener noreferrer">Wikipedia on Readability</a>.<br/><br/>
                                         <b>Flesch-Kincaid</b>:<br/>
                                         Utilizes average sentence length and average word length in syllables to compose an overall score on reading ease.  
                                         This formula is extended to a grade-level equivalent<br/><br/>
@@ -186,7 +187,7 @@ class DetailsMain extends React.Component {
                                         Alongside each personality are the top tweets from *your feed* that the algorithm has determined to be a match.
                                         <br/><br/>
                                         We're always looking for feedback, so if there is a personality you'd like to see featured or recommendations on how to improve, 
-                                        tweet us over at <a href="http://www.twitter.com/tweemio" target="_blank">@Tweemio</a>
+                                        tweet us over at <a href="http://www.twitter.com/tweemio" target="_blank" rel="noopener noreferrer">@Tweemio</a>
                                     </Modal.Body>
                                 </Modal>
                             </Card.Text>
