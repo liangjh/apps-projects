@@ -10,6 +10,8 @@ import { Button, Spinner, Form, OverlayTrigger,
     Tooltip, Container, Row, Col, Navbar, 
     FormControl, Jumbotron, Popover } from 'react-bootstrap';
     
+// Initialize GA component
+ReactGA.initialize(GA_KEY);
 
 class SplashMain extends React.Component {
 
