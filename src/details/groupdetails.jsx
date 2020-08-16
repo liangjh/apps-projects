@@ -101,7 +101,7 @@ class GroupDetails extends React.Component {
                                     <Card.Subtitle className="mb-2 text-muted">
                                         <b>@{screenName}</b><br/>
                                         { metaDetails.user.desc }<br/>
-                                        <Badge variant="light" style={{backgroundColor:'#99cccc'}}>Tweets at: Grade {Math.round(this.roundNumExpr(metaDetails.readability.flesch_kincaid_grade_level))} Level</Badge><br/>                                         
+                                        <Badge variant="light" style={{backgroundColor:'#99cccc'}}>Tweets at: Grade {Math.round(this.roundNumExpr(metaDetails.readability.flesch_kincaid_grade_level))}</Badge><br/>                                         
                                     </Card.Subtitle>
                                     { similarJsx }
                                 </Card.Body>
