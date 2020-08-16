@@ -10,8 +10,6 @@ import { Button, Spinner, Form, OverlayTrigger,
     Tooltip, Container, Row, Col, Navbar, 
     FormControl, Jumbotron, Popover } from 'react-bootstrap';
     
-// Initialize GA component
-ReactGA.initialize(GA_KEY);
 
 class SplashMain extends React.Component {
 
@@ -31,6 +29,9 @@ class SplashMain extends React.Component {
     spinnerOff = () => { this.setState({loading: false}); }
 
     componentDidMount = async(event) => {
+        //  Initialize google analytics
+        console.log(`GA Key is initialized to: ${GA_KEY}`);
+        ReactGA.initialize(GA_KEY);       
         try { ReactGA.pageview('/');} catch(err) {console.log('error sending GA event');}
     }
         

@@ -8,8 +8,6 @@ import { Button, Spinner, Image, Card, Nav, Table, Container, Row, Col, Badge, N
 import ReactGA from 'react-ga';
 
 
-// Initialize GA component
-ReactGA.initialize(GA_KEY);
 
 class DetailsMain extends React.Component {
 
@@ -37,7 +35,9 @@ class DetailsMain extends React.Component {
         this.initGroupMeta();
     }
 
-    // componentDidMount = async(event) => {}
+    componentDidMount = async(event) => {
+        ReactGA.initialize(GA_KEY);  // initialize google analytics
+    }
 
     
     //  Get screen meta info, init to state
