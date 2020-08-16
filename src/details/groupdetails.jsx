@@ -52,7 +52,6 @@ class GroupDetails extends React.Component {
         const cardEntries = Object.entries(this.props.groupCalculation.similarity).map(
                     ([screenName, similarityDetails]) => {                  
                         const metaDetails = this.props.screenMeta[screenName];  // details for each SN in group
-                        console.log(metaDetails);
                         //  Top similar, for currrent screen name
                         let topSimilar = [];
                         let similarJsx = null;
