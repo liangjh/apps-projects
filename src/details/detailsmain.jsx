@@ -5,6 +5,8 @@ import { API_URL } from '../App';
 import { GroupDetails } from './groupdetails';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import { Button, Spinner, Image, Card, Nav, Table, Container, Row, Col, Badge, Navbar, Modal } from 'react-bootstrap';
+import ReactGA from 'react-ga';
+
 
 
 class DetailsMain extends React.Component {
@@ -88,6 +90,9 @@ class DetailsMain extends React.Component {
             this.calculateSimilarity(this.props.userScreenName, groupName);
         this.setState({selectedGroupName: groupName});
         this.spinnerOff();
+
+        // log usage (user, screen name)
+        try { ReactGA.pageview(`/details?screen_name=${this.props.userScreenName}&group=${groupName}`);} catch(err) {console.log('error sending GA event');}
     }    
 
     //  For readability scores

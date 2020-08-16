@@ -4,6 +4,7 @@ import './App.css';
 import { API_URL, GA_KEY } from './App'
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import ReactGA from 'react-ga';
 
 import { Button, Spinner, Form, OverlayTrigger, 
     Tooltip, Container, Row, Col, Navbar, 
@@ -27,6 +28,9 @@ class SplashMain extends React.Component {
     spinnerOn  = () => { this.setState({loading: true }); }
     spinnerOff = () => { this.setState({loading: false}); }
 
+    componentDidMount = async(event) => {
+        try { ReactGA.pageview('/');} catch(err) {console.log('error sending GA event');}
+    }
         
     // Handle user search / submit
     handleUserSearchCalc = async(event) => {
@@ -37,8 +41,8 @@ class SplashMain extends React.Component {
         this.spinnerOn();
         this.setState({hasError: false}); // Ensure clean slate on error
         const userScreenName = event.target.elements.screen_name.value;
-        // -- todo: add GA event
         const resp = await axios.get(`${API_URL}/api/user/`, {params: {screen_name: userScreenName}});
+        try { ReactGA.pageview(`/user?screen_name=${userScreenName}`);} catch(err) {console.log('error sending GA event');}
 
         //  Handle Response
         if ('error' in resp.data && resp.data.error)  {
