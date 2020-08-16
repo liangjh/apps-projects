@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { API_URL } from '../App';
+import { API_URL, GA_KEY } from '../App';
 import { GroupDetails } from './groupdetails';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import { Button, Spinner, Image, Card, Nav, Table, Container, Row, Col, Badge, Navbar, Modal } from 'react-bootstrap';
