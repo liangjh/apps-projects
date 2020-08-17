@@ -23,7 +23,7 @@ def api_user_details(screen_name: str, force: bool=False):
     #  Retrieve persisted user info, or re-download / recalculate
     #  All logic handled in calculate_user function
     #  We don't need to return user timeline
-    user, timeline, readability = calculate_user(screen_name, force=force)
+    user = calculate_user(screen_name, force=force)
 
     return {
         'user': {
@@ -32,7 +32,7 @@ def api_user_details(screen_name: str, force: bool=False):
             'desc': user.desc,
             'profile_img': user.profile_img
         },
-        'readability': readability
+        'readability': user.readability
     }
 
 
@@ -47,21 +47,22 @@ def api_calculate_similarity(screen_name: str, group: str='trumpian', force: boo
 
     #  Get latest tline data, if exists
     #  Download user timeline (if needed) + persist
-    user_tline, tline_data, rdbl_data = calculate_user(screen_name, force)
+    user_tline = calculate_user(screen_name, force)
 
     #  Recalc similarity score (if needed) + persist
     #  Check that refresh calc is within recalc period
     #  (same logic as user_tline)
-    user_calc, calc_data = asmbl_models.TwmUserCalc.latest(screen_name, grp=group)
+    user_calc = asmbl_models.TwmUserCalc.latest(screen_name, grp=group)
     if (force or user_calc is None or
             user_calc.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
 
         #  Execute Similarity Model
         #  Recalculate (or retrieve prior calculated) 
         print(f"Calculating similarity for user: {screen_name} on group: {group}")
-        calc_data = calculate_scores(asmbl_config, screen_name, group, tline_data)
+        calc_data = calculate_scores(asmbl_config, screen_name, group, user_tline.timeline)
         asmbl_models.TwmUserCalc.persist(screen_name, group, calc_data)
 
+    calc_data = user_calc.calc_data if user_calc != None else calc_data
     calc_data = filter_supported_names(calc_data)
     return calc_data
 
@@ -86,7 +87,7 @@ def calculate_user(screen_name: str, force: bool=False):
     Retrieve only if user profile has not been downloaded since threshold 
      (1) user details (2) timeline, (3) calculates user readability scores
     '''
-    user_tline, tline_data, readability = asmbl_models.TwmUserTimeline.latest(screen_name)
+    user_tline = asmbl_models.TwmUserTimeline.latest(screen_name)
     if (force or user_tline is None or 
             user_tline.should_refresh(asmbl_config['SIMILARITY_DAYS_RECALC'])):
         
@@ -109,9 +110,9 @@ def calculate_user(screen_name: str, force: bool=False):
                                              readability=user_readability_scores, data=tline_data)
 
         #  Re-retrieve, for consistent handling
-        user_tline, tline_data, readability = asmbl_models.TwmUserTimeline.latest(screen_name)
+        user_tline = asmbl_models.TwmUserTimeline.latest(screen_name)
 
-    return user_tline, tline_data, readability
+    return user_tline
 
 
 

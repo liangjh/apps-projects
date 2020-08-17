@@ -1,3 +1,4 @@
+import os
 import json
 from google.cloud import storage
 from google.oauth2 import service_account
@@ -63,4 +64,16 @@ def read_json(config: dict, filename: str) -> dict:
     return data
 
 
+def delete_file(config: dict, filename: str):
+    '''
+    Given name of json file, delete from GCS
+    '''
+    if config['methodology'] == 'gcs':
+        client = gcs_client()
+        bucket = client.get_bucket(config['root'])
+        filepath = f"{config['datadir']}/{filename}"
+        bucket.blob(filepath).delete()
+    else:
+        filepath = f"{config['root']}/{config['datadir']}/{filename}"
+        os.remove(filepath) 
 

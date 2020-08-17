@@ -53,6 +53,22 @@ class TwmUserTimeline(db.Model):
         return recalc
 
 
+    @property
+    def timeline(self):
+        ''' Get linked timeline object '''
+        data = filepersist.read_json(asmbl_config['PERSISTENCE'], 
+                                     self.assemble_filename_tline(self.screen_name,  self.created_at, self.uuid))
+        return data
+
+
+    @property
+    def readability(self):
+        ''' Get linked readability object '''
+        rdbl = filepersist.read_json(asmbl_config['PERSISTENCE'], 
+                                     self.assemble_filename_readbl(self.screen_name, self.created_at, self.uuid)) 
+        return rdbl
+
+
     @classmethod
     def latest(cls, screen_name: str):
         '''
@@ -63,13 +79,7 @@ class TwmUserTimeline(db.Model):
                         (cls.screen_name == screen_name))\
                     .order_by(cls.created_at.desc()))
         record = records[0] if (records != None and len(records) > 0) else None
-        if record is None:
-            return (None, None, None)
-
-        data = filepersist.read_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_tline(screen_name,  record.created_at, record.uuid))
-        rdbl = filepersist.read_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_readbl(screen_name, record.created_at, record.uuid)) 
-
-        return (record, data, rdbl)
+        return record
 
 
     @classmethod
@@ -80,7 +90,7 @@ class TwmUserTimeline(db.Model):
         Delete prior calc (if exists), create a new calca
         '''
         #  Delete prior calc
-        tline, _, _ = cls.latest(screen_name)
+        tline = cls.latest(screen_name)
         if (tline != None): 
             tline.delete() 
 
@@ -122,6 +132,15 @@ class TwmUserCalc(db.Model):
         days_since  = (datetime.date.today() - last_update).days
         recalc = days_since > days_refresh
         return recalc
+    
+
+    @property
+    def calc_data(self):
+        ''' Get linked calc results '''
+        data = filepersist.read_json(asmbl_config['PERSISTENCE'], 
+                                     self.assemble_filename_calc(self.screen_name, self.grp, self.created_at, self.uuid))
+        return data
+
 
     @classmethod
     def latest(cls, screen_name: str, grp: str):
@@ -131,11 +150,7 @@ class TwmUserCalc(db.Model):
         records = list(cls.query().filter(
                 (cls.grp == grp) & (cls.screen_name == screen_name)).order_by(cls.created_at.desc()))
         record = records[0] if (records != None and len(records) > 0) else None
-        if record is None:
-            return (record, None)
-        
-        data = filepersist.read_json(asmbl_config['PERSISTENCE'], cls.assemble_filename_calc(screen_name, grp, record.created_at, record.uuid))
-        return (record, data)
+        return record
 
 
     @classmethod
@@ -143,7 +158,7 @@ class TwmUserCalc(db.Model):
         '''
         Delete prior calc (if exists), create a new calc
         '''
-        user_calc, calc_data = cls.latest(screen_name, grp)
+        user_calc = cls.latest(screen_name, grp)
         if (user_calc != None): 
             user_calc.delete() 
 
