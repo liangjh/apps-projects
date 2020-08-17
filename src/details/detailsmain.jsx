@@ -152,7 +152,10 @@ class DetailsMain extends React.Component {
                             </Card.Subtitle>
                             <Card.Text>    
                                 Your tweets are written roughly at the &nbsp;
-                                    <Badge variant="success" style={{fontSize: "0.9rem"}}>Grade <b> { Math.round(this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level)) } </b> Level</Badge><br/>
+                                    <Badge variant="success" style={{fontSize: "0.9rem"}}>Grade <b>{ 
+                                        this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level) > 12 ? '12+' :
+                                            Math.round(this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level)) }
+                                        </b> Level</Badge><br/>
                                     &nbsp;&nbsp;&nbsp;<small><i>(using the Flesch Kincaid Grade Level Score)</i></small>
                                 <br/><br/>
 
