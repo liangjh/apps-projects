@@ -32,7 +32,7 @@ class Api(Assembly):
             return generate_api_error('Missing required parameter: screen_name')
         
         try:
-            user_details = twm.api_user_details(screen_name, force)
+            user_details = twm.api_user_details(screen_name.lower(), force)
         except Exception as ex:
             user_details = generate_api_error(str(ex))
             print(traceback.print_exc())
