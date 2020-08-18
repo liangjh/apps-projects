@@ -162,7 +162,6 @@ class DetailsMain extends React.Component {
                                 <Badge variant="secondary" style={{fontSize: "0.9rem"}}>Automated Readability: { this.roundNumExpr(this.props.userDetails.readability.automated_readability_index) }</Badge><br/>
                                 <Badge variant="secondary" style={{fontSize: "0.9rem"}}>Coleman-Liau: { this.roundNumExpr(this.props.userDetails.readability.coleman_liau_index) }</Badge><br/>
                                 <Badge variant="secondary" style={{fontSize: "0.9rem"}}>Dale-Chall:  { this.roundNumExpr(this.props.userDetails.readability.dale_chall) }</Badge><br/>
-                                <Badge variant="secondary" style={{fontSize: "0.9rem"}}>Flesch-Kincaid Grade Level: { this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_grade_level) }</Badge><br/>
                                 <Badge variant="secondary" style={{fontSize: "0.9rem"}}>Flesch-Kincaid Reading Ease: { this.roundNumExpr(this.props.userDetails.readability.flesch_kincaid_reading_ease) }</Badge><br/><br/>
 
                                 <Button variant="outline-primary" onClick={this.handleShowReadability}><small>About Readability Scores</small></Button>&nbsp;&nbsp;
