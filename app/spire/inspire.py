@@ -34,8 +34,9 @@ def inspire_generate(persona: str='Trump', config: dict={}) -> dict:
             img = pixabay.download_image(img_results[random.randint(0, len(img_results)-1)])
 
     # Generate poster image, save to location
+    # 20200818: set title to None (too many apostrophed topics)
     poster_img = poster.make_poster(img, config['POSTER_PARAMS'][persona], config['RESOURCE_DIRECTORY'], 
-                                    title=(title.upper() if title is not None else title), quote=text)
+                                    title=None, quote=text)
 
     # Save image + information
     persisted_info = img_persist.save_image(poster_img, config['PERSIST_MEDIUM'], config['IMAGE_PERSIST_PROPERTIES'][persona])
