@@ -6,13 +6,16 @@ import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import ReactGA from 'react-ga';
 import { Button, Spinner, Form, Container, Row, Col, FormControl } from 'react-bootstrap';
-    
+import { UserReel } from './details/userreel';
+import { thisTypeAnnotation } from '@babel/types';
+
 
 class SplashMain extends React.Component {
 
     //  -- Event handlers, from App (parent container) --
     //      this.props.handleUseDetails
     //      this.props.handleClearUser
+    //      this.props.screenMeta
 
     state = {
         inputScreenName: '',    // store form entry value
@@ -33,14 +36,16 @@ class SplashMain extends React.Component {
     }
         
     // Handle user search / submit
-    handleUserSearchCalc = async(event) => {
+    handleUserSearchForm = async(event) => {
         //  Override default form submit behavior (form submit => page refresh);
         event.preventDefault();
+        this.handleUserSearch(event.target.elements.screen_name.value);
+    };
 
+    handleUserSearch = async(userScreenName) => {
         //  Invoke user search/retrieval via API
         this.spinnerOn();
         this.setState({hasError: false}); // Ensure clean slate on error
-        const userScreenName = event.target.elements.screen_name.value;
         const resp = await axios.get(`${API_URL}/api/user/`, {params: {screen_name: userScreenName}});
         try { ReactGA.pageview(`/user?screen_name=${userScreenName}`);} catch(err) {console.log('error sending GA event');}
 
@@ -59,8 +64,8 @@ class SplashMain extends React.Component {
     };
 
     //  Sync user input to state
-    handleInputChange = (event) => {
-        this.setState({inputScreenName: event.target.value});
+    handleSetScreenName = (screenName) => {
+        this.setState({inputScreenName: screenName});
     };
 
     render() {
@@ -75,27 +80,31 @@ class SplashMain extends React.Component {
 
         return(
             <Container fluid>
+                <Row><Col><br/><br/><br/><br/><br/></Col></Row>
                 <Row>
-                    <Col>   
-                        <div className="center">
-                            <br/><br/><br/><br/><br/>
-                            <br/><br/><br/><br/><br/>
-                            <br/><br/><br/><br/><br/>
-
-                            <h1>Tweemio</h1><br/>
-
+                    <Col className="d-flex justify-content-center align-items-center">   
+                        <h1>Tweemio</h1>
+                    </Col>
+                </Row>
+                <Row><Col><br/></Col></Row>
+                <Row>
+                    <Col className="d-flex justify-content-center align-items-center">   
                             <Form inline onSubmit={this.handleUserSearchCalc} method="get">
                                 <FormControl type="text" placeholder="Twitter Username" className="mr-md-2" name="screen_name" 
-                                            onChange={this.handleInputChange}/>
+                                            onChange={(event) => { this.handleSetScreenName(event.target.value) }}/>
                                 <Button variant="outline-primary" type="submit">Find</Button>
                             </Form>
                             <font color='red'>{this.state.hasError ? `User ${this.state.inputScreenName} not found, or invalid Twitter user` : ''}</font>
                             { this.state.loading ? <Spinner animation="border" role="status"/> : null }
-                       </div>
                     </Col>
-            </Row>
-        </Container>
-
+                </Row>
+                <Row><Col><br/></Col></Row>
+                <Row>
+                    <Col className="d-flex justify-content-center align-items-center">
+                        <UserReel screenMeta={this.props.screenMeta} handleUserSearch={this.handleUserSearch}/>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 

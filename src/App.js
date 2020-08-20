@@ -4,6 +4,8 @@ import './App.css';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { SplashMain } from './splashmain';
 import { DetailsMain } from './details/detailsmain';
+import axios from 'axios';
+
 
 //  Get shared variables
 let API_URL = process.env.REACT_APP_API_URL; API_URL = (API_URL == null ? 'http://localhost:5000' : API_URL);
@@ -14,12 +16,23 @@ class App extends React.Component {
 
   constructor() {
     super();
+    this.initScreenMeta();
   }
 
   state = {  
       userDetails: null,
-      userScreenName: null
+      userScreenName: null,
+      screenMeta: {}
   }
+
+  //  Get screen meta info, init to state
+  initScreenMeta = async(event) => {
+    if (Object.keys(this.state.screenMeta).length > 0)
+        return;
+    const resp = await axios.get(`${API_URL}/api/screenmeta/`);
+    this.setState({screenMeta: resp.data});
+  }
+
 
   // Set user, user screen name (in state)
   handleSetUserDetails = (userDetails) => {
@@ -45,11 +58,13 @@ class App extends React.Component {
             <Switch>
               <Route exact={true} path="/"
                 render={() => <SplashMain handleSetUserDetails={this.handleSetUserDetails} 
-                                          handleClearUser={this.handleClearUser} /> } />
+                                          handleClearUser={this.handleClearUser}
+                                          screenMeta={this.state.screenMeta} /> } />
               <Route exact={true} path="/details" 
                 render={() => <DetailsMain handleClearUser={this.handleClearUser}  
                                            userDetails={this.state.userDetails}
-                                           userScreenName={this.state.userScreenName}/> } />
+                                           userScreenName={this.state.userScreenName}
+                                           screenMeta={this.state.screenMeta}/> } />
             </Switch>
         </Router>
     );
