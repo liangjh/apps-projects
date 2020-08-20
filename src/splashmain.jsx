@@ -7,7 +7,7 @@ import axios from 'axios';
 import ReactGA from 'react-ga';
 import { Button, Spinner, Form, Container, Row, Col, FormControl } from 'react-bootstrap';
 import { UserReel } from './details/userreel';
-import { thisTypeAnnotation } from '@babel/types';
+import queryString from 'query-string';
 
 
 class SplashMain extends React.Component {
@@ -33,8 +33,16 @@ class SplashMain extends React.Component {
         console.log(`GA Key is initialized to: ${GA_KEY}`);
         ReactGA.initialize(GA_KEY);       
         try { ReactGA.pageview('/');} catch(err) {console.log('error sending GA event');}
+        try { this.handleUserInitLoad(); } catch(err) {console.log('error on init-load user')}  // do nothing if something goes wrong
     }
-        
+
+    // Handle user load (userid passed to page)
+    handleUserInitLoad = () => {
+        const kvs = queryString.parse(window.location.search);
+        if ('screen_name' in kvs) 
+            this.handleUserSearch(kvs.screen_name);
+    };
+
     // Handle user search / submit
     handleUserSearchForm = async(event) => {
         //  Override default form submit behavior (form submit => page refresh);
