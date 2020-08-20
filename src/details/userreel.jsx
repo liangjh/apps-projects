@@ -3,7 +3,7 @@ import { Button, Badge, Table, CardColumns, Card, Image  } from 'react-bootstrap
 
 
 //  # of users to display in list
-const NUM_ELEMENTS = 12;
+const NUM_ELEMENTS = 9;
 
 class UserReel extends React.Component {
 
@@ -19,9 +19,8 @@ class UserReel extends React.Component {
         let selectedArr = [];
         while (selectedArr.length < n) {
             const randidx = Math.floor((Math.random() * n));
-            if (!selectedArr.includes(arr[randidx])) {
+            if (!selectedArr.includes(arr[randidx]))
                 selectedArr.push(arr[randidx]);
-            };
         };
         return selectedArr;
     }
@@ -54,19 +53,20 @@ class UserReel extends React.Component {
                                     <td>
                                         <a href="#" onClick={() => {this.props.handleUserSearch(screenName); } } style={{color:'inherit', textDecoration:'none'}}>
                                             {metaDetails.user.name}<br/>
-                                            @{screenName}</a>
+                                            <Badge variant="light" style={{backgroundColor:'#99cccc', fontSize:'0.9rem'}}>Grade&nbsp; 
+                                            {
+                                                this.roundNumExpr(metaDetails.readability.flesch_kincaid_grade_level) > 12 ? '12+' :
+                                                    Math.round(this.roundNumExpr(metaDetails.readability.flesch_kincaid_grade_level))
+                                            } Level
+                                        </Badge></a>
                                     </td>
                                 </tr>
                             </Table>
                         </Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">
-                            { metaDetails.user.desc }<br/>
-                            <Badge variant="light" style={{backgroundColor:'#99cccc'}}>Tweets at: Grade&nbsp; 
-                                {
-                                    this.roundNumExpr(metaDetails.readability.flesch_kincaid_grade_level) > 12 ? '12+' :
-                                        Math.round(this.roundNumExpr(metaDetails.readability.flesch_kincaid_grade_level))
-                                }
-                            </Badge>
+                            <a href="#" onClick={() => {this.props.handleUserSearch(screenName); } } style={{color:'inherit', textDecoration:'none'}}>
+                            @{screenName}<br/>
+                            { metaDetails.user.desc }</a><br/>
                         </Card.Subtitle>
                     </Card.Body>
                     </Card>
