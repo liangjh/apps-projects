@@ -18,7 +18,7 @@ class UserReel extends React.Component {
         n = Math.min(n, arr.length);
         let selectedArr = [];
         while (selectedArr.length < n) {
-            const randidx = Math.floor((Math.random() * n));
+            const randidx = Math.floor((Math.random() * arr.length));
             if (!selectedArr.includes(arr[randidx]))
                 selectedArr.push(arr[randidx]);
         };
