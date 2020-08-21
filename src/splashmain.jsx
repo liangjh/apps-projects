@@ -5,7 +5,7 @@ import { API_URL, GA_KEY } from './App'
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import ReactGA from 'react-ga';
-import { Button, Spinner, Form, Container, Row, Col, FormControl } from 'react-bootstrap';
+import { Button, Spinner, Form, Container, Row, Col, FormControl, Image } from 'react-bootstrap';
 import { UserReel } from './details/userreel';
 import queryString from 'query-string';
 
@@ -88,10 +88,10 @@ class SplashMain extends React.Component {
 
         return(
             <Container fluid>
-                <Row><Col><br/><br/><br/><br/><br/></Col></Row>
+                <Row><Col><br/><br/></Col></Row>
                 <Row>
                     <Col className="d-flex justify-content-center align-items-center">   
-                        <h1>Tweemio</h1>
+                        <Image src="headline_logo.png"/>
                     </Col>
                 </Row>
                 <Row><Col><br/></Col></Row>

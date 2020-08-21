@@ -8,8 +8,8 @@ import axios from 'axios';
 
 
 //  Get shared variables
-let API_URL = process.env.REACT_APP_API_URL; API_URL = (API_URL == null ? 'http://localhost:5000' : API_URL);
-let GA_KEY = process.env.REACT_APP_GA_KEY; GA_KEY = (GA_KEY == null ? 'n/a' : GA_KEY);
+const API_URL = process.env.REACT_APP_API_URL == null ? 'http://localhost:5000' : process.env.REACT_APP_API_URL;
+const GA_KEY  = process.env.REACT_APP_GA_KEY == null ? 'n/a' : process.env.REACT_APP_GA_KEY;
 
 
 class App extends React.Component {

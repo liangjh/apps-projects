@@ -15,10 +15,10 @@ class DetailsMain extends React.Component {
     //      this.props.handleClearUser  (callback func)
     //      this.props.userDetails  (current user details)
     //      this.props.userScreenName  (this is current user, not a func)
+    //      this.props.screenMeta 
 
     state = {
         //  Meta-information, settings 
-        screenMeta: {},
         groupMeta: {},
         calculations: {},
         selectedGroupName: null,
@@ -30,22 +30,11 @@ class DetailsMain extends React.Component {
     constructor(props) {
         super(props);
 
-        //  Get screen meta info (only necessary to do once)
-        this.initScreenMeta();
         this.initGroupMeta();
     }
 
     componentDidMount = async(event) => {
         ReactGA.initialize(GA_KEY);  // initialize google analytics
-    }
-
-    
-    //  Get screen meta info, init to state
-    initScreenMeta = async(event) => {
-        if (Object.keys(this.state.screenMeta).length > 0)
-            return;
-        const resp = await axios.get(`${API_URL}/api/screenmeta/`);
-        this.setState({screenMeta: resp.data});
     }
 
     //  Get group meta info, init to state
@@ -130,7 +119,7 @@ class DetailsMain extends React.Component {
             <Container fluid>
                 <Row><Col>
                     <Navbar bg="light" variant="light" fluid>
-                        <Navbar.Brand href="/">Tweemio</Navbar.Brand>
+                        <Navbar.Brand href="/"><Image src="topbar_logo.png"/></Navbar.Brand>
                     </Navbar>
                 </Col></Row>
                 <Row><Col>
@@ -206,7 +195,7 @@ class DetailsMain extends React.Component {
                     <GroupDetails
                             groupCalculation={this.state.calculations[this.state.selectedGroupName] || {}}
                             groupMeta={this.state.groupMeta[this.state.selectedGroupName] || {}}
-                            screenMeta={this.state.screenMeta} 
+                            screenMeta={this.props.screenMeta} 
                             groupName={this.state.selectedGroupName} 
                             userScreenName={this.props.userScreenName}/>
                 </Col></Row>

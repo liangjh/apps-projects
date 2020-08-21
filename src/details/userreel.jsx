@@ -31,7 +31,6 @@ class UserReel extends React.Component {
         return scaled;
     }
 
-
     render() {
 
         // Get random N ppl in full set to highlight
