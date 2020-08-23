@@ -23,6 +23,7 @@ def api_user_details(screen_name: str, force: bool=False):
     #  Retrieve persisted user info, or re-download / recalculate
     #  All logic handled in calculate_user function
     #  We don't need to return user timeline
+    screen_name = screen_name[1:] if screen_name.startswith('@') else screen_name
     user = calculate_user(screen_name, force=force)
 
     return {
@@ -47,6 +48,7 @@ def api_calculate_similarity(screen_name: str, group: str='trumpian', force: boo
 
     #  Get latest tline data, if exists
     #  Download user timeline (if needed) + persist
+    screen_name = screen_name[1:] if screen_name.startswith('@') else screen_name
     user_tline = calculate_user(screen_name, force)
 
     #  Recalc similarity score (if needed) + persist
