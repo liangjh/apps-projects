@@ -37,7 +37,7 @@ def markov_generate(persona: str='Trump', params: dict={}) -> str:
 
     #  Retreive list fo models applicable
     models = get_models(persona, {k:params[k] for k in ['MODEL_DIRECTORY', 'MARKOV_MODELS', 'PERSONAS']}) 
-    model_spec = models[random.randint(0, 100) % 2]
+    model_spec = models[0] # models[random.randint(0, 100) % 2]
     model = model_spec['model']
     text = model.make_short_sentence(max_chars = model_spec['max_chars'])
     print('Markov text ({}): {}'.format(persona, text))
