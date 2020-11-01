@@ -256,16 +256,6 @@ class App extends React.Component {
                 <a href="javascript:void(0);">About {PERSONA}spired</a>
               </OverlayTrigger>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
-              <OverlayTrigger trigger ="hover" placement="top" overlay={
-                <Popover id="popover-markov">
-                  <Popover.Title as="h3">About Markov Models</Popover.Title>
-                  <Popover.Content>
-                  <i>Coming soon</i>
-                  </Popover.Content>
-                </Popover>
-              }>
-              </OverlayTrigger>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
                 { personaContent[PERSONA]['follow'] }
                 <br/>
               <small><b>A Production of Trellis Media LLC. &copy;</b><br/><br/></small>
