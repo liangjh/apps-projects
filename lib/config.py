@@ -296,6 +296,15 @@ class Development(BaseConfig):
     DEBUG = True
     SECRET_KEY = "PLEASE CHANGE ME"
 
+    # -------- API (Twitter) ----------
+
+    TWITTER_API_CREDS = {
+        'consumer_key':        'wbz78wFd0ywcShiTvqgDUV2ry',
+        'consumer_secret':     '2qj0P3fygqa0n2LqU6M8LV485OWIAvXWEQOEVLWFNUBdKDcgjz',
+        'access_token_key':    '80578720-t7bH4zwD6Q6sUQEFeCb8211wH04Y9ul0EWECo2ofU',
+        'access_token_secret': 'PSsX8R4agpxAII9XCYHqE74KObPRWfl9tdG4Xd07olOn6'
+    }
+
     #: DB_URL
     #: Assembly uses Active-Alchemy to work with DB 
     #: Postgresql: postgresql+pg8000://user:password@host:port/dbname
@@ -317,6 +326,15 @@ class Production(BaseConfig):
     DEBUG = False
     SECRET_KEY = "whatisthis"
     COMPRESS_HTML = True
+
+    # -------- API (Twitter) ----------
+
+    TWITTER_API_CREDS = {
+        'consumer_key':        'wbz78wFd0ywcShiTvqgDUV2ry',
+        'consumer_secret':     '2qj0P3fygqa0n2LqU6M8LV485OWIAvXWEQOEVLWFNUBdKDcgjz',
+        'access_token_key':    '80578720-t7bH4zwD6Q6sUQEFeCb8211wH04Y9ul0EWECo2ofU',
+        'access_token_secret': 'PSsX8R4agpxAII9XCYHqE74KObPRWfl9tdG4Xd07olOn6'
+    }
 
     # Database in production
     DB_URL = 'postgresql://tspire:kj7xxb9jOJ@dpg-blmma9co8cribb2rmokg:5432/tspire'
