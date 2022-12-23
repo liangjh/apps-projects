@@ -36,7 +36,7 @@ Table definition
 */
 
 Grant privileges
-  create user tspire with encrypted password ‘magamagamaga’;
+  create user tspire with encrypted password ‘****';
   grant all privileges on database tspire to tspire;
 
 Useful psql commands
