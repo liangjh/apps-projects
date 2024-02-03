@@ -1,0 +1,9 @@
+# development configs for postgresql
+# note: in heroku, the db config params are set as system props
+development:
+  adapter: postgresql
+  database: statsly_development
+  username: postgres
+  password: postgres
+  host: localhost
+  encoding: utf8

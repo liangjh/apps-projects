@@ -1,0 +1,47 @@
+<%#
+  T distribution: rendering
+  Local vars:
+    - t_dist
+%>
+
+
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr colspan="3">
+      <th>df = <%=t_dist.df%></th>
+    </tr>
+    <tr>
+      <th><%=image_tag 'alpha.jpg' %></th>
+      <th><%=image_tag 'tdist_1t.jpg' %></th>
+      <th><%=image_tag 'tdist_2t.jpg' %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if t_dist.left_dist.present? %>
+      <tr>
+        <td><%=format_precision(t_dist.left_dist.alpha)%></td>
+        <td><%=format_precision(t_dist.left_dist.tv_1t)%></td>
+        <td><%=format_precision(t_dist.left_dist.tv_2t)%></td>
+      </tr>
+    <% end %>
+    <tr class="success">
+      <td><%=format_precision(t_dist.alpha)%></td>
+      <td><%=format_precision(t_dist.tv_1t)%></td>
+      <td><%=format_precision(t_dist.tv_2t)%></td>
+    </tr>
+    <% if t_dist.right_dist.present? %>
+      <tr>
+        <td><%=format_precision(t_dist.right_dist.alpha)%></td>
+        <td><%=format_precision(t_dist.right_dist.tv_1t)%></td>
+        <td><%=format_precision(t_dist.right_dist.tv_2t)%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if t_dist.interpolated %>
+  <i class="icon-exclamation-sign"></i>&nbsp;&nbsp;<i>Results interpolated</i><br/>
+<% end %>
+<i class="icon-exclamation-sign"></i>&nbsp;&nbsp;<i>Note: <%=image_tag 'tdist_2t.jpg'%> <i>assumes that the provided alpha is alpha/2 (two-tailed test)</i><br/>
+<i class="icon-th-large">&nbsp;&nbsp;</i><i>I don't believe it: <a href="/tables/t-table.pdf"><i>give me the table</a></i><br/>
+<br/><br/>
+

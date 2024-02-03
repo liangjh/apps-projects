@@ -1,0 +1,30 @@
+<div class="col-xs-6 col-md-6">
+
+  <h3>Binomial Table</h3><br/>
+
+  <%= form_tag(binomial_path, :method => :get, :role => 'form') do %>
+
+    <%= label_tag(:n, "N Trials") %>
+    <%= select_tag :n, options_for_select(Distributions::Binomial.ns, :selected => @n) %>
+
+    <%= label_tag(:x, "X Successes") %>
+    <%= text_field_tag :x, @x, :class => 'form-control'%>
+
+    <%= label_tag(:p, "P Population") %>
+    <%= select_tag :p, options_for_select(Distributions::Binomial.ps, :selected => @p) %>
+
+    <br/></br>
+    <%= submit_tag ApplicationController::GO_STATSLY_GO, class: "btn btn-lg btn-info" %>
+
+  <% end %>
+
+</div>
+<!-- solutions section -->
+<div class="col-xs-6 col-md-6">
+  <% if @bin_dist %>
+    <%= render :partial => 'binomial/results',
+               :locals => {:bin_dist => @bin_dist} %>
+  <% end %>
+</div>
+
+

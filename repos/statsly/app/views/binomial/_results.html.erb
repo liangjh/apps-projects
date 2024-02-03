@@ -1,0 +1,57 @@
+
+<%#
+   Render for binomial results
+   Local variables:
+      -bin_dist
+%>
+
+<%
+  row_span  = 2
+  row_span += 1 if bin_dist.left_dist.present?
+  row_span += 1 if bin_dist.right_dist.present?
+%>
+
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+        <th>Parameters</th>
+        <th>X</th>
+        <th><%=image_tag 'p_leq_x.jpg'%></th>
+        <th><%=image_tag 'p_eq_x.jpg'%></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td rowspan="<%=row_span%>">
+      N = <%=bin_dist.n_trials%><br/>
+      P = <%=bin_dist.p_population%>
+    </td>
+  </tr>
+  <% if bin_dist.left_dist.present? %>
+    <tr>
+      <td><%=bin_dist.left_dist.x_success%></td>
+      <td><%=format_precision(bin_dist.left_dist.p_cum)%></td>
+      <td><%=format_precision(bin_dist.left_dist.p_point)%></td>
+    </tr>
+  <% end %>
+  <tr class="success">
+    <td><%=bin_dist.x_success%></td>
+    <td><%=format_precision(bin_dist.p_cum)%></td>
+    <td><%=format_precision(bin_dist.p_point)%></td>
+  </tr>
+  <% if bin_dist.right_dist.present? %>
+    <tr>
+      <td><%=bin_dist.right_dist.x_success%></td>
+      <td><%=format_precision(bin_dist.right_dist.p_cum)%></td>
+      <td><%=format_precision(bin_dist.right_dist.p_point)%></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<br/>
+<%=image_tag 'binomial_cumulative.jpg'%><br/>
+<%=image_tag 'binomial_point.jpg'%><br/><br/>
+<i class="icon-th-large">&nbsp;&nbsp;</i><i>I don't believe it: <a href="/tables/binomial-table-cumulative.pdf"><i>give me the table</a></i><br/>
+
+
+
