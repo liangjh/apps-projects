@@ -1,0 +1,66 @@
+
+<%#
+
+  --- EXPLORE PAGE, SERVER-SIDE CENTRIC ---
+
+  Server-side centric: this version does not load all data upfront - it responds to
+  the filters selected, renders the full view, and then uses isotope to perform the
+  final animation.  Server-side centric view is a step towards a rich client-side API,
+  and allow for adaptive filters to occur.
+
+%>
+
+
+<div class="row">
+
+  <!--// SEARCH FORM -->
+  <div class="span2">
+    <%= form_tag("/explore", :method => "get", :id => "saint_search", :class => "form-search") do %>
+      <%= hidden_field_tag("attributes", @attrib_list.join(','), {:id => "attributes"}) %>
+      <%#= label_tag("q", "Search") %>
+      <%= text_field_tag("q", @q, {:id => "q", :placeholder => "Search", :class => "input-small"}) %>
+    <% end %>
+  </div>
+
+  <!--// BREAD CRUMBS -->
+  <div id="bread_crumbs" class="span8">
+    <%= render :partial => "explore/bread_crumbs", :locals => {:attrib_list => @attrib_list, :attribs_all_map => @attribs_all_map} %>
+  </div>
+
+</div>
+
+<div class="row">
+
+  <!--// ALL AVAILABLE FILTERS -->
+  <div id="discrete_filters" class="span2">
+    <%= render :partial => "explore/search_filters",
+      :locals => {:attrib_categories => @attrib_categories, :attribs_by_category => @attribs_by_category, :result_mapped_attribs => @result_mapped_attribs} %>
+  </div>
+
+  <!--// ALL SAINT TILES -->
+  <div id="isotope_content" class="span10 clickable clearfix">
+    <%= render :partial => "explore/search_tiles", :locals => {:result_saints => @result_saints} %>
+  </div>
+
+</div>
+
+<%= render :partial => 'layouts/detect_ie' %>
+
+<script>
+
+  $(document).ready(function() {
+
+    // Data from server-side
+    var search_q =  '<%=@q%>'
+    var attributes = <%= raw(@attrib_list) %>
+
+    // Initialize screen behaviors
+    var eapp = new ExploreSSApp();
+    eapp.init(search_q, attributes);
+    var popp = new SaintPopoverApp();
+    popp.init();
+  });
+
+</script>
+
+

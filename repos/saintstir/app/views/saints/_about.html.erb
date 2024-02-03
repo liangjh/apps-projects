@@ -1,0 +1,114 @@
+
+
+<%# ABOUT THIS SAINT %>
+
+
+<!--// Section: About -->
+
+          <table class="table table-hover">
+            <tbody>
+              <%#// Lots of code, b/c we want to enforce particular ordering of saint data %>
+
+              <tr>
+                <td><b>Lived</b></td>
+                <td><%= @saint.get_attribs(AttribCategory::CENTURY).sort.join(' - ') %> Century<br/>
+                  <% if (@saint.get_metadata_value(MetadataKey::BORN).nil? && @saint.get_metadata_value(MetadataKey::DIED).nil?) %>
+                    <i>Unknown birth/death dates</i>
+                  <% else %>
+                    <%=@saint.get_metadata_value(MetadataKey::BORN)%> - <%=@saint.get_metadata_value(MetadataKey::DIED)%> AD
+                  <% end %>
+                </td>
+              </tr>
+
+              <tr>
+                  <td><b>Dates<b/></td>
+                  <td>
+                    <% if @saint.canonized? %>
+                      <%=(@saint.get_metadata_value(MetadataKey::CANONYEAR) || "Pre-Congregation")%> (Canonized)<br/>
+                    <% end %>
+                    <% feast = mm_dd_prettify(@saint.get_metadata_value(MetadataKey::FEASTDAY))%>
+                    <% if (!feast.nil?) %>
+                        <%=feast%> (Feast Day)
+                    <% end %>
+                  </td>
+              </tr>
+
+              <tr>
+                <td><b>Origins</b></td>
+                <td>
+                  <%=@saint.get_attrib(AttribCategory::WORLDREGION)%><br/>
+                  <%=@saint.get_attrib(AttribCategory::PERIODEUROCENTRIC)%> (Euro-Centric)<br/>
+                  <%=@saint.get_metadata_value(MetadataKey::SPECIFICGEOPERIOD)%><br/>
+                  Modern-day Country: <%=@saint.get_metadata_value(MetadataKey::MODERNDAYCOUNTRY)%>
+                </td>
+              </tr>
+
+              <tr>
+                <td><b>Occupations</b></td>
+                <td>
+                  <%
+                    @saint.get_metadata_values(MetadataKey::OCCUPATION).sort.each do |meta|
+                    %><%=meta%><br/><%
+                    end
+                  %>
+                  <span class="label label-success"><%=@saint.get_attrib(AttribCategory::OCCUPATIONSECTOR)%></span>
+                </td>
+              </tr>
+
+              <% patronages = @saint.get_metadata_values(MetadataKey::PATRONAGE) %>
+              <% if !patronages.empty? %>
+                <tr>
+                  <td><b>Patronage</b></td>
+                  <td>
+                    <%
+                      i = 0
+                      patronages.sort.each do |meta|
+                        if (i % 4 == 0 && i > 0)
+                          %><br/><%
+                        end
+                        %><span class="label label-success"><%=meta%></span>&nbsp;&nbsp;<%
+                        i += 1
+                      end
+                    %>
+                  </td>
+                </tr>
+              <% end %>
+
+              <% graces = @saint.get_attribs(AttribCategory::GRACES) %>
+              <% if !graces.empty? %>
+                <tr>
+                  <td><b>Graces</b></td>
+                  <td>
+                    <% graces.each do |attrib| %>
+                      <span class="label label-info"><%=attrib%></span>&nbsp;&nbsp;
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+
+              <% superpowers = @saint.get_attribs(AttribCategory::SUPERPOWER) %>
+              <% if (!superpowers.empty?) %>
+                  <tr>
+                    <td><b>Superpowers</b></td>
+                    <td>
+                      <% superpowers.each do |pwr| %>
+                        <span class="label"><%=pwr%></span>&nbsp;&nbsp;
+                      <% end %>
+                    </td>
+                  </tr>
+              <%  end %>
+
+              <% experiences = @saint.get_attribs(AttribCategory::LIFEEXPERIENCE) %>
+              <% if (!experiences.empty?) %>
+                <tr>
+                  <td><b>Experiences</b></td>
+                  <td>
+                      <% experiences.each do |exp| %>
+                        <span class="label label-success"><%=exp%></span>&nbsp;
+                      <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+

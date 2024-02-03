@@ -1,0 +1,88 @@
+
+<%#// List of available postings %>
+
+<%#// Generate pagination using Kaminari gem %>
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <%
+        # Pagination
+        # Do not paginate if we are trying to display a single posting
+      %>
+      <% if (@posting_id.present?) %>
+        <%= link_to 'Browse Postings', saint_path(@saint_id) %>
+      <% else %>
+        <%= paginate @postings %>
+      <% end %>
+    </td>
+    <td align="right">
+      <% if (@sort_by == 'date') %>
+        Date
+      <% else %>
+        <a href="#" class="sort-order" data-id="date">Date</a>
+      <% end %>
+      &nbsp;|&nbsp;
+      <% if (@sort_by == 'popular') %>
+        Most Popular
+      <% else %>
+        <a href="#" class="sort-order" data-id="popular">Most Popular</a>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<% if (@postings.nil? || @postings.empty?) %>
+  <i>No postings yet, please submit one!</i>
+<% else %>
+  <table class="table">
+    <% @postings.each do |posting| %>
+      <tr>
+
+        <td>
+
+          <div style="position:relative">
+            <div style="position:absolute; top:0;right:0;">
+              <% if (!posting.votes.nil? && posting.votes > 0) %>
+                <span class="badge badge-success num-votes"><%=posting.votes%></span>
+              <% end %>
+              <a href="#" class="like-button" data-id="<%=posting.id%>" title="click to 'like' this posting"><i class="icon-thumbs-up"/></a>
+              <a href="#" class="flag-button" data-id="<%=posting.id%>" title="click to flag this posting for inappropriate or inaccurate content"><i class="icon-flag"/></a>
+            </div>
+            <b>
+              <% if (!posting.anonymous) %>
+                <%= (posting.user.nil? ? "Unknown" : posting.user.username) %>
+              <% else %>
+                Anonymous
+              <% end %>
+            </b>
+            <%=posting.created_at.nil? ?  "" : " (#{posting.created_at.strftime('%m/%d/%Y')})"%>
+            <% if (!posting.user.nil?) %>
+              <% if (!posting.user.location_state.nil? || !posting.user.location_country.nil?) %>
+                <br/><i><%=posting.user.location_state.nil? ? "" : "#{posting.user.location_state}, "%><%=posting.user.location_country.nil? ? "" : posting.user.location_country%></i>
+              <% end %>
+            <% end %>
+            <br/><br/>
+
+            <%#// Retain formatting - transform newlines to <br/> tags - but we don't want rails to escape the HTML %>
+            <%=raw(posting.content_formatted)%>
+
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <script>
+    // Configure tooltips on actions
+    $(document).ready(function(){
+      $('.num-votes').tooltip({title: "Number of 'likes' this posting has received"});
+      //$('.like-button').tooltip({title: "Click to 'like' this posting"});
+      //$('.flag-button').tooltip({title: "Click to flag this posting for offensive or inappropriate content"});
+    });
+  </script>
+<% end %>
+
+
+
+
+
+

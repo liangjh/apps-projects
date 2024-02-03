@@ -1,0 +1,25 @@
+
+<p>Dear <%=(@user.username || @user.email) %>:</p>
+
+<p>One of the goals of Saintstir is to create online communities through stories and prayers that
+encourage, inspire, and edify others.</p>
+
+<p>One of your postings had been flagged for inappropriate content recently by a user of the site.
+Upon review, our staff decided that your posting did not meet the standards required by the
+site's mission.  Your posting has been removed from the site.</p>
+
+<p>We'd like to thank you for your contribution to Sainstir.com, and encourage you to continue
+to post stories and prayers to saint walls.</p>
+
+<p>Sincerely,</p>
+<p>Saintstir Team</p>
+
+<br/><br/>
+
+<p>The posting that was removed is below:</p>
+
+<p><font color="grey">
+  <%=raw(@posting.content_formatted)%>
+</font></p>
+
+

@@ -1,0 +1,32 @@
+
+<div class="span8">
+
+  <h2>Contact Us</h2><br/>
+<p>
+  Comment or Suggestion?  Having a problem with the site?  Or just wanted to say hi?  Please use the form below to leave us a message.
+  We would love to hear from you
+</p>
+<br/>
+<%= form_tag contact_us_path, { :method => :post, :class => "well form-vertical"} do %>
+
+  <%= label_tag :your_email_address %>
+  <%# if user logged in, then user hidden field, o/w let user enter email address %>
+  <% if (current_user) %>
+    <%= hidden_field_tag :email, current_user.email %>
+    <i><%= current_user.email%></i><br/><br/>
+  <% else %>
+    <%= text_field_tag :email %>
+  <% end %>
+
+  <%= label_tag :purpose %>
+  <%= select_tag :purpose, options_for_select(contact_us_purpose_options, :selected => (@purpose.present? ? @purpose : nil)) %>
+
+  <%= label_tag :message %>
+  <%= text_area_tag :message, @message.present? ? @message : "", {:class => "span6", :rows => "10"} %>
+
+  <br/><br/>
+  <%= submit_tag "Send Message", {:class => "btn btn-info"} %>
+
+<% end %>
+
+</div>

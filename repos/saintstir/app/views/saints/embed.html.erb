@@ -1,0 +1,13 @@
+
+<%#
+    Embed contains ONLY the main saint insignia
+    so that people can embed it on to their webpages
+%>
+<%= render :partial => 'saints/insignia',  :locals => {:saint => @saint, :popup => true} %>
+<%= render :partial => 'saints/photoreel', :locals => {:saint => @saint} %>
+
+<br/>
+<div>
+  <i>Brought to you by: <a target="_parent" href="http://www.saintstir.com">Saintstir &copy;</a></i>
+</div>
+

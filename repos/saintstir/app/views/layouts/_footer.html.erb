@@ -1,0 +1,35 @@
+
+    <!--// Footer -->
+    <div class="container">
+      <div class="content">
+        <div class="row">
+          <div class="span9">
+            <%= link_to "About", page_path('about') %> &nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to "Contact", contact_us_path %> &nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to "Volunteer", page_path('volunteer') %>   &nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to "Developers", page_path('developers') %>   &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="http://twitter.com/saintstir">@Saintstir</a>  &nbsp;&nbsp;&nbsp;&nbsp;
+            <br/><br/><br/><br/>
+          </div>
+          <div class="span3">
+            &copy; Saintstir <%=Time.now.to_date.strftime("%Y")%>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a rel="license" href="<%=AppLicensing::CC_LICENSE_LANG_URL%>">
+              <img alt="Creative Commons License" style="border-width:0" src="<%=AppLicensing::CC_LICENSE_ICON_URL%>" /></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span12">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $('.dropdown-toggle').dropdown();
+      });
+    </script>
+
+

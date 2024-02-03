@@ -1,0 +1,10 @@
+
+A question was submitted on the website by <%= @user.present? ? @user.email : "Unknown #{@from_email}" %>:
+<br/><br/>
+
+<b>Content</b>
+<br/><br/>
+
+<%=raw(@message)%>
+
+

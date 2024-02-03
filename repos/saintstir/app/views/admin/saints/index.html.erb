@@ -1,0 +1,86 @@
+
+<h2>Saint Roster</h2>
+
+<div class="row">
+  <div class="span8">
+    <% if @search_q.blank? %>
+      <%= paginate @saints %>
+    <% end %>
+  </div>
+  <div class="span4">
+    <!-- saint search bar in admin saints -->
+    <%= form_tag admin_saints_path, :method => 'get', :class => 'form-search' do %>
+      <%= text_field_tag :search, @search_q %>
+      <%= submit_tag "Search", :name => nil %>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to 'Create New Saint', new_admin_saint_path, :class => "btn btn-primary" %>
+<br/><br/>
+
+
+
+
+<table class="table table-hover" width="600">
+  <thead>
+  <tr>
+    <th>Symbol</th>
+    <th>Name</th>
+    <th>Published?</td>
+    <th>Last Updated</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+<%
+  @saints.each do |saint|
+    meta_name = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :name)
+    meta_suffix = MetadataValue.by_saint_symbol_and_metadata_key_code(saint.symbol, :suffix)
+%>
+  <tr>
+    <td>
+      <%= link_to saint_path(saint.id) do %>
+        <i class="icon-share"></i>
+      <% end %>&nbsp;&nbsp;
+      <%= link_to saint.symbol, edit_admin_saint_path(saint) %>
+    </td>
+    <td><%= (meta_name.empty? ? "N/A" : meta_name[0].value) %> <%= (meta_suffix.empty? ? "" : meta_suffix[0].value) %></td>
+    <td>
+      <% if (saint.publish) %>
+        <span class="label label-success">Yes</span>
+      <% else %>
+        <span class="label">No</span>
+      <% end %>
+    </td>
+    <td><%= saint.last_modified.strftime("%b %d, %Y") %></td>
+    <td>
+      <%= link_to 'Edit', edit_admin_saint_path(saint), :class => "btn btn-info" %>&nbsp;&nbsp;
+      <%= link_to 'Delete', admin_saint_path(saint), :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-warning" %>
+    </td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+<%= link_to 'Create New Saint', new_admin_saint_path, :class => "btn btn-primary" %>
+<br/><br/>
+
+<script>
+  $(document).ready(function() {
+    // bind pagination links
+    $('.page-link').click(function(){
+      var pageNum = $(this).attr('data-id');
+      var uri = '/admin/saints?page=' + pageNum;
+      window.location = uri;
+    });
+
+  });
+
+</script>
+
+
+
+
+

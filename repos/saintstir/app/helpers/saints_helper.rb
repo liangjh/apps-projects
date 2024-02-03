@@ -1,0 +1,2 @@
+module SaintsHelper
+end

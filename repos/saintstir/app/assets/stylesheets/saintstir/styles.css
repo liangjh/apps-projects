@@ -1,0 +1,158 @@
+/*
+ *  SAINTSTIR PROJECT STYLESHEET
+ */
+
+/*
+ * ISOTOPE (METAFIZZY) PLUGIN
+ * http://isotope.metafizzy.co
+ */
+
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:         top, left, opacity;
+          transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+/*
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+*/
+
+/*
+ *  ---- SAINTSTIR CUSTOM STYLES ----
+ */
+
+.saint-gallery {
+  width: 315px;
+}
+
+.element {
+  width: 100px;
+  height: 110px;
+  margin: 5px;
+  padding: 5px 5px 0px 5px;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  background: #888;
+  color: #222;
+  -webkit-border-top-right-radius: 1.2em;
+      -moz-border-radius-topright: 1.2em;
+          border-top-right-radius: 1.2em;
+}
+
+.element-magnified {
+  width: 290px;
+  height: 200px;
+  padding: 10px 10px 0px 10px;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  background: #888;
+  color: #222;
+  -webkit-border-top-right-radius: 1.2em;
+      -moz-border-radius-topright: 1.2em;
+          border-top-right-radius: 1.2em;
+}
+
+h1, h2, h3 { font-weight: bold; }
+
+h1 {
+  font-size: 32px;
+  line-height: 1.1em;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 1.1em;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 1.1em;
+}
+
+/* insignia */
+.saint-insignia { font-size: 20px; font-weight: bold; line-height:1.1em;}
+.saint-title { font-size: 42px; font-weight: bold; line-height:1.1em; }
+.saint-subtitle { font-size: 30px; }
+.saint-insignia-mini { font-size: 12px; line-height:1.1em;}
+.saint-title-mini { font-size: 18px; font-weight: bold; }
+.saint-subtitle-mini { font-size: 12px;}
+
+.blurb-title { font-size: 18px; font-weight: bold; line-height: 1.1em; }
+.topnav-menus { font-size: 15px; font-weight: bold; }
+.filter-menus { font-size: 12px; }
+
+/**
+ *  Insignia colors
+ */
+
+/* light blue (default) */
+.basic-elem { background-color: #0FF; background: hsl(180,100%,50%); }
+/* light green */
+.cstm1-elem { background-color: #B8FFE6; background: hsl(159,100%,86%); }
+/* light purple */
+.cstm2-elem { background-color: #b8ccff; }
+/* yellow */
+.cstm3-elem { background-color: #D9C6B0; }
+/* rose */
+.cstm4-elem { background-color: #FFB699; }
+/* light gray */
+.cstm5-elem { background-color: #c2c7c6; }
+
+.clickable .element:hover { cursor: pointer; }
+.clickable .element:hover h3 { text-shadow: 0 0 10px white, 0 0 10px white; }
+
+/*
+ * TWITTER BOOTSTRAP OVERRIDE STYLES
+ *  Additions to Twitter Bootstrap (overrides)
+ */
+
+/* Twitter bootstrap overrides */
+.label-favorite {
+  background-color: #f9edbe;
+}
+
+
+

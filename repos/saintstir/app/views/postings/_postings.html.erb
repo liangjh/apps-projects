@@ -1,0 +1,71 @@
+
+<%# Saint Postings %>
+<%# Assumed local variables: (saint_id, posting_id) %>
+
+<table cellpadding="10">
+  <tr>
+    <% if (current_user) %>
+      <td nowrap>
+        <a href="#posting-modal" class="btn btn-info" data-toggle="modal">Write on wall</a> <br/><br/>
+      </td>
+      <td>
+        Write a personal prayer request to this saint, or leave a story about how this saint has affected your life.
+        Please note that what you write will be visible to everyone on Saintstir &copy; (though you can choose to be anonymous).
+      </td>
+    <% else %>
+      <td colspan="2">
+        <div class="alert alert-info">
+          Hi there!  You're more than welcome to browse, but if you'd like to post on this saint's wall, you'll
+          need to create a Sainstir &copy; account.  It's easy - log in with either your Facebook or Google account using the links on the top right of the page <br/>
+        </div>
+      </td>
+    <% end %>
+  </tr>
+  <%# If there are errors / notfications from the form, they will be placed in this container %>
+  <tr><td colspan="2" id="action-status"></td></tr>
+</table>
+
+
+<!--// Main content for the page (pagination + postings) -->
+<div id="posting-content">
+</div>
+
+<%# Postings form, implemented as a modal %>
+<div class="modal hide span8" id="posting-modal">
+    <form id="posting-form">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Write on Saint Wall</h3>
+      </div>
+      <div class="modal-body">
+        <textarea id="posting-data" name="posting_data" rows="15" class="span7"></textarea><br/>
+        word count:  <span id="word-count">0</span> (max <%= Posting::CONTENT_MAX_WORD_COUNT %> words)<br/>
+        <%= check_box_tag "posting_anonymous", "1",
+          (!current_user.nil? && current_user.anonymous), {:id => "posting-anonymous"} %>
+          Make this posting anonymous
+          <%# anonymous is checked if the user's settings are set to anonymous by default %>
+      </div>
+      <div class="modal-footer">
+        <a id="cancel-posting" href="#" class="btn" data-dismiss="modal">Close</a>
+        <a id="submit-posting" href="#" class="btn btn-info">Submit</a>
+      </div>
+  </form>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    //  Initialize the posting app, by type
+    //  Set to null if posting id DNE (TODO: fix this call, so ugly)
+    var pa = new PostingApp(<%=saint_id%>, <%=Posting::CONTENT_MAX_WORD_COUNT%>);
+    var postingId = <%=posting_id || 'null' %>
+    pa.init();
+    pa.getContent(null, null, <%=posting_id || 'null' %>);
+    if (postingId != null) {
+      clickOnTab('wall');
+    }
+  });
+</script>
+
+
+

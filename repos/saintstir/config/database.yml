@@ -1,0 +1,22 @@
+
+# configs for mysql
+# development:
+#  adapter: mysql2
+#  encoding: utf8
+#  reconnect: false
+#  database: saintstir_development
+#  pool: 5
+#  username: root
+#  password:
+
+# development configs for postgresql
+# note: in heroku, the db config params are set as system props
+development:
+  adapter: postgresql
+  database: saintstir_development
+  username: postgres
+  password: postgres
+  host: localhost
+  encoding: utf8
+
+

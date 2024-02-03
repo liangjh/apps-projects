@@ -1,0 +1,93 @@
+
+
+<%
+
+#//
+#// Form Element Generators
+#// Metadata and Attribs can be generated dynamically
+#//
+
+    #//  Utility method to generate a metadata form element
+    def generate_metadata_form_element(code, meta_key)
+    %>
+      <%= label_tag code, meta_key.name %>
+      <%
+        if (!meta_key.multi)
+          %><%= text_field_tag code, (@meta_values[code].nil? ? "" : (meta_key.is_short? ? @meta_values[code][0].value : @meta_values[code][0].value_text)) %><%
+        else
+        %><%= text_area_tag code, @meta_values[code].nil? ? "" : @meta_values[code].map { |x| (meta_key.is_short? ? x.value : x.value_text) }.join("\r\n"),
+                      :class => (meta_key.is_long? ? "span6" : "span4"), :style => "height:200px;" %><%
+        end
+        %>
+        <span class="help-inline"><%= meta_key.description %></span>
+        <br/><br/>
+      <%
+    end
+
+    #//  Utility method to generate an attrib form element
+    def generate_attrib_form_element(code, attrib_cat)
+    %>
+      <%= label_tag code, attrib_cat.name %>
+      <%= select_tag code,
+            options_from_collection_for_select(@attrib_by_category[code], "id", "name", lambda { |opt| @attrib_saint.has_key?(opt.id)}),
+            {:class => 'chzn-select span6', :multiple => @attrib_categories[code].multi} %>
+        <span class="help-inline"><%= attrib_cat.description %></span>
+        <br/><br/>
+    <%
+    end
+%>
+
+<%#// Symbol is an attribute of the saint %>
+<%= label_tag :symbol %>
+<%= text_field_tag :symbol, @saint.symbol %>
+<br/><br/>
+
+<%= label_tag :publish %>
+<%= check_box_tag :publish, "true", @saint.publish %> (check to publish the saint on the saintstir system - uncheck to disable)
+<br/><br/>
+
+<%= label_tag :edit_comment, "Edit Comment"%>
+<%= text_field_tag :edit_comment %>
+<br/><br/>
+
+<%#// Edit audit info %>
+<b>Audit Log</b><br/>
+<%
+  @saint.saint_edit_audits.each do |audit|
+  %><i><%=audit.created_at%> :: <%= audit.edited_by %> :: <%=audit.comment%></i><br/><%
+  end
+%>
+
+
+<br/><br/>
+
+<p><h3>Metadata Values</h3></p>
+<%
+    @meta_keys.each do |code, meta_key|
+      generate_metadata_form_element(code, meta_key)
+    end
+%>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
+
+<br/><br/>
+
+<p><h3>Discrete Attributes</h3></p>
+<%
+    @attrib_categories.each do |code, attrib_cat|
+      generate_attrib_form_element(code, attrib_cat)
+    end
+%>
+
+<p>
+<%= submit_tag "Save Saint", {:class => "btn btn-primary btn-large"} %>
+</p>
+
+<script>
+
+  $(document).ready(function() {
+    // Initialize the chosen dropdown
+    $('.chzn-select').chosen();
+  });
+
+</script>
+

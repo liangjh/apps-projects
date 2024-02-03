@@ -1,0 +1,19 @@
+
+<p>Dear <%=(@api_user.name || @api_user.email)%>,</p>
+
+<p>
+Thanks for your interest in the Saintstir API.  Your API account has already been created,
+but you'll need to accept the terms of use before it can be enabled for use.  Please follow the
+link below to review.
+</p>
+
+<p>
+<%= link_to "Saintstir Terms of Use", "http://www.saintstir.com#{tou_path(@api_user.key)}" %>
+</p>
+
+<p><i>Saintstir is licensed under the <%=link_to AppLicensing::CC_LICENSE_BLURB, AppLicensing::CC_LICENSE_LANG_URL %></i></p>
+
+<p>God bless,</p>
+<p>The Saintstir Team</p>
+
+

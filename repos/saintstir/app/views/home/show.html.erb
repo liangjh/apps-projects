@@ -1,0 +1,116 @@
+
+<div class="row">
+  <div class="span12">
+
+    <!--// BEGIN BANNER CAROUSEL -->
+    <div id="banner-carousel" class="carousel slide">
+
+      <div class="carousel-inner">
+
+        <div class="active item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Search.</h1></div>
+          <%= link_to image_tag("banner_1.jpg"), explore_path %>
+          <div class="carousel-caption" style="background-color:#7d7d7d; padding:8px">
+            <p>Search and learn about the saints of the Catholic Church using Saintstir's interactive filter buttons.  Every wonder which saints are
+            known for particular virtues or superpowers?  Interested in finding saints who went through the same struggles that you are going through?
+            Find this with our saint explorer.</p>
+          </div>
+        </div>
+
+        <div class="item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Discover.</h1></div>
+          <%= link_to image_tag("banner_2.jpg"), explore_path %>
+          <div class="carousel-caption" style="background-color:#7d7d7d; padding:8px">
+            <p>Find out more about the Catholic saints, beyond facts and biographies.  Read their quotes and prayers for inspiration, and discover other
+            saints with similar traits and graces.  Read stories, testimonies, and prayers from other site members.</p>
+          </div>
+        </div>
+
+        <div class="item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Share.</h1></div>
+          <%= link_to image_tag("banner_3.jpg"), explore_path %>
+          <div class="carousel-caption" style="background-color:#7d7d7d; padding:8px">
+            <p>Share your experiences and reflections with others on each saint's "wall".  "Like" other member's postings.  Build saint-centered communities.</p>
+          </div>
+        </div>
+
+        <div class="item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Integrate.</h1></div>
+          <%= link_to image_tag("banner_4.jpg"), page_path('developers') %>
+          <div class="carousel-caption" style="background-color:#7d7d7d; padding:8px">
+            <p>Integrate Saintstir's extensive saint catalogue on your website or blog via embeds - just copy and paste code into your website.
+            <br/>For developers: build apps on top of Saintstir's saint search API. </p>
+          </div>
+        </div>
+
+
+        <div class="item" style="height:325px;">
+          <div style="position:absolute; top:80px; left:60px;"><h1 style="font-size:40px">Timelines.</h1></div>
+          <%= link_to image_tag("banner_5.jpg"), timeline_path %>
+          <div class="carousel-caption" style="background-color:#7d7d7d; padding:8px">
+            <p>Explore the saints through history, or just through the year with our timelines</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Carousel nav -->
+      <a class="carousel-control left" href="#banner-carousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#banner-carousel" data-slide="next">&rsaquo;</a>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+
+  <!--// Short intro to saintstir, etc-->
+  <div class="span4">
+    <h2>What is Saintstir</h2><br/>
+
+    <p>
+    Saintstir is the world's first online saint taxonomy
+    Through Saintstir, you can discover and learn about the saints, and share your individual stories and prayers.
+    </p>
+
+    <p>
+      <%= link_to explore_path do %>
+        <button class="btn btn-info">Start Exploring</button>
+      <% end %>
+    </p>
+
+    <br/><br/>
+    <p>Saintstir Timelines: <%= link_to "Timelines", timeline_path %></p>
+    <p>How Saintstir got started: <%= link_to "About", page_path('about') %></p>
+    <p>Interested in helping? <%= link_to "Volunteer", page_path('volunteer') %></p>
+    <p>Use our search API: <%= link_to "Developers", page_path('developers') %></p>
+    <p>Have a question or comment? <%= link_to "Contact Us", contact_us_path %></p>
+    <p>Follow us on twitter: <a href="http://twitter.com/saintstir">@saintstir</a></p>
+
+  </div>
+
+  <!--// Integrate insignia and photoreel partials -->
+  <div class="span4">
+    <%= render :partial => "home/saint_of_day", :locals => {:saint => @saint} %>
+ </div>
+
+  <!--// Integrate saintstir twitter feed -->
+  <div class="span4">
+    <%= render :partial => "layouts/embed_twitter" %>
+  </div>
+</div>
+
+<%= render :partial => 'layouts/detect_ie' %>
+
+<script>
+  $(document).ready(function() {
+    // Initialize banner carousel
+    $('.carousel').carousel({interval:5000});
+  });
+</script>
+
+
+
+
+

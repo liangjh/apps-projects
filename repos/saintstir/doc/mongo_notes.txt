@@ -1,0 +1,28 @@
+
+#
+# some simple operations on mongodb
+# using ruby mongo gem 
+#
+
+
+coll.insert({"symbol" => "IsiSev", "world_region" => ["western_europe"], "superpower" => ["visionary","clairvoyance"]})
+
+coll.insert({"symbol" => "MMary", "world_region" => ["middle_east"], "superpower" => ["levitation","healing_touch","clairvoyance"]}) 
+
+coll.find("symbol" => "IsiSev")
+
+coll.find("symbol" => "IsiSev").each { |x| puts x }
+
+coll.find("world_region" => "western_europe").each { |x| puts x }
+
+coll.find("world_region" => "middle_east").each { |x| puts x }
+
+coll.find("world_region" => {"in" => ["middle_east"]}).each { |x| puts x }
+
+coll.find("world_region" => {"$in" => ["middle_east"]}).each { |x| puts x }
+
+coll.find("superpower" => {"$in" => ["clairvoyance"]}).each { |x| puts x }
+
+
+
+

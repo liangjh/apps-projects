@@ -1,0 +1,33 @@
+
+<%
+  #//  This theming is compliant with Twitter bootstrap styles
+  #//  This pagination adapter's links all have the class "page-link", so that
+  #//  we can attach jquery event handlers to each link - the intention is to utilize
+  #//  this is a javascript-centric manner.
+%>
+
+<%= paginator.render do -%>
+  <div class="pagination">
+    <ul>
+    <% if (!current_page.first?) %>
+      <li><a data-id="<%=(current_page-1)%>" class="page-link" href="#">Prev</a></li>
+    <% end %>
+    <% each_page do |page| -%>
+      <% if page.left_outer? || page.right_outer? || page.inside_window? -%>
+        <% if (page == current_page) %>
+          <li class="active"><a data-id="<%=page%>" class="page-link" href="#"><%= page %></a></li>
+        <% else %>
+          <li><a data-id="<%=page%>" class="page-link" href="#"><%= page %></a></li>
+        <% end %>
+      <% elsif !page.was_truncated? -%>
+        <li class="disabled"><a href="#">...</a></li>
+        <% break %>
+      <% end -%>
+    <% end -%>
+    <% if (!current_page.last?) %>
+      <li><a data-id="<%=(current_page+1)%>" class="page-link" href="#">Next</a></li>
+    <% end %>
+  </ul>
+  </div>
+<% end -%>
+

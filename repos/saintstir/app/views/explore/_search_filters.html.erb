@@ -1,0 +1,29 @@
+
+<%#
+  Filter Rendering
+  Expected Parameters
+    1. attrib_categories - all attribute categories
+    2. attribs_by_category - all attributes, organized by category
+    3. result_mapped_attribs - all resulting attributes, with adaptive counts
+%>
+
+    <% @attrib_categories.each do |category|
+          next if (!@attribs_by_category.has_key?(category.code))
+    %>
+      <p>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><%=category.name%>&nbsp;<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <% @attribs_by_category[category.code].each do |attrib| %>
+            <li><a href="#" class="filter" data-filter="<%=attrib.code%>"><%=attrib.name%>
+            <% if @result_mapped_attribs.has_key?(attrib.code) %>
+              (<%=@result_mapped_attribs[attrib.code]%>)
+            <% end %>
+          </a></li>
+          <% end %>
+        </ul>
+      </div>
+      </p>
+    <% end %>
+
+

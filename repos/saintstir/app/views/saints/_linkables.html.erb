@@ -1,0 +1,51 @@
+<%#
+Linkables
+Contains links to functionality supported for a given saint
+Expected params:
+  saint - the saint object for the current saint
+%>
+
+
+<span class="btn" style="padding:5px;" id="share" data-toggle="modal" data-target="#share-modal">
+  <i class="icon-share"></i>
+  <%= image_tag "link.png" %>
+</span>
+
+<span class="btn" style="padding:5px;" id="contact-us">
+  <%= link_to contact_us_path(:purpose => "Correction", :message => "Correction for saint: #{@saint.symbol}") do %>
+    <i class="icon-edit"></i>
+  <% end %>
+</span>
+
+
+<div id="share-modal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Share or Embed on Website</h3>
+    </div>
+    <div class="modal-body">
+      To email or send a link to this saint:<br/></br>
+<pre>
+http://www.sainstir.com<%= saint_path(@saint.id) %>
+</pre>
+      <br/><br/>
+      To embed this saint on your website or blog:<br/></br>
+<pre>
+&lt;iframe src="http://www.saintstir.com<%=embed_saint_path(@saint.symbol)%>" name="<%=@saint.symbol%>"
+width="320" height="400" frameborder="0" marginheight="0" marginwidth="0"&gt;&lt;/iframe&gt;
+</pre>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+
+
+<script>
+$(document).ready(function(){
+  $('#share').tooltip({title: "Share this saint / Embed this saint on your website"});
+  $('#contact-us').tooltip({title: "Errors?  Contact us!  We'd love to hear from you"});
+});
+</script>
+
+
+

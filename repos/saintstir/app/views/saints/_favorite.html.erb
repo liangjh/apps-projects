@@ -1,0 +1,25 @@
+<%#
+    Favorites partial
+    Should be rendered by a page that sets the variable "@saint",
+    for the currently active saint
+%>
+
+<%
+if (favorite_link_enabled?)
+%>
+  <!--// Favorites Functionality -->
+  <span id="favorite"></span>
+  <script>
+    // Load favorites functionality upon startup
+    $(document).ready(function() {
+      var fa = new Favorites(<%=@saint.id%>);
+      fa.init();
+    });
+  </script>
+<%
+else
+  %>&nbsp;&nbsp;<%
+end
+%>
+
+

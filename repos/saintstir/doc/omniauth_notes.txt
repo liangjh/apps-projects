@@ -1,0 +1,99 @@
+
+THIRD-PARTY AUTHENTICATION NOTES & CREDENTIALS
+  (for omniauth integration)
+
+////////////////////////////////////////
+TWITTER
+
+
+API RESPONSE FRAGMENT
+/*
+  ---
+    provider: twitter
+    uid: '345619750'
+    info:
+      nickname: Saintstir
+      name: Saintstir
+      location: ''
+      image: http://a0.twimg.com/profile_images/1487431836/saintstir_logo_crossonly_187x183_normal.jpg
+      description: Saintstir is the coolest, most relevant search engine for Catholic
+        saints on the Internet.  (currently under development)
+      urls:
+        Website: http://www.saintstir.com
+        Twitter: http://twitter.com/Saintstir
+    credentials:
+      token: 345619750-7tOD1mbCcGHxms0nMoFzwfG2caCt80xeBam4tnGX
+      secret: M5rcIusurDdQY1ZEpPHfJYZq44P4m23Okco4JG2nYE
+*/
+
+
+////////////////////////////////////////
+FACEBOOK
+  
+ 
+  API RESPONSE
+/*
+    ---
+      provider: facebook
+      uid: '701085011'
+      info:
+        nickname: liangjh
+        email: jonathan.liang@gmail.com
+        name: Jonathan Liang
+        first_name: Jonathan
+        last_name: Liang
+        image: http://graph.facebook.com/701085011/picture?type=square
+        urls:
+          Facebook: http://www.facebook.com/liangjh
+        verified: true
+      credentials:
+        token: AAADvWI3pfZB4BAJDhLFf6CFQovIumrA98ZCAJoKZCPDm1KMi4RH0uPDYnKXiQj32QU1xHYP8MeZBEnZCm3HZAnV8ryZAcBQKuT6MEtfS6gg9wZDZD
+        expires_at: 1339740000
+        expires: true
+      extra:
+        raw_info:
+          id: '701085011'
+          name: Jonathan Liang
+          first_name: Jonathan
+          last_name: Liang
+          link: http://www.facebook.com/liangjh
+          username: liangjh
+          gender: male
+          email: jonathan.liang@gmail.com
+          timezone: -7
+          locale: en_US
+          verified: true
+          updated_time: '2012-01-18T07:10:05+0000'
+*/
+
+
+////////////////////////////////////////
+GOOGLE
+
+
+  API RESPONSE:
+/*
+  ---
+    provider: google_oauth2
+    uid: '103354516911015906609'
+    info:
+      name: Info Saintstir
+      email: saintstir@gmail.com
+      first_name: Info
+      last_name: Saintstir
+    credentials:
+      token: ya29.AHES6ZSxrTBeuVhyPuLfiiqvp2xKh1K6Cm_SNDE9E2CBPw
+      refresh_token: 1/IRE7oNhGsyRux9mfAHOuYZSifncvM8H3iKAjqbijRVY
+      expires_at: 1339739127
+      expires: true
+    extra:
+      raw_info:
+        id: '103354516911015906609'
+        email: saintstir@gmail.com
+        verified_email: true
+        name: Info Saintstir
+        given_name: Info
+        family_name: Saintstir
+*/
+
+
