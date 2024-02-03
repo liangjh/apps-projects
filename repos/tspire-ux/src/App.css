@@ -1,0 +1,165 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  /* background-color:#282c34; */
+  /* background-color:#c5b358; */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+html,body{
+  margin: 0;
+  padding: 0;
+}
+
+
+.container-fluid {
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto;
+ }
+ 
+.masonry-container{
+	width: 100%;
+	margin: auto;
+	margin-top: 10px;
+	/* border: 1px solid rgba(0,0,0,.1); */
+  /* background-color: #c5b358; */
+	p{
+		text-align: center;
+		padding: 4px;
+		font-family: monospace;
+		/* background: #222; */
+		/* background-color: #c5b358; */
+    /* color: #efefef; */
+    color: #c5b358;
+	}
+}
+.masonry{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-content: stretch;
+	width: 100%;
+	margin: auto;
+}
+.column{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-content: stretch;
+	flex-grow: 1;
+}
+
+.tilecontainer {
+	margin: 4px;
+  position: relative;
+  width: 350px;
+}
+
+.tileimage {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.topright {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.tilecontainer:hover .tileimage {
+  opacity: 0.7;
+}
+
+.tilecontainer:hover .topright {
+  opacity: 1;
+}
+
+.text {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+
+
+.jumbotron {
+  margin: 0;
+  padding: 20px 20px 20px 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  /*
+  background-image: url("flag-bg.png");
+  background-size: cover;
+  */
+}
+
+.shareNetwork {
+  vertical-align: middle;
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 5pm;
+  text-align: center;
+  cursor: pointer;
+}
+
+.imgstyle {
+    box-shadow: 0 1px 1px 2px rgba(0,0,0, .15);
+    border-radius: 10px;
+    width:350px;
+}
+
+.imgstyledetailed {
+    box-shadow: 0 1px 1px 2px rgba(0,0,0, .15);
+    border-radius: 10px;
+    width:100%;
+}
+
+div.noPadding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.noMargin {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+

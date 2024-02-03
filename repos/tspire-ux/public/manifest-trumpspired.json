@@ -1,0 +1,30 @@
+{
+  "short_name": "Trumpspired",
+  "name": "Trumpspired",
+  "icons": [
+    {
+      "src": "favicon-trumpspired.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "trumpspired-logo_160x250.png",
+      "type": "image/png",
+      "sizes": "160x250"
+    },
+    {
+      "src": "trumpspired-logo_192x300.png",
+      "type": "image/png",
+      "sizes": "192x300"
+    },
+    {
+      "src": "trumpspired-logo_512x800.png",
+      "type": "image/png",
+      "sizes": "512x800"
+    },
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
